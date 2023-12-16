@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GombásFeszt</title>
+    <link rel="icon" href="gombi_logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Rubik Beastly' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #e4d9bc;
+            color: #331800;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .menu a {
+            color: #331800;
+            text-decoration: none;
+            font-family: 'Poiret One', cursive;
+            font-weight: 900;
+            font-size: 24px;
+            margin: 0 30px;
+        }
+
+        .menu a::selection {
+            background-color: #331800;
+            color: #e4d9bc;
+        }
+
+        .menu a:hover {
+            color: #8B0000;
+        }
+
+        @keyframes expandInAnimation {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .expandIn {
+            animation: expandInAnimation 2s;
+        }
+
+        @keyframes spinIn {
+            0% {
+                transform: rotate(-360deg);
+                opacity: 0;
+            }
+            100% {
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .spinIn {
+            animation: spinIn 2s;
+        }
+
+        .title {
+            font-family: 'Rubik beastly', sans-serif;
+            font-size: 100px;
+            text-align: center;
+            padding-top: 25px;
+            font-weight: normal;
+        }
+
+        .centered-title {
+            font-weight: bold;
+            padding-top: 450px;
+        }
+
+        .middle-title {
+            font-size: 48px;
+        }
+
+        .vertical-title {
+            font-size: 48px;
+            font-family: 'Rubik beastly', sans-serif;
+            transform: rotate(-90deg);
+            margin-left: -250px;
+        }
+
+        .small-title {
+            font-size: 36px;
+            margin-bottom: 200px;
+            margin-top: 1%;
+        }
+
+        .day-titles {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            flex-direction: row;
+            display: row;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .square {
+            width: 350px;
+            height: 500px;
+            background-color: #22133A;
+            margin: 100px 150px 100px 150px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #879E6B;
+            border-radius: 10px;
+        }
+
+        .map-container {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            margin-top: 50px;
+            margin-bottom: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu img {
+            height: 30px;
+            width: auto;
+            position: absolute;
+            left: 4%;
+            padding-right: 20px;
+        }
+
+        .piros-gomba {
+            height: 80px;
+            width: auto;
+        }
+
+        .piros-gomba img {
+            height: 300%;
+            width: auto;
+        }
+
+        .szoveg {
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            font-family: 'Poiret One', cursive;
+            font-size: 35px;
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: center;
+            height: 50%;
+            font-family: 'Poiret One', cursive;
+            font-size: 35px;
+            margin-top: 100px;
+        }
+
+        .contact-info {
+            display: inline-block;
+            width: 23%;
+        }
+
+        #Otthon {
+            background-image: url('IMG-5923_edited.jpg');
+            background-size: cover;
+            color: #e27d6b;
+            font-weight: bold;
+            height: 100vh;
+        }
+
+        #Otthon ::selection {
+            background-color: white;
+            color: black;
+        }
+
+        #Napirend {
+            height: 100vh;
+            background-color: #401D1D;
+            color: #CF8805;
+        }
+
+        #Napirend ::selection {
+            background-color: #CF8805;
+            color: #401D1D;
+        }
+
+        #Jegyeket-Berleteket {
+            height: 100vh;
+            background-color: #6B889E;
+            color: #22133A;
+            text-align: center;
+        }
+
+        #Jegyeket-Berleteket ::selection {
+            background-color: #22133A;
+            color: #6B889E;
+        }
+
+        #Benevezes {
+            height: 100vh;
+            background-color: #879E6B;
+            color: #22133A;
+            text-align: center;
+        }
+
+        #Benevezes ::selection {
+            background-color: #22133A;
+            color: #879E6B;
+        }
+
+        #Helyszin {
+            height: 100vh;
+            background-color: #22133A;
+            color: #FF0288;
+        }
+
+        #Helyszin ::selection {
+            background-color: #FF0288;
+            color: #22133A;
+        }
+
+        #Ez-ugy-volt {
+            height: 100vh;
+            background-color: #E68813;
+            color: #22133A;
+            text-align: center;
+        }
+
+        #Ez-ugy-volt ::selection {
+            background-color: #22133A;
+            color: #E68813;
+        }
+
+        #Keptar {
+            height: 100vh;
+            background-color: #331800;
+            color: #E68813;
+        }
+
+        #Keptar ::selection {
+            background-color: #E68813;
+            color: #331800;
+        }
+
+        #Hazirend {
+            height: 100vh;
+            background-color: white;
+            color: black;
+        }
+
+        #Kapcsolat {
+            height: 50vh;
+            background-color: #CC5500;
+            color: #331800;
+            text-align: center;
+        }
+
+        #Kapcsolat ::selection {
+            background-color: #331800;
+            color: #CC5500;
+        }
+
+        #facebook-logo {
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="#Otthon"><img src="gombi_logo.png" alt="Gombi logo"></a>
+        <a href="#Otthon">Otthon</a>
+        <a href="#Napirend">Napirend</a>
+        <a href="#Jegyeket-Berleteket">Jegyeket, Bérleteket!</a>
+        <a href="#Benevezes">Benevezés</a>
+        <a href="#Helyszin">Helyszín</a>
+        <a href="#Ez-ugy-volt">Ez úgy volt...</a>
+        <a href="#Keptar">Képtár</a>
+        <a href="#Hazirend">Házirend</a>
+        <a href="#Kapcsolat">Kapcsolat</a>
+    </div>
+    <div class="wrapper" id="Otthon">
+        <div class="title centered-title expandIn">
+            GombásFeszt
+        </div>
+    </div>
+    <div class="wrapper" id="Napirend">
+        <div class="title">
+            Napirend
+        </div>
+        <div class="day-titles">
+            <div class="title small-title">
+                Péntek
+            </div>
+            <div class="title small-title">
+                Szombat
+            </div>
+            <div class="title small-title">
+                Vasárnap
+            </div>
+        </div>
+    </div>
+    <div class="wrapper" id="Jegyeket-Berleteket">
+        <div class="title">
+            Jegyeket, Bérleteket!
+        </div>
+        <div class="square">
+            <div class="vertical-title spinIn2">Napijegy</div>
+        </div>
+        <div class="square">
+            <div class="vertical-title spinIn2">Bérlet</div>
+        </div>
+    </div>
+    <div class="wrapper" id="Benevezes" >
+        <div class="title">
+            Benevezés
+        </div>
+        <div class="piros-gomba">
+            <a href="http://www.keresettferi.hu/" target="_blank">
+                <img src="piros_gomba.png" alt="Piros gomba">
+            </a>
+        </div>
+        <div class="form-container">
+            <iframe
+            title="Jelentkező form"
+            width="1000px"
+            height="650px"
+            src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAfftSU1UMEtXWEs4N1pXRDFDUExVWjZTTTdVRkpKRy4u&embed=true" 
+            style="border: none; border-radius: 10px; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    <div class="wrapper" id="Helyszin">
+        <div class="title">
+            Helyszín
+        </div>
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2679.3228599144863!2d19.126652076827266!3d47.81396057363483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47402b80f3be60d7%3A0x872836da4f613439!2zVsOhYywgS8O8bHPFkWdvbWLDoXMgw7p0IDgtMTAsIDI2MDA!5e0!3m2!1shu!2shu!4v1702402459954!5m2!1shu!2shu"
+                title="GombásFeszt helyszín"
+                width="800"
+                height="600"
+                style="border:0; border-radius: 10px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+    <div class="wrapper" id="Ez-ugy-volt">
+        <div class="title">
+            Ez úgy volt...
+        </div>
+        <div class="szoveg">
+            <p>
+                <br>
+                Hol volt, hol nem volt, volt egyszer egy hetedhét országra szóló mulatság a szépséges Zurugurubában. Ezen az alkalmon egy kupac gombának eszébe ötlött, hogy szívesen kinőnék magukat egy picit nagyobb jellegű eseménnyé. Következett az agyvihar és hirtelen azon kapták magukat, hogy összeállt a fejükben egy fesztivál. A gombuszok felosztották maguk között a feladatokat, és munkához is láttak, nyélbe ütni a dolgot.
+                <br>
+                Az érdeklődési kör kibontakoztatása, ismerkedés a jövőben felmerülő élethelyzetekkel, hagyomány megélése, környezettudatosság és fenntartható életmód értékeit szem előtt tartva szeretnék megvalósítani a fesztivált.
+                Számos barát és ismerős segítségének köszönhetően végülis sikerült elérkezni abba stádiumba, ahol ezt veletek is megosztjuk.
+                Szóval ennek örömére jelentkezz (a kérdőívet kitöltve) és találkozunk nyáron! Ha bármi kérdés felmerül, nyugodtan írjatok nekünk Facebookon, e-mailen vagy akár hívjatok fel!
+                <br>
+                <br>
+                Gombuszok és a szervezők
+            </p>
+        </div>
+    </div>
+    <div class="wrapper" id="Keptar">
+        <div class="title">
+            Képtár
+        </div>
+        <div class="elfsight-app-3f6fad27-afea-4e8a-84a9-25ce611ab693" data-elfsight-app-lazy style="margin-top: 20px;"></div>
+    </div>
+    <div class="wrapper" id="Hazirend">
+        <div class="title">
+            Házirend
+        </div>
+    </div>
+    <div class="wrapper" id="Kapcsolat">
+        <div class="title">
+            Kapcsolat
+        </div>
+        <div class="contacts">
+            <a href="https://www.facebook.com/events/273879812163552?ref=newsfeed" target="_blank">
+                <img id="facebook-logo" src="facebook.png" alt="Facebook esemény" width="100px">
+            </a>
+            <div class="contact-info" style="display: block;">
+                <a style="padding-left: 5%;" href="tel:+36301975338">+36 30 197 5338</a>
+                <a style="padding-left: 5%;" href="mailto:vilagombafeszt@gmail.com">vilagombafeszt@gmail.com</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(window).scroll(function() {
+            $('.centered-title').each(function(){
+                var top_of_element = $(this).offset().top;
+                var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+                var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+                var top_of_screen = $(window).scrollTop();
+
+                if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+                    // the element is visible, add the animation class
+                    $(this).addClass('expandIn');
+                } else {
+                    // the element is not visible, remove the animation class
+                    $(this).removeClass('expandIn');
+                }
+            });
+        });
+    </script>
+    <script>
+        $(window).scroll(function() {
+            $('#facebook-logo').each(function(){
+                var top_of_element = $(this).offset().top;
+                var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+                var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+                var top_of_screen = $(window).scrollTop();
+
+                if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+                    // the element is visible, add the animation class
+                    $(this).addClass('spinIn');
+                } else {
+                    // the element is not visible, remove the animation class
+                    $(this).removeClass('spinIn');
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.menu a').on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
