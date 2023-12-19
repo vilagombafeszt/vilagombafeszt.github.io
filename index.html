@@ -345,6 +345,7 @@
 
             .menu a {
                 display: none;
+                padding: 1%;
             }
 
             .menu-btn {
@@ -374,7 +375,7 @@
             }
 
             .centered-title {
-                padding-top: 250px;
+                padding-top: 260px;
                 font-weight: lighter;
             }
 
@@ -414,7 +415,7 @@
             }
 
             .contact-info a {
-                font-size: 30px;
+                font-size: 20px;
             }
 
             .piros-gomba {
@@ -438,6 +439,33 @@
                 background-size: 600px cover;
                 background-repeat: no-repeat;
                 background-position: center center;
+            }
+
+            #facebook-logo {
+                height: 50px;
+                width: auto;
+            }
+        }
+
+        @media only screen and (max-height: 780px) {
+            #Napirend {
+                height: 120vh;
+            }
+
+            #Jegyeket-Berleteket {
+                height: 120vh;
+            }
+
+            #Benevezes {
+                height: 120vh;
+            }
+
+            #Helyszin {
+                height: 120vh;
+            }
+
+            #Ez-ugy-volt {
+                height: 120vh;
             }
         }
 
@@ -535,8 +563,7 @@
             Ez úgy volt...
         </div>
         <div class="szoveg">
-            <p>
-                <br>
+            <p style="padding-top: 1%;">
                 Hol volt, hol nem volt, volt egyszer egy hetedhét országra szóló mulatság a szépséges Zurugurubában. Ezen az alkalmon egy kupac gombának eszébe ötlött, hogy szívesen kinőnék magukat egy picit nagyobb jellegű eseménnyé. Következett az agyvihar és hirtelen azon kapták magukat, hogy összeállt a fejükben egy fesztivál. A gombuszok felosztották maguk között a feladatokat, és munkához is láttak, nyélbe ütni a dolgot.
                 <br>
                 Az érdeklődési kör kibontakoztatása, ismerkedés a jövőben felmerülő élethelyzetekkel, hagyomány megélése, környezettudatosság és fenntartható életmód értékeit szem előtt tartva szeretnék megvalósítani a fesztivált.
@@ -628,18 +655,29 @@
     <script>
         function toggleMenu() {
             var menuLinks = document.querySelectorAll('.menu a');
-            menuLinks.forEach(link => link.style.display === 'none' ? link.style.display = 'block' : link.style.display = 'none');
+            menuLinks.forEach(link => {
+                link.style.display = (link.style.display === 'none' || link.style.display === '') ? 'block' : 'none';
+            });
         }
     
         // Close menu when a menu item is clicked
         document.querySelectorAll('.menu a').forEach(item => {
             item.addEventListener('click', () => {
-                var menuBtn = document.querySelector('.menu-btn');
+                var menuBtn = document.querySelector('.menu-btn,');
                 if (window.innerWidth <= 600) {
+                    toggleMenu();
                     menuBtn.click();
                 }
             });
         });
-    </script>
+        document.querySelector('.menu').addEventListener('click', function (event) {
+            if (event.target.tagName === 'A') {
+                toggleMenu();
+                event.preventDefault(); // Prevent default link behavior
+                var hash = event.target.hash;
+                document.querySelector(hash).scrollIntoView({ behavior: 'smooth' });
+            }
+        }); 
+    </script>  
 </body>
 </html>
