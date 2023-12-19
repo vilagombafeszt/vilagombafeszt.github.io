@@ -331,9 +331,11 @@
                 display: none;
             }
 
-            body {
+            html, body {
                 font-size: 16px; /* Set a base font size for better scalability */
                 width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
             }
 
             .menu {
@@ -373,15 +375,22 @@
 
             .centered-title {
                 padding-top: 250px;
+                font-weight: lighter;
             }
 
             .small-title {
                 font-size: 20px;
             }
 
+            .vertical-title {
+                font-size: 35px;
+                margin-left: -210px;
+            }
+
             .square {
                 width: 70%;
-                margin: 10px auto;
+                height: 300px;
+                margin: 20px auto;
             }
 
             .szoveg {
@@ -397,14 +406,24 @@
 
             .contacts {
                 margin-top: 50px;
+                display: block;
             }
 
             .contact-info {
                 width: 100%;
             }
 
+            .contact-info a {
+                font-size: 30px;
+            }
+
             .piros-gomba {
                 height: 40px;
+                width: auto;
+            }
+
+            .piros-gomba img {
+                height: 260%;
                 width: auto;
             }
 
