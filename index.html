@@ -495,7 +495,7 @@
             }
         }
 
-        @media only screen and (max-height: 850px) and (max-width: 1280px) {
+        @media only screen and (max-height: 850px) and (min-width: 1000px) and  (max-width: 1280px) {
             #Ez-ugy-volt {
                 height: 110vh;
             }
@@ -504,9 +504,37 @@
                 height: 110vh;
             }
 
+            #Benvezes {
+                height: 110vh;
+            }
+
+            .piros-gomba {
+                height: 60px;
+                width: auto;
+            }
+
+            .form-container {
+                margin-top: 40px;
+                margin-bottom: 20px;
+            }
+
             .menu a {
                 font-size: 20px;
                 margin: 0 10px;
+            }
+
+            .centered-title {
+                padding-top: 340px;
+            }
+
+            .square {
+                width: 25%;
+                height: 450px;
+            }
+
+            #facebook-logo {
+                height: 80px;
+                width: auto;
             }
         }
 
@@ -704,21 +732,25 @@
         // Close menu when a menu item is clicked
         document.querySelectorAll('.menu a').forEach(item => {
             item.addEventListener('click', () => {
-                var menuBtn = document.querySelector('.menu-btn,');
+                var menuBtn = document.querySelector('.menu-btn');
                 if (window.innerWidth <= 600) {
                     toggleMenu();
                     menuBtn.click();
                 }
             });
         });
+    
+        // Toggle menu and scroll to section on menu title click
         document.querySelector('.menu').addEventListener('click', function (event) {
             if (event.target.tagName === 'A') {
-                toggleMenu();
-                event.preventDefault(); // Prevent default link behavior
                 var hash = event.target.hash;
-                document.querySelector(hash).scrollIntoView({ behavior: 'smooth' });
+                if (window.innerWidth <= 600) {
+                    toggleMenu();
+                    event.preventDefault(); // Prevent default link behavior
+                    document.querySelector(hash).scrollIntoView({ behavior: 'smooth' });
+                }
             }
-        }); 
-    </script>  
+        });
+    </script>     
 </body>
 </html>
