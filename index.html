@@ -36,6 +36,8 @@
     <title>GombásFeszt</title>
     <link rel="icon" href="gombi_logo.png" type="image/png">
 
+    <link href='https://fonts.googleapis.com/css?family=Aboreto' rel='stylesheet'>
+
 
     <link href='https://fonts.googleapis.com/css?family=Alumni Sans' rel='stylesheet'>
 
@@ -162,12 +164,12 @@
         .square {
             width: 350px;
             height: 500px;
-            background-color: #22133A;
+            background-color: #102135;
             margin: 100px 150px 100px 150px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #879E6B;
+            color: #aa0000;
             border-radius: 10px;
         }
 
@@ -206,7 +208,7 @@
             display: flex;
             justify-content: center;
             height: 100%;
-            font-family: 'Poiret One', cursive;
+            font-family: 'Alumni Sans';
             font-size: 35px;
             margin-left: 20%;
             margin-right: 20%;
@@ -226,75 +228,88 @@
             width: 23%;
         }
 
+        .neon {
+            color: #fff;
+            text-shadow:
+                0 0 5px #e27d6b,
+                0 0 10px #e27d6b,
+                0 0 20px #e27d6b,
+                0 0 40px #e27d6b,
+                0 0 80px #e27d6b,
+                0 0 90px #e27d6b,
+                0 0 100px #e27d6b,
+                0 0 150px #e27d6b;
+        }
+
         #Otthon {
             background-image: url('IMG-5923_edited.jpg');
             background-size: cover;
-            color: #e27d6b;
+            color: #e1d7b5;
             font-weight: bold;
             height: 100vh;
         }
 
         #Otthon ::selection {
-            background-color: #e27d6b;
+            background-color: #e1d7b5;
             color: black;
         }
 
         #Napirend {
             height: 100vh;
-            background-color: #401D1D;
-            color: #CF8805;
+            background-color: #2d0e0e;
+            color: #ac9d9d;
         }
 
         #Napirend ::selection {
-            background-color: #CF8805;
-            color: #401D1D;
+            background-color: #ac9d9d;
+            color: #2d0e0e;
         }
 
         #Jegyeket-Berleteket {
             height: 100vh;
-            background-color: #6B889E;
-            color: #22133A;
+            background-color: #ac9d9d;
+            color: #102135;
             text-align: center;
         }
 
         #Jegyeket-Berleteket ::selection {
-            background-color: #22133A;
-            color: #6B889E;
+            background-color: #102135;
+            color: #ac9d9d;
         }
 
         #Benevezes {
             height: 100vh;
-            background-color: #879E6B;
-            color: #22133A;
+            background-color: #0e2618;
+            color: #e1d7b5;
             text-align: center;
         }
 
         #Benevezes ::selection {
-            background-color: #22133A;
-            color: #879E6B;
+            background-color: #e1d7b5;
+            color: #0e2618;
         }
 
         #Helyszin {
             height: 100vh;
-            background-color: #22133A;
-            color: #FF0288;
+            background-color: #aa0000;
+            color: #102135;
         }
 
         #Helyszin ::selection {
-            background-color: #FF0288;
-            color: #22133A;
+            background-color: #102135;
+            color: #aa0000;
         }
 
         #Ez-ugy-volt {
             height: 100vh;
-            background-color: #E68813;
-            color: #22133A;
+            background-color: #ac9d9d;
+            color: #102135;
             text-align: center;
         }
 
         #Ez-ugy-volt ::selection {
-            background-color: #22133A;
-            color: #E68813;
+            background-color: #102135;
+            color: #ac9d9d;
         }
 
         #Keptar {
@@ -403,12 +418,14 @@
             .szoveg {
                 margin-left: 5%;
                 margin-right: 5%;
-                font-size: 20px;
+                font-size: 22px;
             }
 
             .map-container, .form-container {
                 margin-top: 20px;
                 height: 100px;
+                width: 80%;
+                padding-left: 10%;
             }
 
             .contacts {
@@ -445,6 +462,14 @@
                 background-size: 600px cover;
                 background-repeat: no-repeat;
                 background-position: center center;
+            }
+
+            #Napirend {
+                height: 110vh;
+            }
+
+            #Jegyeket-Berleteket {
+                height: 110vh;
             }
 
             #facebook-logo {
@@ -550,7 +575,7 @@
             }
 
             #Keptar {
-                height: 150vh;
+                height: 160vh;
             }
 
             #Benevezes {
@@ -593,6 +618,10 @@
             #Helyszin {
                 height: 150vh;
             }
+
+            .szoveg {
+                font-size: 38px;
+            }
         }
 
     </style>
@@ -602,10 +631,10 @@
 
         <!-- Menu button for small screens -->
         <div class="menu-btn" onclick="toggleMenu()">
-            <img src="gombi_logo.png" alt="Gombi logo" style="padding-top: 10px;">
+            <img src="cimlogo_kek.png" alt="Gombi logo" style="padding-top: 10px; height: 50px;">
         </div>
 
-        <a href="#Otthon"><img class="menu-img" src="gombi_logo.png" alt="Gombi logo"></a>
+        <a href="#Otthon"><img class="menu-img" src="cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
         <a href="#Otthon">Otthon</a>
         <a href="#Napirend">Napirend</a>
         <a href="#Jegyeket-Berleteket">Jegyeket, Bérleteket!</a>
@@ -618,7 +647,7 @@
     </div>
     <div class="wrapper" id="Otthon">
         <div class="title centered-title expandIn">
-            GombásFeszt
+            viláGomba
         </div>
     </div>
     <div class="wrapper" id="Napirend">
@@ -808,6 +837,48 @@
                 }
             }
         });
-    </script>     
+    </script>
+    <script>
+        $(window).scroll(function () {
+            var scrollPosition = $(window).scrollTop();
+    
+            // Define the offsets for each section
+            var otthonOffset = $('#Otthon').offset().top;
+            var napirendOffset = $('#Napirend').offset().top;
+            var jegyekOffset = $('#Jegyeket-Berleteket').offset().top;
+            var benevezesOffset = $('#Benevezes').offset().top;
+            var helyszinOffset = $('#Helyszin').offset().top;
+            var ezugyvoltOffset = $('#Ez-ugy-volt').offset().top;
+            var keptarOffset = $('#Keptar').offset().top;
+            var hazirendOffset = $('#Hazirend').offset().top;
+            var kapcsolatOffset = $('#Kapcsolat').offset().top;
+    
+            // Check the scroll position and update menu image accordingly
+            if (scrollPosition < napirendOffset) {
+                updateMenuImage('cimlogo_vaj.png');
+            } else if (scrollPosition < jegyekOffset) {
+                updateMenuImage('cimlogo_vaj.png');
+            } else if (scrollPosition < benevezesOffset) {
+                updateMenuImage('cimlogo_kek.png');
+            } else if (scrollPosition < helyszinOffset) {
+                updateMenuImage('cimlogo_vaj.png');
+            } else if (scrollPosition < ezugyvoltOffset) {
+                updateMenuImage('cimlogo_kek.png');
+            } else if (scrollPosition < keptarOffset) {
+                updateMenuImage('cimlogo_kek.png');
+            } else if (scrollPosition < hazirendOffset) {
+                updateMenuImage('cimlogo_vaj.png');
+            } else if (scrollPosition < kapcsolatOffset) {
+                updateMenuImage('cimlogo_kek.png');
+            } else {
+                updateMenuImage('cimlogo_kek.png');
+            }
+        });
+    
+        // Function to update the menu image
+        function updateMenuImage(imageSrc) {
+            $('.menu-btn img').attr('src', imageSrc);
+        }
+    </script>
 </body>
 </html>
