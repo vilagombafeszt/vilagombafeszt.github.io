@@ -259,13 +259,13 @@
             color: black;
         }
 
-        #Napirend {
+        #Eloadok {
             height: 100vh;
             background-color: #2d0e0e;
             color: #ac9d9d;
         }
 
-        #Napirend ::selection {
+        #Eloadok ::selection {
             background-color: #ac9d9d;
             color: #2d0e0e;
         }
@@ -352,12 +352,15 @@
             z-index: 1000;
         }
         
-        .napirendek {
+        .eloadasok {
             font-family: 'Alumni Sans';
             font-weight: 100;
             padding-top: 30px;
-            line-height: 2;
-            font-size: 35px;
+            padding-left: 150px;
+            padding-right: 150px;
+            font-size: 45px;
+            text-align: center;
+            line-height: 1.5;
         }
 
         @media only screen and (max-width: 600px) {
@@ -477,8 +480,7 @@
                 margin-right: 0px;
             }
 
-            .napirendek {
-                line-height: 1.5;
+            .eloadasok {
                 padding-top: 10px;
                 padding-bottom: 0px;
                 font-size: 20px;
@@ -491,7 +493,7 @@
                 background-position: center center;
             }
 
-            #Napirend {
+            #Eloadok {
                 height: 110vh;
             }
 
@@ -511,7 +513,7 @@
         }
 
         @media only screen and (max-height: 670px) and (min-width: 350px) {
-            #Napirend {
+            #Eloadok {
                 height: 120vh;
             }
 
@@ -675,7 +677,7 @@
 
         <a href="#Otthon"><img class="menu-img" src="cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
         <a href="#Otthon">Otthon</a>
-        <a href="#Napirend">Napirend</a>
+        <a href="#Eloadok">Előadók</a>
         <a href="#Jegyeket-Berleteket">Jegyeket, Bérleteket!</a>
         <a href="#Benevezes">Benevezés</a>
         <a href="#Helyszin">Helyszín</a>
@@ -688,41 +690,13 @@
             viláGomba
         </div>
     </div>
-    <div class="wrapper" id="Napirend">
+    <div class="wrapper" id="Eloadok">
         <div class="title">
-            Napirend
+            Előadók
         </div>
-        <div class="day-titles">
-            <div class="title small-title">
-                Péntek
-                <div class="napirendek">
-                    Alberti-Hamlet Nóra előadása egy elképesztő túráról <br>
-                    Efi és Róza darabja <br>
-                    Őri-Kiss Trió <br>
-                    Semmi Zenekar <br>
-                    Dj-k <br>
-                </div>
-            </div>
-            <div class="title small-title">
-                Szombat
-                <div class="napirendek">
-                    Takács Martin előadása a fenntartható építkezésről <br>
-                    Juhász Zoltán néptáncot tanít <br>
-                    HéBa Zenekar <br>
-                    Kóc <br>
-                    Táncház <br>
-                    Dj-k <br>
-                </div>
-            </div>
-            <div class="title small-title">
-                Vasárnap
-                <div class="napirendek">
-                    Fenyvesi Gábor előadása az absztrakcióról <br>
-                    Blabla Zseraldin és csapata színdarab <br>
-                    Ratter Roland Trió <br>
-                    Sildervald <br>
-                    Kedvenc számaink mixelve <br>
-                </div>
+            <div class="eloadasok">
+                Efi és Róza, Őri-Kiss Botond, Semmi Zenekar, Takács Martin előadása a fenntartható építkezésről, Juhász Zoltán néptáncot tanít, HéBa Zenekar, Kóc Zenekar, Táncház, Fenyvesi Gábor előadása az absztrakcióról, Blabla Zseraldin és csapata színdarab, Ratter Roland Trió, Sildervald <br>
+                És még sokan mások...
             </div>
         </div>
     </div>
@@ -899,7 +873,7 @@
     
             // Define the offsets for each section
             var otthonOffset = $('#Otthon').offset().top;
-            var napirendOffset = $('#Napirend').offset().top;
+            var eloadokOffset = $('#Eloadok').offset().top;
             var jegyekOffset = $('#Jegyeket-Berleteket').offset().top;
             var benevezesOffset = $('#Benevezes').offset().top;
             var helyszinOffset = $('#Helyszin').offset().top;
@@ -908,7 +882,7 @@
             var kapcsolatOffset = $('#Kapcsolat').offset().top;
     
             // Check the scroll position and update menu image accordingly
-            if (scrollPosition < napirendOffset) {
+            if (scrollPosition < eloadokOffset) {
                 updateMenuImage('cimlogo_vaj.png');
             } else if (scrollPosition < jegyekOffset) {
                 updateMenuImage('cimlogo_vaj.png');
