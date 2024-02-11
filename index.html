@@ -319,31 +319,33 @@
 
         #Keptar {
             height: 100vh;
-            background-color: #331800;
-            color: #E68813;
+            background-color: #2d0e0e;
+            color: #ac9d9d;
         }
 
         #Keptar ::selection {
-            background-color: #E68813;
-            color: #331800;
-        }
-
-        #Hazirend {
-            height: 100vh;
-            background-color: white;
-            color: black;
+            background-color: #ac9d9d;
+            color: #2d0e0e;
         }
 
         #Kapcsolat {
             height: 50vh;
-            background-color: #CC5500;
-            color: #331800;
-            text-align: center;
+            background-color: #aa0000;
+            color: #102135;
+            text-align: left;
+        }
+
+        a:link {
+            color: #102135;
+        }
+        
+        a:hover {
+            color: #ac9d9d;
         }
 
         #Kapcsolat ::selection {
-            background-color: #331800;
-            color: #CC5500;
+            background-color: #102135;
+            color: #aa0000;
         }
 
         #facebook-logo {
@@ -795,11 +797,6 @@
         </div>
         <div class="elfsight-app-3f6fad27-afea-4e8a-84a9-25ce611ab693" data-elfsight-app-lazy style="margin-top: 20px;"></div>
     </div>
-    <div class="wrapper" id="Hazirend">
-        <div class="title">
-            Házirend
-        </div>
-    </div>
     <div class="wrapper" id="Kapcsolat">
         <div class="title">
             Kapcsolat
@@ -909,7 +906,6 @@
             var helyszinOffset = $('#Helyszin').offset().top;
             var ezugyvoltOffset = $('#Ez-ugy-volt').offset().top;
             var keptarOffset = $('#Keptar').offset().top;
-            var hazirendOffset = $('#Hazirend').offset().top;
             var kapcsolatOffset = $('#Kapcsolat').offset().top;
     
             // Check the scroll position and update menu image accordingly
@@ -925,8 +921,6 @@
                 updateMenuImage('cimlogo_kek.png');
             } else if (scrollPosition < keptarOffset) {
                 updateMenuImage('cimlogo_kek.png');
-            } else if (scrollPosition < hazirendOffset) {
-                updateMenuImage('cimlogo_vaj.png');
             } else if (scrollPosition < kapcsolatOffset) {
                 updateMenuImage('cimlogo_kek.png');
             } else {
