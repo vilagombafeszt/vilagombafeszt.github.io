@@ -263,76 +263,76 @@
             color: black;
         }
 
-        #Eloadok {
+        #eloadok {
             height: 100vh;
             background-color: #2d0e0e;
             color: #ac9d9d;
         }
 
-        #Eloadok ::selection {
+        #eloadok ::selection {
             background-color: #ac9d9d;
             color: #2d0e0e;
         }
 
-        #Jegyeket-Berleteket {
+        #jegyeket-berleteket {
             height: 100vh;
             background-color: #ac9d9d;
             color: #102135;
             text-align: center;
         }
 
-        #Jegyeket-Berleteket ::selection {
+        #jegyeket-berleteket ::selection {
             background-color: #102135;
             color: #ac9d9d;
         }
 
-        #Benevezes {
+        #benevezes {
             height: 100vh;
             background-color: #0e2618;
             color: #e1d7b5;
             text-align: center;
         }
 
-        #Benevezes ::selection {
+        #benevezes ::selection {
             background-color: #e1d7b5;
             color: #0e2618;
         }
 
-        #Helyszin {
+        #helyszin {
             height: 100vh;
             background-color: #aa0000;
             color: #102135;
         }
 
-        #Helyszin ::selection {
+        #helyszin ::selection {
             background-color: #102135;
             color: #aa0000;
         }
 
-        #Ez-ugy-volt {
+        #ez-ugy-volt {
             height: 100vh;
             background-color: #ac9d9d;
             color: #102135;
             text-align: center;
         }
 
-        #Ez-ugy-volt ::selection {
+        #ez-ugy-volt ::selection {
             background-color: #102135;
             color: #ac9d9d;
         }
 
-        #Keptar {
+        #keptar {
             height: 100vh;
             background-color: #2d0e0e;
             color: #ac9d9d;
         }
 
-        #Keptar ::selection {
+        #keptar ::selection {
             background-color: #ac9d9d;
             color: #2d0e0e;
         }
 
-        #Kapcsolat {
+        #kapcsolat {
             height: 50vh;
             background-color: #aa0000;
             color: #102135;
@@ -511,11 +511,11 @@
                 background-position: center center;
             }
 
-            #Eloadok {
+            #eloadok {
                 height: 110vh;
             }
 
-            #Jegyeket-Berleteket {
+            #jegyeket-berleteket {
                 height: 110vh;
             }
 
@@ -538,23 +538,23 @@
         }
 
         @media only screen and (max-height: 670px) and (min-width: 350px) {
-            #Eloadok {
+            #eloadok {
                 height: 120vh;
             }
 
-            #Jegyeket-Berleteket {
+            #jegyeket-berleteket {
                 height: 120vh;
             }
 
-            #Benevezes {
+            #benevezes {
                 height: 120vh;
             }
 
-            #Helyszin {
+            #helyszin {
                 height: 120vh;
             }
 
-            #Ez-ugy-volt {
+            #ez-ugy-volt {
                 height: 120vh;
             }
         }
@@ -585,15 +585,15 @@
         }
 
         @media only screen and (min-height: 700px) and (max-height: 850px) and (min-width: 1000px) and  (max-width: 1280px) {
-            #Ez-ugy-volt {
+            #ez-ugy-volt {
                 height: 110vh;
             }
 
-            #Keptar {
+            #keptar {
                 height: 110vh;
             }
 
-            #Benevezes {
+            #benevezes {
                 height: 110vh;
             }
 
@@ -656,15 +656,15 @@
         }
 
         @media only screen and (max-height: 700px) and (min-width: 1000px) and  (max-width: 1280px) {
-            #Ez-ugy-volt {
+            #ez-ugy-volt {
                 height: 150vh;
             }
 
-            #Keptar {
+            #keptar {
                 height: 160vh;
             }
 
-            #Benevezes {
+            #benevezes {
                 height: 150vh;
             }
 
@@ -697,11 +697,11 @@
                 width: auto;
             }
 
-            #Kapcsolat {
+            #kapcsolat {
                 height: 70vh;
             }
 
-            #Helyszin {
+            #helyszin {
                 height: 150vh;
             }
 
@@ -729,18 +729,19 @@
         }
 
         @media only screen and (max-height: 560px) {
-            #Előadók {
+            #eloadok {
                 height: 120vh;
             }
 
-            #Jegyeket-Berleteket {
+            #jegyeket-berleteket {
                 height: 130vh;
             }
 
-            #Ez-ugy-volt {
+            #ez-ugy-volt {
                 height: 130vh;
             }
         }
+
     </style>
 </head>
 <body>
@@ -753,7 +754,7 @@
         <a href="#Otthon">Otthon</a>
         <a href="#Eloadok">Előadók</a>
         <a href="#Jegyeket-Berleteket">Jegyeket, Bérleteket!</a>
-        <a href="#Benevezes">Benevezés</a>
+        <a href="#Benevezes">Benevezés</a>  
         <a href="#Helyszin">Helyszín</a>
         <a href="#Ez-ugy-volt">Ez úgy volt...</a>
         <a href="#Keptar">Képtár</a>
@@ -764,7 +765,8 @@
             viláGomba
         </div>
     </div>
-    <div class="wrapper" id="Eloadok">
+    <a id="Eloadok" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="eloadok">
         <div class="title">
             Előadók
         </div>
@@ -774,7 +776,8 @@
             </div>
         </div>
     </div>
-    <div class="wrapper" id="Jegyeket-Berleteket">
+    <a id="Jegyeket-Berleteket" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="jegyeket-berleteket">
         <div class="title">
             Jegyeket, Bérleteket!
         </div>
@@ -788,7 +791,8 @@
             <a href="#Benevezes"><img src="berlet.png" alt="Bérlet" style="width: 100%; height: auto;"></a>
         </div>
     </div>
-    <div class="wrapper" id="Benevezes" >
+    <a id="Benevezes" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="benevezes" >
         <div class="title">
             Benevezés
         </div>
@@ -807,7 +811,8 @@
             </iframe>
         </div>
     </div>
-    <div class="wrapper" id="Helyszin">
+    <a id="Helyszin" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="helyszin">
         <div class="title">
             Helyszín
         </div>
@@ -824,7 +829,8 @@
             </iframe>
         </div>
     </div>
-    <div class="wrapper" id="Ez-ugy-volt">
+    <a id="Ez-ugy-volt" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="ez-ugy-volt">
         <div class="title">
             Ez úgy volt...
         </div>
@@ -842,13 +848,15 @@
             </p>
         </div>
     </div>
-    <div class="wrapper" id="Keptar">
+    <a id="Keptar" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="keptar">
         <div class="title">
             Képtár
         </div>
         <div class="elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421" data-elfsight-app-lazy style="margin-top: 20px;"></div>
     </div>
-    <div class="wrapper" id="Kapcsolat">
+    <a id="Kapcsolat" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="kapcsolat">
         <div class="title">
             Kapcsolat
         </div>
@@ -966,13 +974,13 @@
     
             // Define the offsets for each section
             var otthonOffset = $('#Otthon').offset().top;
-            var eloadokOffset = $('#Eloadok').offset().top;
-            var jegyekOffset = $('#Jegyeket-Berleteket').offset().top;
-            var benevezesOffset = $('#Benevezes').offset().top;
-            var helyszinOffset = $('#Helyszin').offset().top;
-            var ezugyvoltOffset = $('#Ez-ugy-volt').offset().top;
-            var keptarOffset = $('#Keptar').offset().top;
-            var kapcsolatOffset = $('#Kapcsolat').offset().top;
+            var eloadokOffset = $('#eloadok').offset().top;
+            var jegyekOffset = $('#jegyeket-berleteket').offset().top;
+            var benevezesOffset = $('#benevezes').offset().top;
+            var helyszinOffset = $('#helyszin').offset().top;
+            var ezugyvoltOffset = $('#ez-ugy-volt').offset().top;
+            var keptarOffset = $('#keptar').offset().top;
+            var kapcsolatOffset = $('#kapcsolat').offset().top;
     
             // Check the scroll position and update menu image accordingly
             if (scrollPosition < eloadokOffset) {
