@@ -751,14 +751,14 @@
             <img src="cimlogo_vaj.png" alt="Gombi logo" style="padding-top: 10px; height: 50px;">
         </div>
         <a href="#Otthon"><img class="menu-img" src="cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
-        <a href="#Otthon">Otthon</a>
-        <a href="#Eloadok">Előadók</a>
-        <a href="#Jegyeket-Berleteket">Jegyeket, Bérleteket!</a>
-        <a href="#Benevezes">Benevezés</a>  
-        <a href="#Helyszin">Helyszín</a>
-        <a href="#Ez-ugy-volt">Ez úgy volt...</a>
-        <a href="#Keptar">Képtár</a>
-        <a href="#Kapcsolat">Kapcsolat</a>
+        <a href="#Otthon" id="home">Otthon</a>
+        <a href="#Eloadok" id="artists">Előadók</a>
+        <a href="#Jegyeket-berleteket" id="tickets">Jegyeket, Bérleteket!</a>
+        <a href="#Benevezes" id="application">Benevezés</a>  
+        <a href="#Helyszin" id="place">Helyszín</a>
+        <a href="#Ez-ugy-volt" id="story">Ez úgy volt...</a>
+        <a href="#Keptar" id="gallery">Képtár</a>
+        <a href="#Kapcsolat" id="coninfo">Kapcsolat</a>
     </div>
     <div class="wrapper" id="Otthon">
         <div class="title centered-title expandIn">
@@ -776,7 +776,7 @@
             </div>
         </div>
     </div>
-    <a id="Jegyeket-Berleteket" style="padding-top: 50px;"></a>
+    <a id="Jegyeket-berleteket" style="padding-top: 50px;"></a>
     <div class="wrapper" id="jegyeket-berleteket">
         <div class="title">
             Jegyeket, Bérleteket!
@@ -870,6 +870,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(window).resize(function() {
+            if ($(window).width() >= 600) {
+                $('#artists').attr('href', '#Eloadok');
+                $('#tickets').attr('href', '#Jegyeket-berleteket');
+                $('#application').attr('href', '#Benevezes');
+                $('#place').attr('href', '#Helyszin');
+                $('#story').attr('href', '#Ez-ugy-volt');
+                $('#gallery').attr('href', '#Keptar');
+                $('#coninfo').attr('href', '#Kapcsolat');
+            } else {
+                $('#artists').attr('href', '#eloadok');
+                $('#tickets').attr('href', '#jegyeket-berleteket');
+                $('#application').attr('href', '#benevezes');
+                $('#place').attr('href', '#helyszin');
+                $('#story').attr('href', '#ez-ugy-volt');
+                $('#gallery').attr('href', '#keptar');
+                $('#coninfo').attr('href', '#kapcsolat');
+            }
+        });
+    </script>
 
     <script>
         $(window).scroll(function() {
