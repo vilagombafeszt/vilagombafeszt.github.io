@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sass/style.css">
+    <script type="module" src="scripts/login.js" defer></script>
+    <title>GombApp Menu</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="app-title">GombApp</h1>
+        </div>
+        <div class="message-content">
+            <button class="login-button" onclick="toggleLoginForm()">Bejelentkezés</button>
+            <span class="logged-in-message" id="logged-in-message" style="display: none;">Be vagy jelentkezve!</span>
+        </div>
+    </header>
+    <main>
+        <div id="login-form" class="login-form" style="display: none;">
+            <form id="nameForm" class="name-form">
+                <input class="email-field" style="height: 30px;" type="text" id="email" placeholder="email" name="email" required>
+                <input class="pw-field" style="height: 30px;" type="password" id="password" placeholder="jelszó" name="password" required>
+                <button id="submit-button" class="submit-button" type="submit">Belépés</button>
+            </form>
+        </div>
+        <div class="menu">
+            <button id="boss" class="button">
+                <img src="images/userprofilepic.png" alt="Főnök" class="profile-pic"/>
+                Főnök
+            </button>
+            <button id="bartender" class="button">
+                <img src="images/userprofilepic.png" alt="Pultos" class="profile-pic"/>
+                Pultos
+            </button>
+            <button id="ticket-seller" class="button">
+                <img src="images/userprofilepic.png" alt="Jegyárus" class="profile-pic"/>
+                Jegyárus
+            </button>
+            <button id="food-server" class="button">
+                <img src="images/userprofilepic.png" alt="Kajaárus" class="profile-pic"/>
+                Kajaárus
+            </button>
+        </div>
+    </main>
+    <script src="scripts/indexscripts.js"></script>
+</body>
+</html>

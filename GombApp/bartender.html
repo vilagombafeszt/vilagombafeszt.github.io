@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script type="module" src="scripts/login.js" defer></script>
+    <link rel="stylesheet" href="sass/style.css">
+    <title>Pultos</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="history.back(); location.reload()">Vissza</button>
+            <h1 class="bartender-title" id="bartender-title">Pultos meló</h1>
+        </div>
+    </header>
+    <main style="margin-top: -150px;">
+        <div class="time-container" id="time-container" style="display: none;">
+            <form id="timeForm" class="time-form">
+                <label for="time">Kezdés ideje:</label>
+                <input class="time-field" type="time" id="start-time" required></input>
+                <label for="time">Befejezés ideje:</label>
+                <input class="time-field" type="time" id="end-time" required></input>
+                <button id="submit-time-button" class="submit-time-button" type="submit">Tovább</button>
+            </form>
+        </div>
+        <div class="order-container" id="order-container">
+            <form id="orderForm" class="order-form">
+                <label for="order-item">Ital:</label>
+                <select name="drinks" id="drinks" required>
+                    <option value="Sör">Sör</option>
+                    <option value="Bor">Bor</option>
+                    <option value="Shot">Shot</option>
+                    <option value="Koktél">Koktél</option>
+                </select>
+                <button id="submit-order-button" class="submit-order-button" type="submit">Hozzáadás</button>
+            </form>
+            <div class="order-list">
+                <h2>Rendelés</h2>
+                <div class="order-list-box" id="order-list-box">
+                    <ul id="order-list"></ul>
+                </div>
+                <button id="order-save">Mentés</button>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="scripts/bartenderscripts.js"></script>
+</body>
+</html>
