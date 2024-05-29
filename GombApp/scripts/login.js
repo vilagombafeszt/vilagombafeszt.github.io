@@ -56,7 +56,6 @@ onAuthStateChanged(auth, (user) => {
       loginButton.style.display = 'block';
       loggedInMessage.style.display = 'none';
       headerContent.style.flexDirection = 'row';
-      appTitle.style.marginLeft = '50px';
       setMenuMarginTo20();
       const bartenderButton = document.getElementById('bartender');
       bartenderButton.addEventListener('click', function() {
