@@ -1,0 +1,3 @@
+[submodule "GombApp"]
+	path = GombApp
+	url = https://github.com/vilagombafeszt/GombApp
