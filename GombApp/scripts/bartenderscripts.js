@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-import { getAuth} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -24,43 +24,18 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-document.getElementById('timeForm').addEventListener('submit', submitForm);
-document.getElementById('orderForm').addEventListener('submit', submitOrder);
 document.getElementById('order-save').addEventListener('click', saveOrder);
-
-function submitForm(e) {
-    e.preventDefault();
-    var startTime = getInputVal('start-time');
-    var endTime = getInputVal('end-time');
-    var email = auth.currentUser.email;
-    const uid = auth.currentUser.uid; // TODO: use getToken() instead of uid + check if not null
-    set(ref(database, 'Pultosok/' + uid), {
-        email: email,
-        startTime: startTime,
-        endTime: endTime
-    }).then(() => {
-        alert('Sikeresen mentve!');
-        
-        // Hide the time container and show the order container
-        document.getElementById('time-container').style.display = 'none';
-        document.getElementById('order-container').style.display = 'block';
-    }).catch((error) => {
-        console.error("Error saving data:", error);
-        alert("Hiba történt az adatok mentése közben.");
-    });
-    document.getElementById('timeForm').reset();
-}
 
 const getInputVal = (id) => {
     return document.getElementById(id).value;
 }
 
-function submitOrder(e) {
-    e.preventDefault();
-    var drink = getInputVal('drinks');
-    addOrderItem(drink);
-    document.getElementById('orderForm').reset();
-}
+document.querySelectorAll('.drink-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const drink = button.getAttribute('data-drink');
+        addOrderItem(drink);
+    });
+});
 
 function addOrderItem(drink) {
     var orderList = document.getElementById('order-list');
@@ -69,20 +44,42 @@ function addOrderItem(drink) {
     orderList.appendChild(listItem);
 }
 
+
 function saveOrder(e) {
     e.preventDefault();
-    var orderList = document.getElementById('order-list');
-    var email = auth.currentUser.email;
-    const uid = auth.currentUser.uid; // TODO: use getToken() instead of uid + check if not null
-    set(ref(database, 'Rendelések/' + uid), {
-        email: email,
-        orderList: orderList.innerText
-    }).then(() => {
-        alert('Sikeresen mentve!');
-        
-    }).catch((error) => {
-        console.error("Error saving data:", error);
-        alert("Hiba történt az adatok mentése közben.");
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            var orderList = document.getElementById('order-list');
+            var newOrders = Array.from(orderList.children).map(item => item.textContent);
+            var email = user.email;
+            const uid = user.uid;
+            const userOrderRef = ref(database, 'Rendelések/' + uid);
+
+            get(userOrderRef).then((snapshot) => {
+                let existingOrders = [];
+                if (snapshot.exists()) {
+                    existingOrders = snapshot.val().orderList || [];
+                }
+
+                const updatedOrders = existingOrders.concat(newOrders);
+
+                set(userOrderRef, {
+                    email: email,
+                    orderList: updatedOrders
+                }).then(() => {
+                    alert('Sikeresen mentve!');
+                }).catch((error) => {
+                    console.error("Error saving data:", error);
+                    alert("Hiba történt az adatok mentése közben.");
+                });
+
+                orderList.innerHTML = '';
+            }).catch((error) => {
+                console.error("Error reading data:", error);
+                alert("Hiba történt az adatok olvasása közben.");
+            });
+        } else {
+            alert('Kérjük, jelentkezzen be a mentéshez.');
+        }
     });
-    orderList.innerHTML = '';
 }

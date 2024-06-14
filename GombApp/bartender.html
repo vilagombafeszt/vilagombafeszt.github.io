@@ -13,31 +13,70 @@
 <body>
     <header>
         <div class="header-content">
-            <button class="back-button" onclick="window.history.go(-1); location.reload()">Vissza</button>
+            <button class="back-button" onclick="window.history.back();">Vissza</button>
             <h1 class="bartender-title" id="bartender-title">Pultos meló</h1>
         </div>
     </header>
-    <main style="margin-top: -150px;">
-        <div class="time-container" id="time-container" style="display: none;">
-            <form id="timeForm" class="time-form">
-                <label for="time">Kezdés ideje:</label>
-                <input class="time-field" type="time" id="start-time" required></input>
-                <label for="time">Befejezés ideje:</label>
-                <input class="time-field" type="time" id="end-time" required></input>
-                <button id="submit-time-button" class="submit-time-button" type="submit">Tovább</button>
-            </form>
-        </div>
+    <main>
         <div class="order-container" id="order-container">
-            <form id="orderForm" class="order-form">
-                <label for="order-item">Ital:</label>
-                <select name="drinks" id="drinks" required>
-                    <option value="Sör">Sör</option>
-                    <option value="Bor">Bor</option>
-                    <option value="Shot">Shot</option>
-                    <option value="Koktél">Koktél</option>
-                </select>
-                <button id="submit-order-button" class="submit-order-button" type="submit">Hozzáadás</button>
-            </form>
+            <div class="menu">
+                <button class="drink-button" data-drink="Korsó Sör">
+                    <img src="images/korso-sor.png" alt="Korsó Sör" class="drink-pic"/>
+                    Korsó Sör
+                </button>
+                <button class="drink-button" data-drink="Pohár Sör">
+                    <img src="images/pohar-sor.png" alt="Pohár Sör" class="drink-pic"/>
+                    Pohár Sör
+                </button>
+                <button class="drink-button" data-drink="Nagyfröccs">
+                    <img src="images/nagyfroccs.png" alt="Nagyfröccs" class="drink-pic"/>
+                    Nagyfröccs
+                </button>
+                <button class="drink-button" data-drink="Kisfröccs">
+                    <img src="images/kisfroccs.png" alt="Kisfröccs" class="drink-pic"/>
+                    Kisfröccs
+                </button>
+                <button class="drink-button" data-drink="Hosszúlépés">
+                    <img src="images/hosszulepes.png" alt="Hosszúlépés" class="drink-pic"/>
+                    Hosszúlépés
+                </button>
+                <button class="drink-button" data-drink="Háziúr">
+                    <img src="images/haziur.png" alt="Háziúr" class="drink-pic"/>
+                    Háziúr
+                </button>
+                <button class="drink-button" data-drink="Sportfröccs">
+                    <img src="images/sportfroccs.png" alt="Sportfröccs" class="drink-pic"/>
+                    Sportfröccs
+                </button>
+                <button class="drink-button" data-drink="Szóda 3dl">
+                    <img src="images/kisszoda.png" alt="Szóda 3dl" class="drink-pic"/>
+                    Szóda 3dl
+                </button>
+                <button class="drink-button" data-drink="Szóda 5dl">
+                    <img src="images/nagyszoda.png" alt="Szóda 5dl" class="drink-pic"/>
+                    Szóda 5dl
+                </button>
+                <button class="drink-button" data-drink="Bor 3dl">
+                    <img src="images/kisbor.png" alt="Bor 3dl" class="drink-pic"/>
+                    Bor 3dl
+                </button>
+                <button class="drink-button" data-drink="Bor 5dl">
+                    <img src="images/nagybor.png" alt="Bor 5dl" class="drink-pic"/>
+                    Bor 5dl
+                </button>
+                <button class="drink-button" data-drink="Pálinka 3cl">
+                    <img src="images/palinka.png" alt="Pálinka 3cl" class="drink-pic"/>
+                    Pálinka 3cl
+                </button>
+                <button class="drink-button" data-drink="Koktél">
+                    <img src="images/koktel.png" alt="Koktél" class="drink-pic"/>
+                    Koktél
+                </button>
+                <button class="drink-button" data-drink="Jeges tea">
+                    <img src="images/jegestea.png" alt="Jeges tea" class="drink-pic"/>
+                    Jeges tea
+                </button>
+            </div>
             <div class="order-list">
                 <h2>Rendelés</h2>
                 <div class="order-list-box" id="order-list-box">
