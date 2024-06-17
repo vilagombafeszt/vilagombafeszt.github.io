@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sass/style.css">
+    <script type="module" src="scripts/login.js" defer></script>
+    <title>Ételárus</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="window.history.back();">Vissza</button>
+            <h1 class="bartender-title" id="bartender-title">Ételárus</h1>
+        </div>
+    </header>
+    <main>
+        <div class="type-container" id="type-container">
+            <div class="menu">
+                <button class="type-button" data-type="Ebéd" id="lunch">
+                    <img src="images/" alt="Ebéd" class="type-pic"/>
+                    Ebéd
+                </button>
+                <button class="type-button" data-type="Vacsora" id="dinner">
+                    <img src="images/" alt="Vacsora" class="type-pic"/>
+                    Vacsora
+                </button>
+            </div>
+        </div>
+    </main>
+    <script src="scripts/foodserverscripts.js"></script>
+</body>
+</html>

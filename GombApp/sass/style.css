@@ -159,49 +159,6 @@ button {
   text-align: center;
 }
 
-.time-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-size: 25px;
-}
-
-.order-form label {
-  font-size: 1.2em;
-  font-family: "Alumni Sans", sans-serif;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-.order-form select {
-  height: 40px;
-  width: 150px;
-  margin-bottom: 25px;
-  border-radius: 10px;
-  font-size: 1em;
-  font-family: "Alumni Sans", sans-serif;
-  text-align: center;
-}
-
-.order-form button {
-  border-radius: 10px;
-  font-size: 1em;
-  font-family: "Alumni Sans", sans-serif;
-}
-
-.order-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-size: 25px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .order-list {
   display: flex;
   flex-direction: column;
@@ -226,6 +183,28 @@ button {
 }
 
 .drink-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0e2618;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.type-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.dinner-pic {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
