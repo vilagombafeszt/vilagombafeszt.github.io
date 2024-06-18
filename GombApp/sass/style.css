@@ -166,20 +166,20 @@ button {
   align-items: center;
   width: 100%;
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .order-list-box {
   border: 1px solid #e1d7b5;
-  border-radius: 10%;
+  border-radius: 5px;
   width: 200px;
-  max-height: 100px;
+  max-height: 120px;
   overflow: scroll;
   overflow-y: scroll;
   overflow-x: hidden;
   font-size: 25px;
   text-align: center;
-  margin: 20px 20px;
+  margin: 10px 0px;
 }
 
 .drink-pic {

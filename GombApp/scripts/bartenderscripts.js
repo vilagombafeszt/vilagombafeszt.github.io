@@ -26,6 +26,17 @@ const database = getDatabase(app);
 
 document.getElementById('order-save').addEventListener('click', saveOrder);
 
+const backButton = document.getElementById('back-button');
+
+backButton.addEventListener('click', function() {
+    if(window.history.length == 0) {
+        window.location.href = 'index.html';
+    }
+    else {
+        window.history.back();
+    }
+});
+
 const getInputVal = (id) => {
     return document.getElementById(id).value;
 }
@@ -37,14 +48,85 @@ document.querySelectorAll('.drink-button').forEach(button => {
     });
 });
 
+let prices = {};
+fetchPrices().then(fetchedPrices => {
+    prices = fetchedPrices;
+});
+
 function addOrderItem(drink) {
     var orderList = document.getElementById('order-list');
     var listItem = document.createElement('li');
     listItem.textContent = drink;
     orderList.appendChild(listItem);
+    updateTotalPrice();
 }
 
+function fetchPrices() {
+    return get(ref(database, 'Árak/Ital')).then((snapshot) => {
+        if (snapshot.exists()) {
+            return snapshot.val();
+        } else {
+            console.error("Nem található a termék ára!");
+            return {};
+        }
+    }).catch((error) => {
+        console.error("Error fetching data:", error);
+        return {};
+    });
+}
 
+function updateTotalPrice() {
+    let totalPrice = 0;
+    const orderList = Array.from(document.getElementById('order-list').children);
+    orderList.forEach(item => {
+        const drink = item.textContent;
+        switch (drink) {
+            case 'Korsó Sör':
+                totalPrice += prices.korsoSorPrice || 0;
+                break;
+            case 'Pohár Sör':
+                totalPrice += prices.poharSorPrice || 0;
+                break;
+            case 'Nagyfröccs':
+                totalPrice += prices.nagyfroccsPrice || 0;
+                break;
+            case 'Kisfröccs':
+                totalPrice += prices.kisfroccsPrice || 0;
+                break;
+            case 'Hosszúlépés':
+                totalPrice += prices.hosszulepesPrice || 0;
+                break;
+            case 'Háziúr':
+                totalPrice += prices.haziurPrice || 0;
+                break;
+            case 'Sportfröccs':
+                totalPrice += prices.sportfroccsPrice || 0;
+                break;
+            case 'Szóda 3dl':
+                totalPrice += prices.kisszodaPrice || 0;
+                break;
+            case 'Szóda 5dl':
+                totalPrice += prices.nagyszodaPrice || 0;
+                break;
+            case 'Bor 3dl':
+                totalPrice += prices.kisborPrice || 0;
+                break;
+            case 'Bor 5dl':
+                totalPrice += prices.nagyborPrice || 0;
+                break;
+            case 'Pálinka 3cl':
+                totalPrice += prices.palinkaPrice || 0;
+                break;
+            case 'Koktél':
+                totalPrice += prices.koktelPrice || 0;
+                break;
+            case 'Jeges tea':
+                totalPrice += prices.jegesteaPrice || 0;
+                break;
+        }
+    });
+    document.getElementById('total-price').textContent = `Teljes ár: ${totalPrice} Ft`;
+}
 function saveOrder(e) {
     e.preventDefault();
     onAuthStateChanged(auth, (user) => {
@@ -55,31 +137,99 @@ function saveOrder(e) {
             const uid = user.uid;
             const userOrderRef = ref(database, 'Rendelések/' + uid);
 
-            get(userOrderRef).then((snapshot) => {
-                let existingOrders = [];
-                if (snapshot.exists()) {
-                    existingOrders = snapshot.val().orderList || [];
-                }
+            fetchPrices().then(prices => {
+                let totalPrice = 0;
+                let orderPrices = [];
 
-                const updatedOrders = existingOrders.concat(newOrders);
-
-                set(userOrderRef, {
-                    email: email,
-                    orderList: updatedOrders
-                }).then(() => {
-                    alert('Sikeresen mentve!');
-                }).catch((error) => {
-                    console.error("Error saving data:", error);
-                    alert("Hiba történt az adatok mentése közben.");
+                newOrders.forEach(drink => {
+                    let drinkPrice = 0;
+                    switch (drink) {
+                        case 'Korsó Sör':
+                            drinkPrice = prices.korsoSorPrice || 0;
+                            break;
+                        case 'Pohár Sör':
+                            drinkPrice = prices.poharSorPrice || 0;
+                            break;
+                        case 'Nagyfröccs':
+                            drinkPrice = prices.nagyfroccsPrice || 0;
+                            break;
+                        case 'Kisfröccs':
+                            drinkPrice = prices.kisfroccsPrice || 0;
+                            break;
+                        case 'Hosszúlépés':
+                            drinkPrice = prices.hosszulepesPrice || 0;
+                            break;
+                        case 'Háziúr':
+                            drinkPrice = prices.haziurPrice || 0;
+                            break;
+                        case 'Sportfröccs':
+                            drinkPrice = prices.sportfroccsPrice || 0;
+                            break;
+                        case 'Szóda 3dl':
+                            drinkPrice = prices.kisszodaPrice || 0;
+                            break;
+                        case 'Szóda 5dl':
+                            drinkPrice = prices.nagyszodaPrice || 0;
+                            break;
+                        case 'Bor 3dl':
+                            drinkPrice = prices.kisborPrice || 0;
+                            break;
+                        case 'Bor 5dl':
+                            drinkPrice = prices.nagyborPrice || 0;
+                            break;
+                        case 'Pálinka 3cl':
+                            drinkPrice = prices.palinkaPrice || 0;
+                            break;
+                        case 'Koktél':
+                            drinkPrice = prices.koktelPrice || 0;
+                            break;
+                        case 'Jeges tea':
+                            drinkPrice = prices.jegesteaPrice || 0;
+                            break;
+                    }
+                    totalPrice += drinkPrice;
+                    orderPrices.push(drinkPrice);
                 });
 
-                orderList.innerHTML = '';
-            }).catch((error) => {
-                console.error("Error reading data:", error);
-                alert("Hiba történt az adatok olvasása közben.");
+                get(userOrderRef).then((snapshot) => {
+                    let existingOrders = [];
+                    let existingOrderPrices = [];
+                    let existingTotalPrice = 0;
+                    if (snapshot.exists()) {
+                        existingOrders = snapshot.val().orderList || [];
+                        existingOrderPrices = snapshot.val().orderPrices || [];
+                        existingTotalPrice = snapshot.val().totalPrice || 0;
+                    }
+
+                    const updatedOrders = existingOrders.concat(newOrders);
+                    const updatedOrderPrices = existingOrderPrices.concat(orderPrices);
+                    const updatedTotalPrice = existingTotalPrice + totalPrice;
+
+                    set(userOrderRef, {
+                        email: email,
+                        orderList: updatedOrders,
+                        orderPrices: updatedOrderPrices,
+                        totalPrice: updatedTotalPrice
+                    }).then(() => {
+                        alert('Sikeresen mentve!');
+                    }).catch((error) => {
+                        console.error("Error saving data:", error);
+                        alert("Hiba történt az adatok mentése közben.");
+                    });
+
+                    orderList.innerHTML = '';
+                    document.getElementById('total-price').textContent = `Teljes ár: 0 Ft`;
+                }).catch((error) => {
+                    console.error("Error reading data:", error);
+                    alert("Hiba történt az adatok olvasása közben.");
+                });
             });
         } else {
             alert('Kérjük, jelentkezzen be a mentéshez.');
         }
     });
+}
+
+function getPrice(){
+
 }

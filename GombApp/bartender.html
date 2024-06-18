@@ -13,8 +13,8 @@
 <body>
     <header>
         <div class="header-content">
-            <button class="back-button" onclick="window.history.back();">Vissza</button>
-            <h1 class="bartender-title" id="bartender-title">Pultos meló</h1>
+            <button class="back-button" id="back-button">Vissza</button>
+            <h1 class="bartender-title" id="bartender-title">Pultos</h1>
         </div>
     </header>
     <main>
@@ -77,12 +77,13 @@
                     Jeges tea
                 </button>
             </div>
-            <div style="height: 200px;"></div>
+            <div style="height: 240px;"></div>
             <div class="order-list fixed-bottom">
                 <h2>Rendelés</h2>
                 <div class="order-list-box" id="order-list-box">
                     <ul id="order-list"></ul>
                 </div>
+                <p id="total-price" style="margin-bottom: 10px; margin-top: -5px; font-size: 28px;">Teljes ár: 0 Ft</p>
                 <button id="order-save">Mentés</button>
             </div>
         </div>
