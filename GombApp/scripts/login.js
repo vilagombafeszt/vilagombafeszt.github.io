@@ -49,6 +49,7 @@ onAuthStateChanged(auth, (user) => {
       const bartenderButton = document.getElementById('bartender');
       const foodserverButton = document.getElementById('food-server');
       const programsButton = document.getElementById('programs');
+      const adminButton = document.getElementById('admin');
         bartenderButton.addEventListener('click', function() {
             window.location.href = 'bartender.html';
         });
@@ -57,6 +58,9 @@ onAuthStateChanged(auth, (user) => {
         });
         programsButton.addEventListener('click', function() {
           window.location.href = 'programs.html';
+        });
+        adminButton.addEventListener('click', function() {
+          window.location.href = 'admin.html';
         });
     } 
     else {
@@ -74,6 +78,9 @@ onAuthStateChanged(auth, (user) => {
         alert('Kérlek jelentkezz be!');
       });
       programsButton.addEventListener('click', function() {
+        alert('Kérlek jelentkezz be!');
+      });
+      adminButton.addEventListener('click', function() {
         alert('Kérlek jelentkezz be!');
       });
     }

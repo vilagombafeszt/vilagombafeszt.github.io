@@ -14,6 +14,7 @@
     <header>
         <div class="header-content">
             <button class="back-button" id="back-button">Vissza</button>
+            <button class="back-button" id="back-button2" style="display: none;">Vissza</button>
             <h1 class="bartender-title" id="bartender-title">Pultos</h1>
         </div>
     </header>
@@ -77,9 +78,11 @@
                     Jeges tea
                 </button>
             </div>
-            <div style="height: 240px;"></div>
-            <div class="order-list fixed-bottom">
-                <h2>Rendelés</h2>
+            <div style="height: 50px;"></div>
+            <div class="fixed-bottom" id="fixed-bottom">
+                <button id="order-button">Rendelés megtekintése</button>
+            </div>
+            <div class="order-list" id="order-list-container" style="display: none;">
                 <div class="order-list-box" id="order-list-box">
                     <ul id="order-list"></ul>
                 </div>

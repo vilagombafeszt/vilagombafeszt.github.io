@@ -27,6 +27,11 @@ const database = getDatabase(app);
 document.getElementById('order-save').addEventListener('click', saveOrder);
 
 const backButton = document.getElementById('back-button');
+const backButton2 = document.getElementById('back-button2');
+const orderButton = document.getElementById('order-button');
+const fixedBottom = document.getElementById('fixed-bottom');
+const orderList = document.getElementById('order-list-container');
+const menu = document.querySelector('.menu');
 
 backButton.addEventListener('click', function() {
     if(window.history.length == 0) {
@@ -35,6 +40,22 @@ backButton.addEventListener('click', function() {
     else {
         window.history.back();
     }
+});
+
+backButton2.addEventListener('click', function() {
+    fixedBottom.style.display = 'grid';
+    orderList.style.display = 'none';
+    menu.style.display = 'grid';
+    backButton2.style.display = 'none';
+    backButton.style.display = 'block';
+});
+
+orderButton.addEventListener('click', function() {
+    fixedBottom.style.display = 'none';
+    orderList.style.display = 'flex';
+    menu.style.display = 'none';
+    backButton2.style.display = 'block';
+    backButton.style.display = 'none';
 });
 
 const getInputVal = (id) => {
@@ -56,8 +77,23 @@ fetchPrices().then(fetchedPrices => {
 function addOrderItem(drink) {
     var orderList = document.getElementById('order-list');
     var listItem = document.createElement('li');
-    listItem.textContent = drink;
+    
+    var drinkName = document.createElement('span');
+    drinkName.textContent = drink;
+
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.className = 'delete-button';
+    listItem.className = 'order-list-item';
+    deleteButton.addEventListener('click', () => {
+        listItem.remove();
+        updateTotalPrice();
+    });
+
+    listItem.appendChild(drinkName);
+    listItem.appendChild(deleteButton);
     orderList.appendChild(listItem);
+    
     updateTotalPrice();
 }
 
@@ -79,7 +115,7 @@ function updateTotalPrice() {
     let totalPrice = 0;
     const orderList = Array.from(document.getElementById('order-list').children);
     orderList.forEach(item => {
-        const drink = item.textContent;
+        const drink = item.querySelector('span').textContent;
         switch (drink) {
             case 'Korsó Sör':
                 totalPrice += prices.korsoSorPrice || 0;
@@ -127,15 +163,20 @@ function updateTotalPrice() {
     });
     document.getElementById('total-price').textContent = `Teljes ár: ${totalPrice} Ft`;
 }
+
 function saveOrder(e) {
     e.preventDefault();
+    if (document.getElementById('order-list').children.length === 0) {
+        alert('Adj hozzá legalább egy italt a rendeléshez!');
+        return;
+    }
     onAuthStateChanged(auth, (user) => {
         if (user) {
             var orderList = document.getElementById('order-list');
-            var newOrders = Array.from(orderList.children).map(item => item.textContent);
+            var newOrders = Array.from(orderList.children).map(item => item.querySelector('span').textContent);
             var email = user.email;
             const uid = user.uid;
-            const userOrderRef = ref(database, 'Rendelések/' + uid);
+            const userOrderRef = ref(database, 'Rendelések/Ital/' + uid);
 
             fetchPrices().then(prices => {
                 let totalPrice = 0;
@@ -228,8 +269,4 @@ function saveOrder(e) {
             alert('Kérjük, jelentkezzen be a mentéshez.');
         }
     });
-}
-
-function getPrice(){
-
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sass/style.css">
+    <script type="module" src="scripts/login.js" defer></script>
+    <title>Admin</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <button class="back-button" id="back-button">Vissza</button>
+            <h1 class="bartender-title" id="bartender-title">Admin</h1>
+        </div>
+    </header>
+    <main>
+        <div class="menu">
+            <button id="bartenderstats" class="button">
+                <img src="images/stats.png" alt="Pultos statisztika" class="profile-pic"/>
+                Pultos statisztika
+            </button>
+            <button id="foodserverstats" class="button">
+                <img src="images/stats.png" alt="Ételaárus statisztika" class="profile-pic"/>
+                Ételárus statisztika
+            </button>
+            <button id="statsummary" class="button">
+                <img src="images/stats.png" alt="Összes statisztika" class="profile-pic"/>
+                Összes statisztika
+            </button>
+        </div>
+    </main>
+    <script src="scripts/adminscripts.js"></script>
+</body>
+</html>
