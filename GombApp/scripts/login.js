@@ -60,7 +60,12 @@ onAuthStateChanged(auth, (user) => {
           window.location.href = 'programs.html';
         });
         adminButton.addEventListener('click', function() {
-          window.location.href = 'admin.html';
+          const allowedUids = ['9HBKQhxPThQXX51YLwHKGaLiz0D3', 'JlsebVypa1cYKXiLjIns7MktYmy2'];
+            if (allowedUids.includes(user.uid)) {
+                window.location.href = 'admin.html';
+            } else {
+                alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+            }
         });
     } 
     else {

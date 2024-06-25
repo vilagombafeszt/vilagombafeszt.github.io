@@ -43,7 +43,7 @@ backButton.addEventListener('click', function() {
 });
 
 backButton2.addEventListener('click', function() {
-    fixedBottom.style.display = 'grid';
+    fixedBottom.style.display = 'ruby';
     orderList.style.display = 'none';
     menu.style.display = 'grid';
     backButton2.style.display = 'none';

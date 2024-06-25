@@ -189,8 +189,7 @@ button {
 }
 
 .fixed-bottom {
-  display: flex;
-  flex-direction: column;
+  display: ruby;
   position: fixed;
   justify-content: center;
   align-items: center;
