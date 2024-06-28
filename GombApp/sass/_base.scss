@@ -260,3 +260,9 @@ button {
     padding: 10px;
     border-bottom: 1px solid $default-font-color;
 }
+
+.footer-text {
+    bottom: 0;
+    position: absolute;
+    margin-left: -17px;
+}
