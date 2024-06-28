@@ -24,7 +24,8 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-document.getElementById('order-save').addEventListener('click', saveOrder);
+document.getElementById('order-save1').addEventListener('click', saveOrder);
+document.getElementById('order-save2').addEventListener('click', saveOrder);
 
 const backButton2 = document.getElementById('back-button2');
 const orderButton = document.getElementById('order-button');
@@ -130,7 +131,8 @@ function updateTotalPrice() {
                 break;
         }
     });
-    document.getElementById('total-price').textContent = `Teljes ár: ${totalPrice} Ft`;
+    document.getElementById('total-price1').textContent = `Teljes ár: ${totalPrice} Ft`;
+    document.getElementById('total-price2').textContent = `Teljes ár: ${totalPrice} Ft`;
 }
 
 
@@ -202,7 +204,8 @@ function saveOrder(e) {
                     });
 
                     orderList.innerHTML = '';
-                    document.getElementById('total-price').textContent = `Teljes ár: 0 Ft`;
+                    document.getElementById('total-price1').textContent = `Teljes ár: 0 Ft`;
+                    document.getElementById('total-price2').textContent = `Teljes ár: 0 Ft`;
                 }).catch((error) => {
                     console.error("Error reading data:", error);
                     alert("Hiba történt az adatok olvasása közben.");

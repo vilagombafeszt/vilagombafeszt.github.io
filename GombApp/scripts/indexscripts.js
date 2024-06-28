@@ -1,3 +1,10 @@
+const loginButton = document.getElementById('login-button');
+
+loginButton.addEventListener('click', function() {
+  toggleLoginForm();
+});
+
+
 function toggleLoginForm() {
   const loginForm = document.getElementById('login-form');
   loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
@@ -18,14 +25,18 @@ function setMenuMarginTo20() {
   menu.style.marginTop = '20px';
 }
 
-const loginButton = document.querySelector('.login-button');
 const loggedInMessage = document.getElementById('logged-in-message');
 const headerContent = document.querySelector('.header-content');
 const appTitle = document.querySelector('.app-title');
 
 function afterLogin() {
   loginButton.style.display = 'none';
-  loggedInMessage.style.display = 'block';
+  loader.style.display = 'block';
+  setTimeout(function() {
+    const loader = document.getElementById('loader');
+    loader.style.display = 'none';
+    loggedInMessage.style.display = 'block';
+  }, 1500);
   headerContent.style.flexDirection = 'column';
   appTitle.style.marginLeft = '0px';
   setMenuMarginTo80();
