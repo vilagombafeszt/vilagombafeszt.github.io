@@ -254,4 +254,14 @@ button {
   bottom: 0;
   position: absolute;
   margin-left: -17px;
+}
+
+.loginform-buttons {
+  display: flex;
+  justify-content: end;
+}
+
+.cancel-button {
+  align-self: flex-end;
+  margin-right: auto;
 }/*# sourceMappingURL=style.css.map */

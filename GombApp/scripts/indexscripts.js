@@ -41,3 +41,9 @@ function afterLogin() {
   appTitle.style.marginLeft = '0px';
   setMenuMarginTo80();
 }
+
+const cancelButton = document.getElementById('cancel-button');
+
+cancelButton.addEventListener('click', function() {
+  toggleLoginForm();
+});
