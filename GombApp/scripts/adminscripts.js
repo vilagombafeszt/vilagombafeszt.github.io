@@ -100,8 +100,9 @@ function fetchAndDisplayStatistics() {
       isSumNull = false;
     } else {
       console.log("No data available for drinks");
-      document.querySelector('.bartenderstat-container h3:nth-of-type(1)').innerText = `Rendelt italok száma: 0`;
-      document.querySelector('.bartenderstat-container h3:nth-of-type(2)').innerText = `Teljes bevétel: 0 HUF`;
+      document.querySelector('.bartenderstat-container h3:nth-of-type(1)').innerText = `Rendelt italok száma: 0 db`;
+      document.querySelector('.bartenderstat-container h3:nth-of-type(2)').innerText = `Rendelések száma: 0 db`;
+      document.querySelector('.bartenderstat-container h3:nth-of-type(3)').innerText = `Teljes bevétel: 0 HUF`;
     }
   }).catch((error) => {
     console.error(error);
@@ -114,45 +115,54 @@ function fetchAndDisplayStatistics() {
       isSumNull = false;
     } else {
       console.log("No data available for food");
-      document.querySelector('.foodserverstat-container h3:nth-of-type(1)').innerText = `Rendelt ételek száma: 0`;
-      document.querySelector('.foodserverstat-container h3:nth-of-type(2)').innerText = `Teljes bevétel: 0 HUF`;
+      document.querySelector('.foodserverstat-container h3:nth-of-type(1)').innerText = `Rendelt ételek száma: 0 db`;
+      document.querySelector('.foodserverstat-container h3:nth-of-type(2)').innerText = `Rendelések száma: 0 db`;
+      document.querySelector('.foodserverstat-container h3:nth-of-type(3)').innerText = `Teljes bevétel: 0 HUF`;
     }
   }).catch((error) => {
     console.error(error);
   });
 
   if (isSumNull) {
-    document.querySelector('.statsummary-container h3:nth-of-type(1)').innerText = `Rendelt italok/ételek száma: 0`;
-    document.querySelector('.statsummary-container h3:nth-of-type(2)').innerText = `Teljes bevétel: 0 HUF`;
+    document.querySelector('.statsummary-container h3:nth-of-type(1)').innerText = `Rendelt italok/ételek száma: 0 db`;
+    document.querySelector('.statsummary-container h3:nth-of-type(2)').innerText = `Rendelések száma: 0 db`;
+    document.querySelector('.statsummary-container h3:nth-of-type(3)').innerText = `Teljes bevétel: 0 HUF`;
   }
 }
 
 var sumOrders = 0;
+var sumOrderCount = 0;
 var sumRevenue = 0;
 
 function updateStatistics(data, type) {
   let totalOrders = 0;
+  let totalOrderCount = 0;
   let totalRevenue = 0;
   
   for (const uid in data) {
     const userOrders = data[uid];
     totalOrders += userOrders.orderList.length;
+    totalOrderCount += userOrders.orderCount;
     totalRevenue += userOrders.totalPrice;
   }
 
   sumOrders += totalOrders;
+  sumOrderCount += totalOrderCount;
   sumRevenue += totalRevenue;
 
   if (type === 'bartender') {
-    document.querySelector('.bartenderstat-container h3:nth-of-type(1)').innerText = `Rendelt italok száma: ${totalOrders}`;
-    document.querySelector('.bartenderstat-container h3:nth-of-type(2)').innerText = `Teljes bevétel: ${totalRevenue} HUF`;
+    document.querySelector('.bartenderstat-container h3:nth-of-type(1)').innerText = `Rendelt italok száma: ${totalOrders} db`;
+    document.querySelector('.bartenderstat-container h3:nth-of-type(2)').innerText = `Rendelések száma: ${totalOrderCount} db`;
+    document.querySelector('.bartenderstat-container h3:nth-of-type(3)').innerText = `Teljes bevétel: ${totalRevenue} HUF`;
   } 
   else if (type === 'foodserver') {
-    document.querySelector('.foodserverstat-container h3:nth-of-type(1)').innerText = `Rendelt ételek száma: ${totalOrders}`;
-    document.querySelector('.foodserverstat-container h3:nth-of-type(2)').innerText = `Teljes bevétel: ${totalRevenue} HUF`;
+    document.querySelector('.foodserverstat-container h3:nth-of-type(1)').innerText = `Rendelt ételek száma: ${totalOrders} db`;
+    document.querySelector('.foodserverstat-container h3:nth-of-type(2)').innerText = `Rendelések száma: ${totalOrderCount} db`;
+    document.querySelector('.foodserverstat-container h3:nth-of-type(3)').innerText = `Teljes bevétel: ${totalRevenue} HUF`;
   }
 
-  document.querySelector('.statsummary-container h3:nth-of-type(1)').innerText = `Rendelt italok/ételek száma: ${sumOrders}`;
-  document.querySelector('.statsummary-container h3:nth-of-type(2)').innerText = `Teljes bevétel: ${sumRevenue} HUF`;  
+  document.querySelector('.statsummary-container h3:nth-of-type(1)').innerText = `Rendelt italok/ételek száma: ${sumOrders} db`;
+  document.querySelector('.statsummary-container h3:nth-of-type(2)').innerText = `Rendelések száma: ${sumOrderCount} db`;
+  document.querySelector('.statsummary-container h3:nth-of-type(3)').innerText = `Teljes bevétel: ${sumRevenue} HUF`;  
 
 }

@@ -181,21 +181,25 @@ function saveOrder(e) {
                     let existingOrders = [];
                     let existingOrderPrices = [];
                     let existingTotalPrice = 0;
+                    let existingOrderCount = 0;
                     if (snapshot.exists()) {
                         existingOrders = snapshot.val().orderList || [];
                         existingOrderPrices = snapshot.val().orderPrices || [];
                         existingTotalPrice = snapshot.val().totalPrice || 0;
+                        existingOrderCount = snapshot.val().orderCount || 0;
                     }
 
                     const updatedOrders = existingOrders.concat(newOrders);
                     const updatedOrderPrices = existingOrderPrices.concat(orderPrices);
                     const updatedTotalPrice = existingTotalPrice + totalPrice;
+                    const updatedOrderCount = existingOrderCount + 1;
 
                     set(userOrderRef, {
                         email: email,
                         orderList: updatedOrders,
                         orderPrices: updatedOrderPrices,
-                        totalPrice: updatedTotalPrice
+                        totalPrice: updatedTotalPrice,
+                        orderCount: updatedOrderCount
                     }).then(() => {
                         alert('Sikeresen mentve!');
                     }).catch((error) => {
