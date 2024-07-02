@@ -256,6 +256,15 @@ button {
   margin-left: -17px;
 }
 
+@media only screen and (orientation: landscape) {
+  .footer-text {
+    margin-top: 100px;
+    bottom: auto;
+  }
+  .menu {
+    padding-top: 30px;
+  }
+}
 .loginform-buttons {
   display: flex;
   justify-content: end;

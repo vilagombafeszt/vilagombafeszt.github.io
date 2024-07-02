@@ -15,10 +15,13 @@
         <div class="header-content">
             <h1 class="app-title">GombApp</h1>
         </div>
-        <div class="message-content">
+        <div class="message-content" id="message-content" style="display: none;">
             <button class="login-button" id="login-button">Bejelentkezés</button>
             <div class="loader" id="loader" style="display: none;"></div>
             <span class="logged-in-message" id="logged-in-message" style="display: none;">Be vagy jelentkezve!</span>
+        </div>
+        <div class="message-content" style="margin-top: 10px;">
+            <div class="loader" id="loader2"></div>
         </div>
     </header>
     <main>
@@ -52,7 +55,7 @@
         </div>
     </main>
     <footer style="justify-self: center;">
-        <p class="footer-text">v2.5.3</p>
+        <p class="footer-text">v2.5.4</p>
     </footer>
     <script src="scripts/indexscripts.js"></script>
 </body>

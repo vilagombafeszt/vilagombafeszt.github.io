@@ -47,3 +47,10 @@ const cancelButton = document.getElementById('cancel-button');
 cancelButton.addEventListener('click', function() {
   toggleLoginForm();
 });
+
+setTimeout(function() {
+  const loader2 = document.getElementById('loader2');
+  const messageContent = document.getElementById('message-content');
+  loader2.style.display = 'none';
+  messageContent.style.display = 'flex';
+}, 2000);
