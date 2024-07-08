@@ -287,16 +287,57 @@ button {
 }
 
 @media only screen and (max-height: 700px) {
-    .realtime-container iframe {
-        margin-top: 50px;
-    }
-
-    .agenda-container iframe {
-        margin-top: 50px;
-    }
-
     .adjust {
         padding-top: 30px;
+    }
+}
+
+.res-adj1 {
+    font-size: 0.9em;
+    position: absolute; 
+    left: 0; 
+    margin-left: 5px;
+}
+
+.res-adj2 {
+    font-size: 0.9em; 
+    position: absolute; 
+    margin-left: 26px; 
+    width: 75px;
+}
+
+.res-adj3 {
+    font-size: 22px; 
+    position: absolute; 
+    right: 0; 
+    margin-right: 10px;
+}
+
+.res-adj4 {
+    margin-bottom: 10px; 
+    margin-top: -5px; 
+    font-size: 28px;
+}
+
+@media only screen and (min-width: 400px) {
+    .res-adj1 {
+        font-size: 1em;
+        width: 165px;
+    }
+    .res-adj2 {
+        font-size: 1em;
+        width: 85px;
+        margin-left: 30px;
+    }
+    .res-adj3 {
+        font-size: 24px;
+    }
+    .res-adj4 {
+        margin-top: 0px;
+        font-size: 32px;
+    }
+    .res-adj5 {
+        font-size: 1.2em;
     }
 }
 

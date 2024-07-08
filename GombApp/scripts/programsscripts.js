@@ -25,12 +25,7 @@ const back1 = document.getElementById('back-button1');
 const back2 = document.getElementById('back-button2');
 
 back1.addEventListener('click', function() {
-    if(window.history.length == 0) {
-        window.location.href = 'index.html';
-    }
-    else {
-        window.history.back();
-    }
+    window.location.href = 'index.html';
 });
 
 onAuthStateChanged(auth, (user) => {
@@ -76,4 +71,27 @@ back2.addEventListener('click', function() {
     menu.style.display = 'grid';
     back1.style.display = 'block';
     back2.style.display = 'none';
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const realtimeContainer = document.getElementById('realtime-container').querySelector('iframe');
+    const agendaContainer = document.getElementById('agenda-container').querySelector('iframe');
+
+    function resizeIframes() {
+        const newWidth = window.innerWidth - 50;
+        const newHeight = window.innerHeight - 150;
+
+        realtimeContainer.style.width = `${newWidth}px`;
+        realtimeContainer.style.height = `${newHeight}px`;
+
+        agendaContainer.style.width = `${newWidth}px`;
+        agendaContainer.style.height = `${newHeight}px`;
+    }
+
+    // Initial resize
+    resizeIframes();
+
+    // Resize on window resize
+    window.addEventListener('resize', resizeIframes);
 });

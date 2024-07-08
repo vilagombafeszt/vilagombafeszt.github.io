@@ -35,16 +35,11 @@ const menu = document.querySelector('.menu');
 const backButton = document.getElementById('back-button');
 
 backButton.addEventListener('click', function() {
-    if(window.history.length == 0) {
-        window.location.href = 'foodserver.html';
-    }
-    else {
-        window.history.back();
-    }
+    window.location.href = 'foodserver.html';
 });
 
 backButton2.addEventListener('click', function() {
-    fixedBottom.style.display = 'ruby';
+    fixedBottom.style.display = 'flex';
     orderList.style.display = 'none';
     menu.style.display = 'grid';
     backButton2.style.display = 'none';

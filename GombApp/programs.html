@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -15,18 +15,24 @@
         <div class="header-content">
             <button class="back-button" id="back-button1">Vissza</button>
             <button class="back-button" id="back-button2" style="display: none;">Vissza</button>
-            <h1 class="app-title">Programok</h1>
+            <h1 class="bartender-title" id="program-title">Programok</h1>
         </div>
     </header>
     <main>
         <div class="menu" id="menu">
-            <button class="calendar-button" id="realtime" data-type="realtime">Valós idejű</button>
-            <button class="calendar-button" id="agenda" data-type="agenda">Teljes program</button>
+            <button class="calendar-button" id="realtime" data-type="realtime">
+                <img src="images/realtime-calendar.png" alt="Valós idejű program" class="profile-pic"/>
+                Valós idejű
+            </button>
+            <button class="calendar-button" id="agenda" data-type="agenda">
+                <img src="images/agenda-calendar.png" alt="Napi program" class="profile-pic"/>
+                Teljes program
+            </button>
         </div>
-        <div class="realtime-container" id="realtime-container" style="display: none;">
+        <div class="realtime-container" id="realtime-container" style="display: none; margin-top: 60px;">
             <iframe src="https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=WEEK&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5" title="Program naptár" style="border-width:0" width="350" height="500" frameborder="0" scrolling="no"></iframe>
         </div>
-        <div class="agenda-container" id="agenda-container" style="display: none;">
+        <div class="agenda-container" id="agenda-container" style="display: none; margin-top: 60px;">
             <iframe src="https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=AGENDA&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5&dates=20240809/20240812" title="Program naptár" style="border-width:0" width="350" height="500" frameborder="0" scrolling="no"></iframe>
         </div>
     </main>

@@ -35,7 +35,7 @@ const orderList = document.getElementById('order-list-container');
 const menu = document.querySelector('.menu');
 
 backButton.addEventListener('click', function() {
-    if(window.history.length == 0) {
+    if(window.history.length == 1) {
         window.location.href = 'index.html';
     }
     else {
@@ -44,7 +44,7 @@ backButton.addEventListener('click', function() {
 });
 
 backButton2.addEventListener('click', function() {
-    fixedBottom.style.display = 'ruby';
+    fixedBottom.style.display = 'flex';
     orderList.style.display = 'none';
     menu.style.display = 'grid';
     backButton2.style.display = 'none';
