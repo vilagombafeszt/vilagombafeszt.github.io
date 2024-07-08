@@ -219,7 +219,7 @@ button {
 }
 
 .fixed-bottom {
-    display: ruby;
+    display: flex;
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -273,6 +273,29 @@ button {
         bottom: auto;
     }
     .menu {
+        padding-top: 30px;
+    }
+    .bartenderstat-container {
+        padding-top: 30px;
+    }
+    .foodserverstat-container {
+        padding-top: 30px;
+    }
+    .statsummary-container {
+        padding-top: 30px;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    .realtime-container iframe {
+        margin-top: 50px;
+    }
+
+    .agenda-container iframe {
+        margin-top: 50px;
+    }
+
+    .adjust {
         padding-top: 30px;
     }
 }
