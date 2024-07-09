@@ -76,6 +76,8 @@ onAuthStateChanged(auth, (user) => {
       setMenuMarginTo20();
       const bartenderButton = document.getElementById('bartender');
       const foodserverButton = document.getElementById('food-server');
+      const programsButton = document.getElementById('programs');
+      const adminButton = document.getElementById('admin');
       bartenderButton.addEventListener('click', function() {
         alert('Kérlek jelentkezz be!');
       });
