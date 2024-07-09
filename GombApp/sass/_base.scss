@@ -320,13 +320,15 @@ button {
     font-size: 28px;
 }
 
-@media only screen and (min-width: 420px) {
+@media only screen and (min-width: 400px) {
     .res-adj1 {
-        width: 169px;
+        font-size: 18px;
+        width: 168px;
     }
     .res-adj2 {
-        width: 84px;
-        margin-left: 32px;
+        font-size: 18px;
+        width: 82px;
+        margin-left: 30px;
     }
     .res-adj3 {
         font-size: 24px;
