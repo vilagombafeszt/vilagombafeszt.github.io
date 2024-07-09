@@ -26,6 +26,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    touch-action: pan-y pan-x;
 
     @include mq(768px) {
         font-size: 25px;

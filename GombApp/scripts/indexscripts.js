@@ -7,11 +7,15 @@ loginButton.addEventListener('click', function() {
 
 function toggleLoginForm() {
   const loginForm = document.getElementById('login-form');
+  const footer = document.querySelector('.footer-text');
   loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
   if (loginForm.style.display === 'block') {
     setMenuMarginTo20();
+    footer.style.bottom = 'auto';
+    footer.style.marginTop = '80px';  
   } else {
     setMenuMarginTo80();
+    footer.style.bottom = '0';
   }
 }
 

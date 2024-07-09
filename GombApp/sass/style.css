@@ -15,6 +15,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  touch-action: pan-y pan-x;
 }
 @media only screen and (min-width: 768px) {
   html, body {
