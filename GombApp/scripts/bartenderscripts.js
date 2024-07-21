@@ -151,8 +151,11 @@ function updateTotalPrice() {
             case 'Bor 5dl':
                 totalPrice += prices.nagyborPrice || 0;
                 break;
-            case 'Pálinka 3cl':
-                totalPrice += prices.palinkaPrice || 0;
+            case 'Pálinka 2cl':
+                totalPrice += prices.kispalinkaPrice || 0;
+                break;
+            case 'Pálinka 4cl':
+                totalPrice += prices.nagypalinkaPrice || 0;
                 break;
             case 'Koktél':
                 totalPrice += prices.koktelPrice || 0;
@@ -220,8 +223,11 @@ function saveOrder(e) {
                         case 'Bor 5dl':
                             drinkPrice = prices.nagyborPrice || 0;
                             break;
-                        case 'Pálinka 3cl':
-                            drinkPrice = prices.palinkaPrice || 0;
+                        case 'Pálinka 2cl':
+                            drinkPrice = prices.kispalinkaPrice || 0;
+                            break;
+                        case 'Pálinka 4cl':
+                            drinkPrice = prices.nagypalinkaPrice || 0;
                             break;
                         case 'Koktél':
                             drinkPrice = prices.koktelPrice || 0;

@@ -18,6 +18,31 @@
         </div>
     </header>
     <main>
+        <div class="lunch-container" id="lunch-container">
+            <div class="menu">
+                <button class="lunch-button" data-food="Ebéd 1">
+                    <img src="" alt="Ebéd 1" class="dinner-pic"/>
+                    Ebéd 1
+                </button>
+                <button class="lunch-button" data-food="Ebéd 2">
+                    <img src="" alt="Ebéd 2" class="dinner-pic"/>
+                    Ebéd 2
+                </button>
+            </div>
+            <div style="height: 50px;"></div>
+            <div class="fixed-bottom" id="fixed-bottom">
+                <button class="res-adj1" id="order-button">Rendelés megnézése</button>
+                <button class="res-adj2" id="order-save1">Mentés</button>
+                <p class="res-adj3" id="total-price1">Teljes ár: 0 Ft</p>
+            </div>
+            <div class="order-list" id="order-list-container" style="display: none;">
+                <div class="order-list-box" id="order-list-box">
+                    <ul id="order-list"></ul>
+                </div>
+                <p class="res-adj4" id="total-price2">Teljes ár: 0 Ft</p>
+                <button class="res-adj5" id="order-save2">Mentés</button>
+            </div>
+        </div>
     </main>
     <script src="scripts/lunchserverscripts.js"></script>
 </body>

@@ -134,7 +134,7 @@ function updateTotalPrice() {
 function saveOrder(e) {
     e.preventDefault();
     if (document.getElementById('order-list').children.length === 0) {
-        alert('Adj hozzá legalább egy italt a rendeléshez!');
+        alert('Adj hozzá legalább egy ételt a rendeléshez!');
         return;
     }
     onAuthStateChanged(auth, (user) => {
