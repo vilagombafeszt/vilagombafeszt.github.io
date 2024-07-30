@@ -109,10 +109,10 @@ function updateTotalPrice() {
     orderList.forEach(item => {
         const food = item.querySelector('span').textContent;
         switch (food) {
-            case 'Ebéd 1':
+            case 'Paprikás krumpli':
                 totalPrice += prices.ebed1Price || 0;
                 break;
-            case 'Ebéd 2':
+            case 'Lecsó':
                 totalPrice += prices.ebed2Price || 0;
                 break;
         }
@@ -142,11 +142,11 @@ function saveOrder(e) {
                 newOrders.forEach(food => {
                     let foodPrice = 0;
                     switch (food) {
-                        case 'Ebéd 1':
-                            totalPrice = prices.ebed1Price || 0;
+                        case 'Paprikás krumpli':
+                            foodPrice = prices.ebed1Price || 0;
                             break;
-                        case 'Ebéd 2':
-                            totalPrice = prices.ebed2Price || 0;
+                        case 'Lecsó':
+                            foodPrice = prices.ebed2Price || 0;
                             break;
                     }
                     totalPrice += foodPrice;
