@@ -160,6 +160,9 @@ function updateTotalPrice() {
             case 'Koktél':
                 totalPrice += prices.koktelPrice || 0;
                 break;
+            case 'Kávé':
+                totalPrice += prices.kavePrice || 0;
+                break;
             case 'Jeges tea':
                 totalPrice += prices.jegesteaPrice || 0;
                 break;
@@ -231,6 +234,9 @@ function saveOrder(e) {
                             break;
                         case 'Koktél':
                             drinkPrice = prices.koktelPrice || 0;
+                            break;
+                        case 'Kávé':
+                            drinkPrice = prices.kavePrice || 0;
                             break;
                         case 'Jeges tea':
                             drinkPrice = prices.jegesteaPrice || 0;
