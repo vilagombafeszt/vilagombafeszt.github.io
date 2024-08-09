@@ -157,9 +157,6 @@ function updateTotalPrice() {
             case 'Pálinka 4cl':
                 totalPrice += prices.nagypalinkaPrice || 0;
                 break;
-            case 'Koktél':
-                totalPrice += prices.koktelPrice || 0;
-                break;
             case 'Kávé':
                 totalPrice += prices.kavePrice || 0;
                 break;
@@ -231,9 +228,6 @@ function saveOrder(e) {
                             break;
                         case 'Pálinka 4cl':
                             drinkPrice = prices.nagypalinkaPrice || 0;
-                            break;
-                        case 'Koktél':
-                            drinkPrice = prices.koktelPrice || 0;
                             break;
                         case 'Kávé':
                             drinkPrice = prices.kavePrice || 0;

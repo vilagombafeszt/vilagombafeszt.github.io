@@ -254,7 +254,7 @@ button {
 .footer-text {
   bottom: 0;
   position: absolute;
-  margin-left: -40px;
+  margin-left: -20px;
 }
 
 @media only screen and (orientation: landscape) {
