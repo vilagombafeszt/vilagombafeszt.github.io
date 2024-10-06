@@ -598,7 +598,7 @@
             .szoveg {
                 margin-left: 10%;
                 margin-right: 10%;
-                font-size: 42px;
+                font-size: 40px;
             }
 
             .eloadasok {
@@ -615,7 +615,7 @@
             }
 
             #keptar {
-                height: 110vh;
+                height: 120vh;
             }
         }
 
@@ -1133,10 +1133,10 @@
         <a href="#Kapcsolat" id="coninfo">Kapcsolat</a>
     </div>
     <div class="wrapper" id="Otthon">
-        <div class="title centered-title expandIn">
+        <div class="title centered-title expandTitle expandIn">
             viláGomba
         </div>
-        <div class="title small-title expandIn">
+        <div class="title small-title expandTitle expandIn">
             08.09 - 08.11
         </div>
     </div>
@@ -1232,11 +1232,16 @@
             <!--Copy of the original gallery-->
         <div class="elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3" data-elfsight-app-lazy style="margin-top: 20px;"></div>
 
-        <div class="szoveg2">
+        <div class="szoveg2" style="white-space: pre-line; margin-top: -20px;">
             További képek elérhetőek a következő linken keresztül:  
             <a href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7" style="color: #ac9d9d;">
                 https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7
             </a>
+            
+        </div>
+        <div class="szoveg2" style="white-space: pre-line; margin-top: -1.4%;">
+            Képeket készítette: 
+            <a href="https://www.instagram.com/g.adam.llery/" style="color: #ac9d9d; align-content: end;">Kovács Ádám</a>
         </div>
     </div>
     <a id="Kapcsolat" style="padding-top: 50px;"></a>
@@ -1280,7 +1285,7 @@
 
     <script>
         $(window).scroll(function() {
-            $('.centered-title').each(function(){
+            $('.expandTitle').each(function(){
                 var top_of_element = $(this).offset().top;
                 var bottom_of_element = $(this).offset().top + $(this).outerHeight();
                 var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
