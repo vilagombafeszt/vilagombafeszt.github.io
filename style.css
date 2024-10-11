@@ -333,7 +333,28 @@ a:hover {
     padding-top: 30px;
 }
 
+.randomAlbumImage {
+    max-width: 80%;
+    max-height: 80%;
+    border: 2px solid #ac9d9d;
+    border-radius: 5px;
+    margin: 10px;
+    margin-top: 70px;
+    max-width: 800px;
+    max-height: 600px;
+}
+
 @media only screen and (max-width: 600px) {
+    .randomAlbumImage {
+        max-width: 80%;
+        max-height: 80%;
+        border: 2px solid #ac9d9d;
+        border-radius: 5px;
+        margin: 10px;
+        margin-top: 50px;
+        max-width: 400px;
+        max-height: 300px;
+    }
     .menu img {
         height: 50px;
     }
@@ -617,7 +638,7 @@ a:hover {
     }
 
     #keptar {
-        height: 130vh;
+        height: 120vh;
     }
 
     #benevezes {
@@ -1046,7 +1067,7 @@ a:hover {
     }
 
     #keptar {
-        height: 180vh;
+        height: 130vh;
     }
 
     #kapcsolat {
