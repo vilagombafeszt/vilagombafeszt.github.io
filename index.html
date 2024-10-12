@@ -292,8 +292,29 @@
     <script>
         function toggleMenu() {
             var menuLinks = document.querySelectorAll('.menu a');
-            menuLinks.forEach(link => {
-                link.style.display = (link.style.display === 'none' || link.style.display === '') ? 'block' : 'none';
+            // Check if any link is visible (i.e., has opacity 1)
+            var isVisible = menuLinks[0].style.opacity === '1';
+
+            menuLinks.forEach((link, index) => {
+                setTimeout(() => {
+                    if (isVisible) {
+                        // Fade out
+                        link.style.opacity = '0'; // Set opacity to 0
+                        link.style.transition = 'opacity 0.3s ease'; // Transition for fading out
+                        
+                        // After fading out, set display to none
+                        setTimeout(() => {
+                            link.style.display = 'none';
+                        }, 400); // Wait for the fade-out transition to complete
+                    } else {
+                        // Fade in
+                        link.style.display = 'block'; // Ensure display is block before fading in
+                        setTimeout(() => {
+                            link.style.opacity = '1'; // Set opacity to 1 to fade in
+                            link.style.transition = 'opacity 1.0s ease'; // Transition for fading in
+                        }, 1); // Slight delay to ensure display is set before fading in
+                    }
+                }, 15 * index);
             });
         }
     
