@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
+    <!-- Cookie Consent by FreePrivacyPolicy.com https://www.FreePrivacyPolicy.com -->
+    <script type="text/javascript" src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+    <script type="text/javascript" charset="UTF-8">
+    document.addEventListener('DOMContentLoaded', function () {
+    cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"dark","language":"hu","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"ViláGombaFeszt"});
+    });
+    </script>
+
+    <!-- Cookie tracking -->
+    <script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-3C9SFFDX5K"></script>
+        <script type="text/plain" data-cookie-consent="tracking">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3C9SFFDX5K');
+        </script>
+    <!-- end of cookie tracking-->
+
+    <noscript>Cookie Consent by <a href="https://www.freeprivacypolicy.com/">Free Privacy Policy Generator</a></noscript>
+    <!-- End Cookie Consent by FreePrivacyPolicy.com https://www.FreePrivacyPolicy.com -->
+
+    <!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
+
+    <a href="#" id="open_preferences_center" style="display: none;">Update cookies preferences</a>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Világomba Galéria 2024</title>
+    <link rel="icon" href="page_images/cimlogo_kek.png" type="image/png">
     <link rel="stylesheet" href="style_v2024.css">
     <link href='https://fonts.googleapis.com/css?family=Alumni Sans' rel='stylesheet'>
 </head>
@@ -143,6 +170,7 @@
         const img = document.createElement('img');
         img.src = link;
         img.alt = "ViláGomba 2024 életkép";
+        img.loading = "lazy";
 
         anchor.appendChild(img);
         gallery.appendChild(anchor);
