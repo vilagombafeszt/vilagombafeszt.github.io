@@ -267,31 +267,31 @@ body {
 
 #ez-ugy-volt {
     height: 100vh;
-    background-color: #ac9d9d;
-    color: #102135;
+    background-color: #2d0e0e;
+    color: #ac9d9d;
     text-align: center;
 }
 
 #ez-ugy-volt ::selection {
-    background-color: #102135;
-    color: #ac9d9d;
-}
-
-#keptar {
-    height: 100vh;
-    background-color: #2d0e0e;
-    color: #ac9d9d;
-}
-
-#keptar ::selection {
     background-color: #ac9d9d;
     color: #2d0e0e;
 }
 
+#keptar {
+    height: 100vh;
+    background-color: #ac9d9d;
+    color: #102135;
+}
+
+#keptar ::selection {
+    background-color: #102135;
+    color: #ac9d9d;
+}
+
 #kapcsolat {
     height: 50vh;
-    background-color: #aa0000;
-    color: #102135;
+    background-color: #0e2618;
+    color: #e1d7b5;
     text-align: left;
 }
 
@@ -304,8 +304,8 @@ a:hover {
 }
 
 #kapcsolat ::selection {
-    background-color: #102135;
-    color: #aa0000;
+    background-color: #e1d7b5;
+    color: #0e2618;
 }
 
 #facebook-logo {
@@ -373,12 +373,15 @@ a:hover {
     .menu {
         padding: 0;
         text-align: center;
+        display: grid;
+        justify-content: center;
     }
 
     .menu a {
         display: none;
         padding: 1%;
         font-size: 24px;
+        width: 150px;
     }
 
     .menu-btn {
