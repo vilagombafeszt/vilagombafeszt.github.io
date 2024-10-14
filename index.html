@@ -56,9 +56,8 @@
         </div>
         <a href="#Otthon"><img class="menu-img" src="page_images/cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
         <a href="#Otthon" id="home">Otthon</a>
-        <a href="#Eloadok" id="artists">Előadók</a>
+        <a href="#Musor" id="artists">Műsor</a>
         <a href="#Jegyeket-berleteket" id="tickets">Jegyeket, Bérleteket!</a>
-        <a href="#Benevezes" id="application">Benevezés</a>  
         <a href="#Helyszin" id="place">Helyszín</a>
         <a href="#Ez-ugy-volt" id="story">Ez úgy volt...</a>
         <a href="#Keptar" id="gallery">Képtár</a>
@@ -69,16 +68,16 @@
             viláGomba
         </div>
         <div class="title small-title expandTitle expandIn">
-            08.09 - 08.11
+            08.22 - 08.24
         </div>
     </div>
-    <a id="Eloadok" style="padding-top: 50px;"></a>
-    <div class="wrapper" id="eloadok">
+    <a id="Musor" style="padding-top: 50px;"></a>
+    <div class="wrapper" id="musor">
         <div class="title">
-            Előadók
+            Műsor
         </div>
             <div class="eloadasok">
-                Őri-Kiss Botond, Semmi zenekar, Raab Rózsa szövőkurzusa, HéBa zenekar, Juhász Zoltán táncművész táncoktatása, ShakarTrio, Balla Gyöngyi csipkeverőkurzusa, Kóc zenekar, Hárs Róza és F. Tóth Gergely zenés felolvasóestje, Greasy Board, Élőzenés táncház, Cézé, Fenyvesi Gábor festőművész előadása az absztrakcióról, Pesti Magyar Színiakadémia Perényi Balázs osztálya, Sildervald, Narcotic Aesthetic, benj0e, Dj Egnesd, Antipattern, CRRNT <br>
+                Őri-Kiss Botond, HéBa zenekar, Táncház, ShakarTrio, Teleh0ld, Kóc zenekar, Narcotic Aesthetic, benj0e, <br>
                 És még sokan mások...
             </div>
         </div>
@@ -96,26 +95,6 @@
         </div>
         <div class="square">
             <a href="#Benevezes"><img src="page_images/berlet.png" alt="Bérlet" style="width: 100%; height: auto;"></a>
-        </div>
-    </div>
-    <a id="Benevezes" style="padding-top: 50px;"></a>
-    <div class="wrapper" id="benevezes" >
-        <div class="title">
-            Benevezés
-        </div>
-        <div class="piros-gomba">
-            <a href="http://www.keresettferi.hu/" target="_blank">
-                <img src="page_images/piros_gomba.png" alt="Piros gomba">
-            </a>
-        </div>
-        <div class="form-container">
-            <iframe
-            title="Jelentkező form"
-            width="1200px"
-            height="650px"
-            src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAfftSU1UMEtXWEs4N1pXRDFDUExVWjZTTTdVRkpKRy4u&embed=true" 
-            style="border: none; border-radius: 10px; max-width:100%; max-height:80vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
-            </iframe>
         </div>
     </div>
     <a id="Helyszin" style="padding-top: 50px;"></a>
@@ -160,9 +139,6 @@
         <div class="title">
             Képtár
         </div>
-        <!-- <div class="elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421" data-elfsight-app-lazy style="margin-top: 20px;"></div> -->
-            <!--Copy of the original gallery-->
-        <!--<div class="elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3" data-elfsight-app-lazy style="margin-top: 20px;"></div> -->
         <div style="display: flex; justify-content: center;">
             <a href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7">
             <img class="randomAlbumImage" id="randomAlbumImage" src="" alt="Világomba 2024">
@@ -172,16 +148,9 @@
         <div class = "szoveg2" style="white-space: pre-line; margin-top: -40px; margin-bottom: 20px;">
             Kattints a képre a teljes galéria megtekintéséhez!
         </div>
-        <!--<div class="szoveg2" style="white-space: pre-line; margin-top: -20px;">
-            További képek elérhetőek a következő linken keresztül:  
-            <a href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7" style="color: #ac9d9d;">
-                https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7
-            </a>
-            
-        </div>-->
-        <div class="szoveg2" style="white-space: pre-line; margin-top: -1.4%;">
+        <div class="szoveg2" style="white-space: pre; margin-top: -1.4%;">
             Képeket készítette: 
-            <a href="https://www.instagram.com/g.adam.llery/" style="color: #ac9d9d; align-content: end;">Kovács Ádám</a>
+            <a href="https://www.instagram.com/g.adam.llery/" style="align-content: center;">Kovács Ádám</a>
         </div>
     </div>
     <a id="Kapcsolat" style="padding-top: 50px;"></a>
@@ -204,17 +173,15 @@
     <script>
         $(window).resize(function() {
             if ($(window).width() >= 700) {
-                $('#artists').attr('href', '#Eloadok');
+                $('#artists').attr('href', '#Musor');
                 $('#tickets').attr('href', '#Jegyeket-berleteket');
-                $('#application').attr('href', '#Benevezes');
                 $('#place').attr('href', '#Helyszin');
                 $('#story').attr('href', '#Ez-ugy-volt');
                 $('#gallery').attr('href', '#Keptar');
                 $('#coninfo').attr('href', '#Kapcsolat');
             } else {
-                $('#artists').attr('href', '#eloadok');
+                $('#artists').attr('href', '#musor');
                 $('#tickets').attr('href', '#jegyeket-berleteket');
-                $('#application').attr('href', '#benevezes');
                 $('#place').attr('href', '#helyszin');
                 $('#story').attr('href', '#ez-ugy-volt');
                 $('#gallery').attr('href', '#keptar');
@@ -347,21 +314,18 @@
     
             // Define the offsets for each section
             var otthonOffset = $('#Otthon').offset().top;
-            var eloadokOffset = $('#eloadok').offset().top;
+            var musorOffset = $('#musor').offset().top;
             var jegyekOffset = $('#jegyeket-berleteket').offset().top - 20;
-            var benevezesOffset = $('#benevezes').offset().top - 20;
             var helyszinOffset = $('#helyszin').offset().top - 20;
             var ezugyvoltOffset = $('#ez-ugy-volt').offset().top;
             var keptarOffset = $('#keptar').offset().top - 20;
             var kapcsolatOffset = $('#kapcsolat').offset().top;
     
             // Check the scroll position and update menu image accordingly
-            if (scrollPosition < eloadokOffset) {
+            if (scrollPosition < musorOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < jegyekOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
-            } else if (scrollPosition < benevezesOffset) {
-                updateMenuImage('page_images/cimlogo_kek.png');
             } else if (scrollPosition < helyszinOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < ezugyvoltOffset) {

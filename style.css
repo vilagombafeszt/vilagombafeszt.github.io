@@ -8,8 +8,8 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #e4d9bc;
-    color: #331800;
+    background-color: #7c8bb1;
+    color: #102135;
     padding: 20px;
     text-align: center;
     z-index: 1000;
@@ -28,6 +28,10 @@ body {
 .menu a::selection {
     background-color: #331800;
     color: #e4d9bc;
+}
+
+.menu a:link {
+    color: #102135;
 }
 
 .menu a:hover {
@@ -146,16 +150,6 @@ body {
     padding-right: 20px;
 }
 
-.piros-gomba {
-    height: 80px;
-    width: auto;
-}
-
-.piros-gomba img {
-    height: 300%;
-    width: auto;
-}
-
 .szoveg {
     display: flex;
     justify-content: center;
@@ -183,129 +177,98 @@ body {
     padding-top: 30px;
 }
 
-.neon {
-    color: #fff;
-    text-shadow:
-        0 0 5px #e27d6b,
-        0 0 10px #e27d6b,
-        0 0 20px #e27d6b,
-        0 0 40px #e27d6b,
-        0 0 80px #e27d6b,
-        0 0 90px #e27d6b,
-        0 0 100px #e27d6b,
-        0 0 150px #e27d6b;
-}
-
-.elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-    overflow: hidden;
-    max-height: 750px;
-}
-
-.elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-    overflow: hidden;
-    max-height: 750px;
-}
-
 #Otthon {
-    background-image: url('page_images/IMG-5923_edited.jpg');
+    background-image: url('page_images/IMG_9010.png');
     background-size: cover;
-    color: #e1d7b5;
+    color: #7c8bb1;
     font-weight: bold;
     height: 100vh;
 }
 
 #Otthon ::selection {
-    background-color: #e1d7b5;
+    background-color: #7c8bb1;
     color: black;
 }
 
-#eloadok {
+#musor {
     height: 105vh;
-    background-color: #2d0e0e;
+    background-color: #354b3d;
     color: #ac9d9d;
 }
 
-#eloadok ::selection {
+#musor ::selection {
     background-color: #ac9d9d;
-    color: #2d0e0e;
+    color: #354b3d;
 }
 
 #jegyeket-berleteket {
     height: 100vh;
-    background-color: #ac9d9d;
-    color: #102135;
+    background-color: #355168;
+    color: #ac9d9d;
     text-align: center;
 }
 
 #jegyeket-berleteket ::selection {
-    background-color: #102135;
-    color: #ac9d9d;
-}
-
-#benevezes {
-    height: 100vh;
-    background-color: #0e2618;
-    color: #e1d7b5;
-    text-align: center;
-}
-
-#benevezes ::selection {
-    background-color: #e1d7b5;
-    color: #0e2618;
+    background-color: #ac9d9d;
+    color: #355168;
 }
 
 #helyszin {
     height: 100vh;
-    background-color: #aa0000;
-    color: #102135;
+    background-color: #a44041;
+    color: #ac9d9d;
 }
 
 #helyszin ::selection {
-    background-color: #102135;
-    color: #aa0000;
+    background-color: #ac9d9d;
+    color: #a44041;
 }
 
 #ez-ugy-volt {
     height: 100vh;
-    background-color: #ac9d9d;
-    color: #102135;
+    background-color: #474738;
+    color: #ac9d9d;
     text-align: center;
 }
 
 #ez-ugy-volt ::selection {
-    background-color: #102135;
-    color: #ac9d9d;
+    background-color: #ac9d9d;
+    color: #5c5454;
 }
 
 #keptar {
     height: 100vh;
-    background-color: #2d0e0e;
+    background-color: #253529;
     color: #ac9d9d;
 }
 
 #keptar ::selection {
     background-color: #ac9d9d;
-    color: #2d0e0e;
+    color: #253529;
+}
+
+#keptar a:hover {
+    color: #7c8bb1;
 }
 
 #kapcsolat {
     height: 50vh;
-    background-color: #aa0000;
-    color: #102135;
+    background-color: #594a66;
+    color: #ac9d9d;
     text-align: left;
 }
 
 a:link {
-    color: #102135;
-}
-
-a:hover {
     color: #ac9d9d;
 }
 
+#kapcsolat a:hover {
+    color: #102135;
+}
+
 #kapcsolat ::selection {
-    background-color: #102135;
-    color: #aa0000;
+    background-color: #ac9d9d;
+    color: #594a66;
 }
 
 #facebook-logo {
@@ -334,20 +297,16 @@ a:hover {
 }
 
 .randomAlbumImage {
-    max-width: 80%;
-    max-height: 80%;
     border: 2px solid #ac9d9d;
     border-radius: 5px;
     margin: 10px;
     margin-top: 70px;
     max-width: 800px;
-    max-height: 600px;
+    max-height: 550px;
 }
 
 @media only screen and (max-width: 600px) {
     .randomAlbumImage {
-        max-width: 80%;
-        max-height: 80%;
         border: 2px solid #ac9d9d;
         border-radius: 5px;
         margin: 10px;
@@ -486,13 +445,13 @@ a:hover {
     }
 
     #Otthon {
-        background-image: url('page_images/IMG-5923_edited.jpg');
+        background-image: url('page_images/IMG_9010.png');
         background-size: 600px cover;
         background-repeat: no-repeat;
         background-position: center center;
     }
 
-    #eloadok {
+    #musor {
         height: 110vh;
     }
 
@@ -531,15 +490,11 @@ a:hover {
 }
 
 @media only screen and (max-height: 670px) and (min-width: 350px) {
-    #eloadok {
+    #musor {
         height: 145vh;
     }
 
     #jegyeket-berleteket {
-        height: 120vh;
-    }
-
-    #benevezes {
         height: 120vh;
     }
 
@@ -582,11 +537,7 @@ a:hover {
         padding-right: 15%;
     }
 
-    #eloadok {
-        height: 110vh;
-    }
-
-    #benevezes {
+    #musor {
         height: 110vh;
     }
 
@@ -625,11 +576,7 @@ a:hover {
         padding-right: 15%;
     }
 
-    #eloadok {
-        height: 110vh;
-    }
-
-    #benevezes {
+    #musor {
         height: 110vh;
     }
 
@@ -643,10 +590,6 @@ a:hover {
 
     #keptar {
         height: 120vh;
-    }
-
-    #benevezes {
-        height: 110vh;
     }
 
     .piros-gomba {
@@ -693,7 +636,7 @@ a:hover {
         line-height: 1.5;
     }
     
-    #eloadok {
+    #musor {
         height: 130vh;
     }
 }
@@ -720,11 +663,7 @@ a:hover {
         height: 160vh;
     }
 
-    #benevezes {
-        height: 150vh;
-    }
-
-    #eloadok {
+    #musor {
         height: 150vh;
     }
 
@@ -794,7 +733,7 @@ a:hover {
 }
 
 @media only screen and (max-height: 560px) {
-    #eloadok {
+    #musor {
         height: 150vh;
     }
 
@@ -920,13 +859,13 @@ a:hover {
     }
 
     #Otthon {
-        background-image: url('page_images/IMG-5923_edited.jpg');
+        background-image: url('page_images/IMG_9010.png');
         background-size: 600px cover;
         background-repeat: no-repeat;
         background-position: center center;
     }
 
-    #eloadok {
+    #musor {
         height: 115vh;
     }
 
@@ -1014,7 +953,7 @@ a:hover {
         margin-top: -20px;
     }
 
-    #eloadok {
+    #musor {
         height: 130vh;
     }
 
@@ -1040,10 +979,6 @@ a:hover {
     .form-container {
         margin-top: 25px;
         margin-bottom: 20px;
-    }
-
-    #benevezes {
-        height: 130vh;
     }
 
     .map-container {
