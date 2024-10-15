@@ -52,9 +52,9 @@
     <div class="menu">
         <!-- Menu button for small screens -->
         <div class="menu-btn" onclick="toggleMenu()">
-            <img src="page_images/cimlogo_vaj.png" alt="Gombi logo" style="padding-top: 10px;">
+            <img src="page_images/cimlogo_vaj.png" alt="Világomba logo" style="padding-top: 10px;">
         </div>
-        <a href="#Otthon"><img class="menu-img" src="page_images/cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
+        <a href="#Otthon"><img class="menu-img" src="page_images/cimlogo_kek.png" alt="Világomba logo" style="height: 45px; margin-top: -10px;"></a>
         <a href="#Otthon" id="home">Otthon</a>
         <a href="#Musor" id="artists">Műsor</a>
         <a href="#Jegyeket-berleteket" id="tickets">Jegyeket, Bérleteket!</a>
@@ -91,10 +91,10 @@
             Fizetés a helyszínen készpénzzel vagy utalással lehetséges.
         </div>
         <div class="square">
-            <a href="#Benevezes"><img src="page_images/napijegy.png" alt="Napijegy" style="width: 100%; height: auto;"></a>
+            <a href=""><img src="" alt="Napijegy" style="width: 100%; height: auto;"></a>
         </div>
         <div class="square">
-            <a href="#Benevezes"><img src="page_images/berlet.png" alt="Bérlet" style="width: 100%; height: auto;"></a>
+            <a href=""><img src="" alt="Bérlet" style="width: 100%; height: auto;"></a>
         </div>
     </div>
     <a id="Helyszin" style="padding-top: 50px;"></a>
@@ -139,7 +139,7 @@
         <div class="title">
             Képtár
         </div>
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center; padding-right: 4px;">
             <a href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7">
             <img class="randomAlbumImage" id="randomAlbumImage" src="" alt="Világomba 2024">
             </a>
@@ -148,7 +148,7 @@
         <div class = "szoveg2" style="white-space: pre-line; margin-top: -40px; margin-bottom: 20px;">
             Kattints a képre a teljes galéria megtekintéséhez!
         </div>
-        <div class="szoveg2" style="white-space: pre; margin-top: -1.4%;">
+        <div class="szoveg2 szoveg2-1">
             Képeket készítette: 
             <a href="https://www.instagram.com/g.adam.llery/" style="align-content: center;">Kovács Ádám</a>
         </div>
@@ -323,15 +323,15 @@
     
             // Check the scroll position and update menu image accordingly
             if (scrollPosition < musorOffset) {
-                updateMenuImage('page_images/cimlogo_vaj.png');
+                updateMenuImage('page_images/cimlogo_kek.png');
             } else if (scrollPosition < jegyekOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < helyszinOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < ezugyvoltOffset) {
-                updateMenuImage('page_images/cimlogo_kek.png');
+                updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < keptarOffset) {
-                updateMenuImage('page_images/cimlogo_kek.png');
+                updateMenuImage('page_images/cimlogo_vaj.png');
             } else if (scrollPosition < kapcsolatOffset) {
                 updateMenuImage('page_images/cimlogo_vaj.png');
             } else {
