@@ -90,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.hash !== "") {
             event.preventDefault();
             var hash = this.hash;
-            var menuHeight = $('.menu').outerHeight();
+            var menuHeight = (window.innerWidth > 600) ? $('.menu').outerHeight() : 0;
+            
             $('html, body').animate({
                 scrollTop: $(hash).offset().top - menuHeight
             }, 800, function(){
@@ -100,6 +101,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     location.hash = hash;
                 }
             });
+        }
+    });
+
+    // Logo click handler for small devices
+    $('.menu-btn').on('click', function(event) {
+        if (window.innerWidth <= 600) {
+            event.preventDefault();
+            toggleMenu();
         }
     });
 
