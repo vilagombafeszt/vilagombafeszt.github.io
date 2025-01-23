@@ -26,8 +26,8 @@ body {
 }
 
 .menu a::selection {
-    background-color: #331800;
-    color: #e4d9bc;
+    background-color: #102135;
+    color: #7c8bb1;
 }
 
 .menu a:link {
@@ -272,7 +272,6 @@ body {
     color: #7c8bb1;
 }
 
-
 #kapcsolat {
     height: 50vh;
     background-color: #594a66;
@@ -295,6 +294,11 @@ a:link {
 
 #facebook-logo {
     z-index: 1000;
+}
+
+#facebook-logo:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
 }
 
 .eloadasok {
@@ -348,6 +352,11 @@ a:link {
     max-width: 800px;
     max-height: 550px;
     position: relative;
+}
+
+.randomAlbumImage:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
 }
 
 .overlay-text {

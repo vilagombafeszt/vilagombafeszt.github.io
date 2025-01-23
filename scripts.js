@@ -1,4 +1,4 @@
-$(document).ready(function() {   
+document.addEventListener('DOMContentLoaded', function() {
     // Adjusts the href attributes based on window width
     $(window).resize(function() {
         if ($(window).width() >= 700) {
@@ -54,88 +54,6 @@ $(document).ready(function() {
         });
     });
 
-    // Smooth scroll to section on menu link click
-    $(document).ready(function(){
-        $('.menu a').on('click', function(event) {
-            if (this.hash !== "") {
-                event.preventDefault();
-                var hash = this.hash;
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function(){
-                    window.location.hash = hash;
-                });
-            }
-        });
-    });
-
-    // Smooth scroll to section on square link click
-    $(document).ready(function(){
-        $('.square a').on('click', function(event) {
-            if (this.hash !== "") {
-                event.preventDefault();
-                var hash = this.hash;
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function(){
-                    window.location.hash = hash;
-                });
-            }
-        });
-    });
-
-    // Toggles visibility of the menu links
-    function toggleMenu() {
-        var menuLinks = document.querySelectorAll('.menu a');
-        // Check if any link is visible (i.e., has opacity 1)
-        var isVisible = menuLinks[0].style.opacity === '1';
-
-        menuLinks.forEach((link, index) => {
-            setTimeout(() => {
-                if (isVisible) {
-                    // Fade out
-                    link.style.opacity = '0'; // Set opacity to 0
-                    link.style.transition = 'opacity 0.3s ease'; // Transition for fading out
-                    
-                    // After fading out, set display to none
-                    setTimeout(() => {
-                        link.style.display = 'none';
-                    }, 400); // Wait for the fade-out transition to complete
-                } else {
-                    // Fade in
-                    link.style.display = 'block'; // Ensure display is block before fading in
-                    setTimeout(() => {
-                        link.style.opacity = '1'; // Set opacity to 1 to fade in
-                        link.style.transition = 'opacity 1.0s ease'; // Transition for fading in
-                    }, 1); // Slight delay to ensure display is set before fading in
-                }
-            }, 15 * index);
-        });
-    }
-
-    // Close menu when a menu item is clicked
-    document.querySelectorAll('.menu a').forEach(item => {
-        item.addEventListener('click', () => {
-            var menuBtn = document.querySelector('.menu-btn');
-            if (window.innerWidth <= 600) {
-                toggleMenu();
-                menuBtn.click();
-            }
-        });
-    });
-
-    // Toggle menu and scroll to section on menu title click
-    document.querySelector('.menu').addEventListener('click', function (event) {
-        if (event.target.tagName === 'A') {
-            var hash = event.target.hash;
-            if (window.innerWidth <= 600) {
-                toggleMenu();
-                event.preventDefault(); // Prevent default link behavior
-                document.querySelector(hash).scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    });
-
     // Updates the menu image based on scroll position
     $(window).scroll(function () {
         var scrollPosition = $(window).scrollTop();
@@ -167,9 +85,77 @@ $(document).ready(function() {
         }
     });
 
+    // Smooth scrolling for menu items
+    $('.menu a, .square a').on('click', function(event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            var menuHeight = $('.menu').outerHeight();
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top - menuHeight
+            }, 800, function(){
+                if(history.pushState) {
+                    history.pushState(null, null, hash);
+                } else {
+                    location.hash = hash;
+                }
+            });
+        }
+    });
+
+    // Toggles visibility of the menu links
+    function toggleMenu() {
+        var menuLinks = document.querySelectorAll('.menu a');
+        var isVisible = menuLinks[0].style.opacity === '1';
+
+        menuLinks.forEach((link, index) => {
+            setTimeout(() => {
+                if (isVisible) {
+                    // Fade out
+                    link.style.opacity = '0';
+                    link.style.transition = 'opacity 0.3s ease';
+                    
+                    // After fading out, set display to none
+                    setTimeout(() => {
+                        link.style.display = 'none';
+                    }, 400);
+                } else {
+                    // Fade in
+                    link.style.display = 'block';
+                    setTimeout(() => {
+                        link.style.opacity = '1';
+                        link.style.transition = 'opacity 1.0s ease';
+                    }, 1); // Slight delay to ensure display is set before fading in
+                }
+            }, 15 * index);
+        });
+    }
+
+    // Close menu when a menu item is clicked
+    document.querySelectorAll('.menu a').forEach(item => {
+        item.addEventListener('click', () => {
+            var menuBtn = document.querySelector('.menu-btn');
+            if (window.innerWidth <= 600) {
+                toggleMenu();
+                menuBtn.click();
+            }
+        });
+    });
+
+    // Toggle menu and scroll to section on menu title click
+    document.querySelector('.menu').addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+            var hash = event.target.hash;
+            if (window.innerWidth <= 600) {
+                toggleMenu();
+                event.preventDefault(); // Prevent default link behavior
+                document.querySelector(hash).scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+
     // Function to update the menu image
     function updateMenuImage(imageSrc) {
-        console.log("Updating menu image to:", imageSrc);
         $('.menu-btn img').attr('src', imageSrc);
     }
 
