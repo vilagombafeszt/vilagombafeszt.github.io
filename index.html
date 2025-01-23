@@ -56,10 +56,6 @@
         </div>
         <a href="#Otthon"><img class="menu-img" src="page_images/cimlogo_kek.png" alt="Gombi logo" style="height: 45px; margin-top: -10px;"></a>
         <a href="#Otthon" id="home">Otthon</a>
-        <!--<a href="#Eloadok" id="artists">Előadók</a>
-        <a href="#Jegyeket-berleteket" id="tickets">Jegyeket, Bérleteket!</a>
-        <a href="#Benevezes" id="application">Benevezés</a>  
-        <a href="#Helyszin" id="place">Helyszín</a>-->
         <a href="#Ez-ugy-volt" id="story">Ez úgy volt...</a>
         <a href="#Keptar" id="gallery">Képtár</a>
         <a href="#Kapcsolat" id="coninfo">Kapcsolat</a>
@@ -137,18 +133,10 @@
     <script>
         $(window).resize(function() {
             if ($(window).width() >= 700) {
-                $('#artists').attr('href', '#Eloadok');
-                $('#tickets').attr('href', '#Jegyeket-berleteket');
-                $('#application').attr('href', '#Benevezes');
-                $('#place').attr('href', '#Helyszin');
                 $('#story').attr('href', '#Ez-ugy-volt');
                 $('#gallery').attr('href', '#Keptar');
                 $('#coninfo').attr('href', '#Kapcsolat');
             } else {
-                $('#artists').attr('href', '#eloadok');
-                $('#tickets').attr('href', '#jegyeket-berleteket');
-                $('#application').attr('href', '#benevezes');
-                $('#place').attr('href', '#helyszin');
                 $('#story').attr('href', '#ez-ugy-volt');
                 $('#gallery').attr('href', '#keptar');
                 $('#coninfo').attr('href', '#kapcsolat');
@@ -269,25 +257,12 @@
             var scrollPosition = $(window).scrollTop();
     
             // Define the offsets for each section
-            var otthonOffset = $('#Otthon').offset().top;
-            var eloadokOffset = $('#eloadok').offset().top;
-            var jegyekOffset = $('#jegyeket-berleteket').offset().top - 20;
-            var benevezesOffset = $('#benevezes').offset().top - 20;
-            var helyszinOffset = $('#helyszin').offset().top - 20;
             var ezugyvoltOffset = $('#ez-ugy-volt').offset().top;
             var keptarOffset = $('#keptar').offset().top - 20;
             var kapcsolatOffset = $('#kapcsolat').offset().top;
     
             // Check the scroll position and update menu image accordingly
-            if (scrollPosition < eloadokOffset) {
-                updateMenuImage('page_images/cimlogo_vaj.png');
-            } else if (scrollPosition < jegyekOffset) {
-                updateMenuImage('page_images/cimlogo_vaj.png');
-            } else if (scrollPosition < benevezesOffset) {
-                updateMenuImage('page_images/cimlogo_kek.png');
-            } else if (scrollPosition < helyszinOffset) {
-                updateMenuImage('page_images/cimlogo_vaj.png');
-            } else if (scrollPosition < ezugyvoltOffset) {
+            if (scrollPosition < ezugyvoltOffset) {
                 updateMenuImage('page_images/cimlogo_kek.png');
             } else if (scrollPosition < keptarOffset) {
                 updateMenuImage('page_images/cimlogo_kek.png');
