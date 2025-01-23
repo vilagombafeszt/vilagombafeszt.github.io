@@ -198,25 +198,15 @@
                 if (this.hash !== "") {
                     event.preventDefault();
                     var hash = this.hash;
+                    var menuHeight = $('.menu').outerHeight();
                     $('html, body').animate({
-                        scrollTop: $(hash).offset().top
+                        scrollTop: $(hash).offset().top - menuHeight
                     }, 800, function(){
-                        window.location.hash = hash;
-                    });
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
-            $('.square a').on('click', function(event) {
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top
-                    }, 800, function(){
-                        window.location.hash = hash;
+                        if(history.pushState) {
+                            history.pushState(null, null, hash);
+                        } else {
+                            location.hash = hash;
+                        }
                     });
                 }
             });
