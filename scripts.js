@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.hash !== "") {
             event.preventDefault();
             var hash = this.hash;
-            var menuHeight = (window.innerWidth > 600) ? $('.menu').outerHeight() : 0;
+            var menuHeight = (window.innerWidth > 900) ? $('.menu').outerHeight() : 0;
             
             $('html, body').animate({
                 scrollTop: $(hash).offset().top - menuHeight
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Logo click handler for small devices
     $('.menu-btn').on('click', function(event) {
-        if (window.innerWidth <= 600) {
+        if (window.innerWidth <= 900) { // Adjusted to include iPads
             event.preventDefault();
             toggleMenu();
         }
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.menu a').forEach(item => {
         item.addEventListener('click', () => {
             var menuBtn = document.querySelector('.menu-btn');
-            if (window.innerWidth <= 600) {
+            if (window.innerWidth <= 900) {
                 toggleMenu();
                 menuBtn.click();
             }
