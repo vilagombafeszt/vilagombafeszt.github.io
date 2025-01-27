@@ -536,6 +536,10 @@ a:hover {
     #keptar {
         height: 120vh;
     }
+
+    .szoveg2-mt {
+        margin-top: -3%;
+    }
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1500px) and (max-height: 800px) {
