@@ -131,29 +131,12 @@ body {
     justify-content: center;
 }
 
-.form-container {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    display: flex;
-    justify-content: center;
-}
-
 .menu img {
     height: 30px;
     width: auto;
     position: absolute;
     left: 4%;
     padding-right: 20px;
-}
-
-.piros-gomba {
-    height: 80px;
-    width: auto;
-}
-
-.piros-gomba img {
-    height: 300%;
-    width: auto;
 }
 
 .szoveg {
@@ -181,29 +164,6 @@ body {
     display: inline-block;
     width: 23%;
     padding-top: 30px;
-}
-
-.neon {
-    color: #fff;
-    text-shadow:
-        0 0 5px #e27d6b,
-        0 0 10px #e27d6b,
-        0 0 20px #e27d6b,
-        0 0 40px #e27d6b,
-        0 0 80px #e27d6b,
-        0 0 90px #e27d6b,
-        0 0 100px #e27d6b,
-        0 0 150px #e27d6b;
-}
-
-.elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-    overflow: hidden;
-    max-height: 750px;
-}
-
-.elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-    overflow: hidden;
-    max-height: 750px;
 }
 
 #Otthon {
@@ -437,14 +397,10 @@ a:hover {
         font-size: 21px;
     }
 
-    .map-container, .form-container {
+    .map-container {
         margin-top: 20px;
         width: 90%;
         padding-left: 5%;
-    }
-
-    .form-container iframe {
-        height: 70vh;
     }
 
     .contacts {
@@ -461,16 +417,6 @@ a:hover {
 
     .contact-info a {
         font-size: 20px;
-    }
-
-    .piros-gomba {
-        height: 40px;
-        width: auto;
-    }
-
-    .piros-gomba img {
-        height: 260%;
-        width: auto;
     }
 
     .day-titles {
@@ -511,16 +457,6 @@ a:hover {
         height: 60px;
         width: auto;
         margin-top: 25px;
-    }
-
-    .elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-        overflow: hidden;
-        max-height: 390px;
-    }
-
-    .elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-        overflow: hidden;
-        max-height: 390px;
     }
 
     .szoveg2 {
@@ -652,16 +588,6 @@ a:hover {
         height: 110vh;
     }
 
-    .piros-gomba {
-        height: 60px;
-        width: auto;
-    }
-
-    .form-container {
-        margin-top: 40px;
-        margin-bottom: 20px;
-    }
-
     .menu a {
         font-size: 20px;
         margin: 0 10px;
@@ -699,6 +625,10 @@ a:hover {
     #eloadok {
         height: 130vh;
     }
+
+    .szoveg2-mt {
+        margin-top: -3%;
+    }
 }
 
 @media only screen and (min-width: 1430px) and (max-width: 1450px) and (min-height: 890px) and (max-height: 910px) {
@@ -729,16 +659,6 @@ a:hover {
 
     #eloadok {
         height: 150vh;
-    }
-
-    .piros-gomba {
-        height: 60px;
-        width: auto;
-    }
-
-    .form-container {
-        margin-top: 40px;
-        margin-bottom: 20px;
     }
 
     .menu a {
@@ -781,18 +701,6 @@ a:hover {
         font-size: 45px;
         text-align: center;
         line-height: 1.5;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    .elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-        overflow: hidden;
-        max-height: 370px;
-    }
-
-    .elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-        overflow: hidden;
-        max-height: 370px;
     }
 }
 
@@ -876,14 +784,10 @@ a:hover {
         font-size: 34px;
     }
 
-    .map-container, .form-container {
+    .map-container {
         margin-top: 50px;
         width: 90%;
         padding-left: 5%;
-    }
-
-    .form-container iframe {
-        height: 70vh;
     }
 
     .contacts {
@@ -900,17 +804,6 @@ a:hover {
 
     .contact-info a {
         font-size: 32px;
-    }
-
-    .piros-gomba {
-        height: 40px;
-        width: auto;
-        margin-top: 40px;
-    }
-
-    .piros-gomba img {
-        height: 370%;
-        width: auto;
     }
 
     .eloadasok {
@@ -941,16 +834,6 @@ a:hover {
         height: 100px;
         width: auto;
         margin-top: 25px;
-    }
-
-    .elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-        overflow: hidden;
-        max-height: 650px;
-    }
-
-    .elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-        overflow: hidden;
-        max-height: 650px;
     }
 
     .szoveg2 {
@@ -1035,16 +918,6 @@ a:hover {
         height: 180vh;
     }
 
-    .piros-gomba {
-        height: 40px;
-        width: auto;
-    }
-
-    .form-container {
-        margin-top: 25px;
-        margin-bottom: 20px;
-    }
-
     #benevezes {
         height: 130vh;
     }
@@ -1061,16 +934,6 @@ a:hover {
 
     #ez-ugy-volt {
         height: 180vh;
-    }
-
-    .elfsight-app-2bafef65-6f28-4e67-8cbf-d33f5583c421 {
-        overflow: hidden;
-        max-height: 550px;
-    }
-
-    .elfsight-app-854f55ae-9b97-4a09-933e-33d22feb37f3 {
-        overflow: hidden;
-        max-height: 550px;
     }
 
     #keptar {
