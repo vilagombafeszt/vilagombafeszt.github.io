@@ -962,4 +962,8 @@ a:hover {
         width: auto;
         margin-top: 15px;
     }
+
+    .szoveg2-mt {
+        margin-top: -1.4%;
+    }
 }
