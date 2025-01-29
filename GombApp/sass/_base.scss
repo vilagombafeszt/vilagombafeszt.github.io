@@ -1,7 +1,7 @@
-$default-font-color: #e1d7b5;
-$background-color: #0e2618;
-$button-bgcolor: #e1d7b5;
-$button-font-color: black;
+$default-font-color: #102135;;
+$background-color: #7c8bb1;
+$button-bgcolor: #102135;;
+$button-font-color: #7c8bb1;
 
 @mixin mq($size) {
     @media only screen and (min-width: $size) {
