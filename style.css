@@ -100,16 +100,41 @@ body {
 }
 
 .square {
-    width: 350px;
-    height: 500px;
+    width: 300px;
+    height: 250px;
     background-color: #102135;
-    margin: -27px 100px 0px 100px;
-    display: inline-flex;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #aa0000;
     border-radius: 10px;
-    transform: rotate(90deg);
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.square:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.square-logo {
+    width: 60px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.ticket-row a {
+    color: #ac9d9d;
+    text-decoration: none;
 }
 
 .map-container {
@@ -463,10 +488,21 @@ a:link {
         margin-top: 5px;
     }
 
+    .ticket-row {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
     .square {
-        width: 50%;
+        width: 80%;
         height: auto;
-        margin: 0px;
+        margin: 10px 0;
+    }
+
+    .square-logo {
+        width: 50px;
+        margin-bottom: 10px;
     }
 
     .szoveg {
@@ -543,7 +579,7 @@ a:link {
     }
 
     #jegyeket-berleteket {
-        height: 110vh;
+        height: 130vh;
     }
 
     #facebook-logo {
