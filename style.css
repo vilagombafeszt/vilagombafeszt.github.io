@@ -138,7 +138,7 @@ body {
 }
 
 .map-container {
-    margin-top: 70px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
 }
@@ -224,7 +224,7 @@ body {
 }
 
 #helyszin {
-    height: 100vh;
+    height: 105vh;
     background-color: #a44041;
     color: #ac9d9d;
 }
@@ -514,9 +514,9 @@ a:link {
     }
 
     .map-container {
-        margin-top: 20px;
+        margin-top: 50px;
         width: 90%;
-        padding-left: 5%;
+        padding-left: 10%;
     }
 
     .contacts {
