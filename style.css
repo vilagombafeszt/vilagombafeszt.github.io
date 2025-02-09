@@ -369,6 +369,7 @@ a:link {
     font-weight: bold;
     text-shadow: 2px 2px 4px #000000;
     white-space: nowrap;
+    pointer-events: none;
 }
 
 .copyright {
@@ -570,7 +571,7 @@ a:link {
     .eloadasok {
         padding-top: 10px;
         padding-bottom: 0px;
-        font-size: 28px;
+        font-size: 24px;
         padding-left: 40px;
         padding-right: 40px;
     }
