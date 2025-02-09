@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const randomIndex = Math.floor(Math.random() * images.length);
 
                     // Update the menu image
-                    $('.randomAlbumImage').attr('src', images[randomIndex]);
+                    $('.randomAlbumImage').attr('src', 'index_pictures/' + images[randomIndex]);
                 }
             });
         }
