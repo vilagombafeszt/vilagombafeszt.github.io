@@ -172,18 +172,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to update the menu image with a random picture from the index_pictures folder
         function updateAlbumImage() {
             $.ajax({
-                url: './index_pictures/', // Path to the folder containing images
+                url: 'images.json',
+                dataType: 'json',
                 success: function(data) {
-                    const images = $(data).find('a:contains(".jpg")').map(function() {
-                        return $(this).attr('href');
-                    }).get();
-
-                    // Select a random image from the list
+                    const images = data.map(filename => 'index_pictures/' + filename);
                     const randomIndex = Math.floor(Math.random() * images.length);
-
-                    // Update the menu image
                     $('.randomAlbumImage').attr('src', images[randomIndex]);
-                    console.log(images[randomIndex]);
+                },
+                error: function() {
+                    console.error('Error fetching image list:', error);
                 }
             });
         }
