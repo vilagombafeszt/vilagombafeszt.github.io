@@ -773,7 +773,7 @@ a:link {
 
 @media only screen and (max-height: 700px) and (min-width: 1000px) and  (max-width: 1280px) {
     #ez-ugy-volt {
-        height: 175vh;
+        height: 200vh;
     }
 
     #keptar {
@@ -791,6 +791,34 @@ a:link {
 
     .centered-title {
         padding-top: 300px;
+    }
+
+    #ez-ugy-volt  .title {
+        font-size: 50px;
+    }
+
+    #keptar .title {
+        font-size: 50px;
+    }
+
+    #musor .title {
+        font-size: 50px;
+    }
+
+    #musor .eloadasok-day {
+        font-size: 38px;
+    }
+
+    #jegyeket-berleteket .title {
+        font-size: 50px;
+    }
+
+    #helyszin .title {
+        font-size: 50px;
+    }
+
+    #kapcsolat .title {
+        font-size: 50px;
     }
 
     .square {
@@ -824,6 +852,14 @@ a:link {
         font-size: 45px;
         text-align: center;
         line-height: 1.5;
+    }
+
+    .eloadasok-others {
+        font-size: 30px;
+    }
+
+    #jegyeket-berleteket {
+        height: 210vh;
     }
 }
 
@@ -932,6 +968,10 @@ a:link {
         padding-left: 70px;
         padding-right: 70px;
         line-height: 1.7;
+    }
+
+    .eloadasok-others {
+        font-size: 30px;
     }
 
     #Otthon {
