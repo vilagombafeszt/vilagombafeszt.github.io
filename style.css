@@ -509,7 +509,7 @@ a:link {
     }
 
     .square {
-        width: 80%;
+        width: 300px;
         height: auto;
         margin: 10px 0;
     }
@@ -592,7 +592,7 @@ a:link {
     }
 
     #jegyeket-berleteket {
-        height: 375vh;
+        height: 3000px;
     }
 
     #facebook-logo {
@@ -609,10 +609,6 @@ a:link {
 @media only screen and (max-height: 670px) and (min-width: 350px) {
     #musor {
         height: 145vh;
-    }
-
-    #jegyeket-berleteket {
-        height: 450vh;
     }
 
     #helyszin {
@@ -760,10 +756,6 @@ a:link {
     .copyright {
         margin-top: -20px;
     }
-
-    #jegyeket-berleteket {
-        height: 160vh;
-    }
 }
 
 @media only screen and (min-width: 1430px) and (max-width: 1450px) and (min-height: 890px) and (max-height: 910px) {
@@ -776,10 +768,6 @@ a:link {
         font-size: 50px;
         text-align: center;
         line-height: 1.5;
-    }
-
-    #jegyeket-berleteket {
-        height: 140vh;
     }
 }
 
@@ -842,10 +830,6 @@ a:link {
 @media only screen and (max-height: 560px) {
     #musor {
         height: 150vh;
-    }
-
-    #jegyeket-berleteket {
-        height: 130vh;
     }
 
     #ez-ugy-volt {
@@ -961,10 +945,6 @@ a:link {
         height: 115vh;
     }
 
-    #jegyeket-berleteket {
-        height: 110vh;
-    }
-
     #facebook-logo {
         height: 100px;
         width: auto;
@@ -1049,10 +1029,6 @@ a:link {
         height: auto;
     }
 
-    #jegyeket-berleteket {
-        height: 180vh;
-    }
-
     .map-container {
         margin-top: 35px;
     }
@@ -1100,7 +1076,4 @@ a:link {
 }
 
 @media only screen and (min-width: 400px) and (max-width: 450px) and (max-height: 800px) {
-    #jegyeket-berleteket {
-        height: 450vh;
-    }
 }
