@@ -604,6 +604,10 @@ a:link {
     #kapcsolat {
         height: 70vh;
     }
+
+    #ez-ugy-volt {
+        height: 1300px;
+    }
 }
 
 @media only screen and (max-height: 670px) and (min-width: 350px) {
@@ -1100,12 +1104,6 @@ a:link {
         height: 100px;
         width: auto;
         margin-top: 15px;
-    }
-}
-
-@media only screen and (min-height: 670px) and (max-height: 820px) and (max-width: 420px) {
-    #ez-ugy-volt {
-        height: 170vh;
     }
 }
 
