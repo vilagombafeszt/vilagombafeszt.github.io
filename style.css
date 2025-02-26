@@ -584,7 +584,7 @@ a:link {
     }
 
     #musor {
-        height: 115vh;
+        height: 1200px;
     }
 
     #keptar {
@@ -611,10 +611,6 @@ a:link {
 }
 
 @media only screen and (max-height: 670px) and (min-width: 350px) {
-    #musor {
-        height: 145vh;
-    }
-
     #helyszin {
         height: 120vh;
     }
