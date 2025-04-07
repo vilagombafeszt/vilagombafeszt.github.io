@@ -3,6 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
 import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+import { getFirestore, doc, getDoc }  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -23,6 +25,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
+const firestoreDB = getFirestore(app);
 
 const backButton = document.getElementById('back-button');
 const backButton2 = document.getElementById('back-button2');
@@ -49,19 +52,32 @@ backButton2.addEventListener('click', function() {
     summarystats.style.display = 'none';
 });
 
-onAuthStateChanged(auth, (user) => {
-    const allowedUids = ['9HBKQhxPThQXX51YLwHKGaLiz0D3', 'JlsebVypa1cYKXiLjIns7MktYmy2'];
-    if (allowedUids.includes(user.uid)) {
-      // Admin is signed in
-        header.style.display = 'block';
-        menu.style.display = 'grid';
-        fetchAndDisplayStatistics();
-    } 
-    else {
-      // No admin is signed in
-      alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const adminDocRef = doc(firestoreDB, 'admins', 'admin');
+    try {
+      const docSnap = await getDoc(adminDocRef);
+      if (docSnap.exists()) {
+        const adminData = docSnap.data();
+        if (adminData[user.uid] === true) { // Check if the user's UID exists and is true
+          header.style.display = 'block';
+          menu.style.display = 'grid';
+          fetchAndDisplayStatistics();
+        } else {
+          // User is not an admin
+          alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+        }
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
     }
-  });
+  } else {
+    // No user is signed in
+    alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+  }
+});
 
   bartenderButton.addEventListener('click', function() {
     bartenderstats.style.display = 'block';
