@@ -271,10 +271,18 @@ body {
 }
 
 #kapcsolat {
-    height: 50vh;
+    height: 70vh;
     background-color: #594a66;
     color: #ac9d9d;
     text-align: left;
+}
+
+#kapcsolat a:visited {
+    color: #ac9d9d;
+}
+
+#kapcsolat a:visited:hover {
+    color: #102135;
 }
 
 a:link {
@@ -602,7 +610,7 @@ a:link {
     }
 
     #kapcsolat {
-        height: 70vh;
+        height: 80vh;
     }
 
     #ez-ugy-volt {
