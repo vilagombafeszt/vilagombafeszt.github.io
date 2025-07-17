@@ -48,6 +48,8 @@ onAuthStateChanged(auth, (user) => {
         agendaCal.addEventListener('click', function() {
             alert('Kérjük, jelentkezzen be az oldal használatához!');
         });
+        alert('Kérjük, jelentkezzen be az oldal használatához!');
+        window.location.href = 'index.html';
     }
   });
 
