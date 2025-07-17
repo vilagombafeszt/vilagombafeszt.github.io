@@ -24,6 +24,19 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
+// Authentication check
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in
+    console.log("User authenticated:", user.uid);
+  } else {
+    // No user is signed in
+    console.log("User not authenticated, redirecting to login");
+    alert('Kérjük, jelentkezzen be az oldal használatához!');
+    window.location.href = 'index.html';
+  }
+});
+
 document.getElementById('order-save1').addEventListener('click', saveOrder);
 document.getElementById('order-save2').addEventListener('click', saveOrder);
 

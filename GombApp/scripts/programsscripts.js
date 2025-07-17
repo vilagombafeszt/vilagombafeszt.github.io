@@ -31,6 +31,7 @@ back1.addEventListener('click', function() {
 onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in
+        console.log("User authenticated:", user.uid);
         realtimeCal.addEventListener('click', function() {
             showRealtime();
         });
@@ -40,11 +41,12 @@ onAuthStateChanged(auth, (user) => {
     } 
     else {
       // No user is signed in
+        console.log("User not authenticated!");
         realtimeCal.addEventListener('click', function() {
-            alert('Kérlek jelentkezz be!');
+            alert('Kérjük, jelentkezzen be az oldal használatához!');
         });
         agendaCal.addEventListener('click', function() {
-            alert('Kérlek jelentkezz be!');
+            alert('Kérjük, jelentkezzen be az oldal használatához!');
         });
     }
   });
