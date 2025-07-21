@@ -216,6 +216,18 @@ body {
     color: #354b3d;
 }
 
+#musor a {
+    color: #ac9d9d;
+}
+
+#musor a:visited {
+    color: #ac9d9d;
+}
+
+#musor a:visited:hover {
+    color: #ac9d9d;
+}
+
 #jegyeket-berleteket {
     height: 125vh;
     background-color: #355168;
@@ -333,6 +345,7 @@ a:link {
     margin: 5px 0;
     font-size: 35px;
     text-align: center;
+    font-family: 'Alumni Sans';
 }
 
 .szoveg2 {
@@ -507,6 +520,8 @@ a:link {
 
     .eloadasok-others {
         margin-top: -30px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .ticket-row {

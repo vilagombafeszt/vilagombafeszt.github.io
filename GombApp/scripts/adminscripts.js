@@ -66,6 +66,7 @@ onAuthStateChanged(auth, async (user) => {
         } else {
           // User is not an admin
           alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+          window.location.href = 'index.html';
         }
       } else {
         console.log("No such document!");
@@ -76,6 +77,7 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     // No user is signed in
     alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+     window.location.href = 'index.html';
   }
 });
 
