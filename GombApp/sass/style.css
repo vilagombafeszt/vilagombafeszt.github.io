@@ -337,3 +337,9 @@ button {
   align-self: flex-end;
   margin-right: auto;
 }/*# sourceMappingURL=style.css.map */
+
+.disabled-button {
+  background-color: #1a1a1b;
+  color: #7c8bb1;
+  cursor: not-allowed;
+}

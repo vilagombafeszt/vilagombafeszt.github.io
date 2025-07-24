@@ -48,12 +48,7 @@ const orderList = document.getElementById('order-list-container');
 const menu = document.querySelector('.menu');
 
 backButton.addEventListener('click', function() {
-    if(window.history.length == 1) {
-        window.location.href = 'index.html';
-    }
-    else {
-        window.history.back();
-    }
+    window.location.href = 'index.html';
 });
 
 backButton2.addEventListener('click', function() {
@@ -131,11 +126,11 @@ function updateTotalPrice() {
     orderList.forEach(item => {
         const drink = item.querySelector('span').textContent;
         switch (drink) {
-            case 'Korsó Sör':
-                totalPrice += prices.korsoSorPrice || 0;
+            case 'Korsó Kőbányai':
+                totalPrice += prices.korsoKobiPrice || 0;
                 break;
-            case 'Pohár Sör':
-                totalPrice += prices.poharSorPrice || 0;
+            case 'Pohár Kőbányai':
+                totalPrice += prices.poharKobiPrice || 0;
                 break;
             case 'Nagyfröccs':
                 totalPrice += prices.nagyfroccsPrice || 0;
@@ -203,11 +198,11 @@ function saveOrder(e) {
                 newOrders.forEach(drink => {
                     let drinkPrice = 0;
                     switch (drink) {
-                        case 'Korsó Sör':
-                            drinkPrice = prices.korsoSorPrice || 0;
+                        case 'Korsó Kőbányai':
+                            drinkPrice = prices.korsoKobiPrice || 0;
                             break;
-                        case 'Pohár Sör':
-                            drinkPrice = prices.poharSorPrice || 0;
+                        case 'Pohár Kőbányai':
+                            drinkPrice = prices.poharKobiPrice || 0;
                             break;
                         case 'Nagyfröccs':
                             drinkPrice = prices.nagyfroccsPrice || 0;
