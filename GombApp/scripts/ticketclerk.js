@@ -1,12 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 const firebaseConfig = {
   apiKey: "AIzaSyAUIzNyW_fNZ00CN31_vLn7chuZxR6O2_s",
   authDomain: "gombapp-vilagomba.firebaseapp.com",
@@ -18,37 +17,24 @@ const firebaseConfig = {
   measurementId: "G-X958E6F491"
 };
 
+document.getElementById('order-save1').addEventListener('click', saveOrder);
+document.getElementById('order-save2').addEventListener('click', saveOrder);
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-// Authentication check
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in
-    console.log("User authenticated:", user.uid);
-  } else {
-    // No user is signed in
-    console.log("User not authenticated, redirecting to login");
-    alert('Kérjük, jelentkezzen be az oldal használatához!');
-    window.location.href = 'index.html';
-  }
-});
-
-document.getElementById('order-save1').addEventListener('click', saveOrder);
-document.getElementById('order-save2').addEventListener('click', saveOrder);
-
+const backButton = document.getElementById('back-button');
 const backButton2 = document.getElementById('back-button2');
 const orderButton = document.getElementById('order-button');
 const fixedBottom = document.getElementById('fixed-bottom');
-const orderList = document.getElementById('order-list-container');
 const menu = document.querySelector('.menu');
-const backButton = document.getElementById('back-button');
+const orderList = document.getElementById('order-list-container');
 
 backButton.addEventListener('click', function() {
-    window.location.href = 'foodserver.html';
+    window.location.href = 'index.html';
 });
 
 backButton2.addEventListener('click', function() {
@@ -67,10 +53,14 @@ orderButton.addEventListener('click', function() {
     backButton.style.display = 'none';
 });
 
-document.querySelectorAll('.lunch-button').forEach(button => {
+const getInputVal = (id) => {
+    return document.getElementById(id).value;
+}
+
+document.querySelectorAll('.type-button').forEach(button => {
     button.addEventListener('click', () => {
-        const food = button.getAttribute('data-food');
-        addOrderItem(food);
+        const ticket = button.getAttribute('data-type');
+        addOrderItem(ticket);
     });
 });
 
@@ -79,12 +69,12 @@ fetchPrices().then(fetchedPrices => {
     prices = fetchedPrices;
 });
 
-function addOrderItem(food) {
+function addOrderItem(ticket) {
     var orderList = document.getElementById('order-list');
     var listItem = document.createElement('li');
     
-    var foodName = document.createElement('span');
-    foodName.textContent = food;
+    var ticketName = document.createElement('span');
+    ticketName.textContent = ticket;
 
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'X';
@@ -95,7 +85,7 @@ function addOrderItem(food) {
         updateTotalPrice();
     });
 
-    listItem.appendChild(foodName);
+    listItem.appendChild(ticketName);
     listItem.appendChild(deleteButton);
     orderList.appendChild(listItem);
     
@@ -103,11 +93,11 @@ function addOrderItem(food) {
 }
 
 function fetchPrices() {
-    return get(ref(database, 'Árak/Étel')).then((snapshot) => {
+    return get(ref(database, 'Árak/Jegy')).then((snapshot) => {
         if (snapshot.exists()) {
             return snapshot.val();
         } else {
-            console.error("Nem található a termék ára!");
+            console.error("Nem található a jegytípus ára!");
             return {};
         }
     }).catch((error) => {
@@ -120,24 +110,32 @@ function updateTotalPrice() {
     let totalPrice = 0;
     const orderList = Array.from(document.getElementById('order-list').children);
     orderList.forEach(item => {
-        const food = item.querySelector('span').textContent;
-        switch (food) {
-            case 'Paprikás krumpli':
-                totalPrice += prices.ebed1Price || 0;
+        const ticket = item.querySelector('span').textContent;
+        switch (ticket) {
+            case 'Bérlet':
+                totalPrice += prices.passPrice || 0;
                 break;
-            case 'Lecsó':
-                totalPrice += prices.ebed2Price || 0;
+            case 'Napijegy (péntek)':
+                totalPrice += prices.fridayPrice || 0;
                 break;
+            case 'Napijegy (szombat)':
+                totalPrice += prices.saturdayPrice || 0;
+                break;
+            case 'Napijegy (vasárnap)':
+                totalPrice += prices.sundayPrice || 0;
+                break;
+            default:
+                console.warn(`Unknown ticket type: ${ticket}`);
+            break;
         }
     });
-    document.getElementById('total-price1').textContent = `Teljes ár: ${totalPrice} Ft`;
     document.getElementById('total-price2').textContent = `Teljes ár: ${totalPrice} Ft`;
 }
 
 function saveOrder(e) {
     e.preventDefault();
     if (document.getElementById('order-list').children.length === 0) {
-        alert('Adj hozzá legalább egy ételt a rendeléshez!');
+        alert('Adj hozzá legalább egy jegytípust a rendeléshez!');
         return;
     }
     onAuthStateChanged(auth, (user) => {
@@ -146,24 +144,33 @@ function saveOrder(e) {
             var newOrders = Array.from(orderList.children).map(item => item.querySelector('span').textContent);
             var email = user.email;
             const uid = user.uid;
-            const userOrderRef = ref(database, 'Rendelések/Étel/' + uid);
+            const userOrderRef = ref(database, 'Rendelések/Jegy/' + uid);
 
             fetchPrices().then(prices => {
                 let totalPrice = 0;
                 let orderPrices = [];
 
-                newOrders.forEach(food => {
-                    let foodPrice = 0;
-                    switch (food) {
-                        case 'Paprikás krumpli':
-                            foodPrice = prices.ebed1Price || 0;
-                            break;
-                        case 'Lecsó':
-                            foodPrice = prices.ebed2Price || 0;
-                            break;
-                    }
-                    totalPrice += foodPrice;
-                    orderPrices.push(foodPrice);
+                newOrders.forEach(ticket => {
+                    let ticketPrice = 0;
+                    switch (ticket) {
+                      case 'Bérlet':
+                          ticketPrice = prices.passPrice || 0;
+                          break;
+                      case 'Napijegy (péntek)':
+                          ticketPrice = prices.fridayPrice || 0;
+                          break;
+                      case 'Napijegy (szombat)':
+                          ticketPrice = prices.saturdayPrice || 0;
+                          break;
+                      case 'Napijegy (vasárnap)':
+                          ticketPrice = prices.sundayPrice || 0;
+                          break;
+                      default:
+                          console.warn(`Unknown ticket type: ${ticket}`);
+                      break;
+                  }
+                    totalPrice += ticketPrice;
+                    orderPrices.push(ticketPrice);
                 });
 
                 get(userOrderRef).then((snapshot) => {
@@ -197,7 +204,6 @@ function saveOrder(e) {
                     });
 
                     orderList.innerHTML = '';
-                    document.getElementById('total-price1').textContent = `Teljes ár: 0 Ft`;
                     document.getElementById('total-price2').textContent = `Teljes ár: 0 Ft`;
                 }).catch((error) => {
                     console.error("Error reading data:", error);

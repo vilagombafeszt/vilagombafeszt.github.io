@@ -47,14 +47,14 @@ onAuthStateChanged(auth, (user) => {
       // User is signed in
       afterLogin();
       const bartenderButton = document.getElementById('bartender');
-      const foodserverButton = document.getElementById('food-server');
+      const ticketClerkButton = document.getElementById('ticket-clerk');
       const programsButton = document.getElementById('programs');
       const adminButton = document.getElementById('admin');
         bartenderButton.addEventListener('click', function() {
             window.location.href = 'bartender.html';
         });
-        foodserverButton.addEventListener('click', function() {
-            window.location.href = 'foodserver.html';
+        ticketClerkButton.addEventListener('click', function() {
+            window.location.href = 'ticketclerk.html';
         });
         programsButton.addEventListener('click', function() {
           window.location.href = 'programs.html';
@@ -75,13 +75,13 @@ onAuthStateChanged(auth, (user) => {
       headerContent.style.flexDirection = 'row';
       setMenuMarginTo20();
       const bartenderButton = document.getElementById('bartender');
-      const foodserverButton = document.getElementById('food-server');
+      const ticketClerkButton = document.getElementById('ticket-clerk');
       const programsButton = document.getElementById('programs');
       const adminButton = document.getElementById('admin');
       bartenderButton.addEventListener('click', function() {
         alert('Kérlek jelentkezz be!');
       });
-      foodserverButton.addEventListener('click', function() {
+      ticketClerkButton.addEventListener('click', function() {
         alert('Kérlek jelentkezz be!');
       });
       programsButton.addEventListener('click', function() {

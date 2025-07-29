@@ -172,7 +172,7 @@ button {
   margin-top: 20px;
 }
 
-.bartender-title {
+.bartender-title, .ticketclerk-title {
   font-family: "Alumni Sans", sans-serif;
   font-size: 40px;
   margin-top: 15px;
@@ -257,6 +257,12 @@ button {
   margin-left: -20px;
 }
 
+.disabled-button {
+  background-color: #1a1a1b;
+  color: #7c8bb1;
+  cursor: not-allowed;
+}
+
 @media only screen and (orientation: landscape) {
   .footer-text {
     margin-top: 100px;
@@ -337,9 +343,3 @@ button {
   align-self: flex-end;
   margin-right: auto;
 }/*# sourceMappingURL=style.css.map */
-
-.disabled-button {
-  background-color: #1a1a1b;
-  color: #7c8bb1;
-  cursor: not-allowed;
-}
