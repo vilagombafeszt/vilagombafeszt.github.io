@@ -170,7 +170,7 @@ body {
 .contacts {
     display: flex;
     justify-content: center;
-    height: 50%;
+    height: 30%;
     font-family: 'Alumni Sans';
     font-size: 35px;
     margin-top: 50px;
@@ -283,7 +283,7 @@ body {
 }
 
 #kapcsolat {
-    height: 70vh;
+    height: 90vh;
     background-color: #594a66;
     color: #ac9d9d;
     text-align: left;
@@ -398,6 +398,74 @@ a:link {
     text-align: center;
     margin-top: 20px;
     font-size: 24px;
+}
+
+.tamogatok-section {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.tamogatok-title {
+    font-family: 'Alumni Sans';
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #ac9d9d;
+}
+
+.tamogatok-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.tamogatok-logo {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.tamogatok-logo:hover {
+    transform: scale(1.05);
+}
+
+@media only screen and (max-width: 600px) {
+    .tamogatok-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 600px;
+        gap: 10px;
+        margin-top: -20px;
+        margin-bottom: 20px;
+    }
+
+    .tamogatok-logo {
+        width: 100px;
+    }
+    
+    .tamogatok-title {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 850px) and (min-width: 600px) {
+    .tamogatok-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 800px;
+        gap: 20px;
+    }
+
+    .tamogatok-logo {
+        width: 150px;
+    }
+    
+    .tamogatok-title {
+        font-size: 28px;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -558,7 +626,7 @@ a:link {
         flex-direction: column;
         align-items: center;
         margin-top: -10px;
-        height: 60%;
+        height: 35%;
     }
 
     .contact-info {
@@ -625,7 +693,7 @@ a:link {
     }
 
     #kapcsolat {
-        height: 80vh;
+        height: 110vh;
     }
 
     #ez-ugy-volt {
@@ -855,7 +923,7 @@ a:link {
     }
 
     #kapcsolat {
-        height: 70vh;
+        height: 110vh;
     }
 
     #helyszin {
@@ -1111,7 +1179,7 @@ a:link {
     }
 
     #kapcsolat {
-        height: 110vh;
+        height: 120vh;
     }
 
     .contacts {
