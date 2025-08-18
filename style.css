@@ -130,6 +130,15 @@ body {
     height: auto;
 }
 
+.musor-padding {
+    padding: 0 40px;
+    max-height: 600px;
+    @media (max-width: 600px) {
+        padding: 0 0 0 10px;
+        max-height: 360px;
+    }
+}
+
 .ticket-row {
     display: flex;
     justify-content: center;
@@ -346,6 +355,10 @@ a:link {
     font-size: 35px;
     text-align: center;
     font-family: 'Alumni Sans';
+}
+
+.eloadasok-others {
+    margin-top: 30px;
 }
 
 .szoveg2 {
@@ -587,9 +600,9 @@ a:link {
     }
 
     .eloadasok-others {
-        margin-top: -30px;
         margin-left: 10px;
         margin-right: 10px;
+        margin-top: 0px;
     }
 
     .ticket-row {
@@ -663,8 +676,6 @@ a:link {
         padding-top: 10px;
         padding-bottom: 0px;
         font-size: 24px;
-        padding-left: 40px;
-        padding-right: 40px;
     }
 
     #Otthon {
@@ -675,7 +686,7 @@ a:link {
     }
 
     #musor {
-        height: 1350px;
+        height: 1550px;
     }
 
     #keptar {
@@ -742,11 +753,6 @@ a:link {
         font-size: 35px;
     }
 
-    .eloadasok {
-        padding-left: 15%;
-        padding-right: 15%;
-    }
-
     #musor {
         height: 110vh;
     }
@@ -783,11 +789,6 @@ a:link {
         margin-left: 8%;
         margin-right: 8%;
         font-size: 30px;
-    }
-
-    .eloadasok {
-        padding-left: 15%;
-        padding-right: 15%;
     }
 
     #musor {
@@ -841,8 +842,6 @@ a:link {
         font-family: 'Alumni Sans';
         font-weight: 600;
         padding-top: 30px;
-        padding-left: 200px;
-        padding-right: 200px;
         font-size: 47px;
         text-align: center;
         line-height: 1.5;
@@ -862,8 +861,6 @@ a:link {
         font-family: 'Alumni Sans';
         font-weight: 600;
         padding-top: 30px;
-        padding-left: 200px;
-        padding-right: 200px;
         font-size: 50px;
         text-align: center;
         line-height: 1.5;
@@ -946,8 +943,6 @@ a:link {
         font-family: 'Alumni Sans';
         font-weight: 600;
         padding-top: 30px;
-        padding-left: 200px;
-        padding-right: 200px;
         font-size: 45px;
         text-align: center;
         line-height: 1.5;
@@ -955,6 +950,7 @@ a:link {
 
     .eloadasok-others {
         font-size: 30px;
+        margin-top: 30px;
     }
 
     #jegyeket-berleteket {
@@ -1064,13 +1060,12 @@ a:link {
         padding-top: 30px;
         padding-bottom: 0px;
         font-size: 40px;
-        padding-left: 70px;
-        padding-right: 70px;
         line-height: 1.7;
     }
 
     .eloadasok-others {
         font-size: 30px;
+        margin-top: 30px;
     }
 
     #Otthon {
@@ -1148,8 +1143,6 @@ a:link {
     }
 
     .eloadasok {
-        padding-left: 10%;
-        padding-right: 10%;
         font-size: 25px;
         margin-top: -20px;
     }
