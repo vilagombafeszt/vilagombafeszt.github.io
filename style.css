@@ -151,9 +151,16 @@ body {
 }
 
 .map-container {
-    margin-top: 50px;
+    margin: 50px 15px 0px 15px;
     display: flex;
     justify-content: center;
+}
+
+.map-container iframe {
+    border:0;
+    border-radius: 10px;
+    max-height: 70vh;
+    max-width: 45vw;
 }
 
 .menu img {
@@ -250,7 +257,7 @@ body {
 }
 
 #helyszin {
-    height: 105vh;
+    height: 110vh;
     background-color: #a44041;
     color: #ac9d9d;
 }
@@ -261,7 +268,7 @@ body {
 }
 
 #ez-ugy-volt {
-    height: 135vh;
+    height: 150vh;
     background-color: #474738;
     color: #ac9d9d;
     text-align: center;
@@ -391,6 +398,12 @@ a:link {
     transition: transform 0.3s ease;
 }
 
+.maps-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .overlay-text {
     position: absolute;
     top: 50%;
@@ -462,6 +475,16 @@ a:link {
     
     .tamogatok-title {
         font-size: 24px;
+    }
+
+    .map-container iframe {
+        border:0;
+        border-radius: 10px;
+        max-height: 450px;
+    }
+
+    #helyszin {
+        height: 160vh;
     }
 }
 
@@ -631,8 +654,6 @@ a:link {
 
     .map-container {
         margin-top: 50px;
-        width: 90%;
-        padding-left: 10%;
     }
 
     .contacts {
@@ -658,6 +679,9 @@ a:link {
         font-size: 22px;
     }
 
+    .maps-container {
+        display: block;
+    }
 
     .contact-info td:first-child {
         font-weight: bold;
@@ -1036,8 +1060,6 @@ a:link {
 
     .map-container {
         margin-top: 50px;
-        width: 90%;
-        padding-left: 5%;
     }
 
     .contacts {
@@ -1204,6 +1226,10 @@ a:link {
 @media only screen and (min-width: 350px) and (max-width: 400px) and (max-height: 800px) {
     #ez-ugy-volt {
         height: 1300px;
+    }
+
+    #helyszin {
+        height: 180vh;
     }
 }
 
