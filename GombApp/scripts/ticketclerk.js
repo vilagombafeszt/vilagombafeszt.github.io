@@ -29,6 +29,7 @@ const database = getDatabase(app);
 const backButton = document.getElementById('back-button');
 const backButton2 = document.getElementById('back-button2');
 const orderButton = document.getElementById('order-button');
+const statButton = document.getElementById('stat-button');
 const fixedBottom = document.getElementById('fixed-bottom');
 const menu = document.querySelector('.menu');
 const orderList = document.getElementById('order-list-container');
@@ -38,6 +39,12 @@ backButton.addEventListener('click', function() {
 });
 
 backButton2.addEventListener('click', function() {
+    // Hide statistics view if visible
+    const statsContainer = document.getElementById('statistics-container');
+    if (statsContainer) {
+        statsContainer.style.display = 'none';
+    }
+    
     fixedBottom.style.display = 'flex';
     orderList.style.display = 'none';
     menu.style.display = 'grid';
@@ -51,6 +58,10 @@ orderButton.addEventListener('click', function() {
     menu.style.display = 'none';
     backButton2.style.display = 'block';
     backButton.style.display = 'none';
+});
+
+statButton.addEventListener('click', function() {
+    showStatistics();
 });
 
 const getInputVal = (id) => {
@@ -202,6 +213,82 @@ function updateMaxTicketCounts(ticketCounts) {
     }
     
     return Promise.all(promises);
+}
+
+// Function to fetch max ticket counts from database
+function fetchMaxTicketCounts() {
+    const promises = [
+        get(ref(database, 'Jegyek/pentekMax')),
+        get(ref(database, 'Jegyek/szombatMax')),
+        get(ref(database, 'Jegyek/vasarnapMax'))
+    ];
+    
+    return Promise.all(promises).then(snapshots => {
+        return {
+            friday: snapshots[0].exists() ? snapshots[0].val() : 0,
+            saturday: snapshots[1].exists() ? snapshots[1].val() : 0,
+            sunday: snapshots[2].exists() ? snapshots[2].val() : 0
+        };
+    }).catch(error => {
+        console.error("Error fetching max ticket counts:", error);
+        return { friday: 0, saturday: 0, sunday: 0 };
+    });
+}
+
+// Function to show statistics
+function showStatistics() {
+    // Hide all other elements
+    fixedBottom.style.display = 'none';
+    orderList.style.display = 'none';
+    menu.style.display = 'none';
+    
+    // Show back button 2
+    backButton2.style.display = 'block';
+    backButton.style.display = 'none';
+    
+    // Create or show statistics container
+    let statsContainer = document.getElementById('statistics-container');
+    if (!statsContainer) {
+        statsContainer = document.createElement('div');
+        statsContainer.id = 'statistics-container';
+        statsContainer.className = 'statistics-container';
+        document.querySelector('main .order-container').appendChild(statsContainer);
+    }
+    
+    statsContainer.innerHTML = '<div class="loading">Statisztika betöltése...</div>';
+    statsContainer.style.display = 'flex';
+    
+    // Fetch and display max ticket counts
+    fetchMaxTicketCounts().then(maxCounts => {
+        const fridayBorderColor = maxCounts.friday === 0 ? '#d32f2f' : '#4CAF50';
+        const saturdayBorderColor = maxCounts.saturday === 0 ? '#d32f2f' : '#4CAF50';
+        const sundayBorderColor = maxCounts.sunday === 0 ? '#d32f2f' : '#4CAF50';
+        
+        statsContainer.innerHTML = `
+            <div class="statistics-content">
+                <h2>Jegy Statisztikák</h2>
+                <div class="stat-item" style="border-left-color: ${fridayBorderColor};">
+                    <div class="stat-day">Péntek</div>
+                    <div class="stat-count">Elérhető helyek: ${maxCounts.friday}</div>
+                </div>
+                <div class="stat-item" style="border-left-color: ${saturdayBorderColor};">
+                    <div class="stat-day">Szombat</div>
+                    <div class="stat-count">Elérhető helyek: ${maxCounts.saturday}</div>
+                </div>
+                <div class="stat-item" style="border-left-color: ${sundayBorderColor};">
+                    <div class="stat-day">Vasárnap</div>
+                    <div class="stat-count">Elérhető helyek: ${maxCounts.sunday}</div>
+                </div>
+            </div>
+        `;
+    }).catch(error => {
+        statsContainer.innerHTML = `
+            <div class="statistics-content">
+                <h2>Jegy Statisztikák</h2>
+                <div class="error">Hiba történt az adatok betöltése közben.</div>
+            </div>
+        `;
+    });
 }
 
 function saveOrder(e) {
