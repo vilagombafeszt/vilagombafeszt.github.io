@@ -172,7 +172,7 @@ button {
   margin-top: 20px;
 }
 
-.bartender-title {
+.bartender-title, .ticketclerk-title {
   font-family: "Alumni Sans", sans-serif;
   font-size: 40px;
   margin-top: 15px;
@@ -307,6 +307,13 @@ button {
   font-size: 28px;
 }
 
+.res-adj6 {
+  font-size: 18px;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+}
+
 @media only screen and (min-width: 400px) {
   .res-adj1 {
     font-size: 18px;
@@ -326,6 +333,9 @@ button {
   }
   .res-adj5 {
     font-size: 1.2em;
+  }
+  .res-adj6 {
+    font-size: 18px;
   }
 }
 .loginform-buttons {

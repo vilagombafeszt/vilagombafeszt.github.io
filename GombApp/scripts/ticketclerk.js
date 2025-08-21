@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+import { getDatabase, ref, set, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -132,6 +132,78 @@ function updateTotalPrice() {
     document.getElementById('total-price2').textContent = `Teljes ár: ${totalPrice} Ft`;
 }
 
+// Function to count tickets by type
+function countTicketsByType(orders) {
+    let counts = {
+        friday: 0,
+        saturday: 0,
+        sunday: 0,
+        pass: 0
+    };
+    
+    orders.forEach(ticket => {
+        switch (ticket) {
+            case 'Bérlet':
+                counts.pass++;
+                break;
+            case 'Napijegy (péntek)':
+                counts.friday++;
+                break;
+            case 'Napijegy (szombat)':
+                counts.saturday++;
+                break;
+            case 'Napijegy (vasárnap)':
+                counts.sunday++;
+                break;
+        }
+    });
+    
+    return counts;
+}
+
+// Function to update max ticket counts using transactions for atomic operations
+function updateMaxTicketCounts(ticketCounts) {
+    const promises = [];
+    
+    // Update Friday max count
+    if (ticketCounts.friday > 0 || ticketCounts.pass > 0) {
+        const fridayRef = ref(database, 'Jegyek/pentekMax');
+        promises.push(
+            runTransaction(fridayRef, (currentValue) => {
+                const currentMax = currentValue || 0;
+                const decrease = ticketCounts.friday + ticketCounts.pass;
+                return Math.max(0, currentMax - decrease);
+            })
+        );
+    }
+    
+    // Update Saturday max count
+    if (ticketCounts.saturday > 0 || ticketCounts.pass > 0) {
+        const saturdayRef = ref(database, 'Jegyek/szombatMax');
+        promises.push(
+            runTransaction(saturdayRef, (currentValue) => {
+                const currentMax = currentValue || 0;
+                const decrease = ticketCounts.saturday + ticketCounts.pass;
+                return Math.max(0, currentMax - decrease);
+            })
+        );
+    }
+    
+    // Update Sunday max count
+    if (ticketCounts.sunday > 0 || ticketCounts.pass > 0) {
+        const sundayRef = ref(database, 'Jegyek/vasarnapMax');
+        promises.push(
+            runTransaction(sundayRef, (currentValue) => {
+                const currentMax = currentValue || 0;
+                const decrease = ticketCounts.sunday + ticketCounts.pass;
+                return Math.max(0, currentMax - decrease);
+            })
+        );
+    }
+    
+    return Promise.all(promises);
+}
+
 function saveOrder(e) {
     e.preventDefault();
     if (document.getElementById('order-list').children.length === 0) {
@@ -190,21 +262,28 @@ function saveOrder(e) {
                     const updatedTotalPrice = existingTotalPrice + totalPrice;
                     const updatedOrderCount = existingOrderCount + 1;
 
-                    set(userOrderRef, {
-                        email: email,
-                        orderList: updatedOrders,
-                        orderPrices: updatedOrderPrices,
-                        totalPrice: updatedTotalPrice,
-                        orderCount: updatedOrderCount
-                    }).then(() => {
+                    // Count tickets by type for max count updates
+                    const ticketCounts = countTicketsByType(newOrders);
+
+                    // Save user order and update max counts simultaneously
+                    Promise.all([
+                        set(userOrderRef, {
+                            email: email,
+                            orderList: updatedOrders,
+                            orderPrices: updatedOrderPrices,
+                            totalPrice: updatedTotalPrice,
+                            orderCount: updatedOrderCount
+                        }),
+                        updateMaxTicketCounts(ticketCounts)
+                    ]).then(() => {
                         alert('Sikeresen mentve!');
+                        orderList.innerHTML = '';
+                        document.getElementById('total-price2').textContent = `Teljes ár: 0 Ft`;
                     }).catch((error) => {
                         console.error("Error saving data:", error);
                         alert("Hiba történt az adatok mentése közben.");
                     });
 
-                    orderList.innerHTML = '';
-                    document.getElementById('total-price2').textContent = `Teljes ár: 0 Ft`;
                 }).catch((error) => {
                     console.error("Error reading data:", error);
                     alert("Hiba történt az adatok olvasása közben.");
