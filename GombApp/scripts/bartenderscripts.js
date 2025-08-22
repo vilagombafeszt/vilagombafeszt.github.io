@@ -180,6 +180,9 @@ function updateTotalPrice() {
             case 'Jeges tea':
                 totalPrice += prices.jegesteaPrice || 0;
                 break;
+            case 'Limonádé':
+                totalPrice += prices.limonadePrice || 0;
+                break;
         }
     });
     document.getElementById('total-price1').textContent = `Teljes ár: ${totalPrice} Ft`;
@@ -260,6 +263,9 @@ function saveOrder(e) {
                             break;
                         case 'Jeges tea':
                             drinkPrice = prices.jegesteaPrice || 0;
+                            break;
+                        case 'Limonádé':
+                            drinkPrice = prices.limonadePrice || 0;
                             break;
                     }
                     totalPrice += drinkPrice;
