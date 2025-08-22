@@ -132,6 +132,12 @@ function updateTotalPrice() {
             case 'Pohár Kőbányai':
                 totalPrice += prices.poharKobiPrice || 0;
                 break;
+            case 'Korsó Kézműves':
+                totalPrice += prices.korsoNarancsSor || 0;
+                break;
+            case 'Pohár Kézműves':
+                totalPrice += prices.poharNarancsSor || 0;
+                break;
             case 'Nagyfröccs':
                 totalPrice += prices.nagyfroccsPrice || 0;
                 break;
@@ -166,6 +172,9 @@ function updateTotalPrice() {
                 totalPrice += prices.nagypalinkaPrice || 0;
                 break;
             case 'Kávé':
+                totalPrice += prices.kavePrice || 0;
+                break;
+            case 'Tejes Kávé':
                 totalPrice += prices.kavePrice || 0;
                 break;
             case 'Jeges tea':
@@ -204,6 +213,12 @@ function saveOrder(e) {
                         case 'Pohár Kőbányai':
                             drinkPrice = prices.poharKobiPrice || 0;
                             break;
+                        case 'Korsó Kézműves':
+                            drinkPrice = prices.korsoNarancsSor || 0;
+                            break;
+                        case 'Pohár Kézműves':
+                            drinkPrice = prices.poharNarancsSor || 0;
+                            break;
                         case 'Nagyfröccs':
                             drinkPrice = prices.nagyfroccsPrice || 0;
                             break;
@@ -238,6 +253,9 @@ function saveOrder(e) {
                             drinkPrice = prices.nagypalinkaPrice || 0;
                             break;
                         case 'Kávé':
+                            drinkPrice = prices.kavePrice || 0;
+                            break;
+                        case 'Tejes Kávé':
                             drinkPrice = prices.kavePrice || 0;
                             break;
                         case 'Jeges tea':
