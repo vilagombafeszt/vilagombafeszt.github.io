@@ -175,7 +175,7 @@ function updateTotalPrice() {
                 totalPrice += prices.kavePrice || 0;
                 break;
             case 'Tejes Kávé':
-                totalPrice += prices.kavePrice || 0;
+                totalPrice += prices.tejesKavePrice || 0;
                 break;
             case 'Jeges tea':
                 totalPrice += prices.jegesteaPrice || 0;
@@ -256,7 +256,7 @@ function saveOrder(e) {
                             drinkPrice = prices.kavePrice || 0;
                             break;
                         case 'Tejes Kávé':
-                            drinkPrice = prices.kavePrice || 0;
+                            drinkPrice = prices.tejesKavePrice || 0;
                             break;
                         case 'Jeges tea':
                             drinkPrice = prices.jegesteaPrice || 0;
