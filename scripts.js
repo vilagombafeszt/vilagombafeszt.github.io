@@ -186,4 +186,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateAlbumImage();
     });
+
+    $(document).ready(function() {
+        // Function to update the menu image with a random picture from the index_pictures folder
+        function updateAlbumImage() {
+            $.ajax({
+                url: 'images2.json',
+                dataType: 'json',
+                success: function(data) {
+                    const images = data.map(filename => 'index_pictures2/' + filename);
+                    const randomIndex = Math.floor(Math.random() * images.length);
+                    $('.randomAlbumImage2').attr('src', images[randomIndex]);
+                },
+                error: function() {
+                    console.error('Error fetching image list:', error);
+                }
+            });
+        }
+        updateAlbumImage();
+    });
 });

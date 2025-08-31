@@ -23,6 +23,16 @@ body {
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
+.album-container {
+    margin: 0 25px;
+}
+
+.albums-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
 .menu a {
     color: #331800;
     text-decoration: none;
@@ -383,7 +393,7 @@ a:link {
     margin-top: 1.4%;
 }
 
-.randomAlbumImage {
+.randomAlbumImage, .randomAlbumImage2 {
     border: 2px solid #ac9d9d;
     border-radius: 5px;
     margin: 10px;
@@ -393,7 +403,7 @@ a:link {
     position: relative;
 }
 
-.randomAlbumImage:hover {
+.randomAlbumImage:hover, .randomAlbumImage2:hover {
     transform: scale(1.01);
     transition: transform 0.3s ease;
 }
@@ -407,7 +417,22 @@ a:link {
 .overlay-text {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    color: #ac9d9d;
+    font-size: 85px;
+    margin-top: 35px;
+    font-family: 'Alumni Sans';
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.overlay-text2 {
+    position: absolute;
+    top: 50%;
+    left: 73%;
     transform: translate(-50%, -50%);
     color: #ac9d9d;
     font-size: 85px;
@@ -487,6 +512,40 @@ a:link {
     #helyszin {
         height: 160vh;
     }
+
+    .albums-container {
+        flex-direction: column;
+    }
+
+    .overlay-text {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ac9d9d;
+    font-size: 85px;
+    margin-top: 35px;
+    font-family: 'Alumni Sans';
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.overlay-text2 {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ac9d9d;
+    font-size: 85px;
+    margin-top: 35px;
+    font-family: 'Alumni Sans';
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+    white-space: nowrap;
+    pointer-events: none;
+}
 }
 
 @media only screen and (max-width: 850px) and (min-width: 600px) {
@@ -506,7 +565,7 @@ a:link {
 }
 
 @media only screen and (max-width: 600px) {
-    .randomAlbumImage {
+    .randomAlbumImage, .randomAlbumImage2 {
         border: 2px solid #ac9d9d;
         border-radius: 5px;
         margin: 10px;
@@ -516,6 +575,12 @@ a:link {
     }
 
     .overlay-text {
+        font-size: 45px;
+        margin-top: 25px;
+        white-space: nowrap;
+    }
+
+    .overlay-text2 {
         font-size: 45px;
         margin-top: 25px;
         white-space: nowrap;
@@ -828,6 +893,13 @@ a:link {
         width: 150px;
     }
 
+    .randomAlbumImage, .randomAlbumImage2 {
+        max-width: 550px;
+    }
+
+    .overlay-text, .overlay-text2 {
+        font-size: 65px;
+    }
 }
 
 
@@ -889,6 +961,14 @@ a:link {
         font-size: 50px;
         text-align: center;
         line-height: 1.5;
+    }
+
+    .randomAlbumImage, .randomAlbumImage2 {
+        max-width: 620px;
+    }
+
+    .overlay-text, .overlay-text2 {
+        font-size: 70px;
     }
 }
 
@@ -1242,10 +1322,42 @@ a:link {
     .tamogatok-logo {
         width: 150px;
     }
+
+    .randomAlbumImage, .randomAlbumImage2 {
+        max-width: 550px;
+    }
+
+    .overlay-text, .overlay-text2 {
+        font-size: 65px;
+    }
 }
 
 @media only screen and (min-width: 370px) and (max-width: 385px) and (min-height: 660px) and (max-height: 680px) {
     #kapcsolat {
         height: 155vh;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 820px) and (min-height: 1000px) and (max-height: 1150px) {
+    .albums-container {
+        flex-direction: column;
+    }
+
+    .overlay-text {
+        top: 25%;
+        left: 50%;
+    }
+
+    .overlay-text2 {
+        top: 75%;
+        left: 50%;
+    }
+
+    .randomAlbumImage, .randomAlbumImage2 {
+        max-width: 750px;
+    }
+
+    #keptar {
+        height: 150vh;
     }
 }
