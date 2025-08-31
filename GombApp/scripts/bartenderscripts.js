@@ -132,6 +132,12 @@ function updateTotalPrice() {
             case 'Pohár Kőbányai':
                 totalPrice += prices.poharKobiPrice || 0;
                 break;
+            case 'Korsó Kézműves':
+                totalPrice += prices.korsoNarancsSor || 0;
+                break;
+            case 'Pohár Kézműves':
+                totalPrice += prices.poharNarancsSor || 0;
+                break;
             case 'Nagyfröccs':
                 totalPrice += prices.nagyfroccsPrice || 0;
                 break;
@@ -168,8 +174,14 @@ function updateTotalPrice() {
             case 'Kávé':
                 totalPrice += prices.kavePrice || 0;
                 break;
+            case 'Tejes Kávé':
+                totalPrice += prices.tejesKavePrice || 0;
+                break;
             case 'Jeges tea':
                 totalPrice += prices.jegesteaPrice || 0;
+                break;
+            case 'Limonádé':
+                totalPrice += prices.limonadePrice || 0;
                 break;
         }
     });
@@ -203,6 +215,12 @@ function saveOrder(e) {
                             break;
                         case 'Pohár Kőbányai':
                             drinkPrice = prices.poharKobiPrice || 0;
+                            break;
+                        case 'Korsó Kézműves':
+                            drinkPrice = prices.korsoNarancsSor || 0;
+                            break;
+                        case 'Pohár Kézműves':
+                            drinkPrice = prices.poharNarancsSor || 0;
                             break;
                         case 'Nagyfröccs':
                             drinkPrice = prices.nagyfroccsPrice || 0;
@@ -240,8 +258,14 @@ function saveOrder(e) {
                         case 'Kávé':
                             drinkPrice = prices.kavePrice || 0;
                             break;
+                        case 'Tejes Kávé':
+                            drinkPrice = prices.tejesKavePrice || 0;
+                            break;
                         case 'Jeges tea':
                             drinkPrice = prices.jegesteaPrice || 0;
+                            break;
+                        case 'Limonádé':
+                            drinkPrice = prices.limonadePrice || 0;
                             break;
                     }
                     totalPrice += drinkPrice;
