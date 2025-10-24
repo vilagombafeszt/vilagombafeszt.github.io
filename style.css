@@ -1,5 +1,6 @@
 html {
     -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
 }
 
 body {
@@ -7,6 +8,12 @@ body {
     margin: 0;
     padding: 0;
     touch-action: pan-y;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .menu {

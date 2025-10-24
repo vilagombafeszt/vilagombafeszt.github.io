@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add passive touch event listener to improve scrolling performance
     document.addEventListener('touchstart', function(){}, {passive: true});
+    document.addEventListener('touchmove', function(){}, {passive: true});
+
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
 
     // Adjusts the href attributes based on window width
     $(window).resize(function() {
