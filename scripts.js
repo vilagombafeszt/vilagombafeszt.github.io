@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Add passive touch event listener to improve scrolling performance
+    document.addEventListener('touchstart', function(){}, {passive: true});
+
     // Adjusts the href attributes based on window width
     $(window).resize(function() {
         if ($(window).width() >= 700) {

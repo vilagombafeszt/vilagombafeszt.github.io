@@ -1,7 +1,12 @@
+html {
+    -webkit-overflow-scrolling: touch;
+}
+
 body {
     background-color: black;
     margin: 0;
     padding: 0;
+    touch-action: pan-y;
 }
 
 .menu {
