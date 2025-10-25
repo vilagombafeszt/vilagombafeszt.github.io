@@ -1,23 +1,12 @@
 html, body {
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-.freeprivacypolicy-com---pc-overlay {
-  overscroll-behavior: contain;
-}
-
-body {
     background-color: black;
     margin: 0;
     padding: 0;
-    touch-action: pan-y;
+    touch-action: manipulation;
     position: relative;
-    -webkit-overflow-scrolling: touch;
-}
-
-* {
-  -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: auto;
 }
 
 .menu {
