@@ -1440,3 +1440,15 @@ a:link {
         height: 150vh;
     }
 }
+
+@media only screen and (min-width: 601px) and (max-width: 999px) {
+    .menu a {
+        font-size: 23px;
+        margin: 0 14px;
+    }
+
+    .menu img {
+        height: 25px;
+        width: auto;
+    }
+}
