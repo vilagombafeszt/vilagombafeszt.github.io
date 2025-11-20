@@ -91,16 +91,21 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             var hash = this.hash;
             var menuHeight = (window.innerWidth > 900) ? $('.menu').outerHeight() : 0;
+            var targetElement = $(hash);
             
-            $('html, body').animate({
-                scrollTop: $(hash).offset().top - menuHeight
-            }, 800, function(){
-                if(history.pushState) {
-                    history.pushState(null, null, hash);
-                } else {
-                    location.hash = hash;
-                }
-            });
+            if (targetElement.length) {
+                var scrollPosition = targetElement.get(0).offsetTop - menuHeight;
+                
+                $('html, body').animate({
+                    scrollTop: scrollPosition
+                }, 800, function(){
+                    if(history.pushState) {
+                        history.pushState(null, null, hash);
+                    } else {
+                        location.hash = hash;
+                    }
+                });
+            }
         }
     });
 
