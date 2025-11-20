@@ -5,7 +5,6 @@ html, body {
     touch-action: manipulation;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
     width: 100%;
 }
 
