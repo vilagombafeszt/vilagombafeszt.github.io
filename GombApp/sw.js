@@ -2,6 +2,8 @@
 const CACHE_NAME = 'gombapp-v1';
 
 // Static assets to cache on install
+// Note: Icon files (icon-*.png) are not cached as they are placeholders
+// Add them to this list once actual icon files are created
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -127,6 +129,9 @@ self.addEventListener('fetch', (event) => {
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
+              })
+              .catch((error) => {
+                console.error('Failed to cache response:', error);
               });
             
             return networkResponse;
