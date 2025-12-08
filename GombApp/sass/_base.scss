@@ -31,8 +31,8 @@ body {
     font-family: 'Alumni Sans', sans-serif;
     color: $default-font-color;
     width: 100%;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+    min-height: 100vh; /* Fallback for browsers that don't support -webkit-fill-available */
+    min-height: -webkit-fill-available; /* Better mobile browser support, especially for Android */
     background-color: $background-color;
     padding: 20px;
     padding-bottom: env(safe-area-inset-bottom, 20px);
