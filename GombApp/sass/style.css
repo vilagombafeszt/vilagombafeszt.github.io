@@ -13,8 +13,6 @@ html, body {
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for better mobile support */
   background-color: #7c8bb1;
-  padding: 20px;
-  padding-bottom: 0; /* Remove bottom padding to prevent white space */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,8 +87,7 @@ header {
 }
 
 body {
-  padding: 20px;
-  padding-bottom: env(safe-area-inset-bottom, 20px); /* Respect safe area on mobile devices */
+  padding: 20px 20px env(safe-area-inset-bottom, 20px) 20px; /* Respect safe area on mobile devices */
   background-color: #7c8bb1;
 }
 
