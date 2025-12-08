@@ -10,7 +10,7 @@ html, body {
   color: #102135;
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+  min-height: 100vh; /* Fallback for older browsers */
   min-height: 100dvh; /* Dynamic viewport height for better mobile support */
   background-color: #7c8bb1;
   display: flex;
@@ -87,7 +87,8 @@ header {
 }
 
 body {
-  padding: 20px 20px env(safe-area-inset-bottom, 20px) 20px; /* Respect safe area on mobile devices */
+  padding: 20px;
+  padding-bottom: env(safe-area-inset-bottom, 20px); /* Respect safe area on mobile devices */
   background-color: #7c8bb1;
 }
 
