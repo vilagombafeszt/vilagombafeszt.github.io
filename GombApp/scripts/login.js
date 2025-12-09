@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-import { showSnackbar } from "./snackbar.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, fetchSignInMethodsForEmail, signOut } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import { showSnackbar, showConfirmSnackbar } from "./snackbar.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -158,10 +158,35 @@ if (submitButton && forgotPasswordButton && sendLinkButton && loginFields && for
 onAuthStateChanged(auth, (user) => {
     const loginButton = document.getElementById('login-button');
     const loggedInMessage = document.getElementById('logged-in-message');
+    const logoutButton = document.getElementById('logout-button');
     const headerContent = document.querySelector('.header-content');
     
     if (user) {
       // User is signed in
+      // Show logout button
+      if (logoutButton) {
+        logoutButton.style.display = 'block';
+        logoutButton.addEventListener('click', function() {
+          showConfirmSnackbar(
+            'Biztosan ki szeretnél jelentkezni?',
+            () => {
+              // User confirmed
+              signOut(auth)
+                .then(() => {
+                  showSnackbar('Sikeres kijelentkezés!', 'success');
+                  location.reload();
+                })
+                .catch((error) => {
+                  showSnackbar('Hiba történt a kijelentkezés során.', 'error');
+                });
+            },
+            () => {
+              // User cancelled - do nothing
+            }
+          );
+        });
+      }
+      
       // Call afterLogin from indexscripts.js if it exists
       if (typeof afterLogin === 'function') {
         afterLogin();
@@ -195,6 +220,9 @@ onAuthStateChanged(auth, (user) => {
       }
       if (loggedInMessage) {
         loggedInMessage.style.display = 'none';
+      }
+      if (logoutButton) {
+        logoutButton.style.display = 'none';
       }
       if (headerContent) {
         headerContent.style.flexDirection = 'row';
