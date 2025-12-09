@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="sass/style.css">
-    <script type="module" src="scripts/login.js" defer></script>
+    <script type="module" src="scripts/login.js"></script>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -43,11 +43,25 @@
     <main>
         <div id="login-form" class="login-form" style="display: none;">
             <form id="nameForm" class="name-form">
-                <input class="email-field" style="height: 30px;" type="text" id="email" placeholder="email" name="email" required>
-                <input class="pw-field" style="height: 30px;" type="password" id="password" placeholder="jelszó" name="password" required>
-                <div class="loginform-buttons" id="buttons">
-                    <button id="cancel-button" class="cancel-button" type="button">Mégse</button>
-                    <button id="submit-button" class="submit-button" type="submit">Belépés</button>    
+                <div id="login-fields" class="login-fields">
+                    <input class="email-field" type="email" id="email" placeholder="E-mail cím" name="email" required>
+                    <input class="pw-field" type="password" id="password" placeholder="Jelszó" name="password" required>
+                    <div class="loginform-buttons" id="buttons">
+                        <button id="cancel-button" class="cancel-button" type="button">Mégse</button>
+                        <button id="submit-button" class="submit-button" type="submit">Belépés</button>    
+                    </div>
+                    <button id="forgot-password" class="text-button" type="button">Elfelejtettem a jelszavam.</button>
+                </div>
+
+                <div id="forgot-password-fields" class="forgot-password-fields" style="display: none;">
+                    <p class="reset-description">
+                        Add meg az e-mail-címedet, és elküldünk neked egy hivatkozást, amellyel visszajuthatsz a fiókodba.
+                    </p>
+                    <input class="email-field" type="email" id="reset-email" placeholder="E-mail cím" name="reset-email" required>
+                    <div class="loginform-buttons">
+                        <button id="back-to-login" class="cancel-button" type="button">Vissza</button>
+                        <button id="send-link-button" class="submit-button" type="button">Hivatkozás küldése</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -71,7 +85,7 @@
         </div>
     </main>
     <footer style="justify-self: center;">
-        <p class="footer-text">v1.1.2</p>
+        <p class="footer-text">v1.1.3</p>
     </footer>
     <script src="scripts/indexscripts.js"></script>
     

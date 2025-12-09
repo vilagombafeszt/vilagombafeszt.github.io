@@ -135,8 +135,8 @@ button {
   background-color: #7c8bb1;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 100px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 120px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .profile-pic {
@@ -421,6 +421,65 @@ button {
 .cancel-button {
   align-self: flex-end;
   margin-right: auto;
+}
+
+.email-field,
+.pw-field {
+  height: 40px !important;
+  padding: 10px 15px;
+  border: 2px solid rgba(16, 33, 53, 0.2);
+  border-radius: 8px;
+  font-size: 1em;
+  font-family: "Alumni Sans", sans-serif;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #102135;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.email-field::-moz-placeholder, .pw-field::-moz-placeholder {
+  color: rgba(16, 33, 53, 0.5);
+  font-family: "Alumni Sans", sans-serif;
+}
+.email-field::placeholder,
+.pw-field::placeholder {
+  color: rgba(16, 33, 53, 0.5);
+  font-family: "Alumni Sans", sans-serif;
+}
+.email-field:focus,
+.pw-field:focus {
+  border-color: #102135;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 33, 53, 0.1);
+}
+.email-field:hover:not(:focus),
+.pw-field:hover:not(:focus) {
+  border-color: rgba(16, 33, 53, 0.3);
+}
+
+.text-button {
+  background: none;
+  border: none;
+  color: #102135;
+  padding: 0;
+  margin-top: 10px;
+  align-self: flex-start;
+  font-size: 0.7em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-fields,
+.forgot-password-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.reset-description {
+  font-size: 0.8em;
+  margin: 0;
+  padding-bottom: 8px;
 }
 
 .snackbar {

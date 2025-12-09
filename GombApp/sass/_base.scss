@@ -146,8 +146,8 @@ button {
     background-color: $background-color;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 100px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 120px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .profile-pic {
@@ -435,6 +435,61 @@ button {
 .cancel-button {
     align-self: flex-end;
     margin-right: auto;
+}
+
+.email-field,
+.pw-field {
+    height: 40px !important;
+    padding: 10px 15px;
+    border: 2px solid rgba(16, 33, 53, 0.2);
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: 'Alumni Sans', sans-serif;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: $default-font-color;
+    transition: all 0.3s ease;
+    outline: none;
+
+    &::placeholder {
+        color: rgba(16, 33, 53, 0.5);
+        font-family: 'Alumni Sans', sans-serif;
+    }
+
+    &:focus {
+        border-color: $default-font-color;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(16, 33, 53, 0.1);
+    }
+
+    &:hover:not(:focus) {
+        border-color: rgba(16, 33, 53, 0.3);
+    }
+}
+
+.text-button {
+    background: none;
+    border: none;
+    color: $default-font-color;
+    padding: 0;
+    margin-top: 10px;
+    align-self: flex-start;
+    font-size: 0.7em;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-fields,
+.forgot-password-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.reset-description {
+    font-size: 0.8em;
+    margin: 0;
+    padding-bottom: 8px;
 }
 
 // Snackbar notifications

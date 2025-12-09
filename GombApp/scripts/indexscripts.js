@@ -46,12 +46,6 @@ function afterLogin() {
   setMenuMarginTo80();
 }
 
-const cancelButton = document.getElementById('cancel-button');
-
-cancelButton.addEventListener('click', function() {
-  toggleLoginForm();
-});
-
 setTimeout(function() {
   const loader2 = document.getElementById('loader2');
   const messageContent = document.getElementById('message-content');
