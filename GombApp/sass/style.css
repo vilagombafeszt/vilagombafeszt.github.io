@@ -182,7 +182,8 @@ button {
   margin-top: 20px;
 }
 
-.bartender-title {
+.bartender-title,
+.ticketclerk-title {
   font-family: "Alumni Sans", sans-serif;
   font-size: 40px;
   margin-top: 15px;
@@ -346,6 +347,4 @@ button {
 .cancel-button {
   align-self: flex-end;
   margin-right: auto;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
