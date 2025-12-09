@@ -11,13 +11,7 @@ function ensureSnackbarElement() {
   return el;
 }
 
-/**
- * Show a snackbar message.
- * @param {string} message - Text to display.
- * @param {('info'|'success'|'error')} [type='info'] - Visual style.
- * @param {number} [duration=3000] - Visible time in ms.
- */
-export function showSnackbar(message, type = 'info', duration = 3000) {
+export function showSnackbar(message, type = 'info', duration = 4000) {
   const el = ensureSnackbarElement();
 
   el.textContent = message;
@@ -27,8 +21,7 @@ export function showSnackbar(message, type = 'info', duration = 3000) {
     el.classList.add(type);
   }
 
-  // Force reflow so animation can restart
-  // eslint-disable-next-line no-unused-expressions
+
   void el.offsetWidth;
 
   el.classList.add('show');
