@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import { showSnackbar } from "./snackbar.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -32,13 +33,13 @@ submitButton.addEventListener('click', function(event) {
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        alert('Sikeres bejelentkezés!');
+      showSnackbar('Sikeres bejelentkezés!', 'success');
         toggleLoginForm();
         location.reload();
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage);
+      showSnackbar(errorMessage, 'error');
     });
 });
 
@@ -64,7 +65,7 @@ onAuthStateChanged(auth, (user) => {
             if (allowedUids.includes(user.uid)) {
                 window.location.href = 'admin.html';
             } else {
-                alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+            showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
             }
         });
     } 
@@ -79,16 +80,16 @@ onAuthStateChanged(auth, (user) => {
       const programsButton = document.getElementById('programs');
       const adminButton = document.getElementById('admin');
       bartenderButton.addEventListener('click', function() {
-        alert('Kérlek jelentkezz be!');
+        showSnackbar('Kérlek jelentkezz be!', 'info');
       });
       ticketClerkButton.addEventListener('click', function() {
-        alert('Kérlek jelentkezz be!');
+        showSnackbar('Kérlek jelentkezz be!', 'info');
       });
       programsButton.addEventListener('click', function() {
-        alert('Kérlek jelentkezz be!');
+        showSnackbar('Kérlek jelentkezz be!', 'info');
       });
       adminButton.addEventListener('click', function() {
-        alert('Kérlek jelentkezz be!');
+        showSnackbar('Kérlek jelentkezz be!', 'info');
       });
     }
   });

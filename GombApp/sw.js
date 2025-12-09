@@ -1,5 +1,5 @@
 // Service Worker for GombApp PWA
-const CACHE_NAME = 'gombapp-v1.1';
+const CACHE_NAME = 'gombapp-v1.1.1';
 
 // Static assets to cache on install
 // Note: Icon files (icon-*.png) are not cached as they are placeholders
@@ -14,6 +14,7 @@ const STATIC_ASSETS = [
   './manifest.json',
   './sass/style.css',
   './scripts/login.js',
+  './scripts/snackbar.js',
   './scripts/indexscripts.js',
   './scripts/adminscripts.js',
   './scripts/bartenderscripts.js',
