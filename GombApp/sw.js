@@ -1,5 +1,4 @@
 // Service Worker for GombApp PWA
-// Bump CACHE_NAME whenever you change CSS/JS so clients get fresh assets
 const CACHE_NAME = 'gombapp-v2';
 
 // Static assets to cache on install
