@@ -137,7 +137,6 @@ button {
   gap: 20px;
   width: 100%;
   max-width: 500px;
-  margin-top: 120px !important;
 }
 
 .name-form {
@@ -147,11 +146,11 @@ button {
   font-family: "Alumni Sans", sans-serif;
   gap: 15px;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   background-color: #7c8bb1;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 120px;
+  margin-top: 140px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -197,7 +196,6 @@ button {
   font-size: 1.5em;
   font-family: "Alumni Sans", sans-serif;
   font-size: 25px;
-  margin-top: 20px;
 }
 
 .bartender-title,
@@ -306,7 +304,7 @@ button {
 }
 @media only screen and (max-height: 700px) {
   .adjust {
-    padding-top: 45px;
+    padding-top: 80px;
   }
 }
 .res-adj1 {
