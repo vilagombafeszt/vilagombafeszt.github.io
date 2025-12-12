@@ -228,6 +228,14 @@ button {
     margin-top: 20px;
 }
 
+.order-container {
+    padding-top: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .order-list-box {
     border:1px solid $default-font-color;
     border-radius: 5px;

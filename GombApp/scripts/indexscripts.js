@@ -47,6 +47,8 @@ function afterLogin() {
   headerContent.style.flexDirection = 'column';
   appTitle.style.marginLeft = '0px';
   setMenuMarginTo80();
+  const menu = document.querySelector('.menu');
+  menu.style.paddingTop = '80px';
 }
 
 setTimeout(function() {
