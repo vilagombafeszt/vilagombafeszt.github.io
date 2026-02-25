@@ -59,6 +59,16 @@ export default function Menu() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  /* ── scroll to hash anchor on page load / refresh ────────────────── */
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Delay to ensure all sections are rendered and laid out
+      const timer = setTimeout(() => smoothScrollTo(hash), 150);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   /* ── close menu when viewport grows past the breakpoint ──────────── */
   useEffect(() => {
     const onResize = () => {
