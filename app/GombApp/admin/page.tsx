@@ -72,7 +72,7 @@ export default function AdminPage() {
     // Check Firestore admin document
     const checkAdmin = async () => {
       try {
-        const adminDocRef = doc(firestoreDB, 'admins', 'admin');
+        const adminDocRef = doc(firestoreDB!, 'admins', 'admin');
         const docSnap = await getDoc(adminDocRef);
         if (docSnap.exists()) {
           const adminData = docSnap.data();
@@ -97,7 +97,7 @@ export default function AdminPage() {
   }, [user, loading, router, showSnackbar]);
 
   const fetchStatistics = async () => {
-    const dbRef = ref(database);
+    const dbRef = ref(database!);
 
     try {
       const drinkSnap = await get(child(dbRef, 'Rendelések/Ital'));

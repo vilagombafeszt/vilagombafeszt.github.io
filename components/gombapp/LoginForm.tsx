@@ -23,6 +23,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
       return;
     }
 
+    if (!auth) return;
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         showSnackbar('Sikeres bejelentkezés!', 'success');
@@ -68,6 +69,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
       return;
     }
 
+    if (!auth) return;
     sendPasswordResetEmail(auth, trimmed)
       .then(() => {
         showSnackbar('Ha ez az e-mail cím regisztrálva van, küldtünk rá egy hivatkozást.', 'success');

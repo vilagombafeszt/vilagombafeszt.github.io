@@ -79,6 +79,7 @@ export default function BartenderPage() {
 
   // Fetch prices
   useEffect(() => {
+    if (!database) return;
     get(ref(database, 'Árak/Ital'))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -116,9 +117,9 @@ export default function BartenderPage() {
       return;
     }
 
-    const userOrderRef = ref(database, 'Rendelések/Ital/' + user.uid);
+    const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
 
-    get(ref(database, 'Árak/Ital'))
+    get(ref(database!, 'Árak/Ital'))
       .then((priceSnap) => {
         const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
         let orderTotal = 0;

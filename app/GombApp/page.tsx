@@ -27,7 +27,7 @@ export default function GombAppHome() {
     showConfirmSnackbar(
       'Biztosan ki szeretnél jelentkezni?',
       () => {
-        signOut(auth)
+        signOut(auth!)
           .then(() => showSnackbar('Sikeres kijelentkezés!', 'success'))
           .catch(() => showSnackbar('Hiba történt a kijelentkezés során.', 'error'));
       }

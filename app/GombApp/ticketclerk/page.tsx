@@ -57,6 +57,7 @@ export default function TicketClerkPage() {
 
   // Fetch prices
   useEffect(() => {
+    if (!database) return;
     get(ref(database, 'Árak/Jegy'))
       .then((snapshot) => {
         if (snapshot.exists()) setPrices(snapshot.val());
@@ -99,7 +100,7 @@ export default function TicketClerkPage() {
     const promises: Promise<unknown>[] = [];
 
     if (ticketCounts.friday > 0 || ticketCounts.pass > 0) {
-      const fridayRef = ref(database, 'Jegyek/pentekMax');
+      const fridayRef = ref(database!, 'Jegyek/pentekMax');
       promises.push(
         runTransaction(fridayRef, (currentValue) => {
           const currentMax = currentValue || 0;
@@ -109,7 +110,7 @@ export default function TicketClerkPage() {
     }
 
     if (ticketCounts.saturday > 0 || ticketCounts.pass > 0) {
-      const saturdayRef = ref(database, 'Jegyek/szombatMax');
+      const saturdayRef = ref(database!, 'Jegyek/szombatMax');
       promises.push(
         runTransaction(saturdayRef, (currentValue) => {
           const currentMax = currentValue || 0;
@@ -119,7 +120,7 @@ export default function TicketClerkPage() {
     }
 
     if (ticketCounts.sunday > 0 || ticketCounts.pass > 0) {
-      const sundayRef = ref(database, 'Jegyek/vasarnapMax');
+      const sundayRef = ref(database!, 'Jegyek/vasarnapMax');
       promises.push(
         runTransaction(sundayRef, (currentValue) => {
           const currentMax = currentValue || 0;
@@ -133,9 +134,9 @@ export default function TicketClerkPage() {
 
   const fetchMaxTicketCounts = async (): Promise<MaxCounts> => {
     const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
-      get(ref(database, 'Jegyek/pentekMax')),
-      get(ref(database, 'Jegyek/szombatMax')),
-      get(ref(database, 'Jegyek/vasarnapMax')),
+      get(ref(database!, 'Jegyek/pentekMax')),
+      get(ref(database!, 'Jegyek/szombatMax')),
+      get(ref(database!, 'Jegyek/vasarnapMax')),
     ]);
     return {
       friday: fridaySnap.exists() ? fridaySnap.val() : 0,
@@ -168,7 +169,7 @@ export default function TicketClerkPage() {
     }
 
     try {
-      const priceSnap = await get(ref(database, 'Árak/Jegy'));
+      const priceSnap = await get(ref(database!, 'Árak/Jegy'));
       const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
       let orderTotal = 0;
       const orderPrices: number[] = [];
@@ -180,7 +181,7 @@ export default function TicketClerkPage() {
         orderPrices.push(price);
       });
 
-      const userOrderRef = ref(database, 'Rendelések/Jegy/' + user.uid);
+      const userOrderRef = ref(database!, 'Rendelések/Jegy/' + user.uid);
       const snapshot = await get(userOrderRef);
 
       let existingOrders: string[] = [];
