@@ -74,7 +74,7 @@ export default function KapcsolatSection() {
       </div>
 
       <div className="copyright">
-        © 2025 ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével | Minden jog fenntartva
+        © 2026 ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével | Minden jog fenntartva
       </div>
     </div>
   );
