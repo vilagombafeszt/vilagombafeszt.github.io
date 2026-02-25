@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import { showSnackbar } from "./snackbar.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAUIzNyW_fNZ00CN31_vLn7chuZxR6O2_s",
@@ -43,12 +44,12 @@ onAuthStateChanged(auth, (user) => {
       // No user is signed in
         console.log("User not authenticated!");
         realtimeCal.addEventListener('click', function() {
-            alert('Kérjük, jelentkezzen be az oldal használatához!');
+            showSnackbar('Kérjük, jelentkezzen be az oldal használatához!', 'info');
         });
         agendaCal.addEventListener('click', function() {
-            alert('Kérjük, jelentkezzen be az oldal használatához!');
+            showSnackbar('Kérjük, jelentkezzen be az oldal használatához!', 'info');
         });
-        alert('Kérjük, jelentkezzen be az oldal használatához!');
+        showSnackbar('Kérjük, jelentkezzen be az oldal használatához!', 'info');
         window.location.href = 'index.html';
     }
   });

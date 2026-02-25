@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 import { getDatabase, ref, set, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+import { showSnackbar } from "./snackbar.js";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -294,7 +295,7 @@ function showStatistics() {
 function saveOrder(e) {
     e.preventDefault();
     if (document.getElementById('order-list').children.length === 0) {
-        alert('Adj hozzá legalább egy jegytípust a rendeléshez!');
+        showSnackbar('Adj hozzá legalább egy jegytípust a rendeléshez!', 'info');
         return;
     }
     onAuthStateChanged(auth, (user) => {
@@ -363,21 +364,21 @@ function saveOrder(e) {
                         }),
                         updateMaxTicketCounts(ticketCounts)
                     ]).then(() => {
-                        alert('Sikeresen mentve!');
+                        showSnackbar('Sikeresen mentve!', 'success');
                         orderList.innerHTML = '';
                         document.getElementById('total-price2').textContent = `Teljes ár: 0 Ft`;
                     }).catch((error) => {
                         console.error("Error saving data:", error);
-                        alert("Hiba történt az adatok mentése közben.");
+                        showSnackbar('Hiba történt az adatok mentése közben.', 'error');
                     });
 
                 }).catch((error) => {
                     console.error("Error reading data:", error);
-                    alert("Hiba történt az adatok olvasása közben.");
+                    showSnackbar('Hiba történt az adatok olvasása közben.', 'error');
                 });
             });
         } else {
-            alert('Kérjük, jelentkezzen be a mentéshez.');
+            showSnackbar('Kérjük, jelentkezzen be a mentéshez.', 'info');
         }
     });
 }

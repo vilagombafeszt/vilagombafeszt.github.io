@@ -4,6 +4,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebas
 import { getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 import { getFirestore, doc, getDoc }  from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
+import { showSnackbar } from "./snackbar.js";
 
 
 // Your web app's Firebase configuration
@@ -65,7 +66,7 @@ onAuthStateChanged(auth, async (user) => {
           fetchAndDisplayStatistics();
         } else {
           // User is not an admin
-          alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+          showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
           window.location.href = 'index.html';
         }
       } else {
@@ -76,7 +77,7 @@ onAuthStateChanged(auth, async (user) => {
     }
   } else {
     // No user is signed in
-    alert('Nincs jogosultságod az admin oldal megtekintéséhez!');
+    showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
      window.location.href = 'index.html';
   }
 });

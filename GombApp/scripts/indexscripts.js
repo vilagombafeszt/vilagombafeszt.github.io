@@ -8,14 +8,17 @@ loginButton.addEventListener('click', function() {
 function toggleLoginForm() {
   const loginForm = document.getElementById('login-form');
   const footer = document.querySelector('.footer-text');
+  const menu = document.querySelector('.menu');
   loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
   if (loginForm.style.display === 'block') {
     setMenuMarginTo20();
     footer.style.bottom = 'auto';
-    footer.style.marginTop = '80px';  
+    footer.style.marginTop = '80px';
+    menu.style.paddingTop = '0px';
   } else {
     setMenuMarginTo80();
     footer.style.bottom = '0';
+    menu.style.paddingTop = '80px';
   }
 }
 
@@ -44,13 +47,9 @@ function afterLogin() {
   headerContent.style.flexDirection = 'column';
   appTitle.style.marginLeft = '0px';
   setMenuMarginTo80();
+  const menu = document.querySelector('.menu');
+  menu.style.paddingTop = '80px';
 }
-
-const cancelButton = document.getElementById('cancel-button');
-
-cancelButton.addEventListener('click', function() {
-  toggleLoginForm();
-});
 
 setTimeout(function() {
   const loader2 = document.getElementById('loader2');
