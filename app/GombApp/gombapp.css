@@ -1,0 +1,677 @@
+/* GombApp Global Styles */
+
+/* ===== Variables ===== */
+:root {
+  --gombapp-font-color: #102135;
+  --gombapp-bg-color: #7c8bb1;
+  --gombapp-button-bg: #102135;
+  --gombapp-button-font: #7c8bb1;
+}
+
+/* ===== Reset (scoped under .gombapp) ===== */
+.gombapp * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.gombapp {
+  font-size: 20px;
+  font-family: 'Alumni Sans', sans-serif;
+  color: var(--gombapp-font-color);
+  width: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  background-color: var(--gombapp-bg-color);
+  padding: 20px;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: pan-y pan-x;
+  overflow-x: hidden;
+}
+
+@media only screen and (min-width: 768px) {
+  .gombapp {
+    font-size: 25px;
+  }
+}
+
+/* ===== Header ===== */
+.gombapp header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--gombapp-bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 30px;
+  z-index: 100;
+}
+
+.gombapp .header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.gombapp .app-title {
+  font-size: 1.5em;
+  color: var(--gombapp-font-color);
+  text-align: center;
+  flex: 1;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+/* ===== Loader ===== */
+.gombapp .loader {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid var(--gombapp-font-color);
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: gombapp-rotation 1s linear infinite;
+}
+
+@keyframes gombapp-rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Buttons ===== */
+.gombapp .login-button {
+  background-color: var(--gombapp-button-bg);
+  color: var(--gombapp-button-font);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1em;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+.gombapp .logout-button {
+  background-color: #c62828;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 0.7em;
+  font-family: 'Alumni Sans', sans-serif;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.gombapp .logout-button:hover {
+  background-color: #b71c1c;
+}
+
+.gombapp button {
+  background-color: var(--gombapp-button-bg);
+  color: var(--gombapp-button-font);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1em;
+  font-family: 'Alumni Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gombapp .back-button {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  width: 90px;
+}
+
+/* ===== Main ===== */
+.gombapp main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ===== Menu ===== */
+.gombapp .menu {
+  position: static;
+  top: auto;
+  left: auto;
+  height: auto;
+  z-index: auto;
+  background-color: transparent;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Profile Pics / Images ===== */
+.gombapp .profile-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.gombapp .drink-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.gombapp .type-button {
+  height: 100%;
+}
+
+.gombapp .type-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.gombapp .dinner-pic {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+/* ===== Pages ===== */
+.gombapp .bartender-title,
+.gombapp .ticketclerk-title {
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 40px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.gombapp .message-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.gombapp .logged-in-message {
+  font-size: 25px;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+/* ===== Order Container ===== */
+.gombapp .order-container {
+  padding-top: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gombapp .order-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.gombapp .order-list-box {
+  border: 1px solid var(--gombapp-font-color);
+  border-radius: 5px;
+  width: 300px;
+  max-height: 65vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 25px;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.gombapp .order-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid var(--gombapp-font-color);
+}
+
+.gombapp .delete-button {
+  height: 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+/* ===== Fixed Bottom Bar ===== */
+.gombapp .fixed-bottom {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: var(--gombapp-bg-color);
+  padding: 10px;
+  z-index: 1000;
+}
+
+/* ===== Responsive Adjustments ===== */
+.gombapp .res-adj1 {
+  font-size: 0.9em;
+  position: absolute;
+  left: 0;
+  margin-left: 5px;
+}
+
+.gombapp .res-adj2 {
+  font-size: 0.9em;
+  position: absolute;
+  margin-left: 26px;
+  width: 75px;
+}
+
+.gombapp .res-adj3 {
+  font-size: 22px;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+}
+
+.gombapp .res-adj4 {
+  margin-bottom: 10px;
+  margin-top: -5px;
+  font-size: 28px;
+}
+
+.gombapp .res-adj6 {
+  font-size: 18px;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+}
+
+@media only screen and (min-width: 400px) {
+  .gombapp .res-adj1 {
+    font-size: 18px;
+    width: 168px;
+  }
+  .gombapp .res-adj2 {
+    font-size: 18px;
+    width: 82px;
+    margin-left: 30px;
+  }
+  .gombapp .res-adj3 {
+    font-size: 23px;
+  }
+  .gombapp .res-adj4 {
+    margin-top: 0;
+    font-size: 32px;
+  }
+  .gombapp .res-adj5 {
+    font-size: 1.2em;
+  }
+  .gombapp .res-adj6 {
+    font-size: 18px;
+  }
+}
+
+/* ===== Login Form ===== */
+.gombapp .name-form {
+  display: flex;
+  flex-direction: column;
+  font-size: 25px;
+  font-family: 'Alumni Sans', sans-serif;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+  background-color: var(--gombapp-bg-color);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.gombapp .loginform-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.gombapp .cancel-button {
+  align-self: flex-end;
+  margin-right: auto;
+}
+
+.gombapp .submit-button {
+  align-self: flex-end;
+  margin-top: 20px;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.gombapp .forgot-password-fields .submit-button {
+  font-size: 0.95em;
+  padding: 10px 18px;
+}
+
+.gombapp .forgot-password-fields .cancel-button {
+  font-size: 0.95em;
+  padding: 10px 18px;
+}
+
+.gombapp .email-field,
+.gombapp .pw-field {
+  height: 40px !important;
+  padding: 10px 15px;
+  border: 2px solid rgba(16, 33, 53, 0.2);
+  border-radius: 8px;
+  font-size: 1em;
+  font-family: 'Alumni Sans', sans-serif;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--gombapp-font-color);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.gombapp .email-field::placeholder,
+.gombapp .pw-field::placeholder {
+  color: rgba(16, 33, 53, 0.5);
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+.gombapp .email-field:focus,
+.gombapp .pw-field:focus {
+  border-color: var(--gombapp-font-color);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 33, 53, 0.1);
+}
+
+.gombapp .email-field:hover:not(:focus),
+.gombapp .pw-field:hover:not(:focus) {
+  border-color: rgba(16, 33, 53, 0.3);
+}
+
+.gombapp .text-button {
+  background: none;
+  border: none;
+  color: var(--gombapp-font-color);
+  padding: 0;
+  margin-top: 10px;
+  align-self: flex-start;
+  font-size: 0.7em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.gombapp .login-fields,
+.gombapp .forgot-password-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.gombapp .reset-description {
+  font-size: 0.8em;
+  margin: 0;
+  padding-bottom: 8px;
+}
+
+/* ===== Footer ===== */
+.gombapp footer {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.gombapp .footer-text {
+  text-align: center;
+}
+
+/* ===== Statistics ===== */
+.gombapp .statistics-container {
+  display: flex;
+  width: 80vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  padding-top: 80px;
+  height: calc(100vh - 120px);
+}
+
+.gombapp .statistics-content {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  height: 50vh;
+}
+
+.gombapp .statistics-content h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 26px;
+}
+
+.gombapp .stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 20px 0;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border-left: 4px solid #4CAF50;
+  height: 60px;
+}
+
+.gombapp .stat-day {
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+}
+
+.gombapp .stat-count {
+  font-size: 18px;
+  color: #666;
+}
+
+.gombapp .loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}
+
+.gombapp .error {
+  text-align: center;
+  padding: 20px;
+  color: #d32f2f;
+  font-size: 16px;
+}
+
+/* ===== Admin Stats ===== */
+.gombapp .bartenderstat-container,
+.gombapp .foodserverstat-container,
+.gombapp .statsummary-container {
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.gombapp .bartenderstats-title,
+.gombapp .foodserverstats-title,
+.gombapp .statsummary-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* ===== Snackbar ===== */
+.snackbar {
+  visibility: hidden;
+  min-width: 220px;
+  max-width: 90vw;
+  background-color: #333333;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px 16px;
+  position: fixed;
+  left: 50%;
+  top: calc(50% - 250px);
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  opacity: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.25s ease-out;
+}
+
+.snackbar.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.snackbar.info {
+  background-color: #333333;
+}
+
+.snackbar.success {
+  background-color: #2e7d32;
+}
+
+.snackbar.error {
+  background-color: #c62828;
+  color: #ffffff;
+  font-size: 1.15em;
+}
+
+.snackbar.confirm {
+  background-color: #102135;
+  padding: 20px;
+  max-width: 400px;
+  z-index: 2001;
+  top: 50%;
+}
+
+.snackbar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease-out, visibility 0.25s ease-out;
+}
+
+.snackbar-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.snackbar-message {
+  margin-bottom: 15px;
+  font-size: 1em;
+}
+
+.snackbar-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.snackbar-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.snackbar-btn-cancel {
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.snackbar-btn-cancel:hover {
+  background-color: #555555;
+}
+
+.snackbar-btn-confirm {
+  background-color: #c62828;
+  color: #ffffff;
+}
+
+.snackbar-btn-confirm:hover {
+  background-color: #b71c1c;
+}
+
+/* ===== Landscape / small screen overrides ===== */
+@media only screen and (orientation: landscape) and (max-height: 500px) {
+  .gombapp .footer-text {
+    margin-top: 100px;
+    bottom: auto;
+  }
+  .gombapp .menu {
+    padding-top: 30px;
+  }
+  .gombapp .bartenderstat-container,
+  .gombapp .foodserverstat-container,
+  .gombapp .statsummary-container {
+    padding-top: 30px;
+  }
+}
+
+/* Responsive gap between header and menu buttons */
+.gombapp .adjust {
+  margin-top: clamp(140px, 20vh, 250px);
+}
+
+@media only screen and (max-height: 700px) {
+  .gombapp .adjust {
+    margin-top: 130px;
+    padding-top: 0;
+  }
+}
+
+@media only screen and (max-height: 550px) {
+  .gombapp .adjust {
+    margin-top: 110px;
+    padding-top: 0;
+  }
+}
