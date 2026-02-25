@@ -78,21 +78,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {/* Cookie consent initialisation */}
         <Script id="cookie-consent-init" strategy="afterInteractive">{`
-          document.addEventListener('DOMContentLoaded', function () {
-            if (typeof cookieconsent !== 'undefined') {
-              cookieconsent.run({
-                notice_banner_type: 'simple',
-                consent_type: 'express',
-                palette: 'dark',
-                language: 'hu',
-                page_load_consent_levels: ['strictly-necessary'],
-                notice_banner_reject_button_hide: false,
-                preferences_center_close_button_hide: false,
-                page_refresh_confirmation_buttons: false,
-                website_name: 'ViláGombaFeszt',
-              });
-            }
-          });
+          if (typeof cookieconsent !== 'undefined') {
+            cookieconsent.run({
+              notice_banner_type: 'simple',
+              consent_type: 'express',
+              palette: 'dark',
+              language: 'hu',
+              page_load_consent_levels: ['strictly-necessary'],
+              notice_banner_reject_button_hide: false,
+              preferences_center_close_button_hide: false,
+              page_refresh_confirmation_buttons: false,
+              website_name: 'ViláGombaFeszt',
+            });
+          }
         `}</Script>
         {/* Google Analytics init */}
         <Script id="ga-init" strategy="afterInteractive">{`
