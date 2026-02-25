@@ -227,16 +227,202 @@
   align-items: center;
 }
 
+/* ===== Redesigned Order List ===== */
 .gombapp .order-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 100%;
-  font-size: 20px;
-  margin-top: 20px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
+.gombapp .order-list-header {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.gombapp .order-list-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 55vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px;
+  scrollbar-width: thin;
+}
+
+.gombapp .order-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(16, 33, 53, 0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+  gap: 4px 12px;
+  transition: background-color 0.15s ease;
+}
+
+.gombapp .order-card-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+}
+
+.gombapp .order-card-name {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: var(--gombapp-font-color);
+  word-break: break-word;
+}
+
+.gombapp .order-card-price {
+  font-size: 0.85em;
+  color: rgba(16, 33, 53, 0.6);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gombapp .order-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.gombapp .qty-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--gombapp-button-bg);
+  color: var(--gombapp-button-font);
+  font-size: 1.2em;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+.gombapp .qty-btn:active {
+  transform: scale(0.9);
+}
+
+.gombapp .qty-icon {
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.gombapp .qty-btn-remove {
+  background-color: #c62828;
+  color: #ffffff;
+}
+
+.gombapp .qty-count {
+  min-width: 36px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+}
+
+.gombapp .order-card-total {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Empty state */
+.gombapp .order-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  color: rgba(16, 33, 53, 0.45);
+}
+
+.gombapp .order-empty-icon {
+  font-size: 3em;
+  margin-bottom: 12px;
+}
+
+.gombapp .order-empty-text {
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+/* Summary bar */
+.gombapp .order-summary {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px 0;
+  border-top: 2px solid rgba(16, 33, 53, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gombapp .order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gombapp .order-summary-label {
+  font-size: 1.1em;
+  color: rgba(16, 33, 53, 0.6);
+}
+
+.gombapp .order-summary-value {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+}
+
+.gombapp .order-summary-count {
+  font-size: 0.9em;
+  color: rgba(16, 33, 53, 0.45);
+}
+
+.gombapp .order-save-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--gombapp-button-bg);
+  color: var(--gombapp-button-font);
+  font-size: 1.15em;
+  font-weight: 700;
+  font-family: 'Alumni Sans', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
+}
+
+.gombapp .order-save-btn:active {
+  opacity: 0.85;
+}
+
+/* Legacy classes kept for backward compat */
 .gombapp .order-list-box {
   border: 1px solid var(--gombapp-font-color);
   border-radius: 5px;
@@ -613,7 +799,7 @@
   justify-content: center;
 }
 
-.snackbar-btn {
+.gombapp .snackbar-btn {
   padding: 8px 20px;
   border: none;
   border-radius: 6px;
@@ -621,23 +807,24 @@
   font-size: 0.95em;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: inline-block;
 }
 
-.snackbar-btn-cancel {
+.gombapp .snackbar-btn-cancel {
   background-color: #666666;
   color: #ffffff;
 }
 
-.snackbar-btn-cancel:hover {
+.gombapp .snackbar-btn-cancel:hover {
   background-color: #555555;
 }
 
-.snackbar-btn-confirm {
+.gombapp .snackbar-btn-confirm {
   background-color: #c62828;
   color: #ffffff;
 }
 
-.snackbar-btn-confirm:hover {
+.gombapp .snackbar-btn-confirm:hover {
   background-color: #b71c1c;
 }
 

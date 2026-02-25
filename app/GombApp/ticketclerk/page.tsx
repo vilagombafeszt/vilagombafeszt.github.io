@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ref, set, get, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -46,6 +46,14 @@ export default function TicketClerkPage() {
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
+  const lastClickRef = useRef(0);
+
+  const throttle = (fn: () => void) => {
+    const now = Date.now();
+    if (now - lastClickRef.current < 120) return;
+    lastClickRef.current = now;
+    fn();
+  };
 
   // Auth check
   useEffect(() => {
@@ -82,6 +90,19 @@ export default function TicketClerkPage() {
   const removeItem = (index: number) => {
     setOrderItems((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const removeOneOfType = (name: string) => {
+    setOrderItems((prev) => {
+      const idx = prev.lastIndexOf(name);
+      if (idx === -1) return prev;
+      return prev.filter((_, i) => i !== idx);
+    });
+  };
+
+  const groupedItems = orderItems.reduce<Record<string, number>>((acc, item) => {
+    acc[item] = (acc[item] || 0) + 1;
+    return acc;
+  }, {});
 
   const countTicketsByType = (orders: string[]) => {
     const counts = { friday: 0, saturday: 0, sunday: 0, pass: 0 };
@@ -275,23 +296,54 @@ export default function TicketClerkPage() {
           )}
 
           {view === 'order' && (
-            <div className="order-list" style={{ display: 'flex' }}>
-              <div className="order-list-box">
-                <ul style={{ listStyle: 'none' }}>
-                  {orderItems.map((item, index) => (
-                    <li key={index} className="order-list-item">
-                      <span>{item}</span>
-                      <button className="delete-button" onClick={() => removeItem(index)}>
-                        X
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+            <div className="order-list">
+              <h2 className="order-list-header">Rendelt jegyek</h2>
+
+              {orderItems.length === 0 ? (
+                <div className="order-empty">
+                  <div className="order-empty-text">A kosár üres</div>
+                </div>
+              ) : (
+                <div className="order-list-items">
+                  {Object.entries(groupedItems).map(([name, qty]) => {
+                    const unitPrice = getTicketPrice(name);
+                    return (
+                      <div key={name} className="order-card">
+                        <div className="order-card-info">
+                          <div className="order-card-name">{name}</div>
+                          <div className="order-card-price">{unitPrice} Ft / db</div>
+                        </div>
+                        <div className="order-card-controls">
+                          <button
+                            className={`qty-btn${qty === 1 ? ' qty-btn-remove' : ''}`}
+                            onClick={() => throttle(() => removeOneOfType(name))}
+                          >
+                            <span className="material-symbols-rounded qty-icon">{qty === 1 ? 'delete' : 'remove'}</span>
+                          </button>
+                          <span className="qty-count">{qty}</span>
+                          <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>
+                            <span className="material-symbols-rounded qty-icon">add</span>
+                          </button>
+                        </div>
+                        <div className="order-card-total">{unitPrice * qty} Ft</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="order-summary">
+                <div className="order-summary-row">
+                  <span className="order-summary-label">Összesen</span>
+                  <span className="order-summary-value">{totalPrice} Ft</span>
+                </div>
+                <span className="order-summary-count">
+                  {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
+                </span>
+                <button className="order-save-btn" onClick={saveOrder}>
+                  Mentés
+                </button>
               </div>
-              <p className="res-adj4">Teljes ár: {totalPrice} Ft</p>
-              <button className="res-adj5" onClick={saveOrder}>
-                Mentés
-              </button>
             </div>
           )}
 

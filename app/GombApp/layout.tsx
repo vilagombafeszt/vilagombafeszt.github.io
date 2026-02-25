@@ -38,6 +38,11 @@ export const viewport: Viewport = {
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`gombapp ${alumniSans.variable}`} style={{ fontFamily: 'var(--font-alumni-sans), Alumni Sans, sans-serif' }}>
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
+        rel="stylesheet"
+      />
       <AuthProvider>
         <SnackbarProvider>
           {children}
