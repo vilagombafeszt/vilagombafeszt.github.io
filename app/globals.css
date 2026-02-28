@@ -136,7 +136,7 @@ a:visited { color: var(--color-accent); }
    HERO
    ───────────────────────────────────────────────────────────── */
 #Otthon {
-  background-image: url('/page_images/IMG_9010.jpg');
+  background-image: url('/page_images/IMG_1367.jpg');
   background-size: cover;
   background-position: center;
   color: var(--color-hero-text);
@@ -165,7 +165,7 @@ a:visited { color: var(--color-accent); }
 .eloadasok {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 3vw, 40px);
+  gap: clamp(12px, 5vw, 72px);
   width: 100%;
   max-width: 1200px;
 }
