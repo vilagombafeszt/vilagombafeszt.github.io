@@ -422,6 +422,21 @@ a:visited { color: var(--color-accent); }
   font-weight: 600;
   color: var(--color-accent);
   margin-top: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-credit a {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.gallery-credit .fa-instagram {
+  margin: 0 0.3em 0 0.6em;
+  font-size: 0.80em;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -470,10 +485,10 @@ a:visited { color: var(--color-accent); }
 #instagram-logo:hover { transform: scale(1.08); }
 
 .contact-info {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
 }
-.contact-info table { border-collapse: collapse; width: 100%; }
+.contact-info table { border-collapse: collapse; width: auto; }
 .contact-info td {
   padding: 6px 10px;
   font-size: clamp(14px, 1.5vw, 22px);
@@ -560,7 +575,7 @@ a:visited { color: var(--color-accent); }
   .social-links { flex-direction: row; align-items: center; gap: 16px; }
   #facebook-logo,
   #instagram-logo { width: 80px; }
-  .contact-info { flex: 1 1 auto; }
+  .contact-info { flex: 0 1 auto; }
   .contact-info td { padding: 4px 8px; }
 }
 
@@ -644,7 +659,7 @@ a:visited { color: var(--color-accent); }
   }
   #facebook-logo,
   #instagram-logo { width: 60px; }
-  .contact-info { flex: 1 1 auto; }
+  .contact-info { flex: 0 1 auto; }
   .contact-info td {
     font-size: 17px;
     padding: 4px 8px;

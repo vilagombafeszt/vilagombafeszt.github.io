@@ -62,6 +62,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
         />
+        {/* Font Awesome */}
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
         {/* Cookie Consent */}
         <Script
           src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"

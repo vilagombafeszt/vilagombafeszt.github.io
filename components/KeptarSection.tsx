@@ -63,7 +63,8 @@ export default function KeptarSection() {
 
       <div className="gallery-credit">
         <span>Képeket készítette: </span>
-        <a href="https://www.instagram.com/g.adam.llery/">
+        <a href="https://www.instagram.com/g.adam.llery/" target="_blank" rel="noopener noreferrer">
+          <i className="fab fa-instagram" />
           Kovács Ádám
         </a>
       </div>
