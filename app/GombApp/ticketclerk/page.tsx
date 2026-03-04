@@ -280,7 +280,6 @@ export default function TicketClerkPage() {
                   </button>
                 ))}
               </div>
-              <div style={{ height: '50px' }} />
               <div className="fixed-bottom">
                 <button className="res-adj1" onClick={() => setView('order')}>
                   Kosár megnézése

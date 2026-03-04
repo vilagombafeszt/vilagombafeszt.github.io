@@ -14,6 +14,8 @@
 html:has(.gombapp),
 body:has(.gombapp) {
   background-color: var(--gombapp-bg-color) !important;
+  height: 100%;
+  overflow: hidden;
 }
 
 .gombapp * {
@@ -27,8 +29,10 @@ body:has(.gombapp) {
   font-family: 'Alumni Sans', sans-serif;
   color: var(--gombapp-font-color);
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
   background-color: var(--gombapp-bg-color);
   padding: 20px;
   padding-top: calc(20px + env(safe-area-inset-top, 0px));
@@ -36,8 +40,10 @@ body:has(.gombapp) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  touch-action: pan-y pan-x;
-  overflow-x: hidden;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -154,6 +160,9 @@ body:has(.gombapp) {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* ===== Menu ===== */
@@ -172,6 +181,18 @@ body:has(.gombapp) {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* When menu is inside order-container, fill available space and clear fixed bar */
+.gombapp .order-container > .menu {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  overflow-y: visible;
+  overflow-x: visible;
 }
 
 /* ===== Profile Pics / Images ===== */
@@ -230,10 +251,19 @@ body:has(.gombapp) {
 /* ===== Order Container ===== */
 .gombapp .order-container {
   padding-top: 80px;
-  width: 100%;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ===== Redesigned Order List ===== */
@@ -245,6 +275,8 @@ body:has(.gombapp) {
   max-width: 420px;
   margin: 0 auto;
   padding: 0 16px;
+  /* Fill viewport below fixed header + gombapp padding */
+  height: calc(100dvh - 120px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
 }
 
 .gombapp .order-list-header {
@@ -260,7 +292,8 @@ body:has(.gombapp) {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 55vh;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 4px;
@@ -363,6 +396,7 @@ body:has(.gombapp) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex: 1;
   padding: 48px 20px;
   color: rgba(16, 33, 53, 0.45);
 }
@@ -380,12 +414,15 @@ body:has(.gombapp) {
 /* Summary bar */
 .gombapp .order-summary {
   width: 100%;
-  margin-top: 20px;
-  padding: 16px 0;
+  flex-shrink: 0;
+  margin-top: 8px;
+  padding: 12px 0;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   border-top: 2px solid rgba(16, 33, 53, 0.15);
   display: flex;
   flex-direction: column;
   gap: 14px;
+  background-color: var(--gombapp-bg-color);
 }
 
 .gombapp .order-summary-row {
@@ -477,6 +514,7 @@ body:has(.gombapp) {
   padding-left: 10px;
   padding-right: 10px;
   z-index: 1000;
+  flex-shrink: 0;
 }
 
 /* ===== Responsive Adjustments ===== */
@@ -646,6 +684,7 @@ body:has(.gombapp) {
 .gombapp footer {
   margin-top: auto;
   padding-top: 20px;
+  flex-shrink: 0;
 }
 
 .gombapp .footer-text {
@@ -661,7 +700,9 @@ body:has(.gombapp) {
   justify-content: flex-start;
   padding: 20px;
   padding-top: 80px;
-  height: calc(100vh - 120px);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .gombapp .statistics-content {
@@ -724,6 +765,7 @@ body:has(.gombapp) {
 .gombapp .statsummary-container {
   padding: 20px;
   margin-top: 100px;
+  overflow-y: auto;
 }
 
 .gombapp .bartenderstats-title,

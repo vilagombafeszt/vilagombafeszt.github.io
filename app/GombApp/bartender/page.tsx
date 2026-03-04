@@ -222,7 +222,6 @@ export default function BartenderPage() {
                   </button>
                 ))}
               </div>
-              <div style={{ height: '100px' }} />
               <div className="fixed-bottom">
                 <button className="res-adj1" onClick={() => setView('order')}>
                   Rendelés megnézése
