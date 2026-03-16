@@ -175,18 +175,17 @@ body:has(.gombapp) {
   -webkit-overflow-scrolling: touch;
 }
 
-/* When menu is inside order-container, fill available space and clear sticky bar */
+/* When menu is inside order-container, fill available space and scroll */
 .gombapp .order-container > .menu {
   flex: 1;
   min-height: 0;
-  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
-  overflow-y: visible;
-  overflow-x: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* When menu is directly inside main, fill available space and enable scrolling */
+/* When menu is directly inside main, allow scrolling but don't stretch grid rows */
 .gombapp main > .menu {
-  flex: 1;
   min-height: 0;
 }
 
@@ -255,9 +254,7 @@ body:has(.gombapp) {
   align-items: center;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 /* ===== Redesigned Order List ===== */
@@ -494,11 +491,8 @@ body:has(.gombapp) {
 /* ===== Fixed Bottom Bar ===== */
 .gombapp .fixed-bottom {
   display: flex;
-  position: sticky;
   justify-content: center;
   align-items: center;
-  bottom: 0;
-  left: 0;
   width: calc(100% + 40px);
   margin-left: -20px;
   margin-right: -20px;

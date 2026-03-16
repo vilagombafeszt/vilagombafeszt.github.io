@@ -263,7 +263,7 @@ export default function TicketClerkPage() {
         <div className="order-container">
           {view === 'menu' && (
             <>
-              <div className="menu" style={{ gridAutoRows: '1fr' }}>
+              <div className="menu">
                 {TICKETS.map((ticket) => (
                   <button
                     key={ticket.name}
