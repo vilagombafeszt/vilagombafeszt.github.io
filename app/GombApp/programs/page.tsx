@@ -49,7 +49,7 @@ export default function ProgramsPage() {
 
       <main>
         {view === 'menu' && (
-          <div className="menu">
+          <div className="menu adjust">
             <button className="calendar-button" onClick={() => setView('realtime')}>
               <Image
                 src="/GombApp/images/realtime-calendar.png"

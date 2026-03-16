@@ -182,6 +182,7 @@ body:has(.gombapp) {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  align-content: start;
 }
 
 /* When menu is directly inside main, allow scrolling but don't stretch grid rows */
@@ -202,9 +203,6 @@ body:has(.gombapp) {
   margin-bottom: 10px;
 }
 
-.gombapp .type-button {
-  height: 100%;
-}
 
 .gombapp .type-pic {
   width: 100px;
@@ -753,6 +751,7 @@ body:has(.gombapp) {
 .gombapp .foodserverstat-container,
 .gombapp .statsummary-container {
   padding: 20px;
+  padding-top: clamp(20px, 5vh, 60px);
   overflow-y: auto;
 }
 
