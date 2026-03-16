@@ -14,7 +14,6 @@
 html:has(.gombapp),
 body:has(.gombapp) {
   background-color: var(--gombapp-bg-color) !important;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -28,22 +27,12 @@ body:has(.gombapp) {
   font-size: 20px;
   font-family: 'Alumni Sans', sans-serif;
   color: var(--gombapp-font-color);
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  max-height: 100vh;
-  max-height: 100dvh;
   background-color: var(--gombapp-bg-color);
-  padding: 20px;
-  padding-top: calc(20px + env(safe-area-inset-top, 0px));
-  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
-  align-items: center;
   overflow: hidden;
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -62,10 +51,8 @@ body:has(.gombapp) {
   padding: 10px 20px;
   padding-top: calc(10px + env(safe-area-inset-top, 0px));
   background-color: var(--gombapp-bg-color);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
+  position: relative;
   font-size: 30px;
   z-index: 100;
 }
@@ -149,7 +136,8 @@ body:has(.gombapp) {
 
 .gombapp .back-button {
   position: absolute;
-  top: calc(20px + env(safe-area-inset-top, 0px));
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
   width: 90px;
 }
@@ -163,6 +151,7 @@ body:has(.gombapp) {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  padding: 0 20px;
 }
 
 /* ===== Menu ===== */
@@ -186,39 +175,72 @@ body:has(.gombapp) {
   -webkit-overflow-scrolling: touch;
 }
 
-/* When menu is inside order-container, fill available space and clear fixed bar */
-.gombapp .order-container > .menu {
+/* When menu is directly inside main, allow scrolling but don't stretch grid rows */
+.gombapp main > .menu {
+  min-height: 0;
+}
+
+/* ===== Item Grid (Ticketclerk, Bartender) ===== */
+.gombapp .item-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-content: start;
   flex: 1;
   min-height: 0;
-  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
-  overflow-y: visible;
-  overflow-x: visible;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px 0 20px 0;
+}
+
+.gombapp .ticket-grid {
+  align-content: center;
+  padding-bottom: 40px;
+}
+
+.gombapp .item-button {
+  background-color: var(--gombapp-button-bg);
+  color: var(--gombapp-button-font);
+  border: none;
+  padding: 15px 10px;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-family: 'Alumni Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* keep image at top, text flows down */
+  aspect-ratio: 1; /* Makes them perfectly square */
+  width: 100%;
+  transition: transform 0.1s ease;
+}
+
+.gombapp .item-button:active {
+  transform: scale(0.96);
+}
+
+.gombapp .item-button span {
+  margin-top: auto; /* Pushes text to the bottom uniformly or centers it if combined */
+  line-height: 1.1;
+  text-align: center;
+}
+
+.gombapp .item-pic {
+  width: 50%;
+  max-width: 80px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin-bottom: auto; /* pushes image up nicely */
 }
 
 /* ===== Profile Pics / Images ===== */
 .gombapp .profile-pic {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.gombapp .drink-pic {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.gombapp .type-button {
-  height: 100%;
-}
-
-.gombapp .type-pic {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.gombapp .dinner-pic {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
@@ -250,7 +272,6 @@ body:has(.gombapp) {
 
 /* ===== Order Container ===== */
 .gombapp .order-container {
-  padding-top: 80px;
   width: calc(100% + 40px);
   margin-left: -20px;
   margin-right: -20px;
@@ -261,9 +282,7 @@ body:has(.gombapp) {
   align-items: center;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 /* ===== Redesigned Order List ===== */
@@ -275,8 +294,8 @@ body:has(.gombapp) {
   max-width: 420px;
   margin: 0 auto;
   padding: 0 16px;
-  /* Fill viewport below fixed header + gombapp padding */
-  height: calc(100dvh - 120px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  flex: 1;
+  min-height: 0;
 }
 
 .gombapp .order-list-header {
@@ -422,7 +441,6 @@ body:has(.gombapp) {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background-color: var(--gombapp-bg-color);
 }
 
 .gombapp .order-summary-row {
@@ -501,12 +519,11 @@ body:has(.gombapp) {
 /* ===== Fixed Bottom Bar ===== */
 .gombapp .fixed-bottom {
   display: flex;
-  position: fixed;
   justify-content: center;
   align-items: center;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-right: -20px;
   height: calc(80px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background-color: var(--gombapp-bg-color);
@@ -683,7 +700,8 @@ body:has(.gombapp) {
 /* ===== Footer ===== */
 .gombapp footer {
   margin-top: auto;
-  padding-top: 20px;
+  padding: 20px 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   flex-shrink: 0;
 }
 
@@ -699,7 +717,6 @@ body:has(.gombapp) {
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  padding-top: 80px;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -764,7 +781,7 @@ body:has(.gombapp) {
 .gombapp .foodserverstat-container,
 .gombapp .statsummary-container {
   padding: 20px;
-  margin-top: 100px;
+  padding-top: clamp(30px, 10vh, 120px);
   overflow-y: auto;
 }
 
@@ -884,35 +901,26 @@ body:has(.gombapp) {
 
 /* ===== Landscape / small screen overrides ===== */
 @media only screen and (orientation: landscape) and (max-height: 500px) {
-  .gombapp .footer-text {
-    margin-top: 100px;
-    bottom: auto;
-  }
   .gombapp .menu {
-    padding-top: 30px;
-  }
-  .gombapp .bartenderstat-container,
-  .gombapp .foodserverstat-container,
-  .gombapp .statsummary-container {
-    padding-top: 30px;
+    gap: 10px;
   }
 }
 
 /* Responsive gap between header and menu buttons */
 .gombapp .adjust {
-  margin-top: clamp(140px, 20vh, 250px);
+  margin-top: clamp(20px, 12vh, 100px);
 }
 
 @media only screen and (max-height: 700px) {
   .gombapp .adjust {
-    margin-top: 130px;
+    margin-top: 12px;
     padding-top: 0;
   }
 }
 
 @media only screen and (max-height: 550px) {
   .gombapp .adjust {
-    margin-top: 110px;
+    margin-top: 6px;
     padding-top: 0;
   }
 }

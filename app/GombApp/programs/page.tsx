@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
@@ -19,9 +19,6 @@ export default function ProgramsPage() {
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
   const [view, setView] = useState<View>('menu');
-  const realtimeRef = useRef<HTMLIFrameElement>(null);
-  const agendaRef = useRef<HTMLIFrameElement>(null);
-  const [iframeSize, setIframeSize] = useState({ width: 350, height: 500 });
 
   // Auth check
   useEffect(() => {
@@ -30,19 +27,6 @@ export default function ProgramsPage() {
       router.push('/GombApp/');
     }
   }, [user, loading, router, showSnackbar]);
-
-  // Resize iframes
-  const resizeIframes = useCallback(() => {
-    const newWidth = window.innerWidth - 50;
-    const newHeight = window.innerHeight - 150;
-    setIframeSize({ width: newWidth, height: newHeight });
-  }, []);
-
-  useEffect(() => {
-    resizeIframes();
-    window.addEventListener('resize', resizeIframes);
-    return () => window.removeEventListener('resize', resizeIframes);
-  }, [resizeIframes]);
 
   if (loading) return null;
 
@@ -65,7 +49,7 @@ export default function ProgramsPage() {
 
       <main>
         {view === 'menu' && (
-          <div className="menu" style={{ marginTop: '150px' }}>
+          <div className="menu adjust">
             <button className="calendar-button" onClick={() => setView('realtime')}>
               <Image
                 src="/GombApp/images/realtime-calendar.png"
@@ -90,28 +74,22 @@ export default function ProgramsPage() {
         )}
 
         {view === 'realtime' && (
-          <div style={{ marginTop: '80px' }}>
+          <div style={{ flex: 1, width: '100%', minHeight: 0, padding: '10px 0', display: 'flex' }}>
             <iframe
-              ref={realtimeRef}
               src={REALTIME_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden' }}
-              width={iframeSize.width}
-              height={iframeSize.height}
+              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
               scrolling="no"
             />
           </div>
         )}
 
         {view === 'agenda' && (
-          <div style={{ marginTop: '100px' }}>
+          <div style={{ flex: 1, width: '100%', minHeight: 0, padding: '10px 0', display: 'flex' }}>
             <iframe
-              ref={agendaRef}
               src={AGENDA_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden' }}
-              width={iframeSize.width}
-              height={iframeSize.height}
+              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
               scrolling="no"
             />
           </div>
