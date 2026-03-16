@@ -1034,7 +1034,7 @@ body:has(.gombapp) {
 
 /* Responsive gap between header and menu buttons */
 .gombapp .adjust {
-  margin-top: clamp(140px, 20vh, 250px);
+  margin-top: clamp(100px, 10vh, 250px);
 }
 
 @media only screen and (max-height: 700px) {
