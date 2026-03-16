@@ -78,11 +78,6 @@ export default function GombAppHome() {
 
       <main>
         <div className="menu adjust">
-          {showLogin && !user && (
-            <div style={{ gridColumn: '1 / -1' }}>
-              <LoginForm onClose={() => setShowLogin(false)} />
-            </div>
-          )}
           <button className="button" onClick={() => navigateTo('/GombApp/admin/', true)}>
             <Image src="/GombApp/images/adminpic.png" alt="Admin" className="profile-pic" width={100} height={100} />
             Admin
@@ -102,8 +97,10 @@ export default function GombAppHome() {
         </div>
       </main>
 
+      <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
+
       <footer>
-        <p className="footer-text">v2.0.0</p>
+        <p className="footer-text">v2.0.1</p>
       </footer>
     </>
   );
