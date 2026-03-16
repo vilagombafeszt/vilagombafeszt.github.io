@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useSnackbar } from './Snackbar';
+import { BottomSheet, BottomSheetHeader, BottomSheetBody, BottomSheetFooter } from './BottomSheet';
 
 interface LoginFormProps {
+  isOpen: boolean;
   onClose: () => void;
 }
 
-export default function LoginForm({ onClose }: LoginFormProps) {
+export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
   const { showSnackbar } = useSnackbar();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -86,26 +88,53 @@ export default function LoginForm({ onClose }: LoginFormProps) {
   };
 
   return (
-    <div className="login-form" style={{ display: 'block' }}>
+    <BottomSheet isOpen={isOpen} onClose={onClose}>
+      <BottomSheetHeader>Bejelentkezés</BottomSheetHeader>
       <form className="name-form" onSubmit={showReset ? handleSendReset : handleLogin}>
-        {!showReset ? (
-          <div className="login-fields">
-            <input
-              className="email-field"
-              type="email"
-              placeholder="E-mail cím"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              className="pw-field"
-              type="password"
-              placeholder="Jelszó"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        <BottomSheetBody>
+          {!showReset ? (
+            <div className="login-fields">
+              <input
+                className="email-field"
+                type="email"
+                placeholder="E-mail cím"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                className="pw-field"
+                type="password"
+                placeholder="Jelszó"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => setShowReset(true)}
+              >
+                Elfelejtettem a jelszavam.
+              </button>
+            </div>
+          ) : (
+            <div className="forgot-password-fields" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <p className="reset-description">
+                Add meg az e-mail-címedet, és elküldünk neked egy hivatkozást, amellyel visszajuthatsz a fiókodba.
+              </p>
+              <input
+                className="email-field"
+                type="email"
+                placeholder="E-mail cím"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+              />
+            </div>
+          )}
+        </BottomSheetBody>
+        <BottomSheetFooter>
+          {!showReset ? (
             <div className="loginform-buttons">
               <button type="button" className="cancel-button" onClick={onClose}>
                 Mégse
@@ -114,26 +143,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
                 Belépés
               </button>
             </div>
-            <button
-              type="button"
-              className="text-button"
-              onClick={() => setShowReset(true)}
-            >
-              Elfelejtettem a jelszavam.
-            </button>
-          </div>
-        ) : (
-          <div className="forgot-password-fields" style={{ display: 'flex' }}>
-            <p className="reset-description">
-              Add meg az e-mail-címedet, és elküldünk neked egy hivatkozást, amellyel visszajuthatsz a fiókodba.
-            </p>
-            <input
-              className="email-field"
-              type="email"
-              placeholder="E-mail cím"
-              value={resetEmail}
-              onChange={(e) => setResetEmail(e.target.value)}
-            />
+          ) : (
             <div className="loginform-buttons">
               <button
                 type="button"
@@ -146,9 +156,9 @@ export default function LoginForm({ onClose }: LoginFormProps) {
                 Hivatkozás küldése
               </button>
             </div>
-          </div>
-        )}
+          )}
+        </BottomSheetFooter>
       </form>
-    </div>
+    </BottomSheet>
   );
 }
