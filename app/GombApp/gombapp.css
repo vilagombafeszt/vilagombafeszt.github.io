@@ -520,10 +520,9 @@ body:has(.gombapp) {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: calc(80px + env(safe-area-inset-bottom, 0px));
+  height: calc(70px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background-color: var(--gombapp-bg-color);
-  padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
   z-index: 1000;
@@ -911,7 +910,7 @@ body:has(.gombapp) {
   padding: 16px 20px;
   position: fixed;
   left: 50%;
-  top: 60px;
+  top: 70px;
   transform: translate(-50%, -20px);
   z-index: 2000;
   opacity: 0;
@@ -1034,7 +1033,11 @@ body:has(.gombapp) {
 
 /* Responsive gap between header and menu buttons */
 .gombapp .adjust {
-  margin-top: clamp(140px, 20vh, 250px);
+  margin-top: clamp(100px, 10vh, 250px);
+}
+
+.gombapp .home-adjust {
+  margin-top: clamp(50px, 5vh, 150px);
 }
 
 @media only screen and (max-height: 700px) {
@@ -1042,11 +1045,19 @@ body:has(.gombapp) {
     margin-top: 12px;
     padding-top: 0;
   }
+  .gombapp .home-adjust {
+    margin-top: 6px;
+    padding-top: 0;
+  }
 }
 
 @media only screen and (max-height: 550px) {
   .gombapp .adjust {
     margin-top: 6px;
+    padding-top: 0;
+  }
+  .gombapp .home-adjust {
+    margin-top: 0;
     padding-top: 0;
   }
 }
