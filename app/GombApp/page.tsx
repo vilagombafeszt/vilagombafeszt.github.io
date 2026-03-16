@@ -103,7 +103,7 @@ export default function GombAppHome() {
       </main>
 
       <footer>
-        <p className="footer-text">v2.0.0</p>
+        <p className="footer-text">v2.0.1</p>
       </footer>
     </>
   );
