@@ -145,7 +145,7 @@ export default function AdminPage() {
 
       <main>
         {view === 'menu' && (
-          <div className="menu" style={{ marginTop: '150px' }}>
+          <div className="menu">
             <button className="button" onClick={() => setView('bartender')}>
               <Image src="/GombApp/images/stats.png" alt="Pultos statisztika" className="profile-pic" width={100} height={100} />
               Pultos statisztika

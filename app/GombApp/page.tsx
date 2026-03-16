@@ -77,7 +77,7 @@ export default function GombAppHome() {
       </header>
 
       <main>
-        <div className="menu adjust" style={{ paddingTop: user ? '80px' : undefined, marginTop: showLogin ? '140px' : undefined }}>
+        <div className="menu adjust">
           {showLogin && !user && (
             <div style={{ gridColumn: '1 / -1' }}>
               <LoginForm onClose={() => setShowLogin(false)} />
