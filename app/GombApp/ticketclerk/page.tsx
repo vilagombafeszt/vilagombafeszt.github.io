@@ -263,20 +263,22 @@ export default function TicketClerkPage() {
         <div className="order-container">
           {view === 'menu' && (
             <>
-              <div className="menu">
+              <div className="item-grid ticket-grid">
                 {TICKETS.map((ticket) => (
                   <button
                     key={ticket.name}
-                    className="type-button"
+                    className="item-button"
                     onClick={() => addItem(ticket.name)}
                   >
-                    <Image src={ticket.image} alt={ticket.alt} className="type-pic" width={100} height={100} />
-                    {ticket.label.split('\n').map((line, i) => (
-                      <React.Fragment key={i}>
-                        {line}
-                        {i === 0 && <br />}
-                      </React.Fragment>
-                    ))}
+                    <Image src={ticket.image} alt={ticket.alt} className="item-pic" width={100} height={100} />
+                    <span>
+                      {ticket.label.split('\n').map((line, i) => (
+                        <React.Fragment key={i}>
+                          {line}
+                          {i === 0 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </span>
                   </button>
                 ))}
               </div>

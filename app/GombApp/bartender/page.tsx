@@ -210,15 +210,15 @@ export default function BartenderPage() {
         <div className="order-container">
           {view === 'menu' && (
             <>
-              <div className="menu">
+              <div className="item-grid">
                 {DRINKS.map((drink) => (
                   <button
                     key={drink.name}
-                    className="drink-button"
+                    className="item-button"
                     onClick={() => addItem(drink.name)}
                   >
-                    <Image src={drink.image} alt={drink.alt} className="drink-pic" width={100} height={100} />
-                    {drink.label}
+                    <Image src={drink.image} alt={drink.alt} className="item-pic" width={100} height={100} />
+                    <span>{drink.label}</span>
                   </button>
                 ))}
               </div>
