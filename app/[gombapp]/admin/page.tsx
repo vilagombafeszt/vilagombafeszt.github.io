@@ -56,6 +56,29 @@ function computeStats(data: Record<string, { orderList: string[]; orderCount: nu
   return { totalOrders, totalOrderCount, totalRevenue, mostOrdered };
 }
 
+function StatCard({ label, value, unit }: { label: string; value: number; unit: string }) {
+  const formatted = value.toLocaleString('hu-HU').replace(/,/g, ' ');
+
+  return (
+    <div className="admin-stat-card">
+      <div className="admin-stat-label">{label}</div>
+      <div className="admin-stat-value">
+        {formatted}
+        <span className="admin-stat-unit">{unit}</span>
+      </div>
+    </div>
+  );
+}
+
+function StatTextCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="admin-stat-card">
+      <div className="admin-stat-label">{label}</div>
+      <div className="admin-stat-value-text">{value}</div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const { user, loading } = useAuth();
   const { showSnackbar } = useSnackbar();
@@ -187,35 +210,118 @@ export default function AdminPage() {
 
         {view === 'bartender' && (
           <div className="bartenderstat-container">
-            <h2 className="bartenderstats-title">Pultos statisztika</h2>
-            <h3 style={{ marginTop: '20px' }}>Rendelt italok száma: {bartenderStats.totalOrders} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Rendelések száma: {bartenderStats.totalOrderCount} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Legtöbbet rendelt ital: {bartenderStats.mostOrdered}</h3>
-            <h3 style={{ marginTop: '10px' }}>Teljes bevétel: {formatNumber(bartenderStats.totalRevenue)} HUF</h3>
+            <div className="admin-stats">
+              <div className="admin-stats-header">
+                <div className="admin-stats-title">Pultos statisztika</div>
+                <div className="admin-stats-subtitle">Ital rendelések összesítve</div>
+              </div>
+
+              <div className="admin-stats-grid">
+                <StatCard label="Rendelt tételek" value={bartenderStats.totalOrders} unit="db" />
+                <StatCard label="Rendelések" value={bartenderStats.totalOrderCount} unit="db" />
+                <StatTextCard label="Legnépszerűbb ital" value={bartenderStats.mostOrdered} />
+                <div className="admin-stat-card">
+                  <div className="admin-stat-label">Bevétel</div>
+                  <div className="admin-stat-value">
+                    {formatNumber(bartenderStats.totalRevenue)}
+                    <span className="admin-stat-unit">HUF</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {view === 'ticket' && (
           <div className="ticketstat-container">
-            <h2 className="ticketstats-title">Jegyeladás statisztika</h2>
-            <h3 style={{ marginTop: '20px' }}>Eladott jegyek száma: {ticketStats.totalOrders} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Rendelések száma: {ticketStats.totalOrderCount} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Legtöbbet eladott jegy: {ticketStats.mostOrdered}</h3>
-            <h3 style={{ marginTop: '10px', marginBottom: '20px' }}>Teljes jegybevétel: {formatNumber(ticketStats.totalRevenue)} HUF</h3>
+            <div className="admin-stats">
+              <div className="admin-section">
+                <div className="admin-stats-header">
+                  <div className="admin-stats-title">Jegyeladás statisztika</div>
+                  <div className="admin-stats-subtitle">Jegy rendelések összesítve</div>
+                </div>
 
-            <h2 style={{ marginTop: '40px' }} className="ticketstats-title">Szabad helyek száma</h2>
-            <h3 style={{ marginTop: '20px', color: ticketCapacities.friday === 0 ? '#d32f2f' : 'inherit' }}>Péntek: {ticketCapacities.friday} hely</h3>
-            <h3 style={{ marginTop: '10px', color: ticketCapacities.saturday === 0 ? '#d32f2f' : 'inherit' }}>Szombat: {ticketCapacities.saturday} hely</h3>
-            <h3 style={{ marginTop: '10px', color: ticketCapacities.sunday === 0 ? '#d32f2f' : 'inherit' }}>Vasárnap: {ticketCapacities.sunday} hely</h3>
+                <div className="admin-stats-grid">
+                  <StatCard label="Eladott jegyek" value={ticketStats.totalOrders} unit="db" />
+                  <StatCard label="Rendelések" value={ticketStats.totalOrderCount} unit="db" />
+                  <StatTextCard label="Legnépszerűbb jegy" value={ticketStats.mostOrdered} />
+                  <div className="admin-stat-card">
+                    <div className="admin-stat-label">Jegybevétel</div>
+                    <div className="admin-stat-value">
+                      {formatNumber(ticketStats.totalRevenue)}
+                      <span className="admin-stat-unit">HUF</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="admin-section">
+                <div className="admin-section-title">Szabad helyek</div>
+                <div className="admin-capacity-card">
+                  <div className="admin-capacity-row">
+                    <div className="admin-capacity-day">Péntek</div>
+                    <div className="admin-capacity-right">
+                      <span className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}>
+                        {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                      </span>
+                      <span className="admin-capacity-value">
+                        {formatNumber(ticketCapacities.friday)}
+                        <span className="admin-stat-unit">hely</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="admin-capacity-row">
+                    <div className="admin-capacity-day">Szombat</div>
+                    <div className="admin-capacity-right">
+                      <span className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}>
+                        {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                      </span>
+                      <span className="admin-capacity-value">
+                        {formatNumber(ticketCapacities.saturday)}
+                        <span className="admin-stat-unit">hely</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="admin-capacity-row">
+                    <div className="admin-capacity-day">Vasárnap</div>
+                    <div className="admin-capacity-right">
+                      <span className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}>
+                        {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                      </span>
+                      <span className="admin-capacity-value">
+                        {formatNumber(ticketCapacities.sunday)}
+                        <span className="admin-stat-unit">hely</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {view === 'summary' && (
           <div className="statsummary-container">
-            <h2 className="statsummary-title">Összes statisztika</h2>
-            <h3 style={{ marginTop: '20px' }}>Eladott jegyek/italok száma: {summaryOrders} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Rendelések száma: {summaryOrderCount} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Teljes bevétel: {formatNumber(summaryRevenue)} HUF</h3>
+            <div className="admin-stats">
+              <div className="admin-stats-header">
+                <div className="admin-stats-title">Összes statisztika</div>
+                <div className="admin-stats-subtitle">Ital + jegy együtt</div>
+              </div>
+
+              <div className="admin-stats-grid">
+                <StatCard label="Eladott tételek" value={summaryOrders} unit="db" />
+                <StatCard label="Rendelések" value={summaryOrderCount} unit="db" />
+                <div className="admin-stat-card full-span">
+                  <div className="admin-stat-label">Teljes bevétel</div>
+                  <div className="admin-stat-value">
+                    {formatNumber(summaryRevenue)}
+                    <span className="admin-stat-unit">HUF</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>

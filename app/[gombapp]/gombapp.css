@@ -886,16 +886,158 @@ body:has(.gombapp) {
 .gombapp .bartenderstat-container,
 .gombapp .ticketstat-container,
 .gombapp .statsummary-container {
-  padding: 20px;
-  padding-top: clamp(30px, 10vh, 120px);
+  width: 100%;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 0 24px 0;
 }
 
-.gombapp .bartenderstats-title,
-.gombapp .ticketstats-title,
-.gombapp .statsummary-title {
-  font-size: 28px;
-  margin-bottom: 10px;
+.gombapp .admin-stats {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gombapp .admin-stats-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 2px;
+}
+
+.gombapp .admin-stats-title {
+  font-size: clamp(30px, 3.2vh, 38px);
+  letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+.gombapp .admin-stats-subtitle {
+  font-size: 22px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.gombapp .admin-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 360px) {
+  .gombapp .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gombapp .admin-stat-card {
+  border-radius: 16px;
+  padding: 14px 14px 12px 14px;
+  background: color-mix(in srgb, var(--gombapp-bg-color) 86%, var(--gombapp-button-bg) 14%);
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
+}
+
+.gombapp .admin-stat-card.full-span {
+  grid-column: 1 / -1;
+}
+
+.gombapp .admin-stat-label {
+  font-size: 20px;
+  opacity: 0.95;
+  letter-spacing: 0.2px;
+  font-weight: 600;
+}
+
+.gombapp .admin-stat-value {
+  margin-top: 8px;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+  word-break: break-word;
+}
+
+.gombapp .admin-stat-unit {
+  margin-left: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.gombapp .admin-stat-value-text {
+  margin-top: 8px;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.gombapp .admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gombapp .admin-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0 2px;
+}
+
+.gombapp .admin-capacity-card {
+  border-radius: 16px;
+  padding: 14px;
+  background: color-mix(in srgb, var(--gombapp-bg-color) 86%, var(--gombapp-button-bg) 14%);
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
+}
+
+.gombapp .admin-capacity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 2px;
+  border-top: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 16%, transparent);
+}
+
+.gombapp .admin-capacity-row:first-of-type {
+  border-top: none;
+  padding-top: 2px;
+}
+
+.gombapp .admin-capacity-day {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.gombapp .admin-capacity-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gombapp .admin-pill {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
+  background: color-mix(in srgb, var(--gombapp-bg-color) 78%, var(--gombapp-button-bg) 22%);
+}
+
+.gombapp .admin-pill.danger {
+  border-color: #c62828;
+  color: #c62828;
+  background: color-mix(in srgb, var(--gombapp-bg-color) 80%, #c62828 20%);
+}
+
+.gombapp .admin-capacity-value {
+  font-size: 22px;
+  font-weight: 800;
 }
 
 /* ===== Snackbar ===== */
