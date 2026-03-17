@@ -884,7 +884,7 @@ body:has(.gombapp) {
 
 /* ===== Admin Stats ===== */
 .gombapp .bartenderstat-container,
-.gombapp .foodserverstat-container,
+.gombapp .ticketstat-container,
 .gombapp .statsummary-container {
   padding: 20px;
   padding-top: clamp(30px, 10vh, 120px);
@@ -892,7 +892,7 @@ body:has(.gombapp) {
 }
 
 .gombapp .bartenderstats-title,
-.gombapp .foodserverstats-title,
+.gombapp .ticketstats-title,
 .gombapp .statsummary-title {
   font-size: 28px;
   margin-bottom: 10px;

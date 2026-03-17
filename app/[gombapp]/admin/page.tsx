@@ -9,13 +9,19 @@ import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import Image from 'next/image';
 
-type View = 'menu' | 'bartender' | 'foodserver' | 'summary';
+type View = 'menu' | 'bartender' | 'ticket' | 'summary';
 
 interface Stats {
   totalOrders: number;
   totalOrderCount: number;
   totalRevenue: number;
   mostOrdered: string;
+}
+
+interface TicketCapacities {
+  friday: number;
+  saturday: number;
+  sunday: number;
 }
 
 const EMPTY_STATS: Stats = {
@@ -59,7 +65,8 @@ export default function AdminPage() {
   const [view, setView] = useState<View>('menu');
   const [authorized, setAuthorized] = useState(false);
   const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
-  const [foodserverStats, setFoodserverStats] = useState<Stats>(EMPTY_STATS);
+  const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
+  const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({ friday: 0, saturday: 0, sunday: 0 });
 
   // Auth & admin check
   useEffect(() => {
@@ -111,12 +118,27 @@ export default function AdminPage() {
     }
 
     try {
-      const foodSnap = await get(child(dbRef, 'Rendelések/Étel'));
-      if (foodSnap.exists()) {
-        setFoodserverStats(computeStats(foodSnap.val()));
+      const ticketSnap = await get(child(dbRef, 'Rendelések/Jegy'));
+      if (ticketSnap.exists()) {
+        setTicketStats(computeStats(ticketSnap.val()));
       }
     } catch (error) {
-      console.error('Error fetching food stats:', error);
+      console.error('Error fetching ticket stats:', error);
+    }
+
+    try {
+      const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
+        get(child(dbRef, 'Jegyek/pentekMax')),
+        get(child(dbRef, 'Jegyek/szombatMax')),
+        get(child(dbRef, 'Jegyek/vasarnapMax')),
+      ]);
+      setTicketCapacities({
+        friday: fridaySnap.exists() ? fridaySnap.val() : 0,
+        saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
+        sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
+      });
+    } catch (error) {
+      console.error('Error fetching ticket capacities:', error);
     }
   };
 
@@ -124,9 +146,9 @@ export default function AdminPage() {
 
   if (loading || !authorized) return null;
 
-  const summaryOrders = bartenderStats.totalOrders + foodserverStats.totalOrders;
-  const summaryOrderCount = bartenderStats.totalOrderCount + foodserverStats.totalOrderCount;
-  const summaryRevenue = bartenderStats.totalRevenue + foodserverStats.totalRevenue;
+  const summaryOrders = bartenderStats.totalOrders + ticketStats.totalOrders;
+  const summaryOrderCount = bartenderStats.totalOrderCount + ticketStats.totalOrderCount;
+  const summaryRevenue = bartenderStats.totalRevenue + ticketStats.totalRevenue;
 
   return (
     <>
@@ -149,12 +171,12 @@ export default function AdminPage() {
         {view === 'menu' && (
           <div className="menu adjust">
             <button className="button" onClick={() => setView('bartender')}>
-              <Image src="/GombApp/images/stats.png" alt="Pultos statisztika" className="profile-pic" width={100} height={100} />
-              Pultos statisztika
+              <Image src="/GombApp/images/stats.png" alt="Ital statisztika" className="profile-pic" width={100} height={100} />
+              Ital statisztika
             </button>
-            <button className="button" onClick={() => setView('foodserver')}>
-              <Image src="/GombApp/images/stats.png" alt="Ételárus statisztika" className="profile-pic" width={100} height={100} />
-              Ételárus statisztika
+            <button className="button" onClick={() => setView('ticket')}>
+              <Image src="/GombApp/images/stats.png" alt="Jegy statisztika" className="profile-pic" width={100} height={100} />
+              Jegy statisztika
             </button>
             <button className="button" onClick={() => setView('summary')}>
               <Image src="/GombApp/images/stats.png" alt="Összes statisztika" className="profile-pic" width={100} height={100} />
@@ -173,20 +195,25 @@ export default function AdminPage() {
           </div>
         )}
 
-        {view === 'foodserver' && (
-          <div className="foodserverstat-container">
-            <h2 className="foodserverstats-title">Ételárus statisztika</h2>
-            <h3 style={{ marginTop: '20px' }}>Rendelt ételek száma: {foodserverStats.totalOrders} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Rendelések száma: {foodserverStats.totalOrderCount} db</h3>
-            <h3 style={{ marginTop: '10px' }}>Legtöbbet rendelt étel: {foodserverStats.mostOrdered}</h3>
-            <h3 style={{ marginTop: '10px' }}>Teljes bevétel: {formatNumber(foodserverStats.totalRevenue)} HUF</h3>
+        {view === 'ticket' && (
+          <div className="ticketstat-container">
+            <h2 className="ticketstats-title">Jegyeladás statisztika</h2>
+            <h3 style={{ marginTop: '20px' }}>Eladott jegyek száma: {ticketStats.totalOrders} db</h3>
+            <h3 style={{ marginTop: '10px' }}>Rendelések száma: {ticketStats.totalOrderCount} db</h3>
+            <h3 style={{ marginTop: '10px' }}>Legtöbbet eladott jegy: {ticketStats.mostOrdered}</h3>
+            <h3 style={{ marginTop: '10px', marginBottom: '20px' }}>Teljes jegybevétel: {formatNumber(ticketStats.totalRevenue)} HUF</h3>
+
+            <h2 style={{ marginTop: '40px' }} className="ticketstats-title">Szabad helyek száma</h2>
+            <h3 style={{ marginTop: '20px', color: ticketCapacities.friday === 0 ? '#d32f2f' : 'inherit' }}>Péntek: {ticketCapacities.friday} hely</h3>
+            <h3 style={{ marginTop: '10px', color: ticketCapacities.saturday === 0 ? '#d32f2f' : 'inherit' }}>Szombat: {ticketCapacities.saturday} hely</h3>
+            <h3 style={{ marginTop: '10px', color: ticketCapacities.sunday === 0 ? '#d32f2f' : 'inherit' }}>Vasárnap: {ticketCapacities.sunday} hely</h3>
           </div>
         )}
 
         {view === 'summary' && (
           <div className="statsummary-container">
             <h2 className="statsummary-title">Összes statisztika</h2>
-            <h3 style={{ marginTop: '20px' }}>Rendelt ételek/italok száma: {summaryOrders} db</h3>
+            <h3 style={{ marginTop: '20px' }}>Eladott jegyek/italok száma: {summaryOrders} db</h3>
             <h3 style={{ marginTop: '10px' }}>Rendelések száma: {summaryOrderCount} db</h3>
             <h3 style={{ marginTop: '10px' }}>Teljes bevétel: {formatNumber(summaryRevenue)} HUF</h3>
           </div>
