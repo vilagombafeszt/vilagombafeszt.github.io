@@ -136,7 +136,7 @@ a:visited { color: var(--color-accent); }
    HERO
    ───────────────────────────────────────────────────────────── */
 #Otthon {
-  background-image: url('/page_images/IMG_1367.jpg');
+  background-image: url('/page_images/IMG_1367.webp');
   background-size: cover;
   background-position: center;
   color: var(--color-hero-text);

@@ -178,6 +178,7 @@ export default function Menu() {
           width={45}
           height={45}
           unoptimized
+          priority={true}
         />
       </a>
 

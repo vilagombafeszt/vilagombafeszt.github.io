@@ -4,28 +4,28 @@ import Script from 'next/script';
 import './globals.css';
 
 const alumniSans = Alumni_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: ['400', '600', '700'],
   variable: '--font-alumni-sans',
   display: 'swap',
 });
 
 const rubikBeastly = Rubik_Beastly({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: '400',
   variable: '--font-rubik-beastly',
   display: 'swap',
 });
 
 const aboreto = Aboreto({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: '400',
   variable: '--font-aboreto',
   display: 'swap',
 });
 
 const poiretOne = Poiret_One({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: '400',
   variable: '--font-poiret-one',
   display: 'swap',
