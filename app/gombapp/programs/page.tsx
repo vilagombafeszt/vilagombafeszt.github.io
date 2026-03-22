@@ -80,7 +80,13 @@ export default function ProgramsPage() {
             <iframe
               src={REALTIME_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
+              style={{
+                border: 0,
+                borderRadius: '12px',
+                overflow: 'hidden',
+                width: '100%',
+                flex: 1,
+              }}
               scrolling="no"
             />
           </div>
@@ -91,7 +97,13 @@ export default function ProgramsPage() {
             <iframe
               src={AGENDA_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
+              style={{
+                border: 0,
+                borderRadius: '12px',
+                overflow: 'hidden',
+                width: '100%',
+                flex: 1,
+              }}
               scrolling="no"
             />
           </div>

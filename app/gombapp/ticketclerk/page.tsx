@@ -16,14 +16,34 @@ interface TicketItem {
 }
 
 const TICKETS: TicketItem[] = [
-  { name: 'Bérlet', image: '/GombApp/images/pass.png', alt: 'Bérlet', label: 'Bérlet \n 10.000 Ft' },
-  { name: 'Napijegy (péntek)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (péntek)', label: 'Napijegy (péntek) \n 4.500 Ft' },
-  { name: 'Napijegy (szombat)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (szombat)', label: 'Napijegy (szombat) \n 4.500 Ft' },
-  { name: 'Napijegy (vasárnap)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (vasárnap)', label: 'Napijegy (vasárnap) \n 4.500 Ft' },
+  {
+    name: 'Bérlet',
+    image: '/GombApp/images/pass.png',
+    alt: 'Bérlet',
+    label: 'Bérlet \n 10.000 Ft',
+  },
+  {
+    name: 'Napijegy (péntek)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (péntek)',
+    label: 'Napijegy (péntek) \n 4.500 Ft',
+  },
+  {
+    name: 'Napijegy (szombat)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (szombat)',
+    label: 'Napijegy (szombat) \n 4.500 Ft',
+  },
+  {
+    name: 'Napijegy (vasárnap)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (vasárnap)',
+    label: 'Napijegy (vasárnap) \n 4.500 Ft',
+  },
 ];
 
 const PRICE_MAP: Record<string, string> = {
-  'Bérlet': 'passPrice',
+  Bérlet: 'passPrice',
   'Napijegy (péntek)': 'fridayPrice',
   'Napijegy (szombat)': 'saturdayPrice',
   'Napijegy (vasárnap)': 'sundayPrice',
@@ -78,7 +98,7 @@ export default function TicketClerkPage() {
   const getTicketPrice = useCallback(
     (ticket: string): number => {
       const key = PRICE_MAP[ticket];
-      return key ? (prices[key] || 0) : 0;
+      return key ? prices[key] || 0 : 0;
     },
     [prices]
   );
@@ -110,10 +130,18 @@ export default function TicketClerkPage() {
     const counts = { friday: 0, saturday: 0, sunday: 0, pass: 0 };
     orders.forEach((ticket) => {
       switch (ticket) {
-        case 'Bérlet': counts.pass++; break;
-        case 'Napijegy (péntek)': counts.friday++; break;
-        case 'Napijegy (szombat)': counts.saturday++; break;
-        case 'Napijegy (vasárnap)': counts.sunday++; break;
+        case 'Bérlet':
+          counts.pass++;
+          break;
+        case 'Napijegy (péntek)':
+          counts.friday++;
+          break;
+        case 'Napijegy (szombat)':
+          counts.saturday++;
+          break;
+        case 'Napijegy (vasárnap)':
+          counts.sunday++;
+          break;
       }
     });
     return counts;
@@ -199,7 +227,7 @@ export default function TicketClerkPage() {
 
       orderItems.forEach((ticket) => {
         const key = PRICE_MAP[ticket];
-        const price = key ? (freshPrices[key] || 0) : 0;
+        const price = key ? freshPrices[key] || 0 : 0;
         orderTotal += price;
         orderPrices.push(price);
       });
@@ -272,7 +300,13 @@ export default function TicketClerkPage() {
                     className="item-button"
                     onClick={() => addItem(ticket.name)}
                   >
-                    <Image src={ticket.image} alt={ticket.alt} className="item-pic" width={100} height={100} />
+                    <Image
+                      src={ticket.image}
+                      alt={ticket.alt}
+                      className="item-pic"
+                      width={100}
+                      height={100}
+                    />
                     <span>
                       {ticket.label.split('\n').map((line, i) => (
                         <React.Fragment key={i}>
@@ -318,10 +352,12 @@ export default function TicketClerkPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? ' qty-btn-remove' : ''}`}
+                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
-                            <span className="material-symbols-rounded qty-icon">{qty === 1 ? 'delete' : 'remove'}</span>
+                            <span className="material-symbols-rounded qty-icon">
+                              {qty === 1 ? 'delete' : 'remove'}
+                            </span>
                           </button>
                           <span className="qty-count">{qty}</span>
                           <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>

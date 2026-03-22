@@ -35,12 +35,6 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return [{ gombapp: 'GombApp' }, { gombapp: 'gombapp' }];
-}
-
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
