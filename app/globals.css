@@ -1,35 +1,43 @@
-﻿/* ─────────────────────────────────────────────────────────────
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
    Design tokens
    ───────────────────────────────────────────────────────────── */
 :root {
-  --color-menu-bg:      #7c8bb1;
-  --color-menu-text:    #102135;
-  --color-menu-hover:   #8B0000;
-  --color-accent:       #ac9d9d;
+  --color-menu-bg: #7c8bb1;
+  --color-menu-text: #102135;
+  --color-menu-hover: #8b0000;
+  --color-accent: #ac9d9d;
 
-  --color-hero-text:    #7c8bb1;
-  --color-musor-bg:     #354b3d;
-  --color-jegyek-bg:    #355168;
-  --color-helyszin-bg:  #a44041;
-  --color-story-bg:     #474738;
-  --color-keptar-bg:    #253529;
+  --color-hero-text: #7c8bb1;
+  --color-musor-bg: #354b3d;
+  --color-jegyek-bg: #355168;
+  --color-helyszin-bg: #a44041;
+  --color-story-bg: #474738;
+  --color-keptar-bg: #253529;
   --color-kapcsolat-bg: #594a66;
 
   --menu-height: 72px;
 
   --font-brand: var(--font-rubik-beastly), 'Rubik Beastly', cursive;
-  --font-body:  var(--font-alumni-sans),   'Alumni Sans',    sans-serif;
+  --font-body: var(--font-alumni-sans), 'Alumni Sans', sans-serif;
 }
 
 /* ─────────────────────────────────────────────────────────────
    Reset / base
    ───────────────────────────────────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: black;
@@ -40,23 +48,42 @@ html, body {
   touch-action: manipulation;
 }
 
-a { color: var(--color-accent); text-decoration: none; }
-a:visited { color: var(--color-accent); }
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:visited {
+  color: var(--color-accent);
+}
 
 /* ─────────────────────────────────────────────────────────────
    Animations
    ───────────────────────────────────────────────────────────── */
 @keyframes expandInAnimation {
-  from { transform: scale(0); }
-  to   { transform: scale(1); }
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
-.expandIn { animation: expandInAnimation 2s; }
+.expandIn {
+  animation: expandInAnimation 2s;
+}
 
 @keyframes spinIn {
-  from { transform: rotate(-360deg); opacity: 0; }
-  to   { transform: rotate(0deg);    opacity: 1; }
+  from {
+    transform: rotate(-360deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
 }
-.spinIn { animation: spinIn 2s; }
+.spinIn {
+  animation: spinIn 2s;
+}
 
 /* ─────────────────────────────────────────────────────────────
    Menu / Navigation
@@ -95,9 +122,13 @@ a:visited { color: var(--color-accent); }
   transition: color 0.2s;
 }
 .menu a:link,
-.menu a:visited                { color: var(--color-menu-text); }
+.menu a:visited {
+  color: var(--color-menu-text);
+}
 .menu a:hover,
-.menu a:visited:hover          { color: var(--color-menu-hover); }
+.menu a:visited:hover {
+  color: var(--color-menu-hover);
+}
 
 .menu-logo-img {
   height: clamp(28px, 3.5vw, 44px);
@@ -149,18 +180,29 @@ a:visited { color: var(--color-accent); }
 }
 #Otthon .title {
   font-size: clamp(32px, 6vw, 72px);
-  text-shadow: 0 0 20px rgba(0,0,0,0.85);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
   margin: 0;
 }
-#Otthon ::selection { background-color: var(--color-hero-text); color: black; }
+#Otthon ::selection {
+  background-color: var(--color-hero-text);
+  color: black;
+}
 
 /* ─────────────────────────────────────────────────────────────
    MUSOR
    ───────────────────────────────────────────────────────────── */
-#musor { background-color: var(--color-musor-bg); color: var(--color-accent); }
+#musor {
+  background-color: var(--color-musor-bg);
+  color: var(--color-accent);
+}
 #musor a,
-#musor a:visited       { color: var(--color-accent); }
-#musor ::selection     { background-color: var(--color-accent); color: var(--color-musor-bg); }
+#musor a:visited {
+  color: var(--color-accent);
+}
+#musor ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-musor-bg);
+}
 
 .eloadasok {
   display: grid;
@@ -216,7 +258,10 @@ a:visited { color: var(--color-accent); }
   color: var(--color-accent);
   text-align: center;
 }
-#jegyeket-berleteket ::selection { background-color: var(--color-accent); color: var(--color-jegyek-bg); }
+#jegyeket-berleteket ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-jegyek-bg);
+}
 
 .ticket-status {
   font-family: var(--font-body);
@@ -267,11 +312,16 @@ a:visited { color: var(--color-accent); }
   font-size: clamp(16px, 1.8vw, 24px);
   font-weight: 600;
   letter-spacing: 1px;
-  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    transform 0.2s;
   background: transparent;
 }
 .ticket-link-btn:link,
-.ticket-link-btn:visited { color: var(--color-accent); }
+.ticket-link-btn:visited {
+  color: var(--color-accent);
+}
 .ticket-link-btn:hover {
   background-color: var(--color-accent);
   color: var(--color-menu-text);
@@ -281,8 +331,14 @@ a:visited { color: var(--color-accent); }
 /* ─────────────────────────────────────────────────────────────
    HELYSZIN
    ───────────────────────────────────────────────────────────── */
-#helyszin { background-color: var(--color-helyszin-bg); color: var(--color-accent); }
-#helyszin ::selection { background-color: var(--color-accent); color: var(--color-helyszin-bg); }
+#helyszin {
+  background-color: var(--color-helyszin-bg);
+  color: var(--color-accent);
+}
+#helyszin ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-helyszin-bg);
+}
 
 .helyszin-subtitle {
   font-family: var(--font-body);
@@ -334,7 +390,10 @@ a:visited { color: var(--color-accent); }
   color: var(--color-accent);
   text-align: center;
 }
-#ez-ugy-volt ::selection { background-color: var(--color-accent); color: var(--color-story-bg); }
+#ez-ugy-volt ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-story-bg);
+}
 
 .story-text {
   font-family: var(--font-body);
@@ -348,10 +407,20 @@ a:visited { color: var(--color-accent); }
 /* ─────────────────────────────────────────────────────────────
    KEPTAR
    ───────────────────────────────────────────────────────────── */
-#keptar { background-color: var(--color-keptar-bg); color: var(--color-accent); }
-#keptar a:visited       { color: var(--color-accent); }
-#keptar a:visited:hover { color: var(--color-menu-bg); }
-#keptar ::selection     { background-color: var(--color-accent); color: var(--color-keptar-bg); }
+#keptar {
+  background-color: var(--color-keptar-bg);
+  color: var(--color-accent);
+}
+#keptar a:visited {
+  color: var(--color-accent);
+}
+#keptar a:visited:hover {
+  color: var(--color-menu-bg);
+}
+#keptar ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-keptar-bg);
+}
 
 #keptar .title {
   margin-bottom: clamp(24px, 5vh, 64px);
@@ -373,7 +442,9 @@ a:visited { color: var(--color-accent); }
   border: 2px solid var(--color-accent);
   transition: transform 0.3s;
 }
-.album-container:hover { transform: scale(1.015); }
+.album-container:hover {
+  transform: scale(1.015);
+}
 
 .album-img {
   width: 100%;
@@ -383,7 +454,9 @@ a:visited { color: var(--color-accent); }
   display: block;
   transition: transform 0.4s;
 }
-.album-container:hover .album-img { transform: scale(1.05); }
+.album-container:hover .album-img {
+  transform: scale(1.05);
+}
 
 .overlay-text,
 .overlay-text2 {
@@ -396,15 +469,15 @@ a:visited { color: var(--color-accent); }
   font-size: clamp(28px, 4.5vw, 64px);
   font-weight: bold;
   color: var(--color-accent);
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   pointer-events: none;
   white-space: nowrap;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
   transition: background 0.3s;
 }
 .album-container:hover .overlay-text,
 .album-container:hover .overlay-text2 {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .gallery-caption {
@@ -436,7 +509,7 @@ a:visited { color: var(--color-accent); }
 
 .gallery-credit .fa-instagram {
   margin: 0 0.3em 0 0.6em;
-  font-size: 0.80em;
+  font-size: 0.8em;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -448,10 +521,17 @@ a:visited { color: var(--color-accent); }
   padding-bottom: clamp(32px, 5vh, 64px);
   min-height: auto;
 }
-#kapcsolat a:visited       { color: var(--color-accent); }
+#kapcsolat a:visited {
+  color: var(--color-accent);
+}
 #kapcsolat a:hover,
-#kapcsolat a:visited:hover { color: var(--color-menu-text); }
-#kapcsolat ::selection     { background-color: var(--color-accent); color: var(--color-kapcsolat-bg); }
+#kapcsolat a:visited:hover {
+  color: var(--color-menu-text);
+}
+#kapcsolat ::selection {
+  background-color: var(--color-accent);
+  color: var(--color-kapcsolat-bg);
+}
 
 .contacts {
   display: flex;
@@ -482,13 +562,18 @@ a:visited { color: var(--color-accent); }
   transition: transform 0.3s;
 }
 #facebook-logo:hover,
-#instagram-logo:hover { transform: scale(1.08); }
+#instagram-logo:hover {
+  transform: scale(1.08);
+}
 
 .contact-info {
   flex: 0 1 auto;
   min-width: 0;
 }
-.contact-info table { border-collapse: collapse; width: auto; }
+.contact-info table {
+  border-collapse: collapse;
+  width: auto;
+}
 .contact-info td {
   padding: 6px 10px;
   font-size: clamp(14px, 1.5vw, 22px);
@@ -530,7 +615,9 @@ a:visited { color: var(--color-accent); }
   display: block;
   transition: transform 0.3s;
 }
-.tamogatok-logo:hover { transform: scale(1.07); }
+.tamogatok-logo:hover {
+  transform: scale(1.07);
+}
 
 .doc-download-wrapper {
   text-align: center;
@@ -548,7 +635,9 @@ a:visited { color: var(--color-accent); }
   font-weight: 600;
   transition: opacity 0.2s;
 }
-.doc-download:hover { opacity: 0.75; }
+.doc-download:hover {
+  opacity: 0.75;
+}
 
 .copyright {
   font-family: var(--font-body);
@@ -563,27 +652,57 @@ a:visited { color: var(--color-accent); }
    Responsive: tablet  (769px – 1024px)
    ───────────────────────────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .eloadasok { grid-template-columns: 1fr; gap: 28px; }
-  .tamogatok-grid { grid-template-columns: repeat(4, 1fr); }
+  .eloadasok {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .tamogatok-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
-  .maps-container { grid-template-columns: 1fr; max-width: 800px; }
-  .map-container iframe { aspect-ratio: 4 / 3; }
+  .maps-container {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+  }
+  .map-container iframe {
+    aspect-ratio: 4 / 3;
+  }
 
-  .albums-container { grid-template-columns: 1fr; max-width: 700px; margin: 0 auto; }
+  .albums-container {
+    grid-template-columns: 1fr;
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
-  .contacts { flex-direction: row; align-items: flex-start; gap: 24px; }
-  .social-links { flex-direction: row; align-items: center; gap: 16px; }
+  .contacts {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .social-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
   #facebook-logo,
-  #instagram-logo { width: 80px; }
-  .contact-info { flex: 0 1 auto; }
-  .contact-info td { padding: 4px 8px; }
+  #instagram-logo {
+    width: 80px;
+  }
+  .contact-info {
+    flex: 0 1 auto;
+  }
+  .contact-info td {
+    padding: 4px 8px;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
    Responsive: mobile  (<= 768px)
    ───────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  :root { --menu-height: 56px; }
+  :root {
+    --menu-height: 56px;
+  }
 
   .menu {
     justify-content: flex-start;
@@ -623,27 +742,64 @@ a:visited { color: var(--color-accent); }
     padding-bottom: 12px;
     gap: 0;
   }
-  .menu.menu-open .menu-logo-link { margin-bottom: 0; margin-right: 0; padding-top: 0; }
-  .menu.menu-open a#home[data-nav] { width: auto; flex: 1; text-align: center; margin-right: 40px; }
-  .menu.menu-open a[data-nav] { display: block !important; opacity: 1 !important; }
+  .menu.menu-open .menu-logo-link {
+    margin-bottom: 0;
+    margin-right: 0;
+    padding-top: 0;
+  }
+  .menu.menu-open a#home[data-nav] {
+    width: auto;
+    flex: 1;
+    text-align: center;
+    margin-right: 40px;
+  }
+  .menu.menu-open a[data-nav] {
+    display: block !important;
+    opacity: 1 !important;
+  }
 
   /* Műsor — constrain schedule images on mobile */
-  .eloadasok { grid-template-columns: 1fr; gap: 24px; }
-  .musor-schedule-img { max-height: 45vh; }
-  .eloadasok-others { font-size: clamp(17px, 4vw, 22px); }
+  .eloadasok {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .musor-schedule-img {
+    max-height: 45vh;
+  }
+  .eloadasok-others {
+    font-size: clamp(17px, 4vw, 22px);
+  }
 
   /* Helyszín — stacked, full-width maps */
-  .maps-container { grid-template-columns: 1fr; }
-  .map-container iframe { aspect-ratio: 1 / 1; border-radius: 8px; }
-  .map-label { font-size: clamp(18px, 4.5vw, 24px); }
-  #helyszin { padding-bottom: clamp(48px, 6vh, 80px); }
+  .maps-container {
+    grid-template-columns: 1fr;
+  }
+  .map-container iframe {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+  }
+  .map-label {
+    font-size: clamp(18px, 4.5vw, 24px);
+  }
+  #helyszin {
+    padding-bottom: clamp(48px, 6vh, 80px);
+  }
 
   /* Képtár — stacked, more gap between albums and title */
-  #keptar .title { margin-bottom: clamp(24px, 5vh, 48px); }
-  .albums-container { grid-template-columns: 1fr; gap: 40px; }
-  .album-img { aspect-ratio: 16 / 9; }
+  #keptar .title {
+    margin-bottom: clamp(24px, 5vh, 48px);
+  }
+  .albums-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .album-img {
+    aspect-ratio: 16 / 9;
+  }
   .overlay-text,
-  .overlay-text2 { font-size: clamp(28px, 8vw, 44px); }
+  .overlay-text2 {
+    font-size: clamp(28px, 8vw, 44px);
+  }
 
   /* Kapcsolat — side by side: social left, contact info right */
   .contacts {
@@ -658,44 +814,84 @@ a:visited { color: var(--color-accent); }
     gap: 16px;
   }
   #facebook-logo,
-  #instagram-logo { width: 60px; }
-  .contact-info { flex: 0 1 auto; }
+  #instagram-logo {
+    width: 60px;
+  }
+  .contact-info {
+    flex: 0 1 auto;
+  }
   .contact-info td {
     font-size: 17px;
     padding: 4px 8px;
   }
-  .copyright { font-size: 14px; }
+  .copyright {
+    font-size: 14px;
+  }
 
   /* Kapcsolat — compact on mobile */
-  #kapcsolat { min-height: auto; }
+  #kapcsolat {
+    min-height: auto;
+  }
 
   /* Bigger text on mobile globally */
-  .title { font-size: clamp(30px, 7vw, 48px); }
-  .story-text { font-size: clamp(18px, 4.5vw, 24px); }
-  .ticket-subtitle { font-size: clamp(24px, 5.5vw, 34px); }
-  .ticket-text { font-size: clamp(18px, 4vw, 24px); }
-  .ticket-badge { font-size: clamp(17px, 4vw, 24px); }
-  .ticket-link-btn { font-size: clamp(17px, 4vw, 22px); }
-  .helyszin-subtitle { font-size: clamp(18px, 4vw, 24px); }
-  .gallery-caption { font-size: clamp(17px, 4vw, 22px); }
-  .gallery-credit { font-size: clamp(16px, 3.5vw, 20px); }
-  .doc-download { font-size: clamp(16px, 3.5vw, 20px); }
+  .title {
+    font-size: clamp(30px, 7vw, 48px);
+  }
+  .story-text {
+    font-size: clamp(18px, 4.5vw, 24px);
+  }
+  .ticket-subtitle {
+    font-size: clamp(24px, 5.5vw, 34px);
+  }
+  .ticket-text {
+    font-size: clamp(18px, 4vw, 24px);
+  }
+  .ticket-badge {
+    font-size: clamp(17px, 4vw, 24px);
+  }
+  .ticket-link-btn {
+    font-size: clamp(17px, 4vw, 22px);
+  }
+  .helyszin-subtitle {
+    font-size: clamp(18px, 4vw, 24px);
+  }
+  .gallery-caption {
+    font-size: clamp(17px, 4vw, 22px);
+  }
+  .gallery-credit {
+    font-size: clamp(16px, 3.5vw, 20px);
+  }
+  .doc-download {
+    font-size: clamp(16px, 3.5vw, 20px);
+  }
 
-  .tamogatok-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .tamogatok-logo { height: 60px; }
+  .tamogatok-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .tamogatok-logo {
+    height: 60px;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
    Very small screens  (< 400px)
    ───────────────────────────────────────────────────────────── */
 @media (max-width: 400px) {
-  .tamogatok-grid { grid-template-columns: repeat(2, 1fr); }
+  .tamogatok-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
    Landscape phones
    ───────────────────────────────────────────────────────────── */
 @media (max-height: 500px) and (orientation: landscape) {
-  .section { min-height: auto; padding-top: 80px; }
-  #Otthon  { min-height: 100svh; }
+  .section {
+    min-height: auto;
+    padding-top: 80px;
+  }
+  #Otthon {
+    min-height: 100svh;
+  }
 }

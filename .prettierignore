@@ -1,0 +1,17 @@
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# Generated files
+next-env.d.ts
+*.tsbuildinfo
+
+# Config
+tailwind.config.js
+postcss.config.js
+next.config.ts

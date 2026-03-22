@@ -1,0 +1,27 @@
+{
+  "name": "ViláGomba Fesztivál",
+  "short_name": "ViláGomba",
+  "description": "ViláGomba Fesztivál – Zebegény | Programok, jegyek, helyszín",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#7c8bb1",
+  "background_color": "#000000",
+  "lang": "hu",
+  "categories": ["entertainment", "music", "lifestyle"],
+  "icons": [
+    {
+      "src": "/page_images/cimlogo_kek.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/page_images/cimlogo_kek.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

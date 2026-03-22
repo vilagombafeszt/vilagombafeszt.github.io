@@ -35,24 +35,31 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return [{ gombapp: 'GombApp' }, { gombapp: 'gombapp' }];
 }
 
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`gombapp ${alumniSans.variable}`} style={{ fontFamily: 'var(--font-alumni-sans), Alumni Sans, sans-serif' }}>
+    <div
+      className={`gombapp ${alumniSans.variable}`}
+      style={{ fontFamily: 'var(--font-alumni-sans), Alumni Sans, sans-serif' }}
+    >
       {/* Force html/body background to match GombApp — eliminates black bleed on all browsers */}
-      <style dangerouslySetInnerHTML={{ __html: 'html, body { background-color: #7c8bb1 !important; overflow: hidden; }' }} />
+      <style
+        dangerouslySetInnerHTML={{
+          __html: 'html, body { background-color: #7c8bb1 !important; overflow: hidden; }',
+        }}
+      />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
         rel="stylesheet"
       />
       <AuthProvider>
-        <SnackbarProvider>
-          {children}
-        </SnackbarProvider>
+        <SnackbarProvider>{children}</SnackbarProvider>
       </AuthProvider>
     </div>
   );

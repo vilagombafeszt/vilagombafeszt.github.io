@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "program": "Műsor",
+    "tickets": "Jegyeket, Bérleteket",
+    "venue": "Helyszín",
+    "gallery": "Képtár",
+    "contact": "Kapcsolat"
+  },
+  "hero": {
+    "tagline": "Zebegény"
+  },
+  "tickets": {
+    "title": "Jegyeket, Bérleteket",
+    "buy": "Jegyvásárlás"
+  },
+  "contact": {
+    "title": "Kapcsolat",
+    "email": "E-mail"
+  },
+  "meta": {
+    "title": "ViláGomba Fesztivál",
+    "description": "ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról."
+  }
+}

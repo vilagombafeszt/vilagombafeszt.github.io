@@ -1,4 +1,4 @@
-# dependencies
+﻿# dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -34,3 +34,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# testing
+/playwright-report/
+/test-results/
+/coverage/
+
+# husky
+.husky/_/
+
+# serwist
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
