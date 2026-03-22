@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "program": "Programme",
+    "tickets": "Tickets & Passes",
+    "venue": "Venue",
+    "gallery": "Gallery",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Zebegény"
+  },
+  "tickets": {
+    "title": "Tickets & Passes",
+    "buy": "Buy Tickets"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "E-mail"
+  },
+  "meta": {
+    "title": "ViláGomba Festival",
+    "description": "ViláGomba Festival – Zebegény. Programme, tickets, venue and photo gallery."
+  }
+}

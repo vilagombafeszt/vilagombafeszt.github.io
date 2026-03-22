@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Alumni_Sans, Rubik_Beastly, Aboreto, Poiret_One, Monoton } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
@@ -38,11 +38,71 @@ const monoton = Monoton({
   display: 'swap',
 });
 
+const siteUrl = 'https://vilagombafeszt.github.io';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#7c8bb1',
+};
+
 export const metadata: Metadata = {
-  title: 'ViláGomba Fesztivál',
-  description: 'ViláGomba Fesztivál – Zebegény',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'ViláGomba Fesztivál',
+    template: '%s | ViláGomba Fesztivál',
+  },
+  description:
+    'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
+  keywords: ['ViláGomba', 'Fesztivál', 'Zebegény', 'zene', 'programok', 'jegyek'],
+  authors: [{ name: 'ViláGomba Fesztivál' }],
+  creator: 'ViláGomba Fesztivál',
+  publisher: 'ViláGomba Fesztivál',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'hu_HU',
+    url: siteUrl,
+    siteName: 'ViláGomba Fesztivál',
+    title: 'ViláGomba Fesztivál',
+    description:
+      'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
+    images: [
+      {
+        url: '/page_images/IMG_1367.webp',
+        width: 1200,
+        height: 630,
+        alt: 'ViláGomba Fesztivál',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ViláGomba Fesztivál',
+    description: 'ViláGomba Fesztivál – Zebegény',
+    images: ['/page_images/IMG_1367.webp'],
+  },
   icons: {
     icon: '/page_images/cimlogo_kek.png',
+    apple: '/page_images/cimlogo_kek.png',
+  },
+  manifest: '/manifest.json',
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      'hu-HU': `${siteUrl}/hu`,
+      'en-US': `${siteUrl}/en`,
+    },
   },
 };
 
@@ -58,10 +118,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="hu" className={fontClasses}>
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-        />
         {/* Font Awesome */}
         <link
           rel="stylesheet"
@@ -106,6 +162,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-3C9SFFDX5K');
         `}</Script>
+        {/* Service Worker registration */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script id="sw-registration" strategy="afterInteractive">{`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js');
+              });
+            }
+          `}</Script>
+        )}
 
         {/* Cookie preferences link (hidden on mobile via CSS) */}
         <a href="#" id="open_preferences_center" style={{ display: 'none' }}>
