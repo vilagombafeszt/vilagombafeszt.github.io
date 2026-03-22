@@ -10,12 +10,13 @@ export default function MusorSection() {
           <div className="eloadasok-day">Péntek</div>
           <div className="eloadasok-item">
             <Image
-              src="/page_images/pentek.jpg"
+              src="/page_images/pentek.webp"
               alt="Pénteki menetrend"
               className="musor-schedule-img"
               width={600}
               height={800}
               unoptimized
+              loading="lazy"
             />
           </div>
         </div>
@@ -24,12 +25,13 @@ export default function MusorSection() {
           <div className="eloadasok-day">Szombat</div>
           <div className="eloadasok-item">
             <Image
-              src="/page_images/szombat.jpg"
+              src="/page_images/szombat.webp"
               alt="Szombati menetrend"
               className="musor-schedule-img"
               width={600}
               height={800}
               unoptimized
+              loading="lazy"
             />
           </div>
         </div>
@@ -38,12 +40,13 @@ export default function MusorSection() {
           <div className="eloadasok-day">Vasárnap</div>
           <div className="eloadasok-item">
             <Image
-              src="/page_images/vasarnap.jpg"
+              src="/page_images/vasarnap.webp"
               alt="Vasárnapi menetrend"
               className="musor-schedule-img"
               width={600}
               height={800}
               unoptimized
+              loading="lazy"
             />
           </div>
         </div>

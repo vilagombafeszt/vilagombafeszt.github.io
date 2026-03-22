@@ -29,7 +29,7 @@ export default function KapcsolatSection() {
             <Image
               ref={fbRef}
               id="facebook-logo"
-              src="/page_images/facebook.png"
+              src="/page_images/facebook.webp"
               alt="Facebook esemény"
               width={150}
               height={150}
@@ -62,7 +62,7 @@ export default function KapcsolatSection() {
       <div className="doc-download-wrapper">
         <a className="doc-download" href="/szuloi-nyilatkozat-vilagomba.pdf" download="szuloi-nyilatkozat-vilagomba.pdf">
           <Image
-            src="/page_images/document.png"
+            src="/page_images/document.webp"
             alt="Szülői nyilatkozat"
             width={30}
             height={35}

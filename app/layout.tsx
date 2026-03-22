@@ -118,6 +118,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="hu" className={fontClasses}>
       <head>
+        {/* Preload hero background image */}
+        <link
+          rel="preload"
+          as="image"
+          href="/page_images/IMG_1367.webp"
+          type="image/webp"
+        />
         {/* Font Awesome */}
         <link
           rel="stylesheet"
