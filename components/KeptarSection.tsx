@@ -37,6 +37,7 @@ export default function KeptarSection() {
               width={800}
               height={600}
               unoptimized
+              loading="lazy"
             />
           )}
           <div className="overlay-text">ViláGomba 2024</div>
@@ -51,6 +52,7 @@ export default function KeptarSection() {
               width={800}
               height={600}
               unoptimized
+              loading="lazy"
             />
           )}
           <div className="overlay-text2">ViláGomba 2025</div>

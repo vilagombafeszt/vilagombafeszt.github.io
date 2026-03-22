@@ -9,7 +9,7 @@ import { useSnackbar } from '@/components/gombapp/Snackbar';
 import LoginForm from '@/components/gombapp/LoginForm';
 import Image from 'next/image';
 
-const ALLOWED_ADMIN_UIDS = ['9HBKQhxPThQXX51YLwHKGaLiz0D3', 'JlsebVypa1cYKXiLjIns7MktYmy2'];
+const ALLOWED_ADMIN_UIDS = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_UIDS?.split(',') || [];
 
 export default function GombAppHome() {
   const { user, loading } = useAuth();
@@ -26,14 +26,11 @@ export default function GombAppHome() {
   }, []);
 
   const handleLogout = () => {
-    showConfirmSnackbar(
-      'Biztosan ki szeretnél jelentkezni?',
-      () => {
-        signOut(auth!)
-          .then(() => showSnackbar('Sikeres kijelentkezés!', 'success'))
-          .catch(() => showSnackbar('Hiba történt a kijelentkezés során.', 'error'));
-      }
-    );
+    showConfirmSnackbar('Biztosan ki szeretnél jelentkezni?', () => {
+      signOut(auth!)
+        .then(() => showSnackbar('Sikeres kijelentkezés!', 'success'))
+        .catch(() => showSnackbar('Hiba történt a kijelentkezés során.', 'error'));
+    });
   };
 
   const navigateTo = (path: string, adminOnly = false) => {
@@ -81,19 +78,43 @@ export default function GombAppHome() {
       <main>
         <div className="menu home-adjust">
           <button className="button" onClick={() => navigateTo(`/${gombappBase}/admin/`, true)}>
-            <Image src="/GombApp/images/adminpic.png" alt="Admin" className="profile-pic" width={100} height={100} />
+            <Image
+              src="/GombApp/images/adminpic.png"
+              alt="Admin"
+              className="profile-pic"
+              width={100}
+              height={100}
+            />
             Admin
           </button>
           <button className="button" onClick={() => navigateTo(`/${gombappBase}/bartender/`)}>
-            <Image src="/GombApp/images/bartenderprofilepic.png" alt="Pultos" className="profile-pic" width={100} height={100} />
+            <Image
+              src="/GombApp/images/bartenderprofilepic.png"
+              alt="Pultos"
+              className="profile-pic"
+              width={100}
+              height={100}
+            />
             Pultos
           </button>
           <button className="button" onClick={() => navigateTo(`/${gombappBase}/programs/`)}>
-            <Image src="/GombApp/images/calendar.png" alt="Programok" className="profile-pic" width={100} height={100} />
+            <Image
+              src="/GombApp/images/calendar.png"
+              alt="Programok"
+              className="profile-pic"
+              width={100}
+              height={100}
+            />
             Programok
           </button>
           <button className="button" onClick={() => navigateTo(`/${gombappBase}/ticketclerk/`)}>
-            <Image src="/GombApp/images/ticketclerk.png" alt="Jegyárus" className="profile-pic" width={100} height={100} />
+            <Image
+              src="/GombApp/images/ticketclerk.png"
+              alt="Jegyárus"
+              className="profile-pic"
+              width={100}
+              height={100}
+            />
             Jegyárus
           </button>
         </div>
@@ -102,7 +123,7 @@ export default function GombAppHome() {
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
       <footer>
-        <p className="footer-text">v2.0.5</p>
+        <p className="footer-text">v2.0.6</p>
       </footer>
     </>
   );
