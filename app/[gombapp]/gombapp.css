@@ -86,8 +86,12 @@ body:has(.gombapp) {
 }
 
 @keyframes gombapp-rotation {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===== Buttons ===== */
@@ -370,7 +374,9 @@ body:has(.gombapp) {
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: opacity 0.15s ease, transform 0.1s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease;
   font-family: 'Alumni Sans', sans-serif;
 }
 
@@ -679,33 +685,61 @@ body:has(.gombapp) {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUpDesktop {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(0); }
-  to { transform: translateY(100%); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
 @keyframes slideDownDesktop {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(50px); opacity: 0; }
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
 }
 
 /* ===== Login Form ===== */
@@ -818,68 +852,168 @@ body:has(.gombapp) {
 /* ===== Statistics ===== */
 .gombapp .statistics-container {
   display: flex;
-  width: 80vw;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: clamp(16px, 4vw, 32px);
   flex: 1;
   min-height: 0;
   overflow-y: auto;
 }
 
 .gombapp .statistics-content {
-  background: white;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
-  height: 50vh;
-}
-
-.gombapp .statistics-content h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 26px;
-}
-
-.gombapp .stat-item {
+  max-width: 480px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gombapp .statistics-header {
+  display: flex;
   align-items: center;
-  padding: 15px;
-  margin: 20px 0;
-  background: #f5f5f5;
-  border-radius: 8px;
-  border-left: 4px solid #4CAF50;
-  height: 60px;
+  justify-content: space-between;
+  padding: 4px 2px;
 }
 
-.gombapp .stat-day {
-  font-weight: bold;
+.gombapp .statistics-title {
+  font-size: clamp(26px, 3.5vh, 36px);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--gombapp-font-color);
+}
+
+.gombapp .statistics-refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--gombapp-button-bg) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 20%, transparent);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  color: var(--gombapp-font-color);
+  font-size: 24px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.gombapp .statistics-refresh-btn:active {
+  background: color-mix(in srgb, var(--gombapp-button-bg) 22%, transparent);
+}
+
+.gombapp .statistics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gombapp .stat-card {
+  border-radius: 16px;
+  padding: 18px 20px 16px 20px;
+  background: color-mix(in srgb, var(--gombapp-bg-color) 86%, var(--gombapp-button-bg) 14%);
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gombapp .stat-card--sold-out {
+  border-color: color-mix(in srgb, #c62828 50%, transparent);
+  background: color-mix(in srgb, var(--gombapp-bg-color) 86%, #c62828 14%);
+}
+
+.gombapp .stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gombapp .stat-card-day {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+}
+
+.gombapp .stat-card-badge {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.gombapp .stat-card-badge--ok {
+  color: #1b5e20;
+  background: color-mix(in srgb, #4caf50 22%, transparent);
+  border: 1px solid color-mix(in srgb, #4caf50 60%, transparent);
+}
+
+.gombapp .stat-card-badge--danger {
+  color: #c62828;
+  background: color-mix(in srgb, #c62828 18%, transparent);
+  border: 1px solid color-mix(in srgb, #c62828 60%, transparent);
+}
+
+.gombapp .stat-card-count {
+  font-size: clamp(38px, 5.5vh, 54px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gombapp-font-color);
+  margin-top: 8px;
+}
+
+.gombapp .stat-card--sold-out .stat-card-count {
+  color: #c62828;
+}
+
+.gombapp .stat-card-label {
+  font-size: 16px;
+  opacity: 0.7;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-top: 2px;
+}
+
+.gombapp .stats-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 24px;
+  color: var(--gombapp-font-color);
+  opacity: 0.7;
   font-size: 20px;
-  color: #333;
 }
 
-.gombapp .stat-count {
+.gombapp .stats-loading-icon {
+  font-size: 40px;
+  animation: stats-spin 1s linear infinite;
+}
+
+@keyframes stats-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gombapp .stats-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 24px;
+  color: #c62828;
   font-size: 18px;
-  color: #666;
+  text-align: center;
 }
 
-.gombapp .loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 18px;
-  color: #666;
-}
-
-.gombapp .error {
-  text-align: center;
-  padding: 20px;
-  color: #d32f2f;
-  font-size: 20px;
+.gombapp .stats-error-icon {
+  font-size: 36px;
 }
 
 /* ===== Admin Stats ===== */
@@ -1057,8 +1191,13 @@ body:has(.gombapp) {
   z-index: 2000;
   opacity: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: 'Alumni Sans', sans-serif;
   font-size: 1.1em;
   font-weight: 500;
@@ -1094,7 +1233,9 @@ body:has(.gombapp) {
   z-index: 2001;
   top: 50%;
   border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.6),
+    0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .snackbar-backdrop {
@@ -1109,7 +1250,9 @@ body:has(.gombapp) {
   z-index: 1999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    visibility 0.3s ease-out;
 }
 
 .snackbar-backdrop.show {
@@ -1138,7 +1281,10 @@ body:has(.gombapp) {
   font-size: 1.1em;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
   display: inline-block;
 }
 
