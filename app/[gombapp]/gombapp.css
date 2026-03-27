@@ -917,11 +917,6 @@ body:has(.gombapp) {
   min-height: 90px;
 }
 
-.gombapp .stat-row-full {
-  background: color-mix(in srgb, var(--gombapp-bg-color) 80%, #c62828 20%);
-  border-color: color-mix(in srgb, #c62828 40%, transparent);
-}
-
 .gombapp .stat-row-accent {
   width: 6px;
   flex-shrink: 0;
