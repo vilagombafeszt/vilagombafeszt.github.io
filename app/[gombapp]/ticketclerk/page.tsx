@@ -16,14 +16,34 @@ interface TicketItem {
 }
 
 const TICKETS: TicketItem[] = [
-  { name: 'Bérlet', image: '/GombApp/images/pass.png', alt: 'Bérlet', label: 'Bérlet \n 10.000 Ft' },
-  { name: 'Napijegy (péntek)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (péntek)', label: 'Napijegy (péntek) \n 4.500 Ft' },
-  { name: 'Napijegy (szombat)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (szombat)', label: 'Napijegy (szombat) \n 4.500 Ft' },
-  { name: 'Napijegy (vasárnap)', image: '/GombApp/images/ticket1.png', alt: 'Napijegy (vasárnap)', label: 'Napijegy (vasárnap) \n 4.500 Ft' },
+  {
+    name: 'Bérlet',
+    image: '/GombApp/images/pass.png',
+    alt: 'Bérlet',
+    label: 'Bérlet \n 15.000 Ft',
+  },
+  {
+    name: 'Napijegy (péntek)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (péntek)',
+    label: 'Napijegy (péntek) \n 7.500 Ft',
+  },
+  {
+    name: 'Napijegy (szombat)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (szombat)',
+    label: 'Napijegy (szombat) \n 7.500 Ft',
+  },
+  {
+    name: 'Napijegy (vasárnap)',
+    image: '/GombApp/images/ticket1.png',
+    alt: 'Napijegy (vasárnap)',
+    label: 'Napijegy (vasárnap) \n 7.500 Ft',
+  },
 ];
 
 const PRICE_MAP: Record<string, string> = {
-  'Bérlet': 'passPrice',
+  Bérlet: 'passPrice',
   'Napijegy (péntek)': 'fridayPrice',
   'Napijegy (szombat)': 'saturdayPrice',
   'Napijegy (vasárnap)': 'sundayPrice',
@@ -48,6 +68,7 @@ export default function TicketClerkPage() {
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
+  const [capacityLoading, setCapacityLoading] = useState(true);
   const lastClickRef = useRef(0);
 
   const throttle = (fn: () => void) => {
@@ -75,10 +96,25 @@ export default function TicketClerkPage() {
       .catch((error) => console.error('Error fetching prices:', error));
   }, []);
 
+  // Fetch max counts on mount to enable capacity-aware ticket buttons.
+  // `database` is a module-level constant that never changes; omitting it from deps is intentional.
+  useEffect(() => {
+    if (!database) return;
+    setCapacityLoading(true);
+    fetchMaxTicketCounts()
+      .then((counts) => setMaxCounts(counts))
+      .catch((error) => {
+        console.error('Error fetching capacity on mount:', error);
+        setMaxCounts(null);
+      })
+      .finally(() => setCapacityLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const getTicketPrice = useCallback(
     (ticket: string): number => {
       const key = PRICE_MAP[ticket];
-      return key ? (prices[key] || 0) : 0;
+      return key ? prices[key] || 0 : 0;
     },
     [prices]
   );
@@ -110,10 +146,18 @@ export default function TicketClerkPage() {
     const counts = { friday: 0, saturday: 0, sunday: 0, pass: 0 };
     orders.forEach((ticket) => {
       switch (ticket) {
-        case 'Bérlet': counts.pass++; break;
-        case 'Napijegy (péntek)': counts.friday++; break;
-        case 'Napijegy (szombat)': counts.saturday++; break;
-        case 'Napijegy (vasárnap)': counts.sunday++; break;
+        case 'Bérlet':
+          counts.pass++;
+          break;
+        case 'Napijegy (péntek)':
+          counts.friday++;
+          break;
+        case 'Napijegy (szombat)':
+          counts.saturday++;
+          break;
+        case 'Napijegy (vasárnap)':
+          counts.sunday++;
+          break;
       }
     });
     return counts;
@@ -181,6 +225,17 @@ export default function TicketClerkPage() {
     }
   };
 
+  const isTicketDisabled = (ticketName: string): boolean => {
+    if (!maxCounts) return false;
+    if (ticketName === 'Bérlet') {
+      return maxCounts.friday === 0 || maxCounts.saturday === 0 || maxCounts.sunday === 0;
+    }
+    if (ticketName === 'Napijegy (péntek)') return maxCounts.friday === 0;
+    if (ticketName === 'Napijegy (szombat)') return maxCounts.saturday === 0;
+    if (ticketName === 'Napijegy (vasárnap)') return maxCounts.sunday === 0;
+    return false;
+  };
+
   const saveOrder = async () => {
     if (orderItems.length === 0) {
       showSnackbar('Adj hozzá legalább egy jegytípust a rendeléshez!', 'info');
@@ -192,6 +247,25 @@ export default function TicketClerkPage() {
     }
 
     try {
+      // Re-fetch latest capacity before saving
+      const freshCounts = await fetchMaxTicketCounts();
+      setMaxCounts(freshCounts);
+
+      const ticketCounts = countTicketsByType(orderItems);
+
+      if (freshCounts.friday === 0 && (ticketCounts.friday > 0 || ticketCounts.pass > 0)) {
+        showSnackbar('A pénteki napijegy elfogyott!', 'error');
+        return;
+      }
+      if (freshCounts.saturday === 0 && (ticketCounts.saturday > 0 || ticketCounts.pass > 0)) {
+        showSnackbar('A szombati napijegy elfogyott!', 'error');
+        return;
+      }
+      if (freshCounts.sunday === 0 && (ticketCounts.sunday > 0 || ticketCounts.pass > 0)) {
+        showSnackbar('A vasárnapi napijegy elfogyott!', 'error');
+        return;
+      }
+
       const priceSnap = await get(ref(database!, 'Árak/Jegy'));
       const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
       let orderTotal = 0;
@@ -199,7 +273,7 @@ export default function TicketClerkPage() {
 
       orderItems.forEach((ticket) => {
         const key = PRICE_MAP[ticket];
-        const price = key ? (freshPrices[key] || 0) : 0;
+        const price = key ? freshPrices[key] || 0 : 0;
         orderTotal += price;
         orderPrices.push(price);
       });
@@ -219,8 +293,6 @@ export default function TicketClerkPage() {
         existingTotalPrice = data.totalPrice || 0;
         existingOrderCount = data.orderCount || 0;
       }
-
-      const ticketCounts = countTicketsByType(orderItems);
 
       await Promise.all([
         set(userOrderRef, {
@@ -266,23 +338,41 @@ export default function TicketClerkPage() {
           {view === 'menu' && (
             <>
               <div className="item-grid ticket-grid">
-                {TICKETS.map((ticket) => (
-                  <button
-                    key={ticket.name}
-                    className="item-button"
-                    onClick={() => addItem(ticket.name)}
-                  >
-                    <Image src={ticket.image} alt={ticket.alt} className="item-pic" width={100} height={100} />
-                    <span>
-                      {ticket.label.split('\n').map((line, i) => (
-                        <React.Fragment key={i}>
-                          {line}
-                          {i === 0 && <br />}
-                        </React.Fragment>
-                      ))}
-                    </span>
-                  </button>
-                ))}
+                {TICKETS.map((ticket) => {
+                  const disabled = !capacityLoading && isTicketDisabled(ticket.name);
+                  return (
+                    <button
+                      key={ticket.name}
+                      className={`item-button${disabled ? 'item-button-disabled' : ''}`}
+                      onClick={() => !disabled && addItem(ticket.name)}
+                      disabled={disabled}
+                    >
+                      <Image
+                        src={ticket.image}
+                        alt={ticket.alt}
+                        className="item-pic"
+                        width={100}
+                        height={100}
+                      />
+                      <span>
+                        {disabled ? (
+                          <>
+                            Megtelt
+                            <br />
+                            Nem választható
+                          </>
+                        ) : (
+                          ticket.label.split('\n').map((line, i) => (
+                            <React.Fragment key={i}>
+                              {line}
+                              {i === 0 && <br />}
+                            </React.Fragment>
+                          ))
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
               <div className="fixed-bottom">
                 <button className="res-adj1" onClick={() => setView('order')}>
@@ -318,10 +408,12 @@ export default function TicketClerkPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? ' qty-btn-remove' : ''}`}
+                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
-                            <span className="material-symbols-rounded qty-icon">{qty === 1 ? 'delete' : 'remove'}</span>
+                            <span className="material-symbols-rounded qty-icon">
+                              {qty === 1 ? 'delete' : 'remove'}
+                            </span>
                           </button>
                           <span className="qty-count">{qty}</span>
                           <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>
@@ -351,37 +443,52 @@ export default function TicketClerkPage() {
           )}
 
           {view === 'stats' && (
-            <div className="statistics-container" style={{ display: 'flex' }}>
+            <div className="statistics-container">
               {statsLoading ? (
                 <div className="loading">Statisztika betöltése...</div>
               ) : maxCounts ? (
                 <div className="statistics-content">
-                  <h2>Jegy Statisztikák</h2>
-                  <div
-                    className="stat-item"
-                    style={{ borderLeftColor: maxCounts.friday === 0 ? '#d32f2f' : '#4CAF50' }}
-                  >
-                    <div className="stat-day">Péntek</div>
-                    <div className="stat-count">Elérhető helyek: {maxCounts.friday}</div>
+                  <div className="stats-header">
+                    <h2 className="stats-title">Jegy Statisztikák</h2>
+                    <p className="stats-subtitle">Elérhető helyek naponta</p>
                   </div>
-                  <div
-                    className="stat-item"
-                    style={{ borderLeftColor: maxCounts.saturday === 0 ? '#d32f2f' : '#4CAF50' }}
-                  >
-                    <div className="stat-day">Szombat</div>
-                    <div className="stat-count">Elérhető helyek: {maxCounts.saturday}</div>
-                  </div>
-                  <div
-                    className="stat-item"
-                    style={{ borderLeftColor: maxCounts.sunday === 0 ? '#d32f2f' : '#4CAF50' }}
-                  >
-                    <div className="stat-day">Vasárnap</div>
-                    <div className="stat-count">Elérhető helyek: {maxCounts.sunday}</div>
+                  <div className="stats-rows">
+                    {[
+                      { label: 'Péntek', sublabel: 'pénteki napijegy', count: maxCounts.friday },
+                      {
+                        label: 'Szombat',
+                        sublabel: 'szombati napijegy',
+                        count: maxCounts.saturday,
+                      },
+                      {
+                        label: 'Vasárnap',
+                        sublabel: 'vasárnapi napijegy',
+                        count: maxCounts.sunday,
+                      },
+                    ].map(({ label, sublabel, count }) => (
+                      <div key={label} className={`stat-row${count === 0 ? 'stat-row-full' : ''}`}>
+                        <div className="stat-row-accent" />
+                        <div className="stat-row-info">
+                          <div className="stat-row-day">{label}</div>
+                          <div
+                            className={`stat-row-badge ${count === 0 ? 'stat-row-badge-full' : 'stat-row-badge-open'}`}
+                          >
+                            {count === 0 ? 'Megtelt' : 'Elérhető'}
+                          </div>
+                        </div>
+                        <div className="stat-row-right">
+                          <div className="stat-row-count">{count}</div>
+                          <div className="stat-row-unit">szabad hely</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ) : (
                 <div className="statistics-content">
-                  <h2>Jegy Statisztikák</h2>
+                  <div className="stats-header">
+                    <h2 className="stats-title">Jegy Statisztikák</h2>
+                  </div>
                   <div className="error">Hiba történt az adatok betöltése közben.</div>
                 </div>
               )}
