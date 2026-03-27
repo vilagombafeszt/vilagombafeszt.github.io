@@ -86,8 +86,12 @@ body:has(.gombapp) {
 }
 
 @keyframes gombapp-rotation {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===== Buttons ===== */
@@ -222,6 +226,16 @@ body:has(.gombapp) {
 
 .gombapp .item-button:active {
   transform: scale(0.96);
+}
+
+.gombapp .item-button.item-button-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: color-mix(in srgb, var(--gombapp-button-bg) 80%, #c62828 20%);
+}
+
+.gombapp .item-button.item-button-disabled:active {
+  transform: none;
 }
 
 .gombapp .item-button span {
@@ -370,7 +384,9 @@ body:has(.gombapp) {
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: opacity 0.15s ease, transform 0.1s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease;
   font-family: 'Alumni Sans', sans-serif;
 }
 
@@ -679,33 +695,61 @@ body:has(.gombapp) {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUpDesktop {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(0); }
-  to { transform: translateY(100%); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
 @keyframes slideDownDesktop {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(50px); opacity: 0; }
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
 }
 
 /* ===== Login Form ===== */
@@ -818,54 +862,113 @@ body:has(.gombapp) {
 /* ===== Statistics ===== */
 .gombapp .statistics-container {
   display: flex;
-  width: 80vw;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 20px 16px;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
 }
 
 .gombapp .statistics-content {
-  background: white;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
-  height: 50vh;
-}
-
-.gombapp .statistics-content h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 26px;
-}
-
-.gombapp .stat-item {
+  max-width: 460px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  margin: 20px 0;
-  background: #f5f5f5;
-  border-radius: 8px;
-  border-left: 4px solid #4CAF50;
-  height: 60px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.gombapp .stat-day {
-  font-weight: bold;
-  font-size: 20px;
-  color: #333;
+.gombapp .stats-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 2px 0;
 }
 
-.gombapp .stat-count {
+.gombapp .stats-title {
+  font-size: clamp(28px, 3.5vh, 38px);
+  font-weight: 700;
+  color: var(--gombapp-font-color);
+  letter-spacing: 0.2px;
+}
+
+.gombapp .stats-subtitle {
   font-size: 18px;
-  color: #666;
+  opacity: 0.75;
+  font-weight: 600;
+}
+
+.gombapp .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 360px) {
+  .gombapp .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gombapp .stat-card {
+  border-radius: 16px;
+  padding: 16px 12px 14px;
+  background: color-mix(in srgb, var(--gombapp-bg-color) 86%, var(--gombapp-button-bg) 14%);
+  border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s;
+}
+
+.gombapp .stat-card-full {
+  background: color-mix(in srgb, var(--gombapp-bg-color) 80%, #c62828 20%);
+  border-color: color-mix(in srgb, #c62828 40%, transparent);
+}
+
+.gombapp .stat-card-day {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--gombapp-font-color);
+  letter-spacing: 0.2px;
+}
+
+.gombapp .stat-card-count {
+  font-size: clamp(30px, 4vh, 42px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gombapp-font-color);
+  margin-top: 4px;
+}
+
+.gombapp .stat-card-label {
+  font-size: 14px;
+  opacity: 0.7;
+  font-weight: 600;
+  text-align: center;
+}
+
+.gombapp .stat-card-badge {
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.gombapp .stat-card-badge-open {
+  background: color-mix(in srgb, #2e7d32 20%, transparent);
+  color: #2e7d32;
+}
+
+.gombapp .stat-card-badge-full {
+  background: color-mix(in srgb, #c62828 20%, transparent);
+  color: #c62828;
 }
 
 .gombapp .loading {
@@ -1057,8 +1160,13 @@ body:has(.gombapp) {
   z-index: 2000;
   opacity: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: 'Alumni Sans', sans-serif;
   font-size: 1.1em;
   font-weight: 500;
@@ -1094,7 +1202,9 @@ body:has(.gombapp) {
   z-index: 2001;
   top: 50%;
   border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.6),
+    0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .snackbar-backdrop {
@@ -1109,7 +1219,9 @@ body:has(.gombapp) {
   z-index: 1999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    visibility 0.3s ease-out;
 }
 
 .snackbar-backdrop.show {
@@ -1138,7 +1250,10 @@ body:has(.gombapp) {
   font-size: 1.1em;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
   display: inline-block;
 }
 
