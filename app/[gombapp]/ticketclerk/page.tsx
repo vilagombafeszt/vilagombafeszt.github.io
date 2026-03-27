@@ -446,23 +446,34 @@ export default function TicketClerkPage() {
                     <h2 className="stats-title">Jegy Statisztikák</h2>
                     <p className="stats-subtitle">Elérhető helyek naponta</p>
                   </div>
-                  <div className="stats-grid">
+                  <div className="stats-rows">
                     {[
-                      { label: 'Péntek', count: maxCounts.friday },
-                      { label: 'Szombat', count: maxCounts.saturday },
-                      { label: 'Vasárnap', count: maxCounts.sunday },
-                    ].map(({ label, count }) => (
-                      <div
-                        key={label}
-                        className={`stat-card${count === 0 ? 'stat-card-full' : ''}`}
-                      >
-                        <div className="stat-card-day">{label}</div>
-                        <div className="stat-card-count">{count}</div>
-                        <div className="stat-card-label">szabad hely</div>
-                        <div
-                          className={`stat-card-badge${count === 0 ? 'stat-card-badge-full' : 'stat-card-badge-open'}`}
-                        >
-                          {count === 0 ? 'Megtelt' : 'Elérhető'}
+                      { label: 'Péntek', sublabel: 'pénteki napijegy', count: maxCounts.friday },
+                      {
+                        label: 'Szombat',
+                        sublabel: 'szombati napijegy',
+                        count: maxCounts.saturday,
+                      },
+                      {
+                        label: 'Vasárnap',
+                        sublabel: 'vasárnapi napijegy',
+                        count: maxCounts.sunday,
+                      },
+                    ].map(({ label, sublabel, count }) => (
+                      <div key={label} className={`stat-row${count === 0 ? 'stat-row-full' : ''}`}>
+                        <div className="stat-row-accent" />
+                        <div className="stat-row-info">
+                          <div className="stat-row-day">{label}</div>
+                          <div className="stat-row-sublabel">{sublabel}</div>
+                        </div>
+                        <div className="stat-row-right">
+                          <div className="stat-row-count">{count}</div>
+                          <div className="stat-row-unit">szabad hely</div>
+                          <div
+                            className={`stat-row-badge${count === 0 ? 'stat-row-badge-full' : 'stat-row-badge-open'}`}
+                          >
+                            {count === 0 ? 'Megtelt' : 'Elérhető'}
+                          </div>
                         </div>
                       </div>
                     ))}

@@ -900,73 +900,99 @@ body:has(.gombapp) {
   font-weight: 600;
 }
 
-.gombapp .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+.gombapp .stats-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   width: 100%;
 }
 
-@media only screen and (max-width: 360px) {
-  .gombapp .stats-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.gombapp .stat-card {
+.gombapp .stat-row {
   border-radius: 16px;
-  padding: 16px 12px 14px;
+  overflow: hidden;
   background: color-mix(in srgb, var(--gombapp-bg-color) 86%, var(--gombapp-button-bg) 14%);
   border: 1px solid color-mix(in srgb, var(--gombapp-button-bg) 26%, transparent);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: border-color 0.2s;
+  align-items: stretch;
+  min-height: 90px;
 }
 
-.gombapp .stat-card-full {
+.gombapp .stat-row-full {
   background: color-mix(in srgb, var(--gombapp-bg-color) 80%, #c62828 20%);
   border-color: color-mix(in srgb, #c62828 40%, transparent);
 }
 
-.gombapp .stat-card-day {
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--gombapp-font-color);
-  letter-spacing: 0.2px;
+.gombapp .stat-row-accent {
+  width: 6px;
+  flex-shrink: 0;
+  background: #2e7d32;
 }
 
-.gombapp .stat-card-count {
-  font-size: clamp(30px, 4vh, 42px);
+.gombapp .stat-row-full .stat-row-accent {
+  background: #c62828;
+}
+
+.gombapp .stat-row-info {
+  flex: 1;
+  padding: 14px 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.gombapp .stat-row-day {
+  font-weight: 700;
+  font-size: clamp(22px, 2.8vh, 30px);
+  color: var(--gombapp-font-color);
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+}
+
+.gombapp .stat-row-sublabel {
+  font-size: 16px;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+.gombapp .stat-row-right {
+  padding: 12px 18px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1px;
+}
+
+.gombapp .stat-row-count {
+  font-size: clamp(34px, 4.5vh, 50px);
   font-weight: 700;
   line-height: 1;
   color: var(--gombapp-font-color);
-  margin-top: 4px;
 }
 
-.gombapp .stat-card-label {
-  font-size: 14px;
-  opacity: 0.7;
+.gombapp .stat-row-unit {
+  font-size: 15px;
+  opacity: 0.65;
   font-weight: 600;
-  text-align: center;
+  text-align: right;
 }
 
-.gombapp .stat-card-badge {
-  margin-top: 8px;
-  padding: 3px 10px;
+.gombapp .stat-row-badge {
+  margin-top: 6px;
+  padding: 2px 10px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.3px;
 }
 
-.gombapp .stat-card-badge-open {
+.gombapp .stat-row-badge-open {
   background: color-mix(in srgb, #2e7d32 20%, transparent);
   color: #2e7d32;
 }
 
-.gombapp .stat-card-badge-full {
+.gombapp .stat-row-badge-full {
   background: color-mix(in srgb, #c62828 20%, transparent);
   color: #c62828;
 }
