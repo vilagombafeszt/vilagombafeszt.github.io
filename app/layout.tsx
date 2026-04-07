@@ -119,12 +119,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="hu" className={fontClasses}>
       <head>
         {/* Preload hero background image */}
-        <link
-          rel="preload"
-          as="image"
-          href="/page_images/IMG_1367.webp"
-          type="image/webp"
-        />
+        <link rel="preload" as="image" href="/page_images/IMG_1367.webp" type="image/webp" />
+        {/* Preconnect to Google Maps to speed up LazyMap loading */}
+        <link rel="preconnect" href="https://www.google.com" />
         {/* Font Awesome */}
         <link
           rel="stylesheet"

@@ -10,6 +10,7 @@ interface LazyMapProps {
 export default function LazyMap({ src, title }: LazyMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [iframeSrc, setIframeSrc] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -22,7 +23,7 @@ export default function LazyMap({ src, title }: LazyMapProps) {
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' }
+      { rootMargin: '1000px' }
     );
 
     observer.observe(el);
@@ -31,7 +32,7 @@ export default function LazyMap({ src, title }: LazyMapProps) {
 
   return (
     <div ref={containerRef} className="lazy-map-wrapper">
-      {!iframeSrc && (
+      {!isLoaded && (
         <div className="lazy-map-placeholder" role="status">
           <span className="sr-only">Térkép betöltésre vár…</span>
           <svg
@@ -51,6 +52,9 @@ export default function LazyMap({ src, title }: LazyMapProps) {
           src={iframeSrc}
           title={title}
           allowFullScreen
+          loading="lazy"
+          onLoad={() => setIsLoaded(true)}
+          style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.3s ease-in' }}
           referrerPolicy="no-referrer-when-downgrade"
         />
       )}
