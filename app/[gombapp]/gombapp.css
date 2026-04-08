@@ -262,7 +262,7 @@ body:has(.gombapp) {
 .gombapp .ticketclerk-title {
   font-family: 'Alumni Sans', sans-serif;
   font-size: 40px;
-  margin-top: 15px;
+  margin-top: 5px;
   text-align: center;
 }
 
@@ -1343,11 +1343,11 @@ body:has(.gombapp) {
 
 /* ===== iOS extra top padding (detected via JS userAgent) ===== */
 .gombapp.ios-device header {
-  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-top: calc(15px + env(safe-area-inset-top, 0px));
 }
 
 .gombapp.ios-device .back-button {
-  top: calc(50% + 8px);
+  top: calc(50% + 5px + env(safe-area-inset-top, 0px) / 2);
 }
 
 .gombapp.ios-device .snackbar {
