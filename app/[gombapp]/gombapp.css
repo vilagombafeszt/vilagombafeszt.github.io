@@ -1340,3 +1340,12 @@ body:has(.gombapp) {
     padding-top: 0;
   }
 }
+
+/* ===== iOS extra top padding (detected via JS userAgent) ===== */
+.gombapp.ios-device header {
+  padding-top: calc(30px + env(safe-area-inset-top, 0px));
+}
+
+.gombapp.ios-device .snackbar {
+  top: calc(90px + env(safe-area-inset-top, 0px));
+}
