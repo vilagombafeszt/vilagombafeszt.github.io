@@ -1354,12 +1354,12 @@ body:has(.gombapp) {
   top: calc(80px + env(safe-area-inset-top, 0px));
 }
 
-/* ===== iOS extra bottom padding for footer elements ===== */
+/* ===== iOS: lower footer elements by reducing bottom padding push ===== */
 .gombapp.ios-device .fixed-bottom {
-  height: calc(90px + env(safe-area-inset-bottom, 0px));
-  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  height: 70px;
+  padding-bottom: 0px;
 }
 
 .gombapp.ios-device footer {
-  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 0px;
 }
