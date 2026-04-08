@@ -498,7 +498,6 @@ body:has(.gombapp) {
   opacity: 0.85;
 }
 
-/* Legacy classes kept for backward compat */
 .gombapp .order-list-box {
   border: 1px solid var(--gombapp-font-color);
   border-radius: 5px;
@@ -528,7 +527,6 @@ body:has(.gombapp) {
   font-family: 'Alumni Sans', sans-serif;
 }
 
-/* ===== Fixed Bottom Bar ===== */
 .gombapp .fixed-bottom {
   display: flex;
   justify-content: center;
@@ -605,7 +603,6 @@ body:has(.gombapp) {
   }
 }
 
-/* ===== Bottom Sheet ===== */
 .gombapp .bottom-sheet-backdrop {
   position: fixed;
   inset: 0;
@@ -752,7 +749,6 @@ body:has(.gombapp) {
   }
 }
 
-/* ===== Login Form ===== */
 .gombapp .name-form {
   display: flex;
   flex-direction: column;
@@ -848,7 +844,6 @@ body:has(.gombapp) {
   padding-bottom: 8px;
 }
 
-/* ===== Footer ===== */
 .gombapp footer {
   margin-top: auto;
   padding-top: 20px;
@@ -1165,7 +1160,6 @@ body:has(.gombapp) {
   font-weight: 800;
 }
 
-/* ===== Snackbar ===== */
 .snackbar {
   visibility: hidden;
   min-width: 250px;
@@ -1341,7 +1335,11 @@ body:has(.gombapp) {
   }
 }
 
-/* ===== iOS extra top padding (detected via JS userAgent) ===== */
+.gombapp.ios-device {
+  height: 100dvh;
+  bottom: auto;
+}
+
 .gombapp.ios-device header {
   padding-top: calc(15px + env(safe-area-inset-top, 0px));
 }
@@ -1356,7 +1354,11 @@ body:has(.gombapp) {
 
 /* ===== iOS bottom footer adjustments ===== */
 .gombapp.ios-device footer {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 0px;
 }
 
 .gombapp.ios-device .fixed-bottom {
