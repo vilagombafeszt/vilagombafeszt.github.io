@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Alumni_Sans } from 'next/font/google';
 import { AuthProvider } from '@/components/gombapp/AuthProvider';
+import { IosDetector } from '@/components/gombapp/IosDetector';
 import { SnackbarProvider } from '@/components/gombapp/Snackbar';
 import './gombapp.css';
 
@@ -59,6 +60,7 @@ export default function GombAppLayout({ children }: { children: React.ReactNode 
         rel="stylesheet"
       />
       <AuthProvider>
+        <IosDetector />
         <SnackbarProvider>{children}</SnackbarProvider>
       </AuthProvider>
     </div>
