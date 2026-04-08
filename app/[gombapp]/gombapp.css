@@ -1353,3 +1353,12 @@ body:has(.gombapp) {
 .gombapp.ios-device .snackbar {
   top: calc(80px + env(safe-area-inset-top, 0px));
 }
+
+/* ===== iOS bottom footer adjustments ===== */
+.gombapp.ios-device footer {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.gombapp.ios-device .fixed-bottom {
+  align-items: flex-end;
+}
