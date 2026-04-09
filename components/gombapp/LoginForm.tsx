@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { Eye, EyeOff } from 'lucide-react';
 import { auth } from '@/lib/firebase';
 import { useSnackbar } from './Snackbar';
 import { BottomSheet, BottomSheetHeader, BottomSheetBody, BottomSheetFooter } from './BottomSheet';
@@ -15,6 +16,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
   const { showSnackbar } = useSnackbar();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [showReset, setShowReset] = useState(false);
 
@@ -74,7 +76,10 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
     if (!auth) return;
     sendPasswordResetEmail(auth, trimmed)
       .then(() => {
-        showSnackbar('Ha ez az e-mail cím regisztrálva van, küldtünk rá egy hivatkozást.', 'success');
+        showSnackbar(
+          'Ha ez az e-mail cím regisztrálva van, küldtünk rá egy hivatkozást.',
+          'success'
+        );
       })
       .catch((error) => {
         if (error.code === 'auth/user-not-found') {
@@ -102,26 +107,38 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <input
-                className="pw-field"
-                type="password"
-                placeholder="Jelszó"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                className="text-button"
-                onClick={() => setShowReset(true)}
-              >
+              <div className="pw-field-wrapper">
+                <input
+                  className="pw-field"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Jelszó"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onTouchStart={(e) => e.preventDefault()}
+                  aria-label={showPassword ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              <button type="button" className="text-button" onClick={() => setShowReset(true)}>
                 Elfelejtettem a jelszavam.
               </button>
             </div>
           ) : (
-            <div className="forgot-password-fields" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div
+              className="forgot-password-fields"
+              style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
+            >
               <p className="reset-description">
-                Add meg az e-mail-címedet, és elküldünk neked egy hivatkozást, amellyel visszajuthatsz a fiókodba.
+                Add meg az e-mail-címedet, és elküldünk neked egy hivatkozást, amellyel
+                visszajuthatsz a fiókodba.
               </p>
               <input
                 className="email-field"
@@ -145,11 +162,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
             </div>
           ) : (
             <div className="loginform-buttons">
-              <button
-                type="button"
-                className="cancel-button"
-                onClick={() => setShowReset(false)}
-              >
+              <button type="button" className="cancel-button" onClick={() => setShowReset(false)}>
                 Vissza
               </button>
               <button type="submit" className="submit-button">
