@@ -1352,6 +1352,10 @@ body:has(.gombapp) {
   top: calc(80px + env(safe-area-inset-top, 0px));
 }
 
+.gombapp.ios-device .snackbar.confirm {
+  top: 50%;
+}
+
 /* ===== iOS bottom footer adjustments ===== */
 .gombapp.ios-device footer {
   position: absolute;
@@ -1363,4 +1367,5 @@ body:has(.gombapp) {
 
 .gombapp.ios-device .fixed-bottom {
   align-items: flex-end;
+  position: absolute;
 }
