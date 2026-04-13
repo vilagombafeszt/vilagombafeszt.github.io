@@ -47,3 +47,12 @@ next-env.d.ts
 public/sw.js
 public/sw.js.map
 public/swe-worker-*.js
+
+# firebase
+.firebase/
+firebase-debug.log*
+firebase-debug.*.log
+
+# ai agents
+.agents/
+skills-lock.json
