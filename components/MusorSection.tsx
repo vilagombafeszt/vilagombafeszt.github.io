@@ -1,50 +1,60 @@
 const lineupData = {
   friday: [
-    { time: '17:30', artist: 'Artur' },
+    { time: '17:30', artist: 'Artur', instagram: 'https://www.instagram.com/arturmusicofficial/' },
     { time: '19:15', artist: 'Coming soon' },
-    { time: '21:00', artist: 'Shakar Trio' },
+    { time: '21:00', artist: 'Shakar Trio', instagram: 'https://www.instagram.com/shakartrio/' },
     { time: '22:45', artist: 'Coming soon' },
   ],
   saturday: [
-    { time: '17:30', artist: 'Sildervald' },
-    { time: '19:15', artist: 'Várhegyutca' },
+    { time: '17:30', artist: 'Sildervald', instagram: 'https://www.instagram.com/sildervald/' },
+    { time: '19:15', artist: 'Várhegyutca', instagram: 'https://www.instagram.com/varhegyutca/' },
     { time: '21:00', artist: 'Táncház' },
-    { time: '22:45', artist: 'Héba' },
+    { time: '22:45', artist: 'Héba', instagram: 'https://www.instagram.com/heba_zenekar/' },
   ],
   sunday: [
-    { time: '17:30', artist: 'Kvaterka' },
-    { time: '19:15', artist: 'Őri-Kiss Boti' },
-    { time: '21:00', artist: 'Semmi' },
-    { time: '22:45', artist: 'Kóc' },
+    { time: '17:30', artist: 'Kvaterka', instagram: 'https://www.instagram.com/kvaterkaperka/' },
+    { time: '19:15', artist: 'Őri-Kiss Boti', instagram: 'https://www.instagram.com/okboti/' },
+    { time: '21:00', artist: 'Semmi', instagram: 'https://www.instagram.com/semmizenekar' },
+    { time: '22:45', artist: 'Kóc', instagram: 'https://www.instagram.com/koc_band/' },
   ],
 };
 
-function LineupList({ items }: { items: { time: string; artist: string }[] }) {
+function LineupList({ items }: { items: { time: string; artist: string; instagram?: string }[] }) {
   return (
     <div className="relative mb-8 mt-4 flex w-full flex-col gap-3 md:mb-10 md:mt-8 md:gap-4">
-      {items.map((item, index) => (
-        <div
-          key={index}
-          className="hover:border-accent/40 group relative flex items-center gap-6 overflow-hidden rounded-2xl border border-white/5 bg-black/10 p-4 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-black/30 hover:shadow-[0_8px_30px_rgba(172,157,157,0.15)]"
-        >
-          {/* Subtle hover gradient background */}
-          <div className="from-accent/0 to-accent/5 absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      {items.map((item, index) => {
+        const CardElement = item.instagram ? 'a' : 'div';
+        const linkProps = item.instagram
+          ? { href: item.instagram, target: '_blank', rel: 'noopener noreferrer' }
+          : {};
 
-          {/* Time badge */}
-          <div className="relative z-10 flex min-w-[70px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 sm:min-w-[80px]">
-            <span className="font-mono text-base font-bold tracking-wider text-amber-500/90 transition-colors group-hover:text-amber-400 sm:text-lg">
-              {item.time}
-            </span>
-          </div>
+        return (
+          <CardElement
+            key={index}
+            {...linkProps}
+            className={`hover:border-accent/40 group relative flex items-center gap-6 overflow-hidden rounded-2xl border border-white/5 bg-black/10 p-4 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-black/30 hover:shadow-[0_8px_30px_rgba(172,157,157,0.15)] ${
+              item.instagram ? 'cursor-pointer' : ''
+            }`}
+          >
+            {/* Subtle hover gradient background */}
+            <div className="from-accent/0 to-accent/5 absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          {/* Artist name */}
-          <div className="relative z-10 flex w-full flex-col">
-            <span className="font-body text-2xl font-bold tracking-wide text-accent drop-shadow-sm transition-all group-hover:text-white md:text-3xl">
-              {item.artist}
-            </span>
-          </div>
-        </div>
-      ))}
+            {/* Time badge */}
+            <div className="relative z-10 flex min-w-[70px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 sm:min-w-[80px]">
+              <span className="font-mono text-base font-bold tracking-wider text-amber-500/90 transition-colors group-hover:text-amber-400 sm:text-lg">
+                {item.time}
+              </span>
+            </div>
+
+            {/* Artist name */}
+            <div className="relative z-10 flex w-full flex-col">
+              <span className="font-body text-2xl font-bold tracking-wide text-accent drop-shadow-sm transition-all group-hover:text-white md:text-3xl">
+                {item.artist}
+              </span>
+            </div>
+          </CardElement>
+        );
+      })}
     </div>
   );
 }
