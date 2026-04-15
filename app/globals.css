@@ -183,6 +183,10 @@ a:visited {
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
   margin: 0;
 }
+#Otthon .hero-date {
+  font-size: clamp(16px, 2.5vw, 32px);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
+}
 #Otthon ::selection {
   background-color: var(--color-hero-text);
   color: black;
