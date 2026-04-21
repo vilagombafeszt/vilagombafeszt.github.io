@@ -136,6 +136,17 @@ async function processPageImages() {
       dst: 'vasarnap.webp',
       opts: { maxWidth: 1080, quality: 83 },
     },
+    // Ticket images
+    {
+      src: 'early_bird_berlet.png',
+      dst: 'early_bird_berlet.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'early_bird_napijegy.png',
+      dst: 'early_bird_napijegy.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
   ];
 
   for (const { src, dst, opts } of targets) {

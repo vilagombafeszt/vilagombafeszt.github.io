@@ -15,7 +15,13 @@ const lineupData = {
       facebook: 'https://www.facebook.com/shakartrio/',
       spotify: 'https://open.spotify.com/artist/4uxMwBfvrUNDuhgWsWUZ6Z',
     },
-    { time: '22:45', artist: 'Coming soon' },
+    {
+      time: '22:45',
+      artist: 'AZNAP Projekt',
+      instagram: 'https://www.instagram.com/aznapprojekt/',
+      facebook: 'https://www.facebook.com/aznapprojekt/',
+      spotify: 'https://open.spotify.com/artist/5nKpPdELRt9Ih7CIBegKWW',
+    },
   ],
   saturday: [
     {
