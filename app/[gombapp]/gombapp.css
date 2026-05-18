@@ -116,7 +116,9 @@ body:has(.gombapp) {
   font-size: 0.7em;
   font-family: 'Alumni Sans', sans-serif;
   margin-left: 10px;
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.1s ease;
 }
 
 .gombapp .logout-button:hover {
@@ -136,6 +138,11 @@ body:has(.gombapp) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.gombapp button:active {
+  transform: scale(0.96);
 }
 
 .gombapp .back-button {
@@ -144,6 +151,11 @@ body:has(.gombapp) {
   transform: translateY(-50%);
   left: 10px;
   width: 90px;
+  transition: transform 0.1s ease;
+}
+
+.gombapp .back-button:active {
+  transform: translateY(-50%) scale(0.96);
 }
 
 /* ===== Main ===== */
@@ -491,11 +503,14 @@ body:has(.gombapp) {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease;
 }
 
 .gombapp .order-save-btn:active {
   opacity: 0.85;
+  transform: scale(0.96);
 }
 
 .gombapp .order-list-box {
