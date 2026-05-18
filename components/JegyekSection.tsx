@@ -42,7 +42,7 @@ export default function JegyekSection() {
         <p className="ticket-text">
           A 2026-os fesztiválra a jegyértékesítés elkezdődött! Csapjatok le minél hamarabb az Early
           Bird jegyekre, mert csak korlátozott számban (és ideig) érhetők el. A legfrissebb
-          információkért kövessetek minket a hivatalos Facebook- és Instagram-oldalunkon.
+          információkért kövessetek be minket a hivatalos Facebook- és Instagram-oldalunkon.
         </p>
 
         <div className="ticket-links">

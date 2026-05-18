@@ -15,7 +15,7 @@ export default function EzUgyVoltSection() {
           folyamatosan jelentkezünk!
           <br />
           <br />
-          Ezúton is szeretnénk megköszönni először is a helyszínadóinknak, hogy megtarthattuk az
+          Ezúton is szeretnénk megköszönni először is a helyszínadóinknak, hogy megtarthattuk a
           második fesztiválunkat ezen a csodás helyen! Hálával tartozunk továbbá az összes előadónak
           a fantasztikus koncertekért, előadásokért és színdarabokért, valamint a segítő kezeknek,
           akik önzetlenül rengeteg energiát raktak bele ügyünkbe. Végül, de nem utolsó sorban

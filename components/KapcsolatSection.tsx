@@ -4,17 +4,17 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 export default function KapcsolatSection() {
-  const fbRef   = useRef<HTMLImageElement>(null);
+  const fbRef = useRef<HTMLImageElement>(null);
   const [spin, setSpin] = useState(false);
+  const [docHover, setDocHover] = useState(false);
 
   useEffect(() => {
     const el = fbRef.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setSpin(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setSpin(entry.isIntersecting), {
+      threshold: 0.1,
+    });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -25,7 +25,11 @@ export default function KapcsolatSection() {
 
       <div className="contacts">
         <div className="social-links">
-          <a href="https://www.facebook.com/vilagombafeszt" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.facebook.com/vilagombafeszt"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               ref={fbRef}
               id="facebook-logo"
@@ -44,15 +48,21 @@ export default function KapcsolatSection() {
             <tbody>
               <tr>
                 <td>Telefon:</td>
-                <td><a href="tel:+36301975338">+36 30 197 5338</a></td>
+                <td>
+                  <a href="tel:+36301975338">+36 30 197 5338</a>
+                </td>
               </tr>
               <tr>
                 <td>Általános információk:</td>
-                <td><a href="mailto:info@vilagombafeszt.hu">info@vilagombafeszt.hu</a></td>
+                <td>
+                  <a href="mailto:info@vilagombafeszt.hu">info@vilagombafeszt.hu</a>
+                </td>
               </tr>
               <tr>
                 <td>Jegyinformációk:</td>
-                <td><a href="mailto:jegy@vilagombafeszt.hu">jegy@vilagombafeszt.hu</a></td>
+                <td>
+                  <a href="mailto:jegy@vilagombafeszt.hu">jegy@vilagombafeszt.hu</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -60,9 +70,15 @@ export default function KapcsolatSection() {
       </div>
 
       <div className="doc-download-wrapper">
-        <a className="doc-download" href="/szuloi-nyilatkozat-vilagomba.pdf" download="szuloi-nyilatkozat-vilagomba.pdf">
+        <a
+          className="doc-download"
+          href="/szuloi-nyilatkozat-vilagomba.pdf"
+          download="szuloi-nyilatkozat-vilagomba.pdf"
+          onMouseEnter={() => setDocHover(true)}
+          onMouseLeave={() => setDocHover(false)}
+        >
           <Image
-            src="/page_images/document.webp"
+            src={docHover ? '/page_images/document_blue.webp' : '/page_images/document.webp'}
             alt="Szülői nyilatkozat"
             width={30}
             height={35}

@@ -120,6 +120,11 @@ async function processPageImages() {
       dst: 'document.webp',
       opts: { maxWidth: 120, quality: 85 },
     },
+    {
+      src: 'document_blue.png',
+      dst: 'document_blue.webp',
+      opts: { maxWidth: 120, quality: 85 },
+    },
     // Schedule images
     {
       src: 'pentek.jpg',
