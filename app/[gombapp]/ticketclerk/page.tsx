@@ -343,7 +343,7 @@ export default function TicketClerkPage() {
                   return (
                     <button
                       key={ticket.name}
-                      className={`item-button${disabled ? 'item-button-disabled' : ''}`}
+                      className={`item-button ${disabled ? 'item-button-disabled' : ''}`.trim()}
                       onClick={() => !disabled && addItem(ticket.name)}
                       disabled={disabled}
                     >
@@ -408,7 +408,7 @@ export default function TicketClerkPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
+                            className={`qty-btn ${qty === 1 ? 'qty-btn-remove' : ''}`.trim()}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
                             <span className="material-symbols-rounded qty-icon">
