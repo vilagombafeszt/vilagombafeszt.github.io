@@ -85,11 +85,11 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
 
       {/* Backdrop for confirm dialog */}
       {type === 'confirm' && (
-        <div className={`snackbar-backdrop${visible ? 'show' : ''}`} onClick={handleCancel} />
+        <div className={`snackbar-backdrop ${visible ? 'show' : ''}`} onClick={handleCancel} />
       )}
 
       {/* Snackbar element */}
-      <div className={`snackbar ${type}${visible ? 'show' : ''}`}>
+      <div className={`snackbar ${type} ${visible ? 'show' : ''}`}>
         {type === 'confirm' ? (
           <>
             <div className="snackbar-message">{message}</div>

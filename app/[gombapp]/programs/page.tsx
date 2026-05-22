@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
@@ -22,6 +22,21 @@ export default function ProgramsPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [isViewLoaded, setIsViewLoaded] = useState(false);
+  const [iframeLoading, setIframeLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
 
   // Load view from sessionStorage on mount
   useEffect(() => {
@@ -51,10 +66,20 @@ export default function ProgramsPage() {
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
@@ -69,7 +94,13 @@ export default function ProgramsPage() {
       <main>
         {view === 'menu' && (
           <div className="menu adjust">
-            <button className="calendar-button" onClick={() => setView('realtime')}>
+            <button
+              className="calendar-button"
+              onClick={() => {
+                setView('realtime');
+                setIframeLoading(true);
+              }}
+            >
               <Image
                 src="/GombApp/images/realtime-calendar.png"
                 alt="Valós idejű program"
@@ -79,7 +110,13 @@ export default function ProgramsPage() {
               />
               Valós idejű
             </button>
-            <button className="calendar-button" onClick={() => setView('agenda')}>
+            <button
+              className="calendar-button"
+              onClick={() => {
+                setView('agenda');
+                setIframeLoading(true);
+              }}
+            >
               <Image
                 src="/GombApp/images/agenda-calendar.png"
                 alt="Napi program"
@@ -93,34 +130,36 @@ export default function ProgramsPage() {
         )}
 
         {view === 'realtime' && (
-          <div style={{ flex: 1, width: '100%', minHeight: 0, padding: '10px 0', display: 'flex' }}>
+          <div className="iframe-container">
+            {iframeLoading && (
+              <div className="iframe-loader-overlay">
+                <div className="loader" />
+              </div>
+            )}
             <iframe
               src={REALTIME_SRC}
               title="Program naptár"
-              style={{
-                border: 0,
-                borderRadius: '12px',
-                overflow: 'hidden',
-                width: '100%',
-                flex: 1,
-              }}
+              onLoad={() => setIframeLoading(false)}
+              className="iframe-content"
+              style={{ opacity: iframeLoading ? 0 : 1 }}
               scrolling="no"
             />
           </div>
         )}
 
         {view === 'agenda' && (
-          <div style={{ flex: 1, width: '100%', minHeight: 0, padding: '10px 0', display: 'flex' }}>
+          <div className="iframe-container">
+            {iframeLoading && (
+              <div className="iframe-loader-overlay">
+                <div className="loader" />
+              </div>
+            )}
             <iframe
               src={AGENDA_SRC}
               title="Program naptár"
-              style={{
-                border: 0,
-                borderRadius: '12px',
-                overflow: 'hidden',
-                width: '100%',
-                flex: 1,
-              }}
+              onLoad={() => setIframeLoading(false)}
+              className="iframe-content"
+              style={{ opacity: iframeLoading ? 0 : 1 }}
               scrolling="no"
             />
           </div>

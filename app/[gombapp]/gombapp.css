@@ -1468,3 +1468,61 @@ body:has(.gombapp) {
   align-items: flex-end;
   position: absolute;
 }
+
+/* ===== Loader Utilities ===== */
+.gombapp .loader-white {
+  border-top-color: #ffffff;
+}
+
+.gombapp .loader-mb {
+  margin-bottom: 15px;
+}
+
+.gombapp .full-screen-loader-backdrop {
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gombapp .admin-loading-container {
+  margin-top: 50px;
+}
+
+.gombapp .iframe-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  padding: 10px 0;
+  display: flex;
+  position: relative;
+}
+
+.gombapp .iframe-loader-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gombapp .iframe-content {
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  flex: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gombapp .nav-loader-container {
+  position: fixed;
+  inset: 0;
+  background-color: var(--gombapp-bg-color);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}

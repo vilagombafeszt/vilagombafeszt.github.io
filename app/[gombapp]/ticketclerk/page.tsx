@@ -71,8 +71,23 @@ export default function TicketClerkPage() {
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
   const [capacityLoading, setCapacityLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const lastClickRef = useRef(0);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
 
   // Load cart from sessionStorage on mount
   useEffect(() => {
@@ -124,8 +139,6 @@ export default function TicketClerkPage() {
       .catch((error) => console.error('Error fetching prices:', error));
   }, []);
 
-  // Fetch max counts on mount to enable capacity-aware ticket buttons.
-  // `database` is a module-level constant that never changes; omitting it from deps is intentional.
   useEffect(() => {
     if (!database) return;
     setCapacityLoading(true);
@@ -310,6 +323,8 @@ export default function TicketClerkPage() {
       return;
     }
 
+    setIsSaving(true);
+
     try {
       // Re-fetch latest capacity before saving
       const freshCounts = await fetchMaxTicketCounts();
@@ -393,6 +408,8 @@ export default function TicketClerkPage() {
     } catch (error) {
       console.error('Error saving order:', error);
       showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -400,10 +417,26 @@ export default function TicketClerkPage() {
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
+      {isSaving && (
+        <div className="snackbar-backdrop show full-screen-loader-backdrop">
+          <div className="loader loader-white" />
+        </div>
+      )}
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
@@ -531,8 +564,12 @@ export default function TicketClerkPage() {
 
           {view === 'stats' && (
             <div className="statistics-container">
-              {statsLoading ? (
-                <div className="loading">Statisztika betöltése...</div>
+              {statsLoading || capacityLoading ? (
+                <div className="loading">
+                  <div className="loader loader-mb" />
+                  <br />
+                  Statisztika betöltése...
+                </div>
               ) : maxCounts ? (
                 <div className="statistics-content">
                   <div className="stats-header">

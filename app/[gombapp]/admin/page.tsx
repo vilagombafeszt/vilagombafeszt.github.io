@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ref, get, child } from 'firebase/database';
 import { doc, getDoc } from 'firebase/firestore';
@@ -89,6 +89,9 @@ export default function AdminPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [authorized, setAuthorized] = useState(false);
+  const [isFetchingStats, setIsFetchingStats] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
   const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
   const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({
@@ -97,6 +100,18 @@ export default function AdminPage() {
     sunday: 0,
   });
   const [isViewLoaded, setIsViewLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
 
   // Load view from sessionStorage on mount
   useEffect(() => {
@@ -152,6 +167,7 @@ export default function AdminPage() {
   }, [user, loading, router, showSnackbar, gombappBase]);
 
   const fetchStatistics = async () => {
+    setIsFetchingStats(true);
     const dbRef = ref(database!);
 
     try {
@@ -185,6 +201,8 @@ export default function AdminPage() {
       });
     } catch (error) {
       console.error('Error fetching ticket capacities:', error);
+    } finally {
+      setIsFetchingStats(false);
     }
   };
 
@@ -198,10 +216,20 @@ export default function AdminPage() {
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
@@ -249,127 +277,141 @@ export default function AdminPage() {
           </div>
         )}
 
-        {view === 'bartender' && (
-          <div className="bartenderstat-container">
-            <div className="admin-stats">
-              <div className="admin-stats-header">
-                <div className="admin-stats-title">Pultos statisztika</div>
-                <div className="admin-stats-subtitle">Ital rendelések összesítve</div>
-              </div>
-
-              <div className="admin-stats-grid">
-                <StatCard label="Rendelt tételek" value={bartenderStats.totalOrders} unit="db" />
-                <StatCard label="Rendelések" value={bartenderStats.totalOrderCount} unit="db" />
-                <StatTextCard label="Legnépszerűbb ital" value={bartenderStats.mostOrdered} />
-                <div className="admin-stat-card">
-                  <div className="admin-stat-label">Bevétel</div>
-                  <div className="admin-stat-value">
-                    {formatNumber(bartenderStats.totalRevenue)}
-                    <span className="admin-stat-unit">HUF</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {isFetchingStats && view !== 'menu' ? (
+          <div className="loading admin-loading-container">
+            <div className="loader loader-mb" />
+            <br />
+            Adatok betöltése...
           </div>
-        )}
+        ) : (
+          <>
+            {view === 'bartender' && (
+              <div className="bartenderstat-container">
+                <div className="admin-stats">
+                  <div className="admin-stats-header">
+                    <div className="admin-stats-title">Pultos statisztika</div>
+                    <div className="admin-stats-subtitle">Ital rendelések összesítve</div>
+                  </div>
 
-        {view === 'ticket' && (
-          <div className="ticketstat-container">
-            <div className="admin-stats">
-              <div className="admin-section">
-                <div className="admin-stats-header">
-                  <div className="admin-stats-title">Jegyeladás statisztika</div>
-                  <div className="admin-stats-subtitle">Jegy rendelések összesítve</div>
-                </div>
-
-                <div className="admin-stats-grid">
-                  <StatCard label="Eladott jegyek" value={ticketStats.totalOrders} unit="db" />
-                  <StatCard label="Rendelések" value={ticketStats.totalOrderCount} unit="db" />
-                  <StatTextCard label="Legnépszerűbb jegy" value={ticketStats.mostOrdered} />
-                  <div className="admin-stat-card">
-                    <div className="admin-stat-label">Jegybevétel</div>
-                    <div className="admin-stat-value">
-                      {formatNumber(ticketStats.totalRevenue)}
-                      <span className="admin-stat-unit">HUF</span>
+                  <div className="admin-stats-grid">
+                    <StatCard
+                      label="Rendelt tételek"
+                      value={bartenderStats.totalOrders}
+                      unit="db"
+                    />
+                    <StatCard label="Rendelések" value={bartenderStats.totalOrderCount} unit="db" />
+                    <StatTextCard label="Legnépszerűbb ital" value={bartenderStats.mostOrdered} />
+                    <div className="admin-stat-card">
+                      <div className="admin-stat-label">Bevétel</div>
+                      <div className="admin-stat-value">
+                        {formatNumber(bartenderStats.totalRevenue)}
+                        <span className="admin-stat-unit">HUF</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+            )}
 
-              <div className="admin-section">
-                <div className="admin-section-title">Szabad helyek</div>
-                <div className="admin-capacity-card">
-                  <div className="admin-capacity-row">
-                    <div className="admin-capacity-day">Péntek</div>
-                    <div className="admin-capacity-right">
-                      <span
-                        className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}
-                      >
-                        {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                      </span>
-                      <span className="admin-capacity-value">
-                        {formatNumber(ticketCapacities.friday)}
-                        <span className="admin-stat-unit">hely</span>
-                      </span>
+            {view === 'ticket' && (
+              <div className="ticketstat-container">
+                <div className="admin-stats">
+                  <div className="admin-section">
+                    <div className="admin-stats-header">
+                      <div className="admin-stats-title">Jegyeladás statisztika</div>
+                      <div className="admin-stats-subtitle">Jegy rendelések összesítve</div>
+                    </div>
+
+                    <div className="admin-stats-grid">
+                      <StatCard label="Eladott jegyek" value={ticketStats.totalOrders} unit="db" />
+                      <StatCard label="Rendelések" value={ticketStats.totalOrderCount} unit="db" />
+                      <StatTextCard label="Legnépszerűbb jegy" value={ticketStats.mostOrdered} />
+                      <div className="admin-stat-card">
+                        <div className="admin-stat-label">Jegybevétel</div>
+                        <div className="admin-stat-value">
+                          {formatNumber(ticketStats.totalRevenue)}
+                          <span className="admin-stat-unit">HUF</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="admin-capacity-row">
-                    <div className="admin-capacity-day">Szombat</div>
-                    <div className="admin-capacity-right">
-                      <span
-                        className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}
-                      >
-                        {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                      </span>
-                      <span className="admin-capacity-value">
-                        {formatNumber(ticketCapacities.saturday)}
-                        <span className="admin-stat-unit">hely</span>
-                      </span>
-                    </div>
-                  </div>
+                  <div className="admin-section">
+                    <div className="admin-section-title">Szabad helyek</div>
+                    <div className="admin-capacity-card">
+                      <div className="admin-capacity-row">
+                        <div className="admin-capacity-day">Péntek</div>
+                        <div className="admin-capacity-right">
+                          <span
+                            className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}
+                          >
+                            {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="admin-capacity-value">
+                            {formatNumber(ticketCapacities.friday)}
+                            <span className="admin-stat-unit">hely</span>
+                          </span>
+                        </div>
+                      </div>
 
-                  <div className="admin-capacity-row">
-                    <div className="admin-capacity-day">Vasárnap</div>
-                    <div className="admin-capacity-right">
-                      <span
-                        className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}
-                      >
-                        {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                      </span>
-                      <span className="admin-capacity-value">
-                        {formatNumber(ticketCapacities.sunday)}
-                        <span className="admin-stat-unit">hely</span>
-                      </span>
+                      <div className="admin-capacity-row">
+                        <div className="admin-capacity-day">Szombat</div>
+                        <div className="admin-capacity-right">
+                          <span
+                            className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}
+                          >
+                            {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="admin-capacity-value">
+                            {formatNumber(ticketCapacities.saturday)}
+                            <span className="admin-stat-unit">hely</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="admin-capacity-row">
+                        <div className="admin-capacity-day">Vasárnap</div>
+                        <div className="admin-capacity-right">
+                          <span
+                            className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}
+                          >
+                            {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="admin-capacity-value">
+                            {formatNumber(ticketCapacities.sunday)}
+                            <span className="admin-stat-unit">hely</span>
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {view === 'summary' && (
-          <div className="statsummary-container">
-            <div className="admin-stats">
-              <div className="admin-stats-header">
-                <div className="admin-stats-title">Összes statisztika</div>
-                <div className="admin-stats-subtitle">Ital + jegy együtt</div>
-              </div>
+            {view === 'summary' && (
+              <div className="statsummary-container">
+                <div className="admin-stats">
+                  <div className="admin-stats-header">
+                    <div className="admin-stats-title">Összes statisztika</div>
+                    <div className="admin-stats-subtitle">Ital + jegy együtt</div>
+                  </div>
 
-              <div className="admin-stats-grid">
-                <StatCard label="Eladott tételek" value={summaryOrders} unit="db" />
-                <StatCard label="Rendelések" value={summaryOrderCount} unit="db" />
-                <div className="admin-stat-card full-span">
-                  <div className="admin-stat-label">Teljes bevétel</div>
-                  <div className="admin-stat-value">
-                    {formatNumber(summaryRevenue)}
-                    <span className="admin-stat-unit">HUF</span>
+                  <div className="admin-stats-grid">
+                    <StatCard label="Eladott tételek" value={summaryOrders} unit="db" />
+                    <StatCard label="Rendelések" value={summaryOrderCount} unit="db" />
+                    <div className="admin-stat-card full-span">
+                      <div className="admin-stat-label">Teljes bevétel</div>
+                      <div className="admin-stat-value">
+                        {formatNumber(summaryRevenue)}
+                        <span className="admin-stat-unit">HUF</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            )}
+          </>
         )}
       </main>
     </>

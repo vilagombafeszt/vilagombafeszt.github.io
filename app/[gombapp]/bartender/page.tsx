@@ -142,8 +142,23 @@ export default function BartenderPage() {
   const [orderItems, setOrderItems] = useState<string[]>([]);
   const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const lastClickRef = useRef(0);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
 
   // Load cart from sessionStorage on mount
   useEffect(() => {
@@ -238,6 +253,8 @@ export default function BartenderPage() {
       return;
     }
 
+    setIsSaving(true);
+
     try {
       const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
       const priceSnap = await get(ref(database!, 'Árak/Ital'));
@@ -299,6 +316,8 @@ export default function BartenderPage() {
     } catch (error) {
       console.error('Error saving order:', error);
       showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -306,10 +325,26 @@ export default function BartenderPage() {
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
+      {isSaving && (
+        <div className="snackbar-backdrop show full-screen-loader-backdrop">
+          <div className="loader loader-white" />
+        </div>
+      )}
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
