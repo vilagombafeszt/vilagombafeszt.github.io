@@ -6,6 +6,7 @@ import { ref, set, get, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
+import { Undo2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface TicketItem {
@@ -70,6 +71,7 @@ export default function TicketClerkPage() {
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
   const [capacityLoading, setCapacityLoading] = useState(true);
+
   const lastClickRef = useRef(0);
 
   // Load cart from sessionStorage on mount
@@ -225,6 +227,42 @@ export default function TicketClerkPage() {
     return Promise.all(promises);
   };
 
+  const revertMaxTicketCounts = async (ticketCounts: ReturnType<typeof countTicketsByType>) => {
+    const promises: Promise<unknown>[] = [];
+
+    if (ticketCounts.friday > 0 || ticketCounts.pass > 0) {
+      const fridayRef = ref(database!, 'Jegyek/pentekMax');
+      promises.push(
+        runTransaction(fridayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.friday + ticketCounts.pass;
+        })
+      );
+    }
+
+    if (ticketCounts.saturday > 0 || ticketCounts.pass > 0) {
+      const saturdayRef = ref(database!, 'Jegyek/szombatMax');
+      promises.push(
+        runTransaction(saturdayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.saturday + ticketCounts.pass;
+        })
+      );
+    }
+
+    if (ticketCounts.sunday > 0 || ticketCounts.pass > 0) {
+      const sundayRef = ref(database!, 'Jegyek/vasarnapMax');
+      promises.push(
+        runTransaction(sundayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.sunday + ticketCounts.pass;
+        })
+      );
+    }
+
+    return Promise.all(promises);
+  };
+
   const fetchMaxTicketCounts = async (): Promise<MaxCounts> => {
     const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
       get(ref(database!, 'Jegyek/pentekMax')),
@@ -306,24 +344,26 @@ export default function TicketClerkPage() {
 
       const userOrderRef = ref(database!, 'Rendelések/Jegy/' + user.uid);
       const snapshot = await get(userOrderRef);
+      const previousData = snapshot.exists() ? snapshot.val() : null;
 
       let existingOrders: string[] = [];
       let existingOrderPrices: number[] = [];
       let existingTotalPrice = 0;
       let existingOrderCount = 0;
 
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        existingOrders = data.orderList || [];
-        existingOrderPrices = data.orderPrices || [];
-        existingTotalPrice = data.totalPrice || 0;
-        existingOrderCount = data.orderCount || 0;
+      if (previousData) {
+        existingOrders = previousData.orderList || [];
+        existingOrderPrices = previousData.orderPrices || [];
+        existingTotalPrice = previousData.totalPrice || 0;
+        existingOrderCount = previousData.orderCount || 0;
       }
+
+      const currentOrderItems = [...orderItems];
 
       await Promise.all([
         set(userOrderRef, {
           email: user.email,
-          orderList: existingOrders.concat(orderItems),
+          orderList: existingOrders.concat(currentOrderItems),
           orderPrices: existingOrderPrices.concat(orderPrices),
           totalPrice: existingTotalPrice + orderTotal,
           orderCount: existingOrderCount + 1,
@@ -331,7 +371,23 @@ export default function TicketClerkPage() {
         updateMaxTicketCounts(ticketCounts),
       ]);
 
-      showSnackbar('Sikeresen mentve!', 'success');
+      const handleUndo = () => {
+        Promise.all([set(userOrderRef, previousData), revertMaxTicketCounts(ticketCounts)])
+          .then(() => {
+            setOrderItems(currentOrderItems); // repopulate cart
+            setView('order');
+            showSnackbar('Mentés visszavonva!', 'info');
+          })
+          .catch((error) => {
+            console.error('Error undoing ticket order:', error);
+            showSnackbar('Hiba a visszavonás közben.', 'error');
+          });
+      };
+
+      showSnackbar('Sikeresen mentve!', 'success', 10000, {
+        label: <Undo2 size={24} />,
+        onClick: handleUndo,
+      });
       setOrderItems([]);
       setView('menu');
     } catch (error) {
@@ -461,9 +517,14 @@ export default function TicketClerkPage() {
                 <span className="order-summary-count">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
                 </span>
-                <button className="order-save-btn" onClick={saveOrder}>
-                  Mentés
-                </button>
+                <div className="order-actions-container">
+                  <button className="order-clear-btn" onClick={() => setOrderItems([])}>
+                    Kosár ürítése
+                  </button>
+                  <button className="order-save-btn flex-large" onClick={saveOrder}>
+                    Mentés
+                  </button>
+                </div>
               </div>
             </div>
           )}

@@ -6,6 +6,7 @@ import { ref, set, get } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
+import { Undo2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface DrinkItem {
@@ -141,6 +142,7 @@ export default function BartenderPage() {
   const [orderItems, setOrderItems] = useState<string[]>([]);
   const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
+
   const lastClickRef = useRef(0);
 
   // Load cart from sessionStorage on mount
@@ -226,7 +228,7 @@ export default function BartenderPage() {
     return acc;
   }, {});
 
-  const saveOrder = () => {
+  const saveOrder = async () => {
     if (orderItems.length === 0) {
       showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
       return;
@@ -236,53 +238,68 @@ export default function BartenderPage() {
       return;
     }
 
-    const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
+    try {
+      const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
+      const priceSnap = await get(ref(database!, 'Árak/Ital'));
+      const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
 
-    get(ref(database!, 'Árak/Ital'))
-      .then((priceSnap) => {
-        const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
-        let orderTotal = 0;
-        const orderPrices: number[] = [];
-
-        orderItems.forEach((drink) => {
-          const key = PRICE_MAP[drink];
-          const price = key ? freshPrices[key] || 0 : 0;
-          orderTotal += price;
-          orderPrices.push(price);
-        });
-
-        return get(userOrderRef).then((snapshot) => {
-          let existingOrders: string[] = [];
-          let existingOrderPrices: number[] = [];
-          let existingTotalPrice = 0;
-          let existingOrderCount = 0;
-
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            existingOrders = data.orderList || [];
-            existingOrderPrices = data.orderPrices || [];
-            existingTotalPrice = data.totalPrice || 0;
-            existingOrderCount = data.orderCount || 0;
-          }
-
-          return set(userOrderRef, {
-            email: user.email,
-            orderList: existingOrders.concat(orderItems),
-            orderPrices: existingOrderPrices.concat(orderPrices),
-            totalPrice: existingTotalPrice + orderTotal,
-            orderCount: existingOrderCount + 1,
-          });
-        });
-      })
-      .then(() => {
-        showSnackbar('Sikeresen mentve!', 'success');
-        setOrderItems([]);
-        setView('menu');
-      })
-      .catch((error) => {
-        console.error('Error saving order:', error);
-        showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+      let orderTotal = 0;
+      const orderPrices: number[] = [];
+      orderItems.forEach((drink) => {
+        const key = PRICE_MAP[drink];
+        const price = key ? freshPrices[key] || 0 : 0;
+        orderTotal += price;
+        orderPrices.push(price);
       });
+
+      const snapshot = await get(userOrderRef);
+      const previousData = snapshot.exists() ? snapshot.val() : null;
+
+      let existingOrders: string[] = [];
+      let existingOrderPrices: number[] = [];
+      let existingTotalPrice = 0;
+      let existingOrderCount = 0;
+
+      if (previousData) {
+        existingOrders = previousData.orderList || [];
+        existingOrderPrices = previousData.orderPrices || [];
+        existingTotalPrice = previousData.totalPrice || 0;
+        existingOrderCount = previousData.orderCount || 0;
+      }
+
+      const currentOrderItems = [...orderItems];
+
+      await set(userOrderRef, {
+        email: user.email,
+        orderList: existingOrders.concat(currentOrderItems),
+        orderPrices: existingOrderPrices.concat(orderPrices),
+        totalPrice: existingTotalPrice + orderTotal,
+        orderCount: existingOrderCount + 1,
+      });
+
+      const handleUndo = () => {
+        set(userOrderRef, previousData)
+          .then(() => {
+            setOrderItems(currentOrderItems);
+            setView('order');
+            showSnackbar('Mentés visszavonva!', 'info');
+          })
+          .catch((error) => {
+            console.error('Error undoing order:', error);
+            showSnackbar('Hiba a visszavonás közben.', 'error');
+          });
+      };
+
+      showSnackbar('Sikeresen mentve!', 'success', 10000, {
+        label: <Undo2 size={24} />,
+        onClick: handleUndo,
+      });
+      setOrderItems([]);
+      setView('menu');
+    } catch (error) {
+      console.error('Error saving order:', error);
+      showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+    }
   };
 
   if (loading) return null;
@@ -358,7 +375,7 @@ export default function BartenderPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
+                            className={`qty-btn ${qty === 1 ? 'qty-btn-remove' : ''}`.trim()}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
                             <span className="material-symbols-rounded qty-icon">
@@ -385,9 +402,15 @@ export default function BartenderPage() {
                 <span className="order-summary-count">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
                 </span>
-                <button className="order-save-btn" onClick={saveOrder}>
-                  Mentés
-                </button>
+
+                <div className="order-actions-container">
+                  <button className="order-clear-btn" onClick={() => setOrderItems([])}>
+                    Kosár ürítése
+                  </button>
+                  <button className="order-save-btn flex-large" onClick={saveOrder}>
+                    Mentés
+                  </button>
+                </div>
               </div>
             </div>
           )}
