@@ -31,7 +31,9 @@ const EMPTY_STATS: Stats = {
   mostOrdered: 'N/A',
 };
 
-function computeStats(data: Record<string, { orderList: string[]; orderCount: number; totalPrice: number }>): Stats {
+function computeStats(
+  data: Record<string, { orderList: string[]; orderCount: number; totalPrice: number }>
+): Stats {
   let totalOrders = 0;
   let totalOrderCount = 0;
   let totalRevenue = 0;
@@ -89,7 +91,28 @@ export default function AdminPage() {
   const [authorized, setAuthorized] = useState(false);
   const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
   const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
-  const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({ friday: 0, saturday: 0, sunday: 0 });
+  const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({
+    friday: 0,
+    saturday: 0,
+    sunday: 0,
+  });
+  const [isViewLoaded, setIsViewLoaded] = useState(false);
+
+  // Load view from sessionStorage on mount
+  useEffect(() => {
+    const savedView = sessionStorage.getItem('admin_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsViewLoaded(true);
+  }, []);
+
+  // Save view to sessionStorage when it changes
+  useEffect(() => {
+    if (isViewLoaded) {
+      sessionStorage.setItem('admin_view', view);
+    }
+  }, [view, isViewLoaded]);
 
   // Auth & admin check
   useEffect(() => {
@@ -194,15 +217,33 @@ export default function AdminPage() {
         {view === 'menu' && (
           <div className="menu adjust">
             <button className="button" onClick={() => setView('bartender')}>
-              <Image src="/GombApp/images/stats.png" alt="Ital statisztika" className="profile-pic" width={100} height={100} />
+              <Image
+                src="/GombApp/images/stats.png"
+                alt="Ital statisztika"
+                className="profile-pic"
+                width={100}
+                height={100}
+              />
               Ital statisztika
             </button>
             <button className="button" onClick={() => setView('ticket')}>
-              <Image src="/GombApp/images/stats.png" alt="Jegy statisztika" className="profile-pic" width={100} height={100} />
+              <Image
+                src="/GombApp/images/stats.png"
+                alt="Jegy statisztika"
+                className="profile-pic"
+                width={100}
+                height={100}
+              />
               Jegy statisztika
             </button>
             <button className="button" onClick={() => setView('summary')}>
-              <Image src="/GombApp/images/stats.png" alt="Összes statisztika" className="profile-pic" width={100} height={100} />
+              <Image
+                src="/GombApp/images/stats.png"
+                alt="Összes statisztika"
+                className="profile-pic"
+                width={100}
+                height={100}
+              />
               Összes statisztika
             </button>
           </div>
@@ -261,7 +302,9 @@ export default function AdminPage() {
                   <div className="admin-capacity-row">
                     <div className="admin-capacity-day">Péntek</div>
                     <div className="admin-capacity-right">
-                      <span className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}>
+                      <span
+                        className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}
+                      >
                         {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                       </span>
                       <span className="admin-capacity-value">
@@ -274,7 +317,9 @@ export default function AdminPage() {
                   <div className="admin-capacity-row">
                     <div className="admin-capacity-day">Szombat</div>
                     <div className="admin-capacity-right">
-                      <span className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}>
+                      <span
+                        className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}
+                      >
                         {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                       </span>
                       <span className="admin-capacity-value">
@@ -287,7 +332,9 @@ export default function AdminPage() {
                   <div className="admin-capacity-row">
                     <div className="admin-capacity-day">Vasárnap</div>
                     <div className="admin-capacity-right">
-                      <span className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}>
+                      <span
+                        className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}
+                      >
                         {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                       </span>
                       <span className="admin-capacity-value">

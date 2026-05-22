@@ -16,25 +16,95 @@ interface DrinkItem {
 }
 
 const DRINKS: DrinkItem[] = [
-  { name: 'Korsó Kőbányai', image: '/GombApp/images/korso-kobi.png', alt: 'Korsó Kőbányai', label: 'Korsó Kőbányai' },
-  { name: 'Pohár Kőbányai', image: '/GombApp/images/pohar-kobi.png', alt: 'Pohár Kőbányai', label: 'Pohár Kőbányai' },
-  { name: 'Korsó Kézműves', image: '/GombApp/images/kezmuves.png', alt: 'Korsó Kézműves', label: 'Korsó Kézműves' },
-  { name: 'Pohár Kézműves', image: '/GombApp/images/kezmuves.png', alt: 'Pohár Kézműves', label: 'Pohár Kézműves' },
-  { name: 'Nagyfröccs', image: '/GombApp/images/nagyfroccs.png', alt: 'Nagyfröccs', label: 'Nagyfröccs' },
-  { name: 'Kisfröccs', image: '/GombApp/images/kisfroccs.png', alt: 'Kisfröccs', label: 'Kisfröccs' },
-  { name: 'Hosszúlépés', image: '/GombApp/images/hosszulepes.png', alt: 'Hosszúlépés', label: 'Hosszúlépés' },
+  {
+    name: 'Korsó Kőbányai',
+    image: '/GombApp/images/korso-kobi.png',
+    alt: 'Korsó Kőbányai',
+    label: 'Korsó Kőbányai',
+  },
+  {
+    name: 'Pohár Kőbányai',
+    image: '/GombApp/images/pohar-kobi.png',
+    alt: 'Pohár Kőbányai',
+    label: 'Pohár Kőbányai',
+  },
+  {
+    name: 'Korsó Kézműves',
+    image: '/GombApp/images/kezmuves.png',
+    alt: 'Korsó Kézműves',
+    label: 'Korsó Kézműves',
+  },
+  {
+    name: 'Pohár Kézműves',
+    image: '/GombApp/images/kezmuves.png',
+    alt: 'Pohár Kézműves',
+    label: 'Pohár Kézműves',
+  },
+  {
+    name: 'Nagyfröccs',
+    image: '/GombApp/images/nagyfroccs.png',
+    alt: 'Nagyfröccs',
+    label: 'Nagyfröccs',
+  },
+  {
+    name: 'Kisfröccs',
+    image: '/GombApp/images/kisfroccs.png',
+    alt: 'Kisfröccs',
+    label: 'Kisfröccs',
+  },
+  {
+    name: 'Hosszúlépés',
+    image: '/GombApp/images/hosszulepes.png',
+    alt: 'Hosszúlépés',
+    label: 'Hosszúlépés',
+  },
   { name: 'Háziúr', image: '/GombApp/images/haziur.png', alt: 'Háziúr', label: 'Háziúr' },
-  { name: 'Sportfröccs', image: '/GombApp/images/sportfroccs.png', alt: 'Sportfröccs', label: 'Sportfröccs' },
-  { name: 'Szóda 3dl', image: '/GombApp/images/kisszoda.png', alt: 'Szóda 3dl', label: 'Szóda 1dl' },
-  { name: 'Szóda 5dl', image: '/GombApp/images/pohar.png', alt: 'Papír pohár', label: 'Papír pohár' },
+  {
+    name: 'Sportfröccs',
+    image: '/GombApp/images/sportfroccs.png',
+    alt: 'Sportfröccs',
+    label: 'Sportfröccs',
+  },
+  {
+    name: 'Szóda 3dl',
+    image: '/GombApp/images/kisszoda.png',
+    alt: 'Szóda 3dl',
+    label: 'Szóda 1dl',
+  },
+  {
+    name: 'Szóda 5dl',
+    image: '/GombApp/images/pohar.png',
+    alt: 'Papír pohár',
+    label: 'Papír pohár',
+  },
   { name: 'Bor 3dl', image: '/GombApp/images/kisbor.png', alt: 'Bor 3dl', label: 'Bor 3dl' },
   { name: 'Bor 5dl', image: '/GombApp/images/nagybor.png', alt: 'Bor 5dl', label: 'Bor 5dl' },
-  { name: 'Pálinka 2cl', image: '/GombApp/images/palinka.png', alt: 'Pálinka 2cl', label: 'Pálinka 2cl' },
-  { name: 'Pálinka 4cl', image: '/GombApp/images/palinka.png', alt: 'Pálinka 4cl', label: 'Pálinka 4cl' },
+  {
+    name: 'Pálinka 2cl',
+    image: '/GombApp/images/palinka.png',
+    alt: 'Pálinka 2cl',
+    label: 'Pálinka 2cl',
+  },
+  {
+    name: 'Pálinka 4cl',
+    image: '/GombApp/images/palinka.png',
+    alt: 'Pálinka 4cl',
+    label: 'Pálinka 4cl',
+  },
   { name: 'Kávé', image: '/GombApp/images/kave.png', alt: 'Kávé', label: 'Presszó kávé' },
   { name: 'Tejes Kávé', image: '/GombApp/images/kave.png', alt: 'Kávé', label: 'Tejes kávé' },
-  { name: 'Jeges tea', image: '/GombApp/images/jegestea.png', alt: 'Jeges tea', label: 'Limonádé 3dl' },
-  { name: 'Limonádé', image: '/GombApp/images/jegestea.png', alt: 'Limonádé', label: 'Limonádé 5dl' },
+  {
+    name: 'Jeges tea',
+    image: '/GombApp/images/jegestea.png',
+    alt: 'Jeges tea',
+    label: 'Limonádé 3dl',
+  },
+  {
+    name: 'Limonádé',
+    image: '/GombApp/images/jegestea.png',
+    alt: 'Limonádé',
+    label: 'Limonádé 5dl',
+  },
 ];
 
 const PRICE_MAP: Record<string, string> = {
@@ -42,21 +112,21 @@ const PRICE_MAP: Record<string, string> = {
   'Pohár Kőbányai': 'poharKobiPrice',
   'Korsó Kézműves': 'korsoNarancsSor',
   'Pohár Kézműves': 'poharNarancsSor',
-  'Nagyfröccs': 'nagyfroccsPrice',
-  'Kisfröccs': 'kisfroccsPrice',
-  'Hosszúlépés': 'hosszulepesPrice',
-  'Háziúr': 'haziurPrice',
-  'Sportfröccs': 'sportfroccsPrice',
+  Nagyfröccs: 'nagyfroccsPrice',
+  Kisfröccs: 'kisfroccsPrice',
+  Hosszúlépés: 'hosszulepesPrice',
+  Háziúr: 'haziurPrice',
+  Sportfröccs: 'sportfroccsPrice',
   'Szóda 3dl': 'kisszodaPrice',
   'Szóda 5dl': 'nagyszodaPrice',
   'Bor 3dl': 'kisborPrice',
   'Bor 5dl': 'nagyborPrice',
   'Pálinka 2cl': 'kispalinkaPrice',
   'Pálinka 4cl': 'nagypalinkaPrice',
-  'Kávé': 'kavePrice',
+  Kávé: 'kavePrice',
   'Tejes Kávé': 'tejesKavePrice',
   'Jeges tea': 'jegesteaPrice',
-  'Limonádé': 'limonadePrice',
+  Limonádé: 'limonadePrice',
 };
 
 type View = 'menu' | 'order';
@@ -69,8 +139,34 @@ export default function BartenderPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [orderItems, setOrderItems] = useState<string[]>([]);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
   const lastClickRef = useRef(0);
+
+  // Load cart from sessionStorage on mount
+  useEffect(() => {
+    const savedCart = sessionStorage.getItem('bartender_cart');
+    if (savedCart) {
+      try {
+        setOrderItems(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
+      }
+    }
+    const savedView = sessionStorage.getItem('bartender_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsCartLoaded(true);
+  }, []);
+
+  // Save cart to sessionStorage when it changes
+  useEffect(() => {
+    if (isCartLoaded) {
+      sessionStorage.setItem('bartender_cart', JSON.stringify(orderItems));
+      sessionStorage.setItem('bartender_view', view);
+    }
+  }, [orderItems, view, isCartLoaded]);
 
   const throttle = (fn: () => void) => {
     const now = Date.now();
@@ -102,7 +198,7 @@ export default function BartenderPage() {
   const getDrinkPrice = useCallback(
     (drink: string): number => {
       const key = PRICE_MAP[drink];
-      return key ? (prices[key] || 0) : 0;
+      return key ? prices[key] || 0 : 0;
     },
     [prices]
   );
@@ -150,7 +246,7 @@ export default function BartenderPage() {
 
         orderItems.forEach((drink) => {
           const key = PRICE_MAP[drink];
-          const price = key ? (freshPrices[key] || 0) : 0;
+          const price = key ? freshPrices[key] || 0 : 0;
           orderTotal += price;
           orderPrices.push(price);
         });
@@ -219,7 +315,13 @@ export default function BartenderPage() {
                     className="item-button"
                     onClick={() => addItem(drink.name)}
                   >
-                    <Image src={drink.image} alt={drink.alt} className="item-pic" width={100} height={100} />
+                    <Image
+                      src={drink.image}
+                      alt={drink.alt}
+                      className="item-pic"
+                      width={100}
+                      height={100}
+                    />
                     <span>{drink.label}</span>
                   </button>
                 ))}
@@ -256,10 +358,12 @@ export default function BartenderPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? ' qty-btn-remove' : ''}`}
+                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
-                            <span className="material-symbols-rounded qty-icon">{qty === 1 ? 'delete' : 'remove'}</span>
+                            <span className="material-symbols-rounded qty-icon">
+                              {qty === 1 ? 'delete' : 'remove'}
+                            </span>
                           </button>
                           <span className="qty-count">{qty}</span>
                           <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>

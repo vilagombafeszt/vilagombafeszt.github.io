@@ -21,6 +21,23 @@ export default function ProgramsPage() {
   const params = useParams();
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
+  const [isViewLoaded, setIsViewLoaded] = useState(false);
+
+  // Load view from sessionStorage on mount
+  useEffect(() => {
+    const savedView = sessionStorage.getItem('programs_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsViewLoaded(true);
+  }, []);
+
+  // Save view to sessionStorage when it changes
+  useEffect(() => {
+    if (isViewLoaded) {
+      sessionStorage.setItem('programs_view', view);
+    }
+  }, [view, isViewLoaded]);
 
   // Auth check
   useEffect(() => {
@@ -80,7 +97,13 @@ export default function ProgramsPage() {
             <iframe
               src={REALTIME_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
+              style={{
+                border: 0,
+                borderRadius: '12px',
+                overflow: 'hidden',
+                width: '100%',
+                flex: 1,
+              }}
               scrolling="no"
             />
           </div>
@@ -91,7 +114,13 @@ export default function ProgramsPage() {
             <iframe
               src={AGENDA_SRC}
               title="Program naptár"
-              style={{ border: 0, borderRadius: '12px', overflow: 'hidden', width: '100%', flex: 1 }}
+              style={{
+                border: 0,
+                borderRadius: '12px',
+                overflow: 'hidden',
+                width: '100%',
+                flex: 1,
+              }}
               scrolling="no"
             />
           </div>

@@ -65,11 +65,37 @@ export default function TicketClerkPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [orderItems, setOrderItems] = useState<string[]>([]);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
   const [capacityLoading, setCapacityLoading] = useState(true);
   const lastClickRef = useRef(0);
+
+  // Load cart from sessionStorage on mount
+  useEffect(() => {
+    const savedCart = sessionStorage.getItem('ticketclerk_cart');
+    if (savedCart) {
+      try {
+        setOrderItems(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
+      }
+    }
+    const savedView = sessionStorage.getItem('ticketclerk_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsCartLoaded(true);
+  }, []);
+
+  // Save cart to sessionStorage when it changes
+  useEffect(() => {
+    if (isCartLoaded) {
+      sessionStorage.setItem('ticketclerk_cart', JSON.stringify(orderItems));
+      sessionStorage.setItem('ticketclerk_view', view);
+    }
+  }, [orderItems, view, isCartLoaded]);
 
   const throttle = (fn: () => void) => {
     const now = Date.now();
