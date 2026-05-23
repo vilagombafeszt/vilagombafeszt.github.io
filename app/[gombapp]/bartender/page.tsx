@@ -6,6 +6,12 @@ import { ref, set, get } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
+import {
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
+} from '@/components/gombapp/BottomSheet';
 import { Undo2 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -145,6 +151,10 @@ export default function BartenderPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
 
+  // Checkout Modal states
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [receivedAmount, setReceivedAmount] = useState<number | ''>('');
+
   const lastClickRef = useRef(0);
   const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -243,6 +253,19 @@ export default function BartenderPage() {
     return acc;
   }, {});
 
+  const openCheckout = () => {
+    if (orderItems.length === 0) {
+      showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
+      return;
+    }
+    if (!user) {
+      showSnackbar('Kérlek, jelentkezz be a mentéshez.', 'info');
+      return;
+    }
+    setReceivedAmount('');
+    setIsCheckoutOpen(true);
+  };
+
   const saveOrder = async () => {
     if (orderItems.length === 0) {
       showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
@@ -307,6 +330,7 @@ export default function BartenderPage() {
           });
       };
 
+      setIsCheckoutOpen(false);
       showSnackbar('Sikeresen mentve!', 'success', 10000, {
         label: <Undo2 size={24} />,
         onClick: handleUndo,
@@ -340,6 +364,104 @@ export default function BartenderPage() {
           <div className="loader loader-white" />
         </div>
       )}
+
+      {/* Checkout Bottom Sheet */}
+      <BottomSheet isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)}>
+        <BottomSheetHeader>Kassza / Visszajáró</BottomSheetHeader>
+        <BottomSheetBody>
+          <div className="checkout-content">
+            <div className="checkout-total">
+              Fizetendő: <span>{totalPrice.toLocaleString('hu-HU')} Ft</span>
+            </div>
+            <div className="checkout-quick-bills">
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(500)}
+              >
+                500 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(1000)}
+              >
+                1 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(2000)}
+              >
+                2 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(5000)}
+              >
+                5 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(10000)}
+              >
+                10 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(20000)}
+              >
+                20 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn pontos-btn"
+                onClick={() => setReceivedAmount(totalPrice)}
+              >
+                Pontos
+              </button>
+            </div>
+
+            <div className="checkout-input-group">
+              <label>Kapott készpénz:</label>
+              <input
+                type="number"
+                className="email-field"
+                value={receivedAmount}
+                onChange={(e) => setReceivedAmount(e.target.value ? Number(e.target.value) : '')}
+                placeholder="Egyedi összeg megadása..."
+              />
+            </div>
+
+            {receivedAmount !== '' && (
+              <div
+                className={`checkout-change ${Number(receivedAmount) >= totalPrice ? 'positive' : 'negative'}`}
+              >
+                {Number(receivedAmount) >= totalPrice
+                  ? `Visszajáró: ${(Number(receivedAmount) - totalPrice).toLocaleString('hu-HU')} Ft`
+                  : `Hiányzik: ${(totalPrice - Number(receivedAmount)).toLocaleString('hu-HU')} Ft`}
+              </div>
+            )}
+          </div>
+        </BottomSheetBody>
+        <BottomSheetFooter>
+          <div className="loginform-buttons">
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => setIsCheckoutOpen(false)}
+            >
+              Mégse
+            </button>
+            <button type="button" className="submit-button" onClick={saveOrder}>
+              Mentés
+            </button>
+          </div>
+        </BottomSheetFooter>
+      </BottomSheet>
 
       <header>
         <div className="header-content">
@@ -382,7 +504,7 @@ export default function BartenderPage() {
                 <button className="res-adj1" onClick={() => setView('order')}>
                   Rendelés megnézése
                 </button>
-                <button className="res-adj2" onClick={saveOrder}>
+                <button className="res-adj2" onClick={openCheckout}>
                   Mentés
                 </button>
                 <p className="res-adj3">Teljes ár: {totalPrice} Ft</p>
@@ -432,7 +554,9 @@ export default function BartenderPage() {
               <div className="order-summary">
                 <div className="order-summary-row">
                   <span className="order-summary-label">Összesen</span>
-                  <span className="order-summary-value">{totalPrice} Ft</span>
+                  <span className="order-summary-value">
+                    {totalPrice.toLocaleString('hu-HU')} Ft
+                  </span>
                 </div>
                 <span className="order-summary-count">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
@@ -440,10 +564,13 @@ export default function BartenderPage() {
 
                 <div className="order-actions-container">
                   <button className="order-clear-btn" onClick={() => setOrderItems([])}>
-                    Kosár ürítése
+                    <span className="material-symbols-rounded">delete</span>
                   </button>
-                  <button className="order-save-btn flex-large" onClick={saveOrder}>
-                    Mentés
+                  <button className="order-save-btn" onClick={saveOrder}>
+                    Gyors mentés
+                  </button>
+                  <button className="order-save-btn" onClick={openCheckout}>
+                    Kassza
                   </button>
                 </div>
               </div>

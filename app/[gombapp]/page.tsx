@@ -143,7 +143,7 @@ export default function GombAppHome() {
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
       <footer>
-        <p className="footer-text">v2.1.1</p>
+        <p className="footer-text">v2.2.0</p>
       </footer>
     </>
   );

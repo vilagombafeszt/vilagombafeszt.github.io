@@ -251,7 +251,7 @@ body:has(.gombapp) {
 }
 
 .gombapp .item-button span {
-  margin-top: auto; /* Pushes text to the bottom uniformly or centers it if combined */
+  margin-top: auto;
   line-height: 1.1;
   text-align: center;
 }
@@ -316,7 +316,6 @@ body:has(.gombapp) {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  padding: 0 16px;
   flex: 1;
   min-height: 0;
 }
@@ -521,20 +520,21 @@ body:has(.gombapp) {
 }
 
 .gombapp .order-clear-btn {
-  flex: 1;
+  flex: 0.9;
   background-color: #e01f32;
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 14px;
+  padding: 14px 20px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1em;
   cursor: pointer;
   transition: transform 0.1s ease;
   font-family: 'Alumni Sans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .gombapp .order-clear-btn:active {
@@ -1525,4 +1525,81 @@ body:has(.gombapp) {
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.2s ease-out;
+}
+
+/* ===== Checkout / Change Calculator Modal ===== */
+.gombapp .checkout-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+.gombapp .checkout-total {
+  font-size: 1.4em;
+  font-weight: 700;
+  text-align: center;
+  color: var(--gombapp-font-color);
+  padding: 10px;
+  background-color: rgba(16, 33, 53, 0.05);
+  border-radius: 12px;
+}
+
+.gombapp .checkout-quick-bills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.gombapp .checkout-bill-btn {
+  background-color: transparent;
+  color: var(--gombapp-font-color);
+  border: 2px solid var(--gombapp-font-color);
+  padding: 10px 4px;
+  font-size: 1.05em;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Alumni Sans', sans-serif;
+  text-align: center;
+}
+
+.gombapp .checkout-bill-btn:active {
+  transform: scale(0.95);
+  background-color: var(--gombapp-font-color);
+  color: var(--gombapp-bg-color);
+}
+
+.gombapp .pontos-btn {
+  grid-column: 1 / -1;
+  font-size: 1.15em;
+  padding: 12px;
+  background-color: rgba(16, 33, 53, 0.03);
+}
+
+.gombapp .checkout-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.gombapp .checkout-change {
+  font-size: 1.3em;
+  font-weight: 700;
+  text-align: center;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.gombapp .checkout-change.positive {
+  background-color: rgba(46, 125, 50, 0.15);
+  color: #2e7d32;
+}
+
+.gombapp .checkout-change.negative {
+  background-color: rgba(198, 40, 40, 0.15);
+  color: #c62828;
 }
