@@ -44,7 +44,6 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#7c8bb1',
 };
 
 export const metadata: Metadata = {
@@ -97,6 +96,11 @@ export const metadata: Metadata = {
     apple: '/page_images/cimlogo_kek.png',
   },
   manifest: '/manifest.json',
+  appleWebApp: {
+    title: 'ViláGomba Fesztivál',
+    statusBarStyle: 'default',
+    capable: true,
+  },
   alternates: {
     canonical: siteUrl,
     languages: {
