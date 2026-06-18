@@ -62,18 +62,18 @@ a:visited {
 /* ─────────────────────────────────────────────────────────────
    Animations
    ───────────────────────────────────────────────────────────── */
-@keyframes expandInAnimation {
+@keyframes fadeSlideUp {
   from {
-    transform: scale(0);
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(5px);
   }
 
   to {
-    transform: scale(1);
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
-}
-
-.expandIn {
-  animation: expandInAnimation 2s;
 }
 
 @keyframes spinIn {
@@ -116,38 +116,6 @@ a:visited {
   font-weight: normal;
   text-align: center;
   margin: 0 0 clamp(16px, 3vh, 40px);
-}
-
-/* ─────────────────────────────────────────────────────────────
-   HERO
-   ───────────────────────────────────────────────────────────── */
-#Otthon {
-  background-image: url('/page_images/IMG_1367.webp');
-  background-size: cover;
-  background-position: center;
-  color: var(--color-hero-text);
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-#Otthon .title {
-  font-size: clamp(32px, 6vw, 72px);
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
-  margin: 0;
-}
-
-#Otthon .hero-date {
-  font-size: clamp(16px, 2.5vw, 32px);
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
-}
-
-#Otthon ::selection {
-  background-color: var(--color-hero-text);
-  color: black;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -868,9 +836,5 @@ a:visited {
   .section {
     min-height: auto;
     padding-top: 80px;
-  }
-
-  #Otthon {
-    min-height: 100svh;
   }
 }

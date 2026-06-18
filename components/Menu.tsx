@@ -41,6 +41,7 @@ export default function Menu() {
 
   /* ── update logo colour based on scroll position ─────────────────── */
   const handleScroll = useCallback(() => {
+    // ALWAYS use KEK on desktop
     if (window.innerWidth > 768) {
       setLogoSrc(LOGO_KEK);
       return;
@@ -77,10 +78,12 @@ export default function Menu() {
       if (window.innerWidth > 900) {
         setMenuOpen(false);
       }
+      // Force a scroll recalculation to snap logo to KEK if resized to desktop
+      handleScroll();
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, []);
+  }, [handleScroll]);
 
   /* ── close mobile menu when tapping outside (Fallback for desktop) ─ */
   useEffect(() => {
@@ -178,7 +181,7 @@ export default function Menu() {
           }`}
         >
           <Image
-            src={logoSrc}
+            src={menuOpen ? LOGO_KEK : logoSrc}
             alt="Világomba logo"
             width={45}
             height={45}
