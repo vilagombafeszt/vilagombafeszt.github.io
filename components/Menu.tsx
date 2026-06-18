@@ -41,7 +41,6 @@ export default function Menu() {
 
   /* ── update logo colour based on scroll position ─────────────────── */
   const handleScroll = useCallback(() => {
-    // ALWAYS use KEK on desktop
     if (window.innerWidth > 768) {
       setLogoSrc(LOGO_KEK);
       return;
@@ -78,7 +77,6 @@ export default function Menu() {
       if (window.innerWidth > 900) {
         setMenuOpen(false);
       }
-      // Force a scroll recalculation to snap logo to KEK if resized to desktop
       handleScroll();
     };
     window.addEventListener('resize', onResize);
@@ -104,7 +102,6 @@ export default function Menu() {
   /* ── mobile menu: lock body scroll (SAFARI SAFE) ────────────────── */
   useEffect(() => {
     if (menuOpen) {
-      // Simply hide overflow. Do NOT use position: fixed as it breaks iOS address bars.
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -156,65 +153,60 @@ export default function Menu() {
     >
       {/* Mobile Backdrop Overlay - Absorbs swipes securely */}
       <div
-        className={`fixed inset-0 touch-none overscroll-none bg-black/20 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`duration-400 fixed inset-0 touch-none overscroll-none bg-black/30 backdrop-blur-sm transition-opacity md:hidden ${
           menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setMenuOpen(false)}
         aria-hidden="true"
       />
 
-      {/* Logo Toggle */}
+      {/* Logo Toggle: Stripped of clunky borders, acts as pure geometric header */}
       <a
         href="#Otthon"
         onClick={handleLogoClick}
-        className={`pointer-events-auto absolute z-[1010] select-none transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-90 md:left-[clamp(12px,3vw,32px)] md:top-1/2 md:-translate-y-1/2 md:translate-x-0 md:scale-100 md:hover:scale-110 ${
+        className={`pointer-events-auto absolute z-[1020] select-none transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-90 md:left-[clamp(12px,3vw,32px)] md:top-1/2 md:-translate-y-1/2 md:translate-x-0 md:scale-100 md:hover:scale-110 ${
           menuOpen
-            ? 'left-1/2 top-4 -translate-x-1/2 scale-110'
-            : 'left-4 top-2 translate-x-0 scale-100'
+            ? 'left-1/2 top-8 -translate-x-1/2 scale-125 drop-shadow-xl'
+            : 'left-4 top-4 translate-x-0 scale-100 drop-shadow-sm'
         }`}
       >
-        <div
-          className={`relative flex items-center justify-center rounded-2xl transition-all duration-500 ${
-            menuOpen
-              ? 'border border-white/20 bg-[#7c8bb1]/90 p-2 shadow-xl backdrop-blur-xl'
-              : 'border border-transparent bg-transparent p-0 shadow-none'
-          }`}
-        >
-          <Image
-            src={menuOpen ? LOGO_KEK : logoSrc}
-            alt="Világomba logo"
-            width={45}
-            height={45}
-            unoptimized
-            priority={true}
-            className="block h-[40px] w-auto cursor-pointer md:h-[clamp(28px,3.5vw,44px)]"
-          />
-        </div>
+        <Image
+          src={menuOpen ? LOGO_KEK : logoSrc}
+          alt="Világomba logo"
+          width={45}
+          height={45}
+          unoptimized
+          priority={true}
+          className="block h-[44px] w-auto cursor-pointer md:h-[clamp(28px,3.5vw,44px)]"
+        />
       </a>
 
-      {/* Bento Grid Control Center */}
+      {/* Unified Geometric Glass Card */}
       <div
-        className={`absolute left-3 right-3 top-[92px] z-[1010] grid grid-cols-2 gap-2 rounded-[32px] border border-white/30 bg-[#7c8bb1]/85 p-3 shadow-[0_30px_60px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:pointer-events-auto md:static md:flex md:w-auto md:translate-y-0 md:scale-100 md:flex-row md:gap-[clamp(8px,1.5vw,28px)] md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none ${
+        className={`absolute left-4 right-4 top-4 z-[1010] grid grid-cols-2 gap-3 rounded-[32px] border border-white/40 bg-[#7c8bb1]/95 px-4 pb-4 pt-[88px] shadow-[0_40px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:pointer-events-auto md:static md:flex md:w-auto md:translate-y-0 md:scale-100 md:flex-row md:gap-[clamp(8px,1.5vw,28px)] md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none ${
           menuOpen
             ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
             : 'pointer-events-none -translate-y-8 scale-95 opacity-0'
         }`}
       >
+        {/* Full Width Home Button */}
         <a
           href="#Otthon"
           id="home"
           onClick={handleHomeClick}
-          className="col-span-2 flex h-14 w-full select-none items-center justify-center rounded-2xl bg-white/30 text-center font-[family-name:var(--font-body)] text-2xl font-bold uppercase tracking-[2px] !text-[#102135] shadow-sm transition-all duration-200 hover:!text-[#8b0000] active:scale-95 md:col-span-1 md:h-auto md:w-auto md:bg-transparent md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:shadow-none md:hover:scale-110"
+          className="col-span-2 flex h-14 w-full select-none items-center justify-center rounded-[20px] bg-white/40 text-center font-[family-name:var(--font-body)] text-[1.4rem] font-bold tracking-[2px] !text-[#102135] shadow-sm ring-1 ring-white/50 transition-all duration-200 hover:!text-[#8b0000] active:scale-95 md:col-span-1 md:h-auto md:w-auto md:bg-transparent md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:shadow-none md:ring-0 md:hover:scale-110"
         >
           Otthon
         </a>
+
+        {/* 2-Column Grid Sections */}
         {SECTIONS.map(({ desktopHash, label, domId }) => (
           <a
             key={domId}
             href={desktopHash}
             id={domId}
             onClick={(e) => handleNavClick(e, desktopHash)}
-            className="flex h-[4.5rem] w-full select-none items-center justify-center rounded-2xl bg-white/20 px-2 text-center font-[family-name:var(--font-body)] text-[1.35rem] font-bold leading-tight tracking-[1px] !text-[#102135] shadow-sm transition-all duration-200 hover:!text-[#8b0000] active:scale-95 md:h-auto md:w-auto md:bg-transparent md:px-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:tracking-[1px] md:shadow-none md:hover:scale-110"
+            className="flex h-[4rem] w-full select-none items-center justify-center rounded-[20px] bg-white/20 px-2 text-center font-[family-name:var(--font-body)] text-[1.25rem] font-bold leading-tight tracking-[1px] !text-[#102135] shadow-sm ring-1 ring-white/30 transition-all duration-200 hover:!text-[#8b0000] active:scale-95 md:h-auto md:w-auto md:bg-transparent md:px-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:tracking-[1px] md:shadow-none md:ring-0 md:hover:scale-110"
           >
             {label}
           </a>
