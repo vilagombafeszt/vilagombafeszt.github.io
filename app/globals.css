@@ -119,87 +119,6 @@ a:visited {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   JEGYEK
-   ───────────────────────────────────────────────────────────── */
-#jegyeket-berleteket {
-  background-color: var(--color-jegyek-bg);
-  color: var(--color-accent);
-  text-align: center;
-}
-
-#jegyeket-berleteket ::selection {
-  background-color: var(--color-accent);
-  color: var(--color-jegyek-bg);
-}
-
-.ticket-status {
-  font-family: var(--font-body);
-  width: 100%;
-  max-width: 800px;
-}
-
-.ticket-badge {
-  display: inline-block;
-  padding: 10px 28px;
-  margin-bottom: clamp(28px, 4vh, 48px);
-  border-radius: 24px;
-  background: var(--color-accent);
-  color: var(--color-menu-text);
-  font-size: clamp(16px, 2vw, 26px);
-  letter-spacing: 2px;
-  font-weight: 700;
-}
-
-.ticket-subtitle {
-  font-family: var(--font-body);
-  font-size: clamp(22px, 3vw, 38px);
-  margin: 0 0 clamp(24px, 3vh, 40px);
-  line-height: 1.3;
-}
-
-.ticket-text {
-  font-family: var(--font-body);
-  font-size: clamp(16px, 2vw, 26px);
-  line-height: 1.6;
-  margin-bottom: clamp(36px, 5vh, 56px);
-}
-
-.ticket-links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(20px, 3vw, 32px);
-}
-
-.ticket-link-btn {
-  display: inline-block;
-  padding: 12px 40px;
-  border-radius: 24px;
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
-  font-family: var(--font-body);
-  font-size: clamp(16px, 1.8vw, 24px);
-  font-weight: 600;
-  letter-spacing: 1px;
-  transition:
-    background-color 0.3s,
-    color 0.3s,
-    transform 0.2s;
-  background: transparent;
-}
-
-.ticket-link-btn:link,
-.ticket-link-btn:visited {
-  color: var(--color-accent);
-}
-
-.ticket-link-btn:hover {
-  background-color: var(--color-accent);
-  color: var(--color-menu-text);
-  transform: scale(1.04);
-}
-
-/* ─────────────────────────────────────────────────────────────
    HELYSZIN
    ───────────────────────────────────────────────────────────── */
 #helyszin {
@@ -698,22 +617,6 @@ a:visited {
 
   .story-text {
     font-size: clamp(18px, 4.5vw, 24px);
-  }
-
-  .ticket-subtitle {
-    font-size: clamp(24px, 5.5vw, 34px);
-  }
-
-  .ticket-text {
-    font-size: clamp(18px, 4vw, 24px);
-  }
-
-  .ticket-badge {
-    font-size: clamp(17px, 4vw, 24px);
-  }
-
-  .ticket-link-btn {
-    font-size: clamp(17px, 4vw, 22px);
   }
 
   .helyszin-subtitle {
