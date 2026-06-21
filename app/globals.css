@@ -119,29 +119,6 @@ a:visited {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   EZ UGY VOLT
-   ───────────────────────────────────────────────────────────── */
-#ez-ugy-volt {
-  background-color: var(--color-story-bg);
-  color: var(--color-accent);
-  text-align: center;
-}
-
-#ez-ugy-volt ::selection {
-  background-color: var(--color-accent);
-  color: var(--color-story-bg);
-}
-
-.story-text {
-  font-family: var(--font-body);
-  font-size: clamp(16px, 1.8vw, 28px);
-  font-weight: 600;
-  line-height: 1.7;
-  max-width: 1060px;
-  text-align: center;
-}
-
-/* ─────────────────────────────────────────────────────────────
    KEPTAR
    ───────────────────────────────────────────────────────────── */
 #keptar {
@@ -512,10 +489,6 @@ a:visited {
   /* Bigger text on mobile globally */
   .title {
     font-size: clamp(30px, 7vw, 48px);
-  }
-
-  .story-text {
-    font-size: clamp(18px, 4.5vw, 24px);
   }
 
   .gallery-caption {
