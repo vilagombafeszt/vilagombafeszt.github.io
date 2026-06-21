@@ -28,49 +28,83 @@ export default function Menu() {
   const [logoSrc, setLogoSrc] = useState(LOGO_KEK);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [activeSection, setActiveSection] = useState('otthon');
+
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const ticking = useRef(false);
 
-  /* ── Ultra-Performant Hit-Testing for Logo Color ─────────────────── */
+  /* ── Ultra-Performant Hit-Testing & Volume-Based Scrollspy ──────── */
   const handleScroll = useCallback(() => {
-    // Desktop always uses the blue logo
-    if (window.innerWidth > 768) {
-      setLogoSrc(LOGO_KEK);
-      return;
-    }
+    const isDesktop = window.innerWidth > 768;
 
     if (!ticking.current) {
       window.requestAnimationFrame(() => {
-        const logoEl = document.getElementById('mobile-logo');
-        if (logoEl) {
-          const rect = logoEl.getBoundingClientRect();
-          const x = rect.left + rect.width / 2;
-          const y = rect.top + rect.height / 2;
+        if (!isDesktop) {
+          const logoEl = document.getElementById('mobile-logo');
+          if (logoEl) {
+            const rect = logoEl.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
 
-          const elementsUnderLogo = document.elementsFromPoint(x, y);
+            const elementsUnderLogo = document.elementsFromPoint(x, y);
 
-          let foundTheme = 'kek';
-          for (const el of elementsUnderLogo) {
-            const theme = el.getAttribute('data-logo-theme');
-            if (theme) {
-              foundTheme = theme;
-              break;
+            let foundTheme = 'kek';
+            for (const el of elementsUnderLogo) {
+              const theme = el.getAttribute('data-logo-theme');
+              if (theme) {
+                foundTheme = theme;
+                break;
+              }
             }
+            setLogoSrc(foundTheme === 'vaj' ? LOGO_VAJ : LOGO_KEK);
           }
+        } else {
+          setLogoSrc(LOGO_KEK);
 
-          setLogoSrc(foundTheme === 'vaj' ? LOGO_VAJ : LOGO_KEK);
+          const sections = ['otthon', ...SECTIONS.map((s) => s.id)];
+          let maxVisibleVolume = 0;
+          let currentActiveId = activeSection;
+
+          sections.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+
+              const visibleHeight = Math.max(
+                0,
+                Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
+              );
+
+              if (visibleHeight > maxVisibleVolume) {
+                maxVisibleVolume = visibleHeight;
+                currentActiveId = id;
+              }
+            }
+          });
+
+          const isAtBottom =
+            Math.ceil(window.innerHeight + window.scrollY) >=
+            document.documentElement.scrollHeight - 10;
+
+          if (isAtBottom) {
+            setActiveSection('kapcsolat');
+          } else if (currentActiveId !== activeSection) {
+            setActiveSection(currentActiveId);
+          }
         }
+
         ticking.current = false;
       });
       ticking.current = true;
     }
-  }, []);
+  }, [activeSection]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to set initial state
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
@@ -220,13 +254,19 @@ export default function Menu() {
           id="nav-home"
           onClick={handleHomeClick}
           style={{ transitionDelay: menuOpen && !isDragging ? '100ms' : '0ms' }}
-          className={`flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
+          className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
             menuOpen
               ? 'translate-y-0 opacity-100'
               : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
           }`}
         >
           Otthon
+          {/* Animated Structural Scrollspy Indicator */}
+          <span
+            className={`absolute -bottom-1.5 left-1/2 hidden h-[2.5px] -translate-x-1/2 rounded-full bg-[#102135] transition-all duration-300 group-hover:bg-[#8b0000] md:block ${
+              activeSection === 'otthon' ? 'w-[60%] opacity-100' : 'w-0 opacity-0'
+            }`}
+          />
         </a>
 
         {SECTIONS.map(({ id, label }, i) => (
@@ -236,13 +276,19 @@ export default function Menu() {
             id={`nav-${id}`}
             onClick={(e) => handleNavClick(e, id)}
             style={{ transitionDelay: menuOpen && !isDragging ? `${(i + 3) * 35}ms` : '0ms' }}
-            className={`flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
+            className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
               menuOpen
                 ? 'translate-y-0 opacity-100'
                 : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
             }`}
           >
             {label}
+            {/* Animated Structural Scrollspy Indicator */}
+            <span
+              className={`absolute -bottom-1.5 left-1/2 hidden h-[2.5px] -translate-x-1/2 rounded-full bg-[#102135] transition-all duration-300 group-hover:bg-[#8b0000] md:block ${
+                activeSection === id ? 'w-[60%] opacity-100' : 'w-0 opacity-0'
+              }`}
+            />
           </a>
         ))}
 
