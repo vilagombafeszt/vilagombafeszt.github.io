@@ -104,132 +104,12 @@ a:visited {
   align-items: center;
 }
 
-/* Jegyek section */
-#jegyeket-berleteket {
-  min-height: 85vh;
-  padding-bottom: clamp(40px, 5vh, 72px);
-}
-
 .title {
   font-family: var(--font-brand);
   font-size: clamp(28px, 4.5vw, 60px);
   font-weight: normal;
   text-align: center;
   margin: 0 0 clamp(16px, 3vh, 40px);
-}
-
-/* ─────────────────────────────────────────────────────────────
-   KEPTAR
-   ───────────────────────────────────────────────────────────── */
-#keptar {
-  background-color: var(--color-keptar-bg);
-  color: var(--color-accent);
-}
-
-#keptar a:visited {
-  color: var(--color-accent);
-}
-
-#keptar a:visited:hover {
-  color: var(--color-menu-bg);
-}
-
-#keptar ::selection {
-  background-color: var(--color-accent);
-  color: var(--color-keptar-bg);
-}
-
-#keptar .title {
-  margin-bottom: clamp(24px, 5vh, 64px);
-}
-
-.albums-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
-  gap: clamp(24px, 3vw, 48px);
-  width: 100%;
-  max-width: 1400px;
-}
-
-.album-container {
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 2px solid var(--color-accent);
-  transition: transform 0.3s;
-}
-
-.album-container:hover {
-  transform: scale(1.015);
-}
-
-.album-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s;
-}
-
-.album-container:hover .album-img {
-  transform: scale(1.05);
-}
-
-.overlay-text,
-.overlay-text2 {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-body);
-  font-size: clamp(28px, 4.5vw, 64px);
-  font-weight: bold;
-  color: var(--color-accent);
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-  pointer-events: none;
-  white-space: nowrap;
-  background: rgba(0, 0, 0, 0.15);
-  transition: background 0.3s;
-}
-
-.album-container:hover .overlay-text,
-.album-container:hover .overlay-text2 {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.gallery-caption {
-  font-family: var(--font-body);
-  font-size: clamp(18px, 2vw, 28px);
-  font-weight: 600;
-  text-align: center;
-  margin-top: clamp(36px, 6vh, 80px);
-  color: var(--color-accent);
-}
-
-.gallery-credit {
-  font-family: var(--font-body);
-  font-size: clamp(16px, 1.8vw, 26px);
-  font-weight: 600;
-  color: var(--color-accent);
-  margin-top: 8px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gallery-credit a {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.gallery-credit .fa-instagram {
-  margin: 0 0.3em 0 0.6em;
-  font-size: 0.8em;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -381,19 +261,8 @@ a:visited {
    Responsive: tablet  (769px – 1024px)
    ───────────────────────────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .eloadasok {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-
   .tamogatok-grid {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .albums-container {
-    grid-template-columns: 1fr;
-    max-width: 700px;
-    margin: 0 auto;
   }
 
   .contacts {
@@ -428,25 +297,6 @@ a:visited {
 @media (max-width: 768px) {
   :root {
     --menu-height: 56px;
-  }
-
-  /* Képtár — stacked, more gap between albums and title */
-  #keptar .title {
-    margin-bottom: clamp(24px, 5vh, 48px);
-  }
-
-  .albums-container {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .album-img {
-    aspect-ratio: 16 / 9;
-  }
-
-  .overlay-text,
-  .overlay-text2 {
-    font-size: clamp(28px, 8vw, 44px);
   }
 
   /* Kapcsolat — side by side: social left, contact info right */
@@ -489,14 +339,6 @@ a:visited {
   /* Bigger text on mobile globally */
   .title {
     font-size: clamp(30px, 7vw, 48px);
-  }
-
-  .gallery-caption {
-    font-size: clamp(17px, 4vw, 22px);
-  }
-
-  .gallery-credit {
-    font-size: clamp(16px, 3.5vw, 20px);
   }
 
   .doc-download {
