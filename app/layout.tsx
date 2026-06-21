@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ].join(' ');
 
   return (
-    <html lang="hu" className={fontClasses}>
+    <html lang="hu" className={`${fontClasses} scroll-smooth md:scroll-pt-[72px]`}>
       <head>
         {/* Preload hero background image */}
         <link rel="preload" as="image" href="/page_images/IMG_1367.webp" type="image/webp" />

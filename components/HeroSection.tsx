@@ -3,7 +3,7 @@
 export default function HeroSection() {
   return (
     <section
-      id="Otthon"
+      id="otthon"
       className="relative flex min-h-[100svh] w-full items-center justify-center bg-[url('/page_images/IMG_1367.webp')] bg-cover bg-center selection:bg-[#7c8bb1] selection:text-black"
     >
       <div className="relative z-10 flex flex-col items-center gap-2 md:gap-4">

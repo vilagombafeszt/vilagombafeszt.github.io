@@ -4,34 +4,25 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 const SECTIONS = [
-  { id: 'musor', desktopHash: '#Musor', label: 'Műsor', domId: 'artists' },
-  {
-    id: 'jegyeket-berleteket',
-    desktopHash: '#Jegyeket-berleteket',
-    label: 'Jegyeket, Bérleteket!',
-    domId: 'tickets',
-  },
-  { id: 'helyszin', desktopHash: '#Helyszin', label: 'Helyszín', domId: 'place' },
-  { id: 'ez-ugy-volt', desktopHash: '#Ez-ugy-volt', label: 'Ez úgy volt...', domId: 'story' },
-  { id: 'keptar', desktopHash: '#Keptar', label: 'Képtár', domId: 'gallery' },
-  { id: 'kapcsolat', desktopHash: '#Kapcsolat', label: 'Kapcsolat', domId: 'coninfo' },
+  { id: 'musor', label: 'Műsor' },
+  { id: 'jegyeket-berleteket', label: 'Jegyeket, Bérleteket!' },
+  { id: 'helyszin', label: 'Helyszín' },
+  { id: 'ez-ugy-volt', label: 'Ez úgy volt...' },
+  { id: 'keptar', label: 'Képtár' },
+  { id: 'kapcsolat', label: 'Kapcsolat' },
 ] as const;
 
 const LOGO_VAJ = '/page_images/cimlogo_vaj.png';
 const LOGO_KEK = '/page_images/cimlogo_kek.png';
 
-function smoothScrollTo(hash: string) {
-  const id = hash.startsWith('#') ? hash.slice(1) : hash;
-  const el = document.getElementById(id);
+function smoothScrollTo(id: string) {
+  const elId = id.replace('#', '');
+  const el = document.getElementById(elId);
   if (!el) return;
 
-  const menu = document.querySelector<HTMLElement>('nav');
-  const offset = window.innerWidth > 900 ? (menu?.offsetHeight ?? 0) : 0;
-  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  window.scrollTo({ top, behavior: 'smooth' });
-
-  if (history.pushState) history.pushState(null, '', hash);
+  if (history.pushState) history.pushState(null, '', `#${elId}`);
 }
 
 export default function Menu() {
@@ -145,16 +136,14 @@ export default function Menu() {
   };
 
   /* ── Navigation Handlers ──────────────────────────────────────────── */
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    const target = window.innerWidth >= 700 ? hash : hash.toLowerCase();
 
     if (menuOpen) {
       setMenuOpen(false);
-      // Fired almost instantly, just 10ms to let the body unlock so Safari allows scrolling
-      setTimeout(() => smoothScrollTo(target), 10);
+      setTimeout(() => smoothScrollTo(id), 10);
     } else {
-      smoothScrollTo(target);
+      smoothScrollTo(id);
     }
   };
 
@@ -163,9 +152,9 @@ export default function Menu() {
 
     if (menuOpen) {
       setMenuOpen(false);
-      setTimeout(() => smoothScrollTo('#Otthon'), 10);
+      setTimeout(() => smoothScrollTo('otthon'), 10);
     } else {
-      smoothScrollTo('#Otthon');
+      smoothScrollTo('otthon');
     }
   };
 
@@ -177,14 +166,12 @@ export default function Menu() {
 
     if (window.innerWidth <= 768) {
       if (menuOpen) {
-        // ONLY close the menu on mobile if it is open (don't scroll)
         setMenuOpen(false);
       } else {
         setMenuOpen(true);
       }
     } else {
-      // On desktop, it acts as a normal "back to top" link
-      smoothScrollTo('#Otthon');
+      smoothScrollTo('otthon');
     }
   };
 
@@ -201,7 +188,7 @@ export default function Menu() {
 
       {/* The Anchor Logo */}
       <a
-        href="#Otthon"
+        href="#otthon"
         onClick={handleLogoClick}
         onTouchEnd={handleLogoClick}
         className="pointer-events-auto absolute left-4 top-[max(16px,env(safe-area-inset-top))] z-[1050] select-none transition-transform duration-300 active:scale-90 md:left-[clamp(12px,3vw,32px)] md:top-1/2 md:-translate-y-1/2 md:hover:scale-110"
@@ -235,8 +222,8 @@ export default function Menu() {
       >
         {/* Nav Links */}
         <a
-          href="#Otthon"
-          id="home"
+          href="#otthon"
+          id="nav-home"
           onClick={handleHomeClick}
           style={{ transitionDelay: menuOpen && !isDragging ? '100ms' : '0ms' }}
           className={`flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
@@ -248,12 +235,12 @@ export default function Menu() {
           Otthon
         </a>
 
-        {SECTIONS.map(({ desktopHash, label, domId }, i) => (
+        {SECTIONS.map(({ id, label }, i) => (
           <a
-            key={domId}
-            href={desktopHash}
-            id={domId}
-            onClick={(e) => handleNavClick(e, desktopHash)}
+            key={id}
+            href={`#${id}`}
+            id={`nav-${id}`}
+            onClick={(e) => handleNavClick(e, id)}
             style={{ transitionDelay: menuOpen && !isDragging ? `${(i + 3) * 35}ms` : '0ms' }}
             className={`flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
               menuOpen
