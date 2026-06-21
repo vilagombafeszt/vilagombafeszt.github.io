@@ -80,6 +80,7 @@ export default function HelyszinSection() {
   return (
     <section
       id="helyszin"
+      data-logo-theme="vaj"
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#a44041] px-[clamp(16px,5vw,80px)] pb-[clamp(48px,6vh,80px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#a44041] md:pb-[clamp(32px,4vh,64px)]"
     >

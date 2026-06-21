@@ -30,6 +30,7 @@ export default function KapcsolatSection() {
   return (
     <section
       id="kapcsolat"
+      data-logo-theme="vaj"
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex w-full flex-col items-center bg-[#594a66] px-[clamp(16px,5vw,80px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#594a66]"
     >

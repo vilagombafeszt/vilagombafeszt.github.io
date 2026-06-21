@@ -91,7 +91,7 @@ const TicketCard = ({
       target="_blank"
       rel="noopener noreferrer"
       style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
-      className={`group block shrink-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
+      className={`group block drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
         isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
       } ${
         isSectionVisible
@@ -138,6 +138,7 @@ export default function JegyekSection() {
   return (
     <section
       id="jegyeket-berleteket"
+      data-logo-theme="vaj"
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[85svh] w-full flex-col items-center bg-[#355168] px-[clamp(16px,5vw,80px)] pb-[clamp(40px,5vh,72px)] pt-[clamp(32px,3vh,56px)] text-center text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#355168]"
     >
@@ -166,7 +167,7 @@ export default function JegyekSection() {
         </div>
       </div>
 
-      <div className="mx-auto mb-10 mt-4 flex w-full max-w-[1600px] flex-col items-center justify-center gap-6 md:mb-12 md:mt-4 md:flex-row md:flex-wrap md:gap-8 lg:flex-nowrap lg:gap-6 xl:gap-8">
+      <div className="mx-auto mb-10 mt-4 grid w-full max-w-[1600px] grid-cols-1 justify-items-center gap-6 md:mb-12 md:mt-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
         {TICKET_IMAGES.map((img, index) => (
           <TicketCard key={index} img={img} index={index} isSectionVisible={isVisible} />
         ))}

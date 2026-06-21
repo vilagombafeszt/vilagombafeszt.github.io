@@ -215,10 +215,9 @@ export default function MusorSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Trigger animation once the section is 10% visible on screen
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Stop observing once it's triggered
+          observer.disconnect();
         }
       },
       { threshold: 0.1 }
@@ -234,6 +233,7 @@ export default function MusorSection() {
   return (
     <section
       id="musor"
+      data-logo-theme="vaj"
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#354b3d] px-[clamp(16px,5vw,80px)] pb-[clamp(24px,3vh,48px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#354b3d]"
     >

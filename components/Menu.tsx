@@ -21,7 +21,6 @@ function smoothScrollTo(id: string) {
   if (!el) return;
 
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
   if (history.pushState) history.pushState(null, '', `#${elId}`);
 }
 
@@ -29,27 +28,45 @@ export default function Menu() {
   const [logoSrc, setLogoSrc] = useState(LOGO_KEK);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Touch Drag State
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
+  const ticking = useRef(false);
 
-  /* ── update logo colour based on scroll position ─────────────────── */
+  /* ── Ultra-Performant Hit-Testing for Logo Color ─────────────────── */
   const handleScroll = useCallback(() => {
+    // Desktop always uses the blue logo
     if (window.innerWidth > 768) {
       setLogoSrc(LOGO_KEK);
       return;
     }
 
-    const scroll = window.scrollY;
-    const musor = document.getElementById('musor');
-    const kapcsolat = document.getElementById('kapcsolat');
+    if (!ticking.current) {
+      window.requestAnimationFrame(() => {
+        const logoEl = document.getElementById('mobile-logo');
+        if (logoEl) {
+          const rect = logoEl.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top + rect.height / 2;
 
-    if (!musor || !kapcsolat) return;
+          const elementsUnderLogo = document.elementsFromPoint(x, y);
 
-    const beforeMusor = scroll < musor.offsetTop;
-    setLogoSrc(beforeMusor ? LOGO_KEK : LOGO_VAJ);
+          let foundTheme = 'kek';
+          for (const el of elementsUnderLogo) {
+            const theme = el.getAttribute('data-logo-theme');
+            if (theme) {
+              foundTheme = theme;
+              break;
+            }
+          }
+
+          setLogoSrc(foundTheme === 'vaj' ? LOGO_VAJ : LOGO_KEK);
+        }
+        ticking.current = false;
+      });
+      ticking.current = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -70,9 +87,7 @@ export default function Menu() {
   /* ── close menu when viewport grows past the breakpoint ──────────── */
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth > 900) {
-        setMenuOpen(false);
-      }
+      if (window.innerWidth > 900) setMenuOpen(false);
       handleScroll();
     };
     window.addEventListener('resize', onResize);
@@ -88,18 +103,12 @@ export default function Menu() {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [menuOpen]);
 
   /* ── mobile menu: lock body scroll (SAFARI SAFE) ────────────────── */
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
@@ -116,29 +125,19 @@ export default function Menu() {
     if (!isDragging) return;
     const currentY = e.touches[0].clientY;
     const deltaY = currentY - touchStartY.current;
-
-    if (deltaY < 0) {
-      setDragY(deltaY);
-    } else {
-      setDragY(0);
-    }
+    setDragY(deltaY < 0 ? deltaY : 0);
   };
 
   const handleTouchEnd = () => {
     if (!isDragging) return;
     setIsDragging(false);
-
-    if (dragY < -60) {
-      setMenuOpen(false);
-    }
-
+    if (dragY < -60) setMenuOpen(false);
     setDragY(0);
   };
 
   /* ── Navigation Handlers ──────────────────────────────────────────── */
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-
     if (menuOpen) {
       setMenuOpen(false);
       setTimeout(() => smoothScrollTo(id), 10);
@@ -149,7 +148,6 @@ export default function Menu() {
 
   const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-
     if (menuOpen) {
       setMenuOpen(false);
       setTimeout(() => smoothScrollTo('otthon'), 10);
@@ -163,13 +161,8 @@ export default function Menu() {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-
     if (window.innerWidth <= 768) {
-      if (menuOpen) {
-        setMenuOpen(false);
-      } else {
-        setMenuOpen(true);
-      }
+      setMenuOpen(!menuOpen);
     } else {
       smoothScrollTo('otthon');
     }
@@ -188,6 +181,7 @@ export default function Menu() {
 
       {/* The Anchor Logo */}
       <a
+        id="mobile-logo"
         href="#otthon"
         onClick={handleLogoClick}
         onTouchEnd={handleLogoClick}
