@@ -41,6 +41,78 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+/* ── Individual Ticket Component for Mobile Scroll Logic ──────── */
+const TicketCard = ({
+  img,
+  index,
+  isSectionVisible,
+}: {
+  img: { src: string; alt: string };
+  index: number;
+  isSectionVisible: boolean;
+}) => {
+  const [isMobileActive, setIsMobileActive] = useState(false);
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (window.innerWidth < 768) {
+          setIsMobileActive(entry.isIntersecting);
+        } else {
+          setIsMobileActive(false);
+        }
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px',
+        threshold: 0,
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setIsMobileActive(false);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <a
+      ref={cardRef}
+      href="https://www.tixa.hu/vilagomba-2026"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
+      className={`group block shrink-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
+        isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
+      } ${
+        isSectionVisible
+          ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+          : 'opacity-0'
+      }`}
+    >
+      <Image
+        src={img.src}
+        alt={img.alt}
+        width={350}
+        height={500}
+        className={`h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover:-rotate-2 md:group-hover:scale-105 md:group-hover:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
+          isMobileActive ? '-rotate-2 scale-[1.15] brightness-110' : ''
+        }`}
+      />
+    </a>
+  );
+};
+
+/* ── Main Section Component ───────────────────────────────────── */
 export default function JegyekSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -94,29 +166,9 @@ export default function JegyekSection() {
         </div>
       </div>
 
-      {/* Staggered Transparent Tickets with Image Animations */}
-      <div className="mx-auto mb-10 mt-4 flex w-full max-w-[1600px] flex-col items-center justify-center gap-2 md:mb-12 md:mt-4 md:flex-row md:flex-wrap md:gap-8 lg:flex-nowrap lg:gap-6 xl:gap-8">
+      <div className="mx-auto mb-10 mt-4 flex w-full max-w-[1600px] flex-col items-center justify-center gap-6 md:mb-12 md:mt-4 md:flex-row md:flex-wrap md:gap-8 lg:flex-nowrap lg:gap-6 xl:gap-8">
         {TICKET_IMAGES.map((img, index) => (
-          <a
-            key={index}
-            href="https://www.tixa.hu/vilagomba-2026"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ animationDelay: isVisible ? `${0.2 + index * 0.15}s` : '0s' }}
-            className={`group block shrink-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-4 hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
-              isVisible
-                ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-                : 'opacity-0'
-            }`}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              width={350}
-              height={500}
-              className="h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-2 group-hover:scale-105 group-hover:brightness-110 sm:w-[280px] md:w-[260px] lg:w-[220px] xl:w-[260px] 2xl:w-[300px]"
-            />
-          </a>
+          <TicketCard key={index} img={img} index={index} isSectionVisible={isVisible} />
         ))}
       </div>
 
