@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const TICKET_IMAGES = [
   { src: '/page_images/normal_napijegy.webp', alt: 'Normál Napijegy' },
@@ -63,15 +64,10 @@ const TicketCard = ({
           setIsMobileActive(false);
         }
       },
-      {
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0,
-      }
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
+    if (cardRef.current) observer.observe(cardRef.current);
 
     const handleResize = () => {
       if (window.innerWidth >= 768) setIsMobileActive(false);
@@ -93,11 +89,7 @@ const TicketCard = ({
       style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
       className={`group block drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
         isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
-      } ${
-        isSectionVisible
-          ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-          : 'opacity-0'
-      }`}
+      } ${isSectionVisible ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0' : 'opacity-0'}`}
     >
       <Image
         src={img.src}
@@ -114,26 +106,7 @@ const TicketCard = ({
 
 /* ── Main Section Component ───────────────────────────────────── */
 export default function JegyekSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
   return (
     <section
@@ -142,7 +115,6 @@ export default function JegyekSection() {
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[85svh] w-full flex-col items-center bg-[#355168] px-[clamp(16px,5vw,80px)] pb-[clamp(40px,5vh,72px)] pt-[clamp(32px,3vh,56px)] text-center text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#355168]"
     >
-      {/* Title Reveal */}
       <h2
         className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
           isVisible
@@ -153,7 +125,6 @@ export default function JegyekSection() {
         Jegyeket, Bérleteket!
       </h2>
 
-      {/* Ticket Badge */}
       <div
         style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
         className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${
@@ -173,7 +144,6 @@ export default function JegyekSection() {
         ))}
       </div>
 
-      {/* Footer Text & Buttons */}
       <div
         style={{ animationDelay: isVisible ? '0.8s' : '0s' }}
         className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${

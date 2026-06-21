@@ -1,28 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function EzUgyVoltSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
   return (
     <section
@@ -43,7 +24,6 @@ export default function EzUgyVoltSection() {
       </h2>
 
       {/* Staggered Text Blocks */}
-      {/* Reduced base gap from gap-6 to gap-4 for mobile, kept md:gap-8 for larger screens */}
       <div className="flex w-full max-w-[1060px] flex-col items-center gap-4 font-[family-name:var(--font-body)] text-[clamp(18px,4.5vw,24px)] font-semibold leading-[1.7] tracking-wide md:gap-8 md:text-[clamp(16px,1.8vw,28px)]">
         <p
           style={{ animationDelay: isVisible ? '0.1s' : '0s' }}

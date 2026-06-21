@@ -1,31 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function KapcsolatSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Notice: The docHover state has been completely removed for better performance!
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
   return (
     <section
@@ -34,7 +13,6 @@ export default function KapcsolatSection() {
       ref={sectionRef}
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex w-full flex-col items-center bg-[#594a66] px-[clamp(16px,5vw,80px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#594a66]"
     >
-      {/* Title Reveal */}
       <h2
         className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
           isVisible
@@ -45,9 +23,7 @@ export default function KapcsolatSection() {
         Kapcsolat
       </h2>
 
-      {/* Contacts Container (Original split layout) */}
       <div className="mb-[clamp(24px,4vh,60px)] flex w-full max-w-[900px] flex-col items-center justify-center gap-6 font-[family-name:var(--font-body)] text-[clamp(16px,1.8vw,26px)] font-semibold md:flex-row md:items-start md:gap-[clamp(24px,4vw,48px)]">
-        {/* Social Links (FB Mascot) */}
         <div
           style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
           className={`flex flex-row items-center gap-4 md:gap-5 ${
@@ -77,7 +53,6 @@ export default function KapcsolatSection() {
           </a>
         </div>
 
-        {/* Refined Contact Info List */}
         <div
           style={{ animationDelay: isVisible ? '0.2s' : '0s' }}
           className={`min-w-0 flex-none md:flex-[0_1_auto] ${
@@ -132,7 +107,6 @@ export default function KapcsolatSection() {
         </div>
       </div>
 
-      {/* Doc Download */}
       <div
         style={{ animationDelay: isVisible ? '0.3s' : '0s' }}
         className={`mb-[clamp(12px,2vh,24px)] mt-[clamp(20px,3vh,40px)] text-center ${
@@ -146,9 +120,7 @@ export default function KapcsolatSection() {
           href="/szuloi-nyilatkozat-vilagomba.pdf"
           download="szuloi-nyilatkozat-vilagomba.pdf"
         >
-          {/* CSS Crossfade wrapper */}
           <div className="relative mr-1 flex items-center justify-center">
-            {/* The base grey image fades OUT on hover */}
             <Image
               src="/page_images/document.webp"
               alt="Szülői nyilatkozat"
@@ -157,7 +129,6 @@ export default function KapcsolatSection() {
               className="h-auto w-[24px] transition-opacity duration-300 group-hover:opacity-0 md:w-[30px]"
               unoptimized
             />
-            {/* The blue image fades IN on hover */}
             <Image
               src="/page_images/document_blue.webp"
               alt="Szülői nyilatkozat"
@@ -173,7 +144,6 @@ export default function KapcsolatSection() {
         </a>
       </div>
 
-      {/* Copyright */}
       <div
         style={{ animationDelay: isVisible ? '0.4s' : '0s' }}
         className={`w-full max-w-[1200px] text-center font-[family-name:var(--font-body)] text-[14px] text-[#ac9d9d] md:text-[clamp(13px,1.4vw,20px)] ${

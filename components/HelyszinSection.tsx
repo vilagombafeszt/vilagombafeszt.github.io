@@ -1,29 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import LazyMap from './LazyMap';
 
 /* ── Custom UI Icons ────────────────────────────────────────────── */
-const TrainIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="4" y="3" width="16" height="16" rx="2"></rect>
-    <path d="M4 11h16"></path>
-    <path d="M12 3v8"></path>
-    <path d="M8 19l-2 3"></path>
-    <path d="M16 19l2 3"></path>
-    <path d="M8 15h.01"></path>
-    <path d="M16 15h.01"></path>
-  </svg>
-);
-
 const MapPinIcon = ({ className }: { className?: string }) => (
   <svg
     className={className}
@@ -56,26 +36,7 @@ const RouteIcon = ({ className }: { className?: string }) => (
 );
 
 export default function HelyszinSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
   return (
     <section
@@ -122,7 +83,6 @@ export default function HelyszinSection() {
               title="ViláGomba Fesztivál helyszín"
             />
           </div>
-
           <div className="mt-5 flex items-center justify-center gap-2.5 px-2 text-center font-[family-name:var(--font-body)] text-[clamp(20px,5vw,28px)] font-bold text-[#ac9d9d] transition-transform duration-300 md:text-[clamp(18px,2vw,28px)]">
             <MapPinIcon className="h-6 w-6" />A fesztivál helyszíne
           </div>
@@ -142,7 +102,6 @@ export default function HelyszinSection() {
               title="A helyszín a Zebegényi vasútállomástól"
             />
           </div>
-
           <div className="mt-5 flex items-center justify-center gap-2.5 px-2 text-center font-[family-name:var(--font-body)] text-[clamp(20px,5vw,28px)] font-bold text-[#ac9d9d] transition-transform duration-300 md:text-[clamp(18px,2vw,28px)]">
             <RouteIcon className="h-6 w-6" />
             Útvonal a vasútállomástól
