@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { siteConfig } from '@/site.config';
 
 const TICKET_IMAGES = [
   { src: '/page_images/normal_napijegy.webp', alt: 'Normál Napijegy' },
@@ -83,7 +84,7 @@ const TicketCard = ({
   return (
     <a
       ref={cardRef}
-      href="https://www.tixa.hu/vilagomba-2026"
+      href={siteConfig.externalLinks.ticketSales}
       target="_blank"
       rel="noopener noreferrer"
       style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
@@ -161,7 +162,7 @@ export default function JegyekSection() {
 
         <div className="flex flex-col items-center justify-center gap-[clamp(16px,2vw,24px)] sm:flex-row">
           <a
-            href="https://www.facebook.com/vilagombafeszt"
+            href={siteConfig.socials.facebook}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
@@ -170,7 +171,7 @@ export default function JegyekSection() {
             Kövess Facebookon
           </a>
           <a
-            href="https://www.instagram.com/vilagombafeszt/"
+            href={siteConfig.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"

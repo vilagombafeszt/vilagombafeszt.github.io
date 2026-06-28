@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { siteConfig } from '@/site.config';
 
 export default function KapcsolatSection() {
   const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
@@ -33,7 +34,7 @@ export default function KapcsolatSection() {
           }`}
         >
           <a
-            href="https://www.facebook.com/vilagombafeszt"
+            href={siteConfig.socials.facebook}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-block"
@@ -69,7 +70,7 @@ export default function KapcsolatSection() {
                 </td>
                 <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <a
-                    href="tel:+36301975338"
+                    href={`tel:${siteConfig.contact.phone}`}
                     className="transition-colors duration-300 hover:text-[#102135]"
                   >
                     +36 30 197 5338
@@ -82,7 +83,7 @@ export default function KapcsolatSection() {
                 </td>
                 <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <a
-                    href="mailto:info@vilagombafeszt.hu"
+                    href={`mailto:${siteConfig.contact.emailGeneral}`}
                     className="transition-colors duration-300 hover:text-[#102135]"
                   >
                     info@vilagombafeszt.hu
@@ -95,7 +96,7 @@ export default function KapcsolatSection() {
                 </td>
                 <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <a
-                    href="mailto:jegy@vilagombafeszt.hu"
+                    href={`mailto:${siteConfig.contact.emailTickets}`}
                     className="transition-colors duration-300 hover:text-[#102135]"
                   >
                     jegy@vilagombafeszt.hu
