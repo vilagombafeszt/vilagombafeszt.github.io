@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -19,6 +19,15 @@ export default function GombAppHome() {
   const gombappBase = params.gombapp || 'GombApp';
   const [showLogin, setShowLogin] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setInitialLoading(false), 2000);
@@ -42,11 +51,22 @@ export default function GombAppHome() {
       showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
       return;
     }
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
     router.push(path);
   };
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
       <header>
         <div className="header-content" style={user ? { flexDirection: 'column' } : undefined}>
           <h1 className="app-title">GombApp</h1>
@@ -123,7 +143,7 @@ export default function GombAppHome() {
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
       <footer>
-        <p className="footer-text">v2.0.9</p>
+        <p className="footer-text">v2.2.0</p>
       </footer>
     </>
   );

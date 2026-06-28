@@ -6,6 +6,13 @@ import { ref, set, get } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
+import {
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
+} from '@/components/gombapp/BottomSheet';
+import { Undo2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface DrinkItem {
@@ -16,25 +23,95 @@ interface DrinkItem {
 }
 
 const DRINKS: DrinkItem[] = [
-  { name: 'Korsó Kőbányai', image: '/GombApp/images/korso-kobi.png', alt: 'Korsó Kőbányai', label: 'Korsó Kőbányai' },
-  { name: 'Pohár Kőbányai', image: '/GombApp/images/pohar-kobi.png', alt: 'Pohár Kőbányai', label: 'Pohár Kőbányai' },
-  { name: 'Korsó Kézműves', image: '/GombApp/images/kezmuves.png', alt: 'Korsó Kézműves', label: 'Korsó Kézműves' },
-  { name: 'Pohár Kézműves', image: '/GombApp/images/kezmuves.png', alt: 'Pohár Kézműves', label: 'Pohár Kézműves' },
-  { name: 'Nagyfröccs', image: '/GombApp/images/nagyfroccs.png', alt: 'Nagyfröccs', label: 'Nagyfröccs' },
-  { name: 'Kisfröccs', image: '/GombApp/images/kisfroccs.png', alt: 'Kisfröccs', label: 'Kisfröccs' },
-  { name: 'Hosszúlépés', image: '/GombApp/images/hosszulepes.png', alt: 'Hosszúlépés', label: 'Hosszúlépés' },
+  {
+    name: 'Korsó Kőbányai',
+    image: '/GombApp/images/korso-kobi.png',
+    alt: 'Korsó Kőbányai',
+    label: 'Korsó Kőbányai',
+  },
+  {
+    name: 'Pohár Kőbányai',
+    image: '/GombApp/images/pohar-kobi.png',
+    alt: 'Pohár Kőbányai',
+    label: 'Pohár Kőbányai',
+  },
+  {
+    name: 'Korsó Kézműves',
+    image: '/GombApp/images/kezmuves.png',
+    alt: 'Korsó Kézműves',
+    label: 'Korsó Kézműves',
+  },
+  {
+    name: 'Pohár Kézműves',
+    image: '/GombApp/images/kezmuves.png',
+    alt: 'Pohár Kézműves',
+    label: 'Pohár Kézműves',
+  },
+  {
+    name: 'Nagyfröccs',
+    image: '/GombApp/images/nagyfroccs.png',
+    alt: 'Nagyfröccs',
+    label: 'Nagyfröccs',
+  },
+  {
+    name: 'Kisfröccs',
+    image: '/GombApp/images/kisfroccs.png',
+    alt: 'Kisfröccs',
+    label: 'Kisfröccs',
+  },
+  {
+    name: 'Hosszúlépés',
+    image: '/GombApp/images/hosszulepes.png',
+    alt: 'Hosszúlépés',
+    label: 'Hosszúlépés',
+  },
   { name: 'Háziúr', image: '/GombApp/images/haziur.png', alt: 'Háziúr', label: 'Háziúr' },
-  { name: 'Sportfröccs', image: '/GombApp/images/sportfroccs.png', alt: 'Sportfröccs', label: 'Sportfröccs' },
-  { name: 'Szóda 3dl', image: '/GombApp/images/kisszoda.png', alt: 'Szóda 3dl', label: 'Szóda 1dl' },
-  { name: 'Szóda 5dl', image: '/GombApp/images/pohar.png', alt: 'Papír pohár', label: 'Papír pohár' },
+  {
+    name: 'Sportfröccs',
+    image: '/GombApp/images/sportfroccs.png',
+    alt: 'Sportfröccs',
+    label: 'Sportfröccs',
+  },
+  {
+    name: 'Szóda 3dl',
+    image: '/GombApp/images/kisszoda.png',
+    alt: 'Szóda 3dl',
+    label: 'Szóda 1dl',
+  },
+  {
+    name: 'Szóda 5dl',
+    image: '/GombApp/images/pohar.png',
+    alt: 'Papír pohár',
+    label: 'Papír pohár',
+  },
   { name: 'Bor 3dl', image: '/GombApp/images/kisbor.png', alt: 'Bor 3dl', label: 'Bor 3dl' },
   { name: 'Bor 5dl', image: '/GombApp/images/nagybor.png', alt: 'Bor 5dl', label: 'Bor 5dl' },
-  { name: 'Pálinka 2cl', image: '/GombApp/images/palinka.png', alt: 'Pálinka 2cl', label: 'Pálinka 2cl' },
-  { name: 'Pálinka 4cl', image: '/GombApp/images/palinka.png', alt: 'Pálinka 4cl', label: 'Pálinka 4cl' },
+  {
+    name: 'Pálinka 2cl',
+    image: '/GombApp/images/palinka.png',
+    alt: 'Pálinka 2cl',
+    label: 'Pálinka 2cl',
+  },
+  {
+    name: 'Pálinka 4cl',
+    image: '/GombApp/images/palinka.png',
+    alt: 'Pálinka 4cl',
+    label: 'Pálinka 4cl',
+  },
   { name: 'Kávé', image: '/GombApp/images/kave.png', alt: 'Kávé', label: 'Presszó kávé' },
   { name: 'Tejes Kávé', image: '/GombApp/images/kave.png', alt: 'Kávé', label: 'Tejes kávé' },
-  { name: 'Jeges tea', image: '/GombApp/images/jegestea.png', alt: 'Jeges tea', label: 'Limonádé 3dl' },
-  { name: 'Limonádé', image: '/GombApp/images/jegestea.png', alt: 'Limonádé', label: 'Limonádé 5dl' },
+  {
+    name: 'Jeges tea',
+    image: '/GombApp/images/jegestea.png',
+    alt: 'Jeges tea',
+    label: 'Limonádé 3dl',
+  },
+  {
+    name: 'Limonádé',
+    image: '/GombApp/images/jegestea.png',
+    alt: 'Limonádé',
+    label: 'Limonádé 5dl',
+  },
 ];
 
 const PRICE_MAP: Record<string, string> = {
@@ -42,21 +119,21 @@ const PRICE_MAP: Record<string, string> = {
   'Pohár Kőbányai': 'poharKobiPrice',
   'Korsó Kézműves': 'korsoNarancsSor',
   'Pohár Kézműves': 'poharNarancsSor',
-  'Nagyfröccs': 'nagyfroccsPrice',
-  'Kisfröccs': 'kisfroccsPrice',
-  'Hosszúlépés': 'hosszulepesPrice',
-  'Háziúr': 'haziurPrice',
-  'Sportfröccs': 'sportfroccsPrice',
+  Nagyfröccs: 'nagyfroccsPrice',
+  Kisfröccs: 'kisfroccsPrice',
+  Hosszúlépés: 'hosszulepesPrice',
+  Háziúr: 'haziurPrice',
+  Sportfröccs: 'sportfroccsPrice',
   'Szóda 3dl': 'kisszodaPrice',
   'Szóda 5dl': 'nagyszodaPrice',
   'Bor 3dl': 'kisborPrice',
   'Bor 5dl': 'nagyborPrice',
   'Pálinka 2cl': 'kispalinkaPrice',
   'Pálinka 4cl': 'nagypalinkaPrice',
-  'Kávé': 'kavePrice',
+  Kávé: 'kavePrice',
   'Tejes Kávé': 'tejesKavePrice',
   'Jeges tea': 'jegesteaPrice',
-  'Limonádé': 'limonadePrice',
+  Limonádé: 'limonadePrice',
 };
 
 type View = 'menu' | 'order';
@@ -69,8 +146,54 @@ export default function BartenderPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [orderItems, setOrderItems] = useState<string[]>([]);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Checkout Modal states
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [receivedAmount, setReceivedAmount] = useState<number | ''>('');
+
   const lastClickRef = useRef(0);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
+
+  // Load cart from sessionStorage on mount
+  useEffect(() => {
+    const savedCart = sessionStorage.getItem('bartender_cart');
+    if (savedCart) {
+      try {
+        setOrderItems(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
+      }
+    }
+    const savedView = sessionStorage.getItem('bartender_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsCartLoaded(true);
+  }, []);
+
+  // Save cart to sessionStorage when it changes
+  useEffect(() => {
+    if (isCartLoaded) {
+      sessionStorage.setItem('bartender_cart', JSON.stringify(orderItems));
+      sessionStorage.setItem('bartender_view', view);
+    }
+  }, [orderItems, view, isCartLoaded]);
 
   const throttle = (fn: () => void) => {
     const now = Date.now();
@@ -102,7 +225,7 @@ export default function BartenderPage() {
   const getDrinkPrice = useCallback(
     (drink: string): number => {
       const key = PRICE_MAP[drink];
-      return key ? (prices[key] || 0) : 0;
+      return key ? prices[key] || 0 : 0;
     },
     [prices]
   );
@@ -130,7 +253,20 @@ export default function BartenderPage() {
     return acc;
   }, {});
 
-  const saveOrder = () => {
+  const openCheckout = () => {
+    if (orderItems.length === 0) {
+      showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
+      return;
+    }
+    if (!user) {
+      showSnackbar('Kérlek, jelentkezz be a mentéshez.', 'info');
+      return;
+    }
+    setReceivedAmount('');
+    setIsCheckoutOpen(true);
+  };
+
+  const saveOrder = async () => {
     if (orderItems.length === 0) {
       showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
       return;
@@ -140,63 +276,197 @@ export default function BartenderPage() {
       return;
     }
 
-    const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
+    setIsSaving(true);
 
-    get(ref(database!, 'Árak/Ital'))
-      .then((priceSnap) => {
-        const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
-        let orderTotal = 0;
-        const orderPrices: number[] = [];
+    try {
+      const userOrderRef = ref(database!, 'Rendelések/Ital/' + user.uid);
+      const priceSnap = await get(ref(database!, 'Árak/Ital'));
+      const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
 
-        orderItems.forEach((drink) => {
-          const key = PRICE_MAP[drink];
-          const price = key ? (freshPrices[key] || 0) : 0;
-          orderTotal += price;
-          orderPrices.push(price);
-        });
-
-        return get(userOrderRef).then((snapshot) => {
-          let existingOrders: string[] = [];
-          let existingOrderPrices: number[] = [];
-          let existingTotalPrice = 0;
-          let existingOrderCount = 0;
-
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            existingOrders = data.orderList || [];
-            existingOrderPrices = data.orderPrices || [];
-            existingTotalPrice = data.totalPrice || 0;
-            existingOrderCount = data.orderCount || 0;
-          }
-
-          return set(userOrderRef, {
-            email: user.email,
-            orderList: existingOrders.concat(orderItems),
-            orderPrices: existingOrderPrices.concat(orderPrices),
-            totalPrice: existingTotalPrice + orderTotal,
-            orderCount: existingOrderCount + 1,
-          });
-        });
-      })
-      .then(() => {
-        showSnackbar('Sikeresen mentve!', 'success');
-        setOrderItems([]);
-        setView('menu');
-      })
-      .catch((error) => {
-        console.error('Error saving order:', error);
-        showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+      let orderTotal = 0;
+      const orderPrices: number[] = [];
+      orderItems.forEach((drink) => {
+        const key = PRICE_MAP[drink];
+        const price = key ? freshPrices[key] || 0 : 0;
+        orderTotal += price;
+        orderPrices.push(price);
       });
+
+      const snapshot = await get(userOrderRef);
+      const previousData = snapshot.exists() ? snapshot.val() : null;
+
+      let existingOrders: string[] = [];
+      let existingOrderPrices: number[] = [];
+      let existingTotalPrice = 0;
+      let existingOrderCount = 0;
+
+      if (previousData) {
+        existingOrders = previousData.orderList || [];
+        existingOrderPrices = previousData.orderPrices || [];
+        existingTotalPrice = previousData.totalPrice || 0;
+        existingOrderCount = previousData.orderCount || 0;
+      }
+
+      const currentOrderItems = [...orderItems];
+
+      await set(userOrderRef, {
+        email: user.email,
+        orderList: existingOrders.concat(currentOrderItems),
+        orderPrices: existingOrderPrices.concat(orderPrices),
+        totalPrice: existingTotalPrice + orderTotal,
+        orderCount: existingOrderCount + 1,
+      });
+
+      const handleUndo = () => {
+        set(userOrderRef, previousData)
+          .then(() => {
+            setOrderItems(currentOrderItems);
+            setView('order');
+            showSnackbar('Mentés visszavonva!', 'info');
+          })
+          .catch((error) => {
+            console.error('Error undoing order:', error);
+            showSnackbar('Hiba a visszavonás közben.', 'error');
+          });
+      };
+
+      setIsCheckoutOpen(false);
+      showSnackbar('Sikeresen mentve!', 'success', 10000, {
+        label: <Undo2 size={24} />,
+        onClick: handleUndo,
+      });
+      setOrderItems([]);
+      setView('menu');
+    } catch (error) {
+      console.error('Error saving order:', error);
+      showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (loading) return null;
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
+      {isSaving && (
+        <div className="snackbar-backdrop show full-screen-loader-backdrop">
+          <div className="loader loader-white" />
+        </div>
+      )}
+
+      {/* Checkout Bottom Sheet */}
+      <BottomSheet isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)}>
+        <BottomSheetHeader>Kassza / Visszajáró</BottomSheetHeader>
+        <BottomSheetBody>
+          <div className="checkout-content">
+            <div className="checkout-total">
+              Fizetendő: <span>{totalPrice.toLocaleString('hu-HU')} Ft</span>
+            </div>
+            <div className="checkout-quick-bills">
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(500)}
+              >
+                500 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(1000)}
+              >
+                1 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(2000)}
+              >
+                2 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(5000)}
+              >
+                5 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(10000)}
+              >
+                10 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(20000)}
+              >
+                20 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn pontos-btn"
+                onClick={() => setReceivedAmount(totalPrice)}
+              >
+                Pontos
+              </button>
+            </div>
+
+            <div className="checkout-input-group">
+              <label>Kapott készpénz:</label>
+              <input
+                type="number"
+                className="email-field"
+                value={receivedAmount}
+                onChange={(e) => setReceivedAmount(e.target.value ? Number(e.target.value) : '')}
+                placeholder="Egyedi összeg megadása..."
+              />
+            </div>
+
+            {receivedAmount !== '' && (
+              <div
+                className={`checkout-change ${Number(receivedAmount) >= totalPrice ? 'positive' : 'negative'}`}
+              >
+                {Number(receivedAmount) >= totalPrice
+                  ? `Visszajáró: ${(Number(receivedAmount) - totalPrice).toLocaleString('hu-HU')} Ft`
+                  : `Hiányzik: ${(totalPrice - Number(receivedAmount)).toLocaleString('hu-HU')} Ft`}
+              </div>
+            )}
+          </div>
+        </BottomSheetBody>
+        <BottomSheetFooter>
+          <div className="loginform-buttons">
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => setIsCheckoutOpen(false)}
+            >
+              Mégse
+            </button>
+            <button type="button" className="submit-button" onClick={saveOrder}>
+              Mentés
+            </button>
+          </div>
+        </BottomSheetFooter>
+      </BottomSheet>
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
@@ -219,7 +489,13 @@ export default function BartenderPage() {
                     className="item-button"
                     onClick={() => addItem(drink.name)}
                   >
-                    <Image src={drink.image} alt={drink.alt} className="item-pic" width={100} height={100} />
+                    <Image
+                      src={drink.image}
+                      alt={drink.alt}
+                      className="item-pic"
+                      width={100}
+                      height={100}
+                    />
                     <span>{drink.label}</span>
                   </button>
                 ))}
@@ -228,7 +504,7 @@ export default function BartenderPage() {
                 <button className="res-adj1" onClick={() => setView('order')}>
                   Rendelés megnézése
                 </button>
-                <button className="res-adj2" onClick={saveOrder}>
+                <button className="res-adj2" onClick={openCheckout}>
                   Mentés
                 </button>
                 <p className="res-adj3">Teljes ár: {totalPrice} Ft</p>
@@ -256,10 +532,12 @@ export default function BartenderPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? ' qty-btn-remove' : ''}`}
+                            className={`qty-btn ${qty === 1 ? 'qty-btn-remove' : ''}`.trim()}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
-                            <span className="material-symbols-rounded qty-icon">{qty === 1 ? 'delete' : 'remove'}</span>
+                            <span className="material-symbols-rounded qty-icon">
+                              {qty === 1 ? 'delete' : 'remove'}
+                            </span>
                           </button>
                           <span className="qty-count">{qty}</span>
                           <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>
@@ -276,14 +554,25 @@ export default function BartenderPage() {
               <div className="order-summary">
                 <div className="order-summary-row">
                   <span className="order-summary-label">Összesen</span>
-                  <span className="order-summary-value">{totalPrice} Ft</span>
+                  <span className="order-summary-value">
+                    {totalPrice.toLocaleString('hu-HU')} Ft
+                  </span>
                 </div>
                 <span className="order-summary-count">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
                 </span>
-                <button className="order-save-btn" onClick={saveOrder}>
-                  Mentés
-                </button>
+
+                <div className="order-actions-container">
+                  <button className="order-clear-btn" onClick={() => setOrderItems([])}>
+                    <span className="material-symbols-rounded">delete</span>
+                  </button>
+                  <button className="order-save-btn" onClick={saveOrder}>
+                    Gyors mentés
+                  </button>
+                  <button className="order-save-btn" onClick={openCheckout}>
+                    Kassza
+                  </button>
+                </div>
               </div>
             </div>
           )}

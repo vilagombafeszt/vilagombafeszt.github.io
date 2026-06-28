@@ -1,38 +1,186 @@
-export default function JegyekSection() {
+'use client';
+
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { siteConfig } from '@/site.config';
+
+const TICKET_IMAGES = [
+  { src: '/page_images/normal_napijegy.webp', alt: 'Normál Napijegy' },
+  { src: '/page_images/normal_berlet.webp', alt: 'Normál Bérlet' },
+  { src: '/page_images/helyszini_napijegy.webp', alt: 'Helyszíni Napijegy' },
+  { src: '/page_images/helyszini_berlet.webp', alt: 'Helyszíni Bérlet' },
+];
+
+/* ── Social Icons for the Buttons ─────────────────────────────── */
+const FacebookIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+  </svg>
+);
+
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+
+/* ── Individual Ticket Component for Mobile Scroll Logic ──────── */
+const TicketCard = ({
+  img,
+  index,
+  isSectionVisible,
+}: {
+  img: { src: string; alt: string };
+  index: number;
+  isSectionVisible: boolean;
+}) => {
+  const [isMobileActive, setIsMobileActive] = useState(false);
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (window.innerWidth < 768) {
+          setIsMobileActive(entry.isIntersecting);
+        } else {
+          setIsMobileActive(false);
+        }
+      },
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setIsMobileActive(false);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="section" id="jegyeket-berleteket">
-      <div className="title">Jegyeket, Bérleteket!</div>
+    <a
+      ref={cardRef}
+      href={siteConfig.externalLinks.ticketSales}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
+      className={`group block drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
+        isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
+      } ${isSectionVisible ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0' : 'opacity-0'}`}
+    >
+      <Image
+        src={img.src}
+        alt={img.alt}
+        width={350}
+        height={500}
+        className={`h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover:-rotate-2 md:group-hover:scale-105 md:group-hover:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
+          isMobileActive ? '-rotate-2 scale-[1.15] brightness-110' : ''
+        }`}
+      />
+    </a>
+  );
+};
 
-      <div className="ticket-status">
-        <div className="ticket-badge">JEGYÉRTÉKESÍTÉS LEZÁRULT</div>
+/* ── Main Section Component ───────────────────────────────────── */
+export default function JegyekSection() {
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
-        <h2 className="ticket-subtitle">Köszönjük, hogy velünk voltatok 2025-ben!</h2>
+  return (
+    <section
+      id="jegyeket-berleteket"
+      data-logo-theme="vaj"
+      ref={sectionRef}
+      className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[85svh] w-full flex-col items-center bg-[#355168] px-[clamp(16px,5vw,80px)] pb-[clamp(40px,5vh,72px)] pt-[clamp(32px,3vh,56px)] text-center text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#355168]"
+    >
+      <h2
+        className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
+          isVisible
+            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+            : 'opacity-0'
+        }`}
+      >
+        Jegyeket, Bérleteket!
+      </h2>
 
-        <p className="ticket-text">
-          Jelenleg nincs aktív jegyértékesítés. A következő ViláGomba Fesztivál időpontjával és
-          jegyinformációkkal kapcsolatban itt, a hivatalos Facebook- és Instagram-oldalunkon
-          jelentkezünk.
+      <div
+        style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
+        className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${
+          isVisible
+            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+            : 'opacity-0'
+        }`}
+      >
+        <div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
+          ELINDULT A JEGYÉRTÉKESÍTÉS!
+        </div>
+      </div>
+
+      <div className="mx-auto mb-10 mt-4 grid w-full max-w-[1600px] grid-cols-1 justify-items-center gap-6 md:mb-12 md:mt-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
+        {TICKET_IMAGES.map((img, index) => (
+          <TicketCard key={index} img={img} index={index} isSectionVisible={isVisible} />
+        ))}
+      </div>
+
+      <div
+        style={{ animationDelay: isVisible ? '0.8s' : '0s' }}
+        className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${
+          isVisible
+            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+            : 'opacity-0'
+        }`}
+      >
+        <p className="mb-[clamp(36px,5vh,56px)] text-[clamp(18px,4vw,24px)] leading-[1.6] md:text-[clamp(16px,2vw,26px)]">
+          A 2026-os fesztiválra az Early Bird jegyek elfogytak! Már csak a normál jegyek elérhetőek,
+          de azok is csak korlátozott számban. Érdemes megvenni a jegyeket előre, hogy biztosan
+          legyen helyetek a fesztiválon! A legfrissebb információkért kövessetek be minket a
+          hivatalos Facebook- és Instagram-oldalunkon.
         </p>
 
-        <div className="ticket-links">
+        <div className="flex flex-col items-center justify-center gap-[clamp(16px,2vw,24px)] sm:flex-row">
           <a
-            href="https://www.facebook.com/vilagombafeszt"
+            href={siteConfig.socials.facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="ticket-link-btn"
+            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
+            <FacebookIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
             Kövess Facebookon
           </a>
           <a
-            href="https://www.instagram.com/vilagombafeszt/"
+            href={siteConfig.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="ticket-link-btn ticket-link-btn-outline"
+            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
+            <InstagramIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
             Kövess Instagramon
           </a>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

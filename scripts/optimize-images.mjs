@@ -91,7 +91,7 @@ async function processGalleryFolder(folderName, jsonFile, options = {}) {
   const pct = (((totalBefore - totalAfter) / totalBefore) * 100).toFixed(0);
   console.log(
     `  ${folderName}: ${(totalBefore / 1024 / 1024).toFixed(1)} MB → ` +
-      `${(totalAfter / 1024 / 1024).toFixed(1)} MB (saved ${savedMB} MB / ${pct}%)`,
+    `${(totalAfter / 1024 / 1024).toFixed(1)} MB (saved ${savedMB} MB / ${pct}%)`,
   );
   console.log(`  Updated ${jsonFile} with ${allWebPs.length} files`);
 }
@@ -120,6 +120,11 @@ async function processPageImages() {
       dst: 'document.webp',
       opts: { maxWidth: 120, quality: 85 },
     },
+    {
+      src: 'document_blue.png',
+      dst: 'document_blue.webp',
+      opts: { maxWidth: 120, quality: 85 },
+    },
     // Schedule images
     {
       src: 'pentek.jpg',
@@ -135,6 +140,37 @@ async function processPageImages() {
       src: 'vasarnap.jpg',
       dst: 'vasarnap.webp',
       opts: { maxWidth: 1080, quality: 83 },
+    },
+    // Ticket images
+    {
+      src: 'early_bird_berlet.png',
+      dst: 'early_bird_berlet.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'early_bird_napijegy.png',
+      dst: 'early_bird_napijegy.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'normal_berlet.png',
+      dst: 'normal_berlet.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'normal_napijegy.png',
+      dst: 'normal_napijegy.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'helyszini_berlet.png',
+      dst: 'helyszini_berlet.webp',
+      opts: { maxWidth: 800, quality: 85 },
+    },
+    {
+      src: 'helyszini_napijegy.png',
+      dst: 'helyszini_napijegy.webp',
+      opts: { maxWidth: 800, quality: 85 },
     },
   ];
 

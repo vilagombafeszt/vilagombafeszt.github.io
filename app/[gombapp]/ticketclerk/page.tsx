@@ -6,6 +6,13 @@ import { ref, set, get, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
+import {
+  BottomSheet,
+  BottomSheetHeader,
+  BottomSheetBody,
+  BottomSheetFooter,
+} from '@/components/gombapp/BottomSheet';
+import { Undo2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface TicketItem {
@@ -65,11 +72,56 @@ export default function TicketClerkPage() {
   const gombappBase = params.gombapp || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [orderItems, setOrderItems] = useState<string[]>([]);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
   const [capacityLoading, setCapacityLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [receivedAmount, setReceivedAmount] = useState<number | ''>('');
+
   const lastClickRef = useRef(0);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setIsNavigating(false);
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
+    router.push(path);
+  };
+
+  // Load cart from sessionStorage on mount
+  useEffect(() => {
+    const savedCart = sessionStorage.getItem('ticketclerk_cart');
+    if (savedCart) {
+      try {
+        setOrderItems(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
+      }
+    }
+    const savedView = sessionStorage.getItem('ticketclerk_view') as View;
+    if (savedView) {
+      setView(savedView);
+    }
+    setIsCartLoaded(true);
+  }, []);
+
+  // Save cart to sessionStorage when it changes
+  useEffect(() => {
+    if (isCartLoaded) {
+      sessionStorage.setItem('ticketclerk_cart', JSON.stringify(orderItems));
+      sessionStorage.setItem('ticketclerk_view', view);
+    }
+  }, [orderItems, view, isCartLoaded]);
 
   const throttle = (fn: () => void) => {
     const now = Date.now();
@@ -96,8 +148,6 @@ export default function TicketClerkPage() {
       .catch((error) => console.error('Error fetching prices:', error));
   }, []);
 
-  // Fetch max counts on mount to enable capacity-aware ticket buttons.
-  // `database` is a module-level constant that never changes; omitting it from deps is intentional.
   useEffect(() => {
     if (!database) return;
     setCapacityLoading(true);
@@ -199,6 +249,42 @@ export default function TicketClerkPage() {
     return Promise.all(promises);
   };
 
+  const revertMaxTicketCounts = async (ticketCounts: ReturnType<typeof countTicketsByType>) => {
+    const promises: Promise<unknown>[] = [];
+
+    if (ticketCounts.friday > 0 || ticketCounts.pass > 0) {
+      const fridayRef = ref(database!, 'Jegyek/pentekMax');
+      promises.push(
+        runTransaction(fridayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.friday + ticketCounts.pass;
+        })
+      );
+    }
+
+    if (ticketCounts.saturday > 0 || ticketCounts.pass > 0) {
+      const saturdayRef = ref(database!, 'Jegyek/szombatMax');
+      promises.push(
+        runTransaction(saturdayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.saturday + ticketCounts.pass;
+        })
+      );
+    }
+
+    if (ticketCounts.sunday > 0 || ticketCounts.pass > 0) {
+      const sundayRef = ref(database!, 'Jegyek/vasarnapMax');
+      promises.push(
+        runTransaction(sundayRef, (currentValue) => {
+          const currentMax = currentValue || 0;
+          return currentMax + ticketCounts.sunday + ticketCounts.pass;
+        })
+      );
+    }
+
+    return Promise.all(promises);
+  };
+
   const fetchMaxTicketCounts = async (): Promise<MaxCounts> => {
     const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
       get(ref(database!, 'Jegyek/pentekMax')),
@@ -236,6 +322,19 @@ export default function TicketClerkPage() {
     return false;
   };
 
+  const openCheckout = () => {
+    if (orderItems.length === 0) {
+      showSnackbar('Adj hozzá legalább egy jegytípust a rendeléshez!', 'info');
+      return;
+    }
+    if (!user) {
+      showSnackbar('Kérlek, jelentkezz be a mentéshez.', 'info');
+      return;
+    }
+    setReceivedAmount('');
+    setIsCheckoutOpen(true);
+  };
+
   const saveOrder = async () => {
     if (orderItems.length === 0) {
       showSnackbar('Adj hozzá legalább egy jegytípust a rendeléshez!', 'info');
@@ -246,6 +345,8 @@ export default function TicketClerkPage() {
       return;
     }
 
+    setIsSaving(true);
+
     try {
       // Re-fetch latest capacity before saving
       const freshCounts = await fetchMaxTicketCounts();
@@ -255,14 +356,17 @@ export default function TicketClerkPage() {
 
       if (freshCounts.friday === 0 && (ticketCounts.friday > 0 || ticketCounts.pass > 0)) {
         showSnackbar('A pénteki napijegy elfogyott!', 'error');
+        setIsCheckoutOpen(false);
         return;
       }
       if (freshCounts.saturday === 0 && (ticketCounts.saturday > 0 || ticketCounts.pass > 0)) {
         showSnackbar('A szombati napijegy elfogyott!', 'error');
+        setIsCheckoutOpen(false);
         return;
       }
       if (freshCounts.sunday === 0 && (ticketCounts.sunday > 0 || ticketCounts.pass > 0)) {
         showSnackbar('A vasárnapi napijegy elfogyott!', 'error');
+        setIsCheckoutOpen(false);
         return;
       }
 
@@ -280,24 +384,26 @@ export default function TicketClerkPage() {
 
       const userOrderRef = ref(database!, 'Rendelések/Jegy/' + user.uid);
       const snapshot = await get(userOrderRef);
+      const previousData = snapshot.exists() ? snapshot.val() : null;
 
       let existingOrders: string[] = [];
       let existingOrderPrices: number[] = [];
       let existingTotalPrice = 0;
       let existingOrderCount = 0;
 
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        existingOrders = data.orderList || [];
-        existingOrderPrices = data.orderPrices || [];
-        existingTotalPrice = data.totalPrice || 0;
-        existingOrderCount = data.orderCount || 0;
+      if (previousData) {
+        existingOrders = previousData.orderList || [];
+        existingOrderPrices = previousData.orderPrices || [];
+        existingTotalPrice = previousData.totalPrice || 0;
+        existingOrderCount = previousData.orderCount || 0;
       }
+
+      const currentOrderItems = [...orderItems];
 
       await Promise.all([
         set(userOrderRef, {
           email: user.email,
-          orderList: existingOrders.concat(orderItems),
+          orderList: existingOrders.concat(currentOrderItems),
           orderPrices: existingOrderPrices.concat(orderPrices),
           totalPrice: existingTotalPrice + orderTotal,
           orderCount: existingOrderCount + 1,
@@ -305,12 +411,31 @@ export default function TicketClerkPage() {
         updateMaxTicketCounts(ticketCounts),
       ]);
 
-      showSnackbar('Sikeresen mentve!', 'success');
+      const handleUndo = () => {
+        Promise.all([set(userOrderRef, previousData), revertMaxTicketCounts(ticketCounts)])
+          .then(() => {
+            setOrderItems(currentOrderItems); // repopulate cart
+            setView('order');
+            showSnackbar('Mentés visszavonva!', 'info');
+          })
+          .catch((error) => {
+            console.error('Error undoing ticket order:', error);
+            showSnackbar('Hiba a visszavonás közben.', 'error');
+          });
+      };
+
+      setIsCheckoutOpen(false);
+      showSnackbar('Sikeresen mentve!', 'success', 10000, {
+        label: <Undo2 size={24} />,
+        onClick: handleUndo,
+      });
       setOrderItems([]);
       setView('menu');
     } catch (error) {
       console.error('Error saving order:', error);
       showSnackbar('Hiba történt az adatok mentése közben.', 'error');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -318,10 +443,124 @@ export default function TicketClerkPage() {
 
   return (
     <>
+      {isNavigating && (
+        <div className="nav-loader-container">
+          <div className="loading">
+            <div className="loader loader-mb" />
+            <br />
+            Betöltés...
+          </div>
+        </div>
+      )}
+
+      {isSaving && (
+        <div className="snackbar-backdrop show full-screen-loader-backdrop">
+          <div className="loader loader-white" />
+        </div>
+      )}
+
+      {/* Checkout Bottom Sheet */}
+      <BottomSheet isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)}>
+        <BottomSheetHeader>Kassza / Visszajáró</BottomSheetHeader>
+        <BottomSheetBody>
+          <div className="checkout-content">
+            <div className="checkout-total">
+              Fizetendő: <span>{totalPrice.toLocaleString('hu-HU')} Ft</span>
+            </div>
+            <div className="checkout-quick-bills">
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(500)}
+              >
+                500 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(1000)}
+              >
+                1 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(2000)}
+              >
+                2 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(5000)}
+              >
+                5 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(10000)}
+              >
+                10 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn"
+                onClick={() => setReceivedAmount(20000)}
+              >
+                20 000 Ft
+              </button>
+              <button
+                type="button"
+                className="checkout-bill-btn pontos-btn"
+                onClick={() => setReceivedAmount(totalPrice)}
+              >
+                Pontos
+              </button>
+            </div>
+
+            <div className="checkout-input-group">
+              <label>Kapott készpénz:</label>
+              <input
+                type="number"
+                className="email-field"
+                value={receivedAmount}
+                onChange={(e) => setReceivedAmount(e.target.value ? Number(e.target.value) : '')}
+                placeholder="Egyedi összeg megadása..."
+              />
+            </div>
+
+            {receivedAmount !== '' && (
+              <div
+                className={`checkout-change ${Number(receivedAmount) >= totalPrice ? 'positive' : 'negative'}`}
+              >
+                {Number(receivedAmount) >= totalPrice
+                  ? `Visszajáró: ${(Number(receivedAmount) - totalPrice).toLocaleString('hu-HU')} Ft`
+                  : `Hiányzik: ${(totalPrice - Number(receivedAmount)).toLocaleString('hu-HU')} Ft`}
+              </div>
+            )}
+          </div>
+        </BottomSheetBody>
+        <BottomSheetFooter>
+          <div className="loginform-buttons">
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => setIsCheckoutOpen(false)}
+            >
+              Mégse
+            </button>
+            <button type="button" className="submit-button" onClick={saveOrder}>
+              Mentés
+            </button>
+          </div>
+        </BottomSheetFooter>
+      </BottomSheet>
+
       <header>
         <div className="header-content">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => router.push(`/${gombappBase}/`)}>
+            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
               Vissza
             </button>
           ) : (
@@ -343,7 +582,7 @@ export default function TicketClerkPage() {
                   return (
                     <button
                       key={ticket.name}
-                      className={`item-button${disabled ? 'item-button-disabled' : ''}`}
+                      className={`item-button ${disabled ? 'item-button-disabled' : ''}`.trim()}
                       onClick={() => !disabled && addItem(ticket.name)}
                       disabled={disabled}
                     >
@@ -378,7 +617,7 @@ export default function TicketClerkPage() {
                 <button className="res-adj1" onClick={() => setView('order')}>
                   Kosár megnézése
                 </button>
-                <button className="res-adj2" onClick={saveOrder}>
+                <button className="res-adj2" onClick={openCheckout}>
                   Mentés
                 </button>
                 <button className="res-adj6" onClick={showStatistics}>
@@ -408,7 +647,7 @@ export default function TicketClerkPage() {
                         </div>
                         <div className="order-card-controls">
                           <button
-                            className={`qty-btn${qty === 1 ? 'qty-btn-remove' : ''}`}
+                            className={`qty-btn ${qty === 1 ? 'qty-btn-remove' : ''}`.trim()}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
                             <span className="material-symbols-rounded qty-icon">
@@ -430,22 +669,36 @@ export default function TicketClerkPage() {
               <div className="order-summary">
                 <div className="order-summary-row">
                   <span className="order-summary-label">Összesen</span>
-                  <span className="order-summary-value">{totalPrice} Ft</span>
+                  <span className="order-summary-value">
+                    {totalPrice.toLocaleString('hu-HU')} Ft
+                  </span>
                 </div>
                 <span className="order-summary-count">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
                 </span>
-                <button className="order-save-btn" onClick={saveOrder}>
-                  Mentés
-                </button>
+                <div className="order-actions-container">
+                  <button className="order-clear-btn" onClick={() => setOrderItems([])}>
+                    <span className="material-symbols-rounded">delete</span>
+                  </button>
+                  <button className="order-save-btn" onClick={saveOrder}>
+                    Gyors mentés
+                  </button>
+                  <button className="order-save-btn" onClick={openCheckout}>
+                    Kassza
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
           {view === 'stats' && (
             <div className="statistics-container">
-              {statsLoading ? (
-                <div className="loading">Statisztika betöltése...</div>
+              {statsLoading || capacityLoading ? (
+                <div className="loading">
+                  <div className="loader loader-mb" />
+                  <br />
+                  Statisztika betöltése...
+                </div>
               ) : maxCounts ? (
                 <div className="statistics-content">
                   <div className="stats-header">

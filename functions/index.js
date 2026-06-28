@@ -8,12 +8,8 @@ admin.initializeApp();
 // Replace the "ID_..." placeholders when you have the real IDs.
 // ----------------------------------------------------------------------
 const TICKET_MAP = {
-  // Test IDs
-  62421: 'berletCount',
-  62419: 'pentekJegyCount',
-
   // Bérletek
-  ID_EARLY_BIRD_BERLET: 'berletCount',
+  75505: 'berletCount',
   ID_NORMAL_BERLET: 'berletCount',
 
   // Péntek
@@ -30,20 +26,24 @@ const TICKET_MAP = {
 };
 
 export const catchTicketSale = onRequest(async (req, res) => {
-  const emailBody = req.body.emailBody;
+  const rawEmailBody = req.body.emailBody;
 
-  if (!emailBody) {
+  if (!rawEmailBody) {
     return res.status(400).send('No email body provided.');
   }
+
+  const cleanBody = rawEmailBody
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ');
 
   // Regex to find the ID and the quantity next to the "x"
   const regex = /\((\d+)\)\s*[\d\s]+(?:HUF|Ft)\s*(\d+)x/gi;
 
   let match;
-
   const localTotals = {};
 
-  while ((match = regex.exec(emailBody)) !== null) {
+  while ((match = regex.exec(cleanBody)) !== null) {
     const ticketId = match[1];
     const quantity = parseInt(match[2], 10);
 
@@ -57,8 +57,8 @@ export const catchTicketSale = onRequest(async (req, res) => {
     }
   }
 
-  // If the email didn't contain any recognized tickets, stop here
   if (Object.keys(localTotals).length === 0) {
+    console.log('Cleaned body text was:', cleanBody);
     return res.status(200).send('Ignored: No recognized ticket IDs found.');
   }
 
@@ -69,7 +69,6 @@ export const catchTicketSale = onRequest(async (req, res) => {
 
   try {
     const dbRef = admin.database().ref('Jegyek');
-
     await dbRef.update(rtdbUpdates);
 
     res.status(200).send('Realtime Database updated successfully!');
