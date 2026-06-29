@@ -4,20 +4,18 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-function useRandomImage(jsonUrl: string, folder: string) {
+import indexPictures from '../public/images.json';
+import indexPictures2 from '../public/images2.json';
+
+function useRandomImage(files: string[], folder: string) {
   const [src, setSrc] = useState('');
 
   useEffect(() => {
-    fetch(jsonUrl)
-      .then<string[]>((r) => r.json())
-      .then((files) => {
-        if (files && files.length > 0) {
-          const idx = Math.floor(Math.random() * files.length);
-          setSrc(`/${folder}/${files[idx]}`);
-        }
-      })
-      .catch(console.error);
-  }, [jsonUrl, folder]);
+    if (files && files.length > 0) {
+      const idx = Math.floor(Math.random() * files.length);
+      setSrc(`/${folder}/${files[idx]}`);
+    }
+  }, [files, folder]);
 
   return src;
 }
@@ -41,8 +39,8 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 export default function KeptarSection() {
   const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
-  const album1Src = useRandomImage('/images.json', 'index_pictures');
-  const album2Src = useRandomImage('/images2.json', 'index_pictures2');
+  const album1Src = useRandomImage(indexPictures, 'index_pictures');
+  const album2Src = useRandomImage(indexPictures2, 'index_pictures2');
 
   return (
     <section
