@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Alumni_Sans, Rubik_Beastly, Aboreto, Poiret_One, Monoton } from 'next/font/google';
+import { Alumni_Sans, Rubik_Beastly } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 
@@ -14,27 +14,6 @@ const rubikBeastly = Rubik_Beastly({
   subsets: ['latin', 'latin-ext'],
   weight: '400',
   variable: '--font-rubik-beastly',
-  display: 'swap',
-});
-
-const aboreto = Aboreto({
-  subsets: ['latin', 'latin-ext'],
-  weight: '400',
-  variable: '--font-aboreto',
-  display: 'swap',
-});
-
-const poiretOne = Poiret_One({
-  subsets: ['latin', 'latin-ext'],
-  weight: '400',
-  variable: '--font-poiret-one',
-  display: 'swap',
-});
-
-const monoton = Monoton({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-monoton',
   display: 'swap',
 });
 
@@ -111,13 +90,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const fontClasses = [
-    alumniSans.variable,
-    rubikBeastly.variable,
-    aboreto.variable,
-    poiretOne.variable,
-    monoton.variable,
-  ].join(' ');
+  const fontClasses = [alumniSans.variable, rubikBeastly.variable].join(' ');
 
   return (
     <html lang="hu" className={`${fontClasses} scroll-smooth md:scroll-pt-[72px]`}>
