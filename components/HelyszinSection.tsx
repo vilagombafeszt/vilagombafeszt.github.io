@@ -1,6 +1,4 @@
-'use client';
-
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import ScrollRevealWrapper from './ScrollRevealWrapper';
 import LazyMap from './LazyMap';
 
 /* ── Custom UI Icons ────────────────────────────────────────────── */
@@ -36,32 +34,19 @@ const RouteIcon = ({ className }: { className?: string }) => (
 );
 
 export default function HelyszinSection() {
-  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
-
   return (
-    <section
+    <ScrollRevealWrapper
       id="helyszin"
-      data-logo-theme="vaj"
-      ref={sectionRef}
+      dataLogoTheme="vaj"
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#a44041] px-[clamp(16px,5vw,80px)] pb-[clamp(48px,6vh,80px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#a44041] md:pb-[clamp(32px,4vh,64px)]"
     >
-      <h2
-        className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
-      >
+      <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
         Helyszín
       </h2>
 
       <div
-        style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
-        className={`mb-[clamp(24px,4vh,48px)] flex w-full justify-center ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
+        style={{ animationDelay: '0.1s' }}
+        className="mb-[clamp(24px,4vh,48px)] flex w-full justify-center opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <div className="inline-flex max-w-[700px] items-center gap-3 rounded-full border-2 border-[#ac9d9d] bg-transparent px-6 py-3 text-center font-[family-name:var(--font-body)] text-[clamp(16px,4vw,22px)] font-bold tracking-wide text-[#ac9d9d] md:px-8 md:py-4 md:text-[clamp(16px,1.8vw,24px)]">
           <span>A Zebegényi vasútállomástól kb. 20 perc sétára található.</span>
@@ -70,12 +55,8 @@ export default function HelyszinSection() {
 
       <div className="grid w-full max-w-[800px] grid-cols-1 gap-[clamp(32px,5vw,56px)] lg:max-w-[1400px] lg:grid-cols-[repeat(auto-fit,minmax(min(420px,100%),1fr))]">
         <div
-          style={{ animationDelay: isVisible ? '0.2s' : '0s' }}
-          className={`group flex w-full flex-col ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
+          style={{ animationDelay: '0.2s' }}
+          className="group/map flex w-full flex-col opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
         >
           <div className="relative aspect-square w-full overflow-hidden rounded-2xl border-4 border-[#ac9d9d] transition-all duration-300 ease-out md:aspect-[4/3] [&>div]:absolute [&>div]:inset-0 [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:h-full [&_iframe]:w-full [&_iframe]:border-0">
             <LazyMap
@@ -89,12 +70,8 @@ export default function HelyszinSection() {
         </div>
 
         <div
-          style={{ animationDelay: isVisible ? '0.35s' : '0s' }}
-          className={`group flex w-full flex-col ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
+          style={{ animationDelay: '0.35s' }}
+          className="group/route flex w-full flex-col opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
         >
           <div className="relative aspect-square w-full overflow-hidden rounded-2xl border-4 border-[#ac9d9d] transition-all duration-300 ease-out md:aspect-[4/3] [&>div]:absolute [&>div]:inset-0 [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:h-full [&_iframe]:w-full [&_iframe]:border-0">
             <LazyMap
@@ -108,6 +85,6 @@ export default function HelyszinSection() {
           </div>
         </div>
       </div>
-    </section>
+    </ScrollRevealWrapper>
   );
 }

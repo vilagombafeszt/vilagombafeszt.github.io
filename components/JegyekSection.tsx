@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import ScrollRevealWrapper from './ScrollRevealWrapper';
 import { siteConfig } from '@/site.config';
 
 const TICKET_IMAGES = [
@@ -43,97 +40,20 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-/* ── Individual Ticket Component for Mobile Scroll Logic ──────── */
-const TicketCard = ({
-  img,
-  index,
-  isSectionVisible,
-}: {
-  img: { src: string; alt: string };
-  index: number;
-  isSectionVisible: boolean;
-}) => {
-  const [isMobileActive, setIsMobileActive] = useState(false);
-  const cardRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (window.innerWidth < 768) {
-          setIsMobileActive(entry.isIntersecting);
-        } else {
-          setIsMobileActive(false);
-        }
-      },
-      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
-    );
-
-    if (cardRef.current) observer.observe(cardRef.current);
-
-    const handleResize = () => {
-      if (window.innerWidth >= 768) setIsMobileActive(false);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  return (
-    <a
-      ref={cardRef}
-      href={siteConfig.externalLinks.ticketSales}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{ animationDelay: isSectionVisible ? `${0.2 + index * 0.15}s` : '0s' }}
-      className={`group block drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
-        isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
-      } ${isSectionVisible ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0' : 'opacity-0'}`}
-    >
-      <Image
-        src={img.src}
-        alt={img.alt}
-        width={350}
-        height={500}
-        loading="lazy"
-        className={`h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover:-rotate-2 md:group-hover:scale-105 md:group-hover:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
-          isMobileActive ? '-rotate-2 scale-[1.15] brightness-110' : ''
-        }`}
-      />
-    </a>
-  );
-};
-
-/* ── Main Section Component ───────────────────────────────────── */
 export default function JegyekSection() {
-  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
-
   return (
-    <section
+    <ScrollRevealWrapper
       id="jegyeket-berleteket"
-      data-logo-theme="vaj"
-      ref={sectionRef}
+      dataLogoTheme="vaj"
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[85svh] w-full flex-col items-center bg-[#355168] px-[clamp(16px,5vw,80px)] pb-[clamp(40px,5vh,72px)] pt-[clamp(32px,3vh,56px)] text-center text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#355168]"
     >
-      <h2
-        className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
-      >
+      <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
         Jegyeket, Bérleteket!
       </h2>
 
       <div
-        style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
-        className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
+        style={{ animationDelay: '0.1s' }}
+        className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
           ELINDULT A JEGYÉRTÉKESÍTÉS!
@@ -142,17 +62,29 @@ export default function JegyekSection() {
 
       <div className="mx-auto mb-10 mt-4 grid w-full max-w-[1600px] grid-cols-1 justify-items-center gap-6 md:mb-12 md:mt-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
         {TICKET_IMAGES.map((img, index) => (
-          <TicketCard key={index} img={img} index={index} isSectionVisible={isVisible} />
+          <a
+            key={index}
+            href={siteConfig.externalLinks.ticketSales}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ animationDelay: `${0.2 + index * 0.15}s` }}
+            className="group/ticket block opacity-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-4 hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              width={350}
+              height={500}
+              loading="lazy"
+              className="h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover/ticket:-rotate-2 group-hover/ticket:scale-105 group-hover/ticket:brightness-110 sm:w-[280px] md:w-[260px] lg:w-[220px] xl:w-[260px] 2xl:w-[300px]"
+            />
+          </a>
         ))}
       </div>
 
       <div
-        style={{ animationDelay: isVisible ? '0.8s' : '0s' }}
-        className={`w-full max-w-[800px] font-[family-name:var(--font-body)] ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
+        style={{ animationDelay: '0.8s' }}
+        className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <p className="mb-[clamp(36px,5vh,56px)] text-[clamp(18px,4vw,24px)] leading-[1.6] md:text-[clamp(16px,2vw,26px)]">
           A 2026-os fesztiválra az Early Bird jegyek elfogytak! Már csak a normál jegyek elérhetőek,
@@ -182,6 +114,6 @@ export default function JegyekSection() {
           </a>
         </div>
       </div>
-    </section>
+    </ScrollRevealWrapper>
   );
 }

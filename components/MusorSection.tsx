@@ -1,6 +1,4 @@
-'use client';
-
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import ScrollRevealWrapper from './ScrollRevealWrapper';
 
 const lineupData = {
   friday: [
@@ -120,7 +118,6 @@ const SpotifyIcon = ({ className }: { className?: string }) => (
 
 function LineupList({
   items,
-  isVisible,
   baseDelay,
 }: {
   items: {
@@ -130,7 +127,6 @@ function LineupList({
     facebook?: string;
     spotify?: string;
   }[];
-  isVisible: boolean;
   baseDelay: number;
 }) {
   return (
@@ -138,21 +134,17 @@ function LineupList({
       {items.map((item, index) => (
         <div
           key={index}
-          style={{ animationDelay: isVisible ? `${baseDelay + index * 0.1}s` : '0s' }}
-          className={`group relative flex flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] sm:gap-4 sm:p-4 md:gap-6 ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
+          style={{ animationDelay: `${baseDelay + index * 0.1}s` }}
+          className="group/card relative flex flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
         >
-          <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover:scale-110 group-hover:bg-black/60 sm:min-w-[80px]">
+          <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
             <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
               {item.time}
             </span>
           </div>
 
           <div className="relative z-10 flex w-full min-w-0 flex-row items-center justify-between gap-2 sm:gap-3">
-            <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
+            <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
               {item.artist}
             </span>
 
@@ -198,68 +190,47 @@ function LineupList({
 }
 
 export default function MusorSection() {
-  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
-
   return (
-    <section
+    <ScrollRevealWrapper
       id="musor"
-      data-logo-theme="vaj"
-      ref={sectionRef}
+      dataLogoTheme="vaj"
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#354b3d] px-[clamp(16px,5vw,80px)] pb-[clamp(24px,3vh,48px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#354b3d]"
     >
-      <h2
-        className={`m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal md:text-[clamp(28px,4.5vw,60px)] ${
-          isVisible
-            ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-            : 'opacity-0'
-        }`}
-      >
+      <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
         Műsor
       </h2>
 
       <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 px-4 md:gap-10 xl:flex-row xl:gap-4 2xl:gap-24">
         <div className="min-w-0 flex-1">
           <h3
-            style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
-            className={`mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] drop-shadow-md md:mb-6 md:pb-3 md:text-4xl ${
-              isVisible
-                ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-                : 'opacity-0'
-            }`}
+            style={{ animationDelay: '0.1s' }}
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
             Péntek
           </h3>
-          <LineupList items={lineupData.friday} isVisible={isVisible} baseDelay={0.2} />
+          <LineupList items={lineupData.friday} baseDelay={0.2} />
         </div>
 
         <div className="min-w-0 flex-1">
           <h3
-            style={{ animationDelay: isVisible ? '0.3s' : '0s' }}
-            className={`mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] drop-shadow-md md:mb-6 md:pb-3 md:text-4xl ${
-              isVisible
-                ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-                : 'opacity-0'
-            }`}
+            style={{ animationDelay: '0.3s' }}
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
             Szombat
           </h3>
-          <LineupList items={lineupData.saturday} isVisible={isVisible} baseDelay={0.4} />
+          <LineupList items={lineupData.saturday} baseDelay={0.4} />
         </div>
 
         <div className="min-w-0 flex-1">
           <h3
-            style={{ animationDelay: isVisible ? '0.5s' : '0s' }}
-            className={`mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] drop-shadow-md md:mb-6 md:pb-3 md:text-4xl ${
-              isVisible
-                ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-                : 'opacity-0'
-            }`}
+            style={{ animationDelay: '0.5s' }}
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
             Vasárnap
           </h3>
-          <LineupList items={lineupData.sunday} isVisible={isVisible} baseDelay={0.6} />
+          <LineupList items={lineupData.sunday} baseDelay={0.6} />
         </div>
       </div>
-    </section>
+    </ScrollRevealWrapper>
   );
 }
