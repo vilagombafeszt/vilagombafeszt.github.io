@@ -12,8 +12,8 @@ const SECTIONS = [
   { id: 'kapcsolat', label: 'Kapcsolat' },
 ] as const;
 
-const LOGO_VAJ = '/page_images/cimlogo_vaj.png';
-const LOGO_KEK = '/page_images/cimlogo_kek.png';
+const LOGO_VAJ = '/page_images/cimlogo_vaj.webp';
+const LOGO_KEK = '/page_images/cimlogo_kek.webp';
 
 function smoothScrollTo(id: string) {
   const elId = id.replace('#', '');

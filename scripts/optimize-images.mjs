@@ -79,7 +79,6 @@ async function processGalleryFolder(folderName, jsonFile, options = {}) {
     fs.unlinkSync(src);
   }
 
-  // Also include already-converted WebP files not just created
   const existingWebPs = fs
     .readdirSync(folderPath)
     .filter((f) => f.endsWith('.webp') && !webpNames.includes(f));
@@ -100,16 +99,26 @@ async function processPageImages() {
   const pageDir = path.join(publicDir, 'page_images');
   console.log('\nProcessing page_images...');
 
-  // Images to convert/compress. Add entries here when new page images are added.
-  // Use `dst` with a .webp extension to convert, or same extension to compress in-place.
   const targets = [
-    // Hero background – resize to max 1920 px wide (expects a JPG/PNG source named IMG_1367.jpg/png)
+    // --- BRAND LOGOS ---
+    {
+      src: 'cimlogo_kek.png',
+      dst: 'cimlogo_kek.webp',
+      opts: { maxWidth: 300, quality: 85 },
+      keepSource: true,
+    },
+    {
+      src: 'cimlogo_vaj.png',
+      dst: 'cimlogo_vaj.webp',
+      opts: { maxWidth: 300, quality: 85 },
+      keepSource: true,
+    },
+    // --- HERO & ICONS ---
     {
       src: 'IMG_1367.jpg',
       dst: 'IMG_1367.webp',
       opts: { maxWidth: 1920, quality: 82 },
     },
-    // Social / document icons – resize to max 300 px
     {
       src: 'facebook.png',
       dst: 'facebook.webp',
@@ -125,7 +134,7 @@ async function processPageImages() {
       dst: 'document_blue.webp',
       opts: { maxWidth: 120, quality: 85 },
     },
-    // Schedule images
+    // --- SCHEDULE ---
     {
       src: 'pentek.jpg',
       dst: 'pentek.webp',
@@ -141,7 +150,7 @@ async function processPageImages() {
       dst: 'vasarnap.webp',
       opts: { maxWidth: 1080, quality: 83 },
     },
-    // Ticket images
+    // --- TICKETS ---
     {
       src: 'early_bird_berlet.png',
       dst: 'early_bird_berlet.webp',
@@ -174,7 +183,7 @@ async function processPageImages() {
     },
   ];
 
-  for (const { src, dst, opts } of targets) {
+  for (const { src, dst, opts, keepSource } of targets) {
     const srcPath = path.join(pageDir, src);
     const dstPath = path.join(pageDir, dst);
     if (!fs.existsSync(srcPath)) continue;
@@ -185,8 +194,7 @@ async function processPageImages() {
       `  ${src} → ${dst}: ${(before / 1024).toFixed(0)} KB → ${(after / 1024).toFixed(0)} KB (${pct}% saved)`,
     );
 
-    // Remove the original if it was converted to a different filename
-    if (src !== dst && fs.existsSync(srcPath)) {
+    if (src !== dst && fs.existsSync(srcPath) && !keepSource) {
       fs.unlinkSync(srcPath);
     }
   }

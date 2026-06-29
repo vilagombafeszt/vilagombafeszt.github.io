@@ -97,6 +97,7 @@ const TicketCard = ({
         alt={img.alt}
         width={350}
         height={500}
+        loading="lazy"
         className={`h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover:-rotate-2 md:group-hover:scale-105 md:group-hover:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
           isMobileActive ? '-rotate-2 scale-[1.15] brightness-110' : ''
         }`}
