@@ -99,13 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" as="image" href="/page_images/IMG_1367.webp" type="image/webp" />
         {/* Preconnect to Google Maps to speed up LazyMap loading */}
         <link rel="preconnect" href="https://www.google.com" />
-        {/* Font Awesome */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
-        />
+
         {/* Cookie Consent */}
         <Script
           src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"
