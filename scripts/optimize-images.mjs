@@ -9,7 +9,7 @@
  *
  * What it does:
  * - Compresses page_images/ (hero, logos) in-place as WebP
- * - Converts gallery images in index_pictures/ and index_pictures2/ to WebP
+ * - Converts gallery images to WebP
  * - Updates images.json and images2.json with the new WebP filenames
  * - Removes original JPG/PNG files after conversion
  */
@@ -205,12 +205,17 @@ async function main() {
 
   await processPageImages();
 
-  await processGalleryFolder('index_pictures', 'images.json', {
+  await processGalleryFolder('index-pictures-2024', 'images-2024.json', {
     maxWidth: 1200,
     quality: 82,
   });
 
-  await processGalleryFolder('index_pictures2', 'images2.json', {
+  await processGalleryFolder('index-pictures-2025', 'images-2025.json', {
+    maxWidth: 1200,
+    quality: 82,
+  });
+
+  await processGalleryFolder('index-pictures-nyarnyito', 'images-nyarnyito.json', {
     maxWidth: 1200,
     quality: 82,
   });

@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-import indexPictures from '../public/images.json';
-import indexPictures2 from '../public/images2.json';
+import indexPictures2024 from '../public/images-2024.json';
+import indexPictures2025 from '../public/images-2025.json';
+import indexPicturesnyarnyito from '../public/images-nyarnito.json';
 
 function useRandomImage(files: string[], folder: string) {
   const [src, setSrc] = useState('');
@@ -39,8 +40,9 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 export default function KeptarSection() {
   const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
-  const album1Src = useRandomImage(indexPictures, 'index_pictures');
-  const album2Src = useRandomImage(indexPictures2, 'index_pictures2');
+  const album1Src = useRandomImage(indexPictures2024, 'index-pictures-2024');
+  const album2Src = useRandomImage(indexPictures2025, 'index-pictures-2025');
+  const album3Src = useRandomImage(indexPicturesnyarnyito, 'index-pictures-nyarnyito');
 
   return (
     <section
@@ -59,7 +61,8 @@ export default function KeptarSection() {
         Képtár
       </h2>
 
-      <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[1400px] lg:grid-cols-2 lg:gap-[clamp(24px,3vw,48px)]">
+      <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[95%] lg:grid-cols-3 lg:gap-[clamp(32px,4vw,64px)] xl:max-w-[1800px]">
+        {/* Album 1: ViláGomba 2024 */}
         <a
           href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7"
           target="_blank"
@@ -82,11 +85,12 @@ export default function KeptarSection() {
               className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
             />
           )}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4.5vw,64px)]">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
             ViláGomba 2024
           </div>
         </a>
 
+        {/* Album 2: ViláGomba 2025 */}
         <a
           href="https://photos.app.goo.gl/njhqn6NmA3wEk73H7"
           target="_blank"
@@ -109,14 +113,42 @@ export default function KeptarSection() {
               className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
             />
           )}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4.5vw,64px)]">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
             ViláGomba 2025
+          </div>
+        </a>
+
+        {/* Album 3: Nyárnyitó */}
+        <a
+          href="https://photos.app.goo.gl/faBRAoSwUqxKYiFi7"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ animationDelay: isVisible ? '0.3s' : '0s' }}
+          className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
+            isVisible
+              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+              : 'opacity-0'
+          }`}
+        >
+          {album3Src && (
+            <Image
+              src={album3Src}
+              alt="Nyárnyitó"
+              width={800}
+              height={600}
+              unoptimized
+              loading="lazy"
+              className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
+            />
+          )}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
+            Nyárnyitó 2026
           </div>
         </a>
       </div>
 
       <div
-        style={{ animationDelay: isVisible ? '0.35s' : '0s' }}
+        style={{ animationDelay: isVisible ? '0.45s' : '0s' }}
         className={`mt-[clamp(36px,6vh,80px)] font-[family-name:var(--font-body)] text-[clamp(17px,4vw,22px)] font-semibold text-[#ac9d9d] md:text-[clamp(18px,2vw,28px)] ${
           isVisible
             ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
@@ -127,7 +159,7 @@ export default function KeptarSection() {
       </div>
 
       <div
-        style={{ animationDelay: isVisible ? '0.45s' : '0s' }}
+        style={{ animationDelay: isVisible ? '0.55s' : '0s' }}
         className={`mt-2 flex w-full items-center justify-center font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] md:text-[clamp(16px,1.8vw,26px)] ${
           isVisible
             ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
