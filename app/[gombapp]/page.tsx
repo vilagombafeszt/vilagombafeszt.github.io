@@ -8,6 +8,7 @@ import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import LoginForm from '@/components/gombapp/LoginForm';
 import Image from 'next/image';
+import packageInfo from '../../package.json';
 
 const ALLOWED_ADMIN_UIDS = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_UIDS?.split(',') || [];
 
@@ -153,7 +154,7 @@ export default function GombAppHome() {
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
       <footer className="mt-auto shrink-0 pt-5">
-        <p className="text-center">v2.2.2</p>
+        <p className="text-center">v{packageInfo.version}</p>
       </footer>
     </>
   );
