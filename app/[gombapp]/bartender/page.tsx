@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, set, get } from 'firebase/database';
+import { ref, set, get, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
@@ -292,33 +292,53 @@ export default function BartenderPage() {
         orderPrices.push(price);
       });
 
-      const snapshot = await get(userOrderRef);
-      const previousData = snapshot.exists() ? snapshot.val() : null;
-
-      let existingOrders: string[] = [];
-      let existingOrderPrices: number[] = [];
-      let existingTotalPrice = 0;
-      let existingOrderCount = 0;
-
-      if (previousData) {
-        existingOrders = previousData.orderList || [];
-        existingOrderPrices = previousData.orderPrices || [];
-        existingTotalPrice = previousData.totalPrice || 0;
-        existingOrderCount = previousData.orderCount || 0;
-      }
-
       const currentOrderItems = [...orderItems];
 
-      await set(userOrderRef, {
-        email: user.email,
-        orderList: existingOrders.concat(currentOrderItems),
-        orderPrices: existingOrderPrices.concat(orderPrices),
-        totalPrice: existingTotalPrice + orderTotal,
-        orderCount: existingOrderCount + 1,
+      await runTransaction(userOrderRef, (currentData) => {
+        let existingOrders: string[] = [];
+        let existingOrderPrices: number[] = [];
+        let existingTotalPrice = 0;
+        let existingOrderCount = 0;
+
+        if (currentData) {
+          existingOrders = currentData.orderList || [];
+          existingOrderPrices = currentData.orderPrices || [];
+          existingTotalPrice = currentData.totalPrice || 0;
+          existingOrderCount = currentData.orderCount || 0;
+        }
+
+        return {
+          email: user.email,
+          orderList: existingOrders.concat(currentOrderItems),
+          orderPrices: existingOrderPrices.concat(orderPrices),
+          totalPrice: existingTotalPrice + orderTotal,
+          orderCount: existingOrderCount + 1,
+        };
       });
 
       const handleUndo = () => {
-        set(userOrderRef, previousData)
+        runTransaction(userOrderRef, (currentData) => {
+          if (!currentData) return currentData;
+
+          const existingOrders: string[] = currentData.orderList || [];
+          const existingOrderPrices: number[] = currentData.orderPrices || [];
+          const existingTotalPrice = currentData.totalPrice || 0;
+          const existingOrderCount = currentData.orderCount || 0;
+
+          return {
+            email: currentData.email,
+            orderList: existingOrders.slice(
+              0,
+              Math.max(0, existingOrders.length - currentOrderItems.length)
+            ),
+            orderPrices: existingOrderPrices.slice(
+              0,
+              Math.max(0, existingOrderPrices.length - orderPrices.length)
+            ),
+            totalPrice: Math.max(0, existingTotalPrice - orderTotal),
+            orderCount: Math.max(0, existingOrderCount - 1),
+          };
+        })
           .then(() => {
             setOrderItems(currentOrderItems);
             setView('order');

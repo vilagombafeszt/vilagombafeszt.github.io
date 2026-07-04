@@ -383,36 +383,59 @@ export default function TicketClerkPage() {
       });
 
       const userOrderRef = ref(database!, 'Rendelések/Jegy/' + user.uid);
-      const snapshot = await get(userOrderRef);
-      const previousData = snapshot.exists() ? snapshot.val() : null;
-
-      let existingOrders: string[] = [];
-      let existingOrderPrices: number[] = [];
-      let existingTotalPrice = 0;
-      let existingOrderCount = 0;
-
-      if (previousData) {
-        existingOrders = previousData.orderList || [];
-        existingOrderPrices = previousData.orderPrices || [];
-        existingTotalPrice = previousData.totalPrice || 0;
-        existingOrderCount = previousData.orderCount || 0;
-      }
-
       const currentOrderItems = [...orderItems];
 
       await Promise.all([
-        set(userOrderRef, {
-          email: user.email,
-          orderList: existingOrders.concat(currentOrderItems),
-          orderPrices: existingOrderPrices.concat(orderPrices),
-          totalPrice: existingTotalPrice + orderTotal,
-          orderCount: existingOrderCount + 1,
+        runTransaction(userOrderRef, (currentData) => {
+          let existingOrders: string[] = [];
+          let existingOrderPrices: number[] = [];
+          let existingTotalPrice = 0;
+          let existingOrderCount = 0;
+
+          if (currentData) {
+            existingOrders = currentData.orderList || [];
+            existingOrderPrices = currentData.orderPrices || [];
+            existingTotalPrice = currentData.totalPrice || 0;
+            existingOrderCount = currentData.orderCount || 0;
+          }
+
+          return {
+            email: user.email,
+            orderList: existingOrders.concat(currentOrderItems),
+            orderPrices: existingOrderPrices.concat(orderPrices),
+            totalPrice: existingTotalPrice + orderTotal,
+            orderCount: existingOrderCount + 1,
+          };
         }),
         updateMaxTicketCounts(ticketCounts),
       ]);
 
       const handleUndo = () => {
-        Promise.all([set(userOrderRef, previousData), revertMaxTicketCounts(ticketCounts)])
+        Promise.all([
+          runTransaction(userOrderRef, (currentData) => {
+            if (!currentData) return currentData;
+
+            const existingOrders: string[] = currentData.orderList || [];
+            const existingOrderPrices: number[] = currentData.orderPrices || [];
+            const existingTotalPrice = currentData.totalPrice || 0;
+            const existingOrderCount = currentData.orderCount || 0;
+
+            return {
+              email: currentData.email,
+              orderList: existingOrders.slice(
+                0,
+                Math.max(0, existingOrders.length - currentOrderItems.length)
+              ),
+              orderPrices: existingOrderPrices.slice(
+                0,
+                Math.max(0, existingOrderPrices.length - orderPrices.length)
+              ),
+              totalPrice: Math.max(0, existingTotalPrice - orderTotal),
+              orderCount: Math.max(0, existingOrderCount - 1),
+            };
+          }),
+          revertMaxTicketCounts(ticketCounts),
+        ])
           .then(() => {
             setOrderItems(currentOrderItems); // repopulate cart
             setView('order');
