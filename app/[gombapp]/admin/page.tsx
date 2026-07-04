@@ -119,7 +119,7 @@ export default function AdminPage() {
   const [isViewLoaded, setIsViewLoaded] = useState(false);
   const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
   const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
-  const [, setTicketCapacities] = useState<TicketCapacities>({
+  const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({
     friday: 0,
     saturday: 0,
     sunday: 0,
