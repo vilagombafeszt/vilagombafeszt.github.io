@@ -16,8 +16,24 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = localStorage.getItem('gombapp_user');
+        if (cached) return JSON.parse(cached) as User;
+      } catch (e) {
+        // ignore JSON parse errors
+      }
+    }
+    return null;
+  });
+
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !localStorage.getItem('gombapp_user');
+    }
+    return true;
+  });
 
   useEffect(() => {
     if (!auth) {
@@ -25,15 +41,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     const unsubscribe = onAuthStateChanged(auth, (u) => {
+      if (u) {
+        // Cache essential fields to avoid JSON cyclical errors and keep storage light
+        const userToCache = {
+          uid: u.uid,
+          email: u.email,
+          displayName: u.displayName,
+          photoURL: u.photoURL,
+        };
+        localStorage.setItem('gombapp_user', JSON.stringify(userToCache));
+      } else {
+        localStorage.removeItem('gombapp_user');
+      }
       setUser(u);
       setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
 }

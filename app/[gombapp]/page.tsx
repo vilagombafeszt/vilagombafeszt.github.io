@@ -18,20 +18,16 @@ export default function GombAppHome() {
   const params = useParams();
   const gombappBase = params.gombapp || 'GombApp';
   const [showLogin, setShowLogin] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setIsNavigating(false);
+    setIsClient(true);
     return () => {
       if (navTimerRef.current) clearTimeout(navTimerRef.current);
     };
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setInitialLoading(false), 2000);
-    return () => clearTimeout(timer);
   }, []);
 
   const handleLogout = () => {
@@ -70,41 +66,31 @@ export default function GombAppHome() {
       <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
         <div
           className="flex w-full flex-row items-center justify-center"
-          style={user ? { flexDirection: 'column' } : undefined}
+          style={isClient && user ? { flexDirection: 'column' } : undefined}
         >
           <h1 className="flex-1 text-center text-[1.5em] text-gombapp-text">GombApp</h1>
         </div>
 
-        {initialLoading ? (
-          <div
-            className="mt-2.5 flex w-full flex-col items-center justify-center gap-5"
-            style={{ marginTop: '10px' }}
-          >
-            <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
-          </div>
-        ) : (
-          <div className="mt-2.5 flex w-full flex-col items-center justify-center gap-5">
-            {!user && !loading && (
+        <div className="mt-2.5 flex min-h-[92px] w-full flex-col items-center justify-center gap-5">
+          {!isClient || loading ? null : !user ? (
+            <button
+              className="cursor-pointer rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg"
+              onClick={() => setShowLogin((prev) => !prev)}
+            >
+              Bejelentkezés
+            </button>
+          ) : (
+            <>
+              <span className="text-[25px]">Be vagy jelentkezve!</span>
               <button
-                className="cursor-pointer rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg"
-                onClick={() => setShowLogin((prev) => !prev)}
+                className="ml-2.5 cursor-pointer rounded-xl border-none bg-[#c62828] px-5 py-2.5 text-[0.7em] text-white transition-all duration-300 ease-in-out hover:bg-[#b71c1c]"
+                onClick={handleLogout}
               >
-                Bejelentkezés
+                Kijelentkezés
               </button>
-            )}
-            {user && (
-              <>
-                <span className="text-[25px]">Be vagy jelentkezve!</span>
-                <button
-                  className="ml-2.5 cursor-pointer rounded-xl border-none bg-[#c62828] px-5 py-2.5 text-[0.7em] text-white transition-all duration-300 ease-in-out hover:bg-[#b71c1c]"
-                  onClick={handleLogout}
-                >
-                  Kijelentkezés
-                </button>
-              </>
-            )}
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </header>
 
       <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
@@ -167,7 +153,7 @@ export default function GombAppHome() {
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
       <footer className="mt-auto shrink-0 pt-5">
-        <p className="text-center">v2.2.1</p>
+        <p className="text-center">v2.2.2</p>
       </footer>
     </>
   );

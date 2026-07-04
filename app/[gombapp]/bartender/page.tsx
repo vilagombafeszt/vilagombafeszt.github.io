@@ -345,8 +345,6 @@ export default function BartenderPage() {
     }
   };
 
-  if (loading) return null;
-
   return (
     <>
       {isNavigating && (

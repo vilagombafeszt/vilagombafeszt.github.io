@@ -208,7 +208,7 @@ export default function AdminPage() {
 
   const formatNumber = (n: number) => n.toLocaleString('hu-HU').replace(/,/g, ' ');
 
-  if (loading || !authorized) return null;
+  if (!authorized) return null;
 
   const summaryOrders = bartenderStats.totalOrders + ticketStats.totalOrders;
   const summaryOrderCount = bartenderStats.totalOrderCount + ticketStats.totalOrderCount;

@@ -439,8 +439,6 @@ export default function TicketClerkPage() {
     }
   };
 
-  if (loading) return null;
-
   return (
     <>
       {isNavigating && (

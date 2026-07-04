@@ -62,8 +62,6 @@ export default function ProgramsPage() {
     }
   }, [user, loading, router, showSnackbar, gombappBase]);
 
-  if (loading) return null;
-
   return (
     <>
       {isNavigating && (
