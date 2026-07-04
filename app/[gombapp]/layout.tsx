@@ -45,7 +45,7 @@ export function generateStaticParams() {
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`gombapp ${alumniSans.variable}`}
+      className={`gombapp ${alumniSans.variable} fixed inset-0 flex flex-col overflow-hidden bg-gombapp-bg text-[20px] text-gombapp-text md:text-[25px]`}
       style={{ fontFamily: 'var(--font-alumni-sans), Alumni Sans, sans-serif' }}
     >
       {/* Force html/body background to match GombApp — eliminates black bleed on all browsers */}

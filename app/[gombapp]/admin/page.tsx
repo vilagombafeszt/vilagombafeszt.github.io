@@ -62,11 +62,11 @@ function StatCard({ label, value, unit }: { label: string; value: number; unit: 
   const formatted = value.toLocaleString('hu-HU').replace(/,/g, ' ');
 
   return (
-    <div className="admin-stat-card">
-      <div className="admin-stat-label">{label}</div>
-      <div className="admin-stat-value">
+    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+      <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">{label}</div>
+      <div className="mt-2 break-words text-[34px] font-bold leading-none text-gombapp-text">
         {formatted}
-        <span className="admin-stat-unit">{unit}</span>
+        <span className="ml-1.5 text-[18px] font-semibold opacity-95">{unit}</span>
       </div>
     </div>
   );
@@ -74,9 +74,9 @@ function StatCard({ label, value, unit }: { label: string; value: number; unit: 
 
 function StatTextCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="admin-stat-card">
-      <div className="admin-stat-label">{label}</div>
-      <div className="admin-stat-value-text">{value}</div>
+    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+      <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">{label}</div>
+      <div className="mt-2 break-words text-[22px] font-bold leading-[1.2]">{value}</div>
     </div>
   );
 }
@@ -217,58 +217,73 @@ export default function AdminPage() {
   return (
     <>
       {isNavigating && (
-        <div className="nav-loader-container">
-          <div className="loading">
-            <div className="loader loader-mb" />
+        <div className="fixed inset-0 z-[9999] flex animate-gombapp-fade-in-fast flex-col items-center justify-center bg-gombapp-bg">
+          <div className="p-10 text-center text-[18px] text-[#666]">
+            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
             <br />
             Betöltés...
           </div>
         </div>
       )}
 
-      <header>
-        <div className="header-content">
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
+        <div className="flex w-full flex-row items-center justify-center">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => handleNavigation(`/${gombappBase}/`)}
+            >
               Vissza
             </button>
           ) : (
-            <button className="back-button" onClick={() => setView('menu')}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('menu')}
+            >
               Vissza
             </button>
           )}
-          <h1 className="bartender-title">Admin</h1>
+          <h1 className="mt-[5px] text-center text-[40px]">Admin</h1>
         </div>
       </header>
 
-      <main>
+      <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
         {view === 'menu' && (
-          <div className="menu adjust">
-            <button className="button" onClick={() => setView('bartender')}>
+          <div className="menu adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('bartender')}
+            >
               <Image
                 src="/GombApp/images/stats.png"
                 alt="Ital statisztika"
-                className="profile-pic"
+                className="mb-2.5 h-[100px] w-[100px]"
                 width={100}
                 height={100}
               />
               Ital statisztika
             </button>
-            <button className="button" onClick={() => setView('ticket')}>
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('ticket')}
+            >
               <Image
                 src="/GombApp/images/stats.png"
                 alt="Jegy statisztika"
-                className="profile-pic"
+                className="mb-2.5 h-[100px] w-[100px]"
                 width={100}
                 height={100}
               />
               Jegy statisztika
             </button>
-            <button className="button" onClick={() => setView('summary')}>
+            <button
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('summary')}
+            >
               <Image
                 src="/GombApp/images/stats.png"
                 alt="Összes statisztika"
-                className="profile-pic"
+                className="mb-2.5 h-[100px] w-[100px]"
                 width={100}
                 height={100}
               />
@@ -278,22 +293,26 @@ export default function AdminPage() {
         )}
 
         {isFetchingStats && view !== 'menu' ? (
-          <div className="loading admin-loading-container">
-            <div className="loader loader-mb" />
+          <div className="mt-[50px] p-10 text-center text-[18px] text-[#666]">
+            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
             <br />
             Adatok betöltése...
           </div>
         ) : (
           <>
             {view === 'bartender' && (
-              <div className="bartenderstat-container">
-                <div className="admin-stats">
-                  <div className="admin-stats-header">
-                    <div className="admin-stats-title">Pultos statisztika</div>
-                    <div className="admin-stats-subtitle">Ital rendelések összesítve</div>
+              <div className="w-full overflow-y-auto py-4 pb-6">
+                <div className="mx-auto flex w-full max-w-[560px] flex-col gap-3.5">
+                  <div className="flex flex-col gap-1 px-0.5 py-2">
+                    <div className="text-[clamp(30px,3.2vh,38px)] font-bold tracking-[0.2px]">
+                      Pultos statisztika
+                    </div>
+                    <div className="text-[22px] font-semibold opacity-90">
+                      Ital rendelések összesítve
+                    </div>
                   </div>
 
-                  <div className="admin-stats-grid">
+                  <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                     <StatCard
                       label="Rendelt tételek"
                       value={bartenderStats.totalOrders}
@@ -301,11 +320,13 @@ export default function AdminPage() {
                     />
                     <StatCard label="Rendelések" value={bartenderStats.totalOrderCount} unit="db" />
                     <StatTextCard label="Legnépszerűbb ital" value={bartenderStats.mostOrdered} />
-                    <div className="admin-stat-card">
-                      <div className="admin-stat-label">Bevétel</div>
-                      <div className="admin-stat-value">
+                    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+                      <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">
+                        Bevétel
+                      </div>
+                      <div className="mt-2 break-words text-[34px] font-bold leading-none text-gombapp-text">
                         {formatNumber(bartenderStats.totalRevenue)}
-                        <span className="admin-stat-unit">HUF</span>
+                        <span className="ml-1.5 text-[18px] font-semibold opacity-95">HUF</span>
                       </div>
                     </div>
                   </div>
@@ -314,72 +335,84 @@ export default function AdminPage() {
             )}
 
             {view === 'ticket' && (
-              <div className="ticketstat-container">
-                <div className="admin-stats">
-                  <div className="admin-section">
-                    <div className="admin-stats-header">
-                      <div className="admin-stats-title">Jegyeladás statisztika</div>
-                      <div className="admin-stats-subtitle">Jegy rendelések összesítve</div>
+              <div className="w-full overflow-y-auto py-4 pb-6">
+                <div className="mx-auto flex w-full max-w-[560px] flex-col gap-3.5">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-1 px-0.5 py-2">
+                      <div className="text-[clamp(30px,3.2vh,38px)] font-bold tracking-[0.2px]">
+                        Jegyeladás statisztika
+                      </div>
+                      <div className="text-[22px] font-semibold opacity-90">
+                        Jegy rendelések összesítve
+                      </div>
                     </div>
 
-                    <div className="admin-stats-grid">
+                    <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                       <StatCard label="Eladott jegyek" value={ticketStats.totalOrders} unit="db" />
                       <StatCard label="Rendelések" value={ticketStats.totalOrderCount} unit="db" />
                       <StatTextCard label="Legnépszerűbb jegy" value={ticketStats.mostOrdered} />
-                      <div className="admin-stat-card">
-                        <div className="admin-stat-label">Jegybevétel</div>
-                        <div className="admin-stat-value">
+                      <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+                        <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">
+                          Jegybevétel
+                        </div>
+                        <div className="mt-2 break-words text-[34px] font-bold leading-none text-gombapp-text">
                           {formatNumber(ticketStats.totalRevenue)}
-                          <span className="admin-stat-unit">HUF</span>
+                          <span className="ml-1.5 text-[18px] font-semibold opacity-95">HUF</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="admin-section">
-                    <div className="admin-section-title">Szabad helyek</div>
-                    <div className="admin-capacity-card">
-                      <div className="admin-capacity-row">
-                        <div className="admin-capacity-day">Péntek</div>
-                        <div className="admin-capacity-right">
+                  <div className="flex flex-col gap-3">
+                    <div className="px-0.5 text-[24px] font-bold">Szabad helyek</div>
+                    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Péntek</div>
+                        <div className="inline-flex items-center gap-2.5">
                           <span
-                            className={`admin-pill ${ticketCapacities.friday === 0 ? 'danger' : ''}`}
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.friday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
                           >
                             {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                           </span>
-                          <span className="admin-capacity-value">
+                          <span className="text-[22px] font-extrabold">
                             {formatNumber(ticketCapacities.friday)}
-                            <span className="admin-stat-unit">hely</span>
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
                           </span>
                         </div>
                       </div>
 
-                      <div className="admin-capacity-row">
-                        <div className="admin-capacity-day">Szombat</div>
-                        <div className="admin-capacity-right">
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Szombat</div>
+                        <div className="inline-flex items-center gap-2.5">
                           <span
-                            className={`admin-pill ${ticketCapacities.saturday === 0 ? 'danger' : ''}`}
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.saturday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
                           >
                             {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                           </span>
-                          <span className="admin-capacity-value">
+                          <span className="text-[22px] font-extrabold">
                             {formatNumber(ticketCapacities.saturday)}
-                            <span className="admin-stat-unit">hely</span>
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
                           </span>
                         </div>
                       </div>
 
-                      <div className="admin-capacity-row">
-                        <div className="admin-capacity-day">Vasárnap</div>
-                        <div className="admin-capacity-right">
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Vasárnap</div>
+                        <div className="inline-flex items-center gap-2.5">
                           <span
-                            className={`admin-pill ${ticketCapacities.sunday === 0 ? 'danger' : ''}`}
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.sunday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
                           >
                             {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
                           </span>
-                          <span className="admin-capacity-value">
+                          <span className="text-[22px] font-extrabold">
                             {formatNumber(ticketCapacities.sunday)}
-                            <span className="admin-stat-unit">hely</span>
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
                           </span>
                         </div>
                       </div>
@@ -390,21 +423,25 @@ export default function AdminPage() {
             )}
 
             {view === 'summary' && (
-              <div className="statsummary-container">
-                <div className="admin-stats">
-                  <div className="admin-stats-header">
-                    <div className="admin-stats-title">Összes statisztika</div>
-                    <div className="admin-stats-subtitle">Ital + jegy együtt</div>
+              <div className="w-full overflow-y-auto py-4 pb-6">
+                <div className="mx-auto flex w-full max-w-[560px] flex-col gap-3.5">
+                  <div className="flex flex-col gap-1 px-0.5 py-2">
+                    <div className="text-[clamp(30px,3.2vh,38px)] font-bold tracking-[0.2px]">
+                      Összes statisztika
+                    </div>
+                    <div className="text-[22px] font-semibold opacity-90">Ital + jegy együtt</div>
                   </div>
 
-                  <div className="admin-stats-grid">
+                  <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                     <StatCard label="Eladott tételek" value={summaryOrders} unit="db" />
                     <StatCard label="Rendelések" value={summaryOrderCount} unit="db" />
-                    <div className="admin-stat-card full-span">
-                      <div className="admin-stat-label">Teljes bevétel</div>
-                      <div className="admin-stat-value">
+                    <div className="col-span-full rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+                      <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">
+                        Teljes bevétel
+                      </div>
+                      <div className="mt-2 break-words text-[34px] font-bold leading-none text-gombapp-text">
                         {formatNumber(summaryRevenue)}
-                        <span className="admin-stat-unit">HUF</span>
+                        <span className="ml-1.5 text-[18px] font-semibold opacity-95">HUF</span>
                       </div>
                     </div>
                   </div>

@@ -67,35 +67,41 @@ export default function ProgramsPage() {
   return (
     <>
       {isNavigating && (
-        <div className="nav-loader-container">
-          <div className="loading">
-            <div className="loader loader-mb" />
+        <div className="fixed inset-0 z-[9999] flex animate-gombapp-fade-in-fast flex-col items-center justify-center bg-gombapp-bg">
+          <div className="p-10 text-center text-[18px] text-[#666]">
+            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
             <br />
             Betöltés...
           </div>
         </div>
       )}
 
-      <header>
-        <div className="header-content">
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
+        <div className="flex w-full flex-row items-center justify-center">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => handleNavigation(`/${gombappBase}/`)}
+            >
               Vissza
             </button>
           ) : (
-            <button className="back-button" onClick={() => setView('menu')}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('menu')}
+            >
               Vissza
             </button>
           )}
-          <h1 className="bartender-title">Programok</h1>
+          <h1 className="mt-[5px] text-center text-[40px]">Programok</h1>
         </div>
       </header>
 
-      <main>
+      <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
         {view === 'menu' && (
-          <div className="menu adjust">
+          <div className="menu adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
             <button
-              className="calendar-button"
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               onClick={() => {
                 setView('realtime');
                 setIframeLoading(true);
@@ -104,14 +110,14 @@ export default function ProgramsPage() {
               <Image
                 src="/GombApp/images/realtime-calendar.png"
                 alt="Valós idejű program"
-                className="profile-pic"
+                className="mb-2.5 h-[100px] w-[100px]"
                 width={100}
                 height={100}
               />
               Valós idejű
             </button>
             <button
-              className="calendar-button"
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               onClick={() => {
                 setView('agenda');
                 setIframeLoading(true);
@@ -120,7 +126,7 @@ export default function ProgramsPage() {
               <Image
                 src="/GombApp/images/agenda-calendar.png"
                 alt="Napi program"
-                className="profile-pic"
+                className="mb-2.5 h-[100px] w-[100px]"
                 width={100}
                 height={100}
               />
@@ -130,17 +136,17 @@ export default function ProgramsPage() {
         )}
 
         {view === 'realtime' && (
-          <div className="iframe-container">
+          <div className="relative flex min-h-0 w-full flex-1 py-2.5">
             {iframeLoading && (
-              <div className="iframe-loader-overlay">
-                <div className="loader" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
               </div>
             )}
             <iframe
               src={REALTIME_SRC}
               title="Program naptár"
               onLoad={() => setIframeLoading(false)}
-              className="iframe-content"
+              className="w-full flex-1 overflow-hidden rounded-xl border-0 transition-opacity duration-300 ease-in-out"
               style={{ opacity: iframeLoading ? 0 : 1 }}
               scrolling="no"
             />
@@ -148,17 +154,17 @@ export default function ProgramsPage() {
         )}
 
         {view === 'agenda' && (
-          <div className="iframe-container">
+          <div className="relative flex min-h-0 w-full flex-1 py-2.5">
             {iframeLoading && (
-              <div className="iframe-loader-overlay">
-                <div className="loader" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
               </div>
             )}
             <iframe
               src={AGENDA_SRC}
               title="Program naptár"
               onLoad={() => setIframeLoading(false)}
-              className="iframe-content"
+              className="w-full flex-1 overflow-hidden rounded-xl border-0 transition-opacity duration-300 ease-in-out"
               style={{ opacity: iframeLoading ? 0 : 1 }}
               scrolling="no"
             />

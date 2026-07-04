@@ -444,9 +444,9 @@ export default function TicketClerkPage() {
   return (
     <>
       {isNavigating && (
-        <div className="nav-loader-container">
-          <div className="loading">
-            <div className="loader loader-mb" />
+        <div className="fixed inset-0 z-[9999] flex animate-gombapp-fade-in-fast flex-col items-center justify-center bg-gombapp-bg">
+          <div className="p-10 text-center text-[18px] text-[#666]">
+            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
             <br />
             Betöltés...
           </div>
@@ -455,7 +455,7 @@ export default function TicketClerkPage() {
 
       {isSaving && (
         <div className="snackbar-backdrop show full-screen-loader-backdrop">
-          <div className="loader loader-white" />
+          <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-white" />
         </div>
       )}
 
@@ -463,67 +463,70 @@ export default function TicketClerkPage() {
       <BottomSheet isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)}>
         <BottomSheetHeader>Kassza / Visszajáró</BottomSheetHeader>
         <BottomSheetBody>
-          <div className="checkout-content">
-            <div className="checkout-total">
-              Fizetendő: <span>{totalPrice.toLocaleString('hu-HU')} Ft</span>
+          <div className="flex w-full flex-col gap-[15px] pt-2.5">
+            <div className="mb-[5px] flex items-center justify-between rounded-xl border border-gombapp-card-border bg-gombapp-card-bg p-[15px] text-[24px] font-bold">
+              Fizetendő:{' '}
+              <span className="text-[28px] font-extrabold text-[#2e7d32]">
+                {totalPrice.toLocaleString('hu-HU')} Ft
+              </span>
             </div>
-            <div className="checkout-quick-bills">
+            <div className="grid w-full grid-cols-3 gap-2.5">
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(500)}
               >
                 500 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(1000)}
               >
                 1 000 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(2000)}
               >
                 2 000 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(5000)}
               >
                 5 000 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(10000)}
               >
                 10 000 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn"
+                className="cursor-pointer rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] transition-colors hover:bg-[#c8e6c9] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(20000)}
               >
                 20 000 Ft
               </button>
               <button
                 type="button"
-                className="checkout-bill-btn pontos-btn"
+                className="col-span-3 cursor-pointer rounded-xl border border-none border-[#a5d6a7] bg-[#2e7d32] bg-[#e8f5e9] px-2.5 py-3 text-[16px] font-bold text-[#2e7d32] text-white transition-colors hover:bg-[#1b5e20] active:scale-[0.96]"
                 onClick={() => setReceivedAmount(totalPrice)}
               >
                 Pontos
               </button>
             </div>
 
-            <div className="checkout-input-group">
-              <label>Kapott készpénz:</label>
+            <div className="mt-[5px] flex flex-col gap-2">
+              <label className="pl-1 text-[16px] font-bold">Kapott készpénz:</label>
               <input
                 type="number"
-                className="email-field"
+                className="h-10 rounded-xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
                 value={receivedAmount}
                 onChange={(e) => setReceivedAmount(e.target.value ? Number(e.target.value) : '')}
                 placeholder="Egyedi összeg megadása..."
@@ -532,7 +535,7 @@ export default function TicketClerkPage() {
 
             {receivedAmount !== '' && (
               <div
-                className={`checkout-change ${Number(receivedAmount) >= totalPrice ? 'positive' : 'negative'}`}
+                className={`mt-2.5 rounded-xl border-2 p-3.5 text-center text-[24px] font-bold ${Number(receivedAmount) >= totalPrice ? 'border-[#a5d6a7] bg-[#e8f5e9] text-[#2e7d32]' : 'border-[#ef9a9a] bg-gombapp-pill-danger-bg text-[#c62828]'}`}
               >
                 {Number(receivedAmount) >= totalPrice
                   ? `Visszajáró: ${(Number(receivedAmount) - totalPrice).toLocaleString('hu-HU')} Ft`
@@ -542,54 +545,64 @@ export default function TicketClerkPage() {
           </div>
         </BottomSheetBody>
         <BottomSheetFooter>
-          <div className="loginform-buttons">
+          <div className="flex w-full justify-between">
             <button
               type="button"
-              className="cancel-button"
+              className="mr-auto flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               onClick={() => setIsCheckoutOpen(false)}
             >
               Mégse
             </button>
-            <button type="button" className="submit-button" onClick={saveOrder}>
+            <button
+              type="button"
+              className="mt-5 flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={saveOrder}
+            >
               Mentés
             </button>
           </div>
         </BottomSheetFooter>
       </BottomSheet>
 
-      <header>
-        <div className="header-content">
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
+        <div className="flex w-full flex-row items-center justify-center">
           {view === 'menu' ? (
-            <button className="back-button" onClick={() => handleNavigation(`/${gombappBase}/`)}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => handleNavigation(`/${gombappBase}/`)}
+            >
               Vissza
             </button>
           ) : (
-            <button className="back-button" onClick={() => setView('menu')}>
+            <button
+              className="absolute left-[10px] top-1/2 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              onClick={() => setView('menu')}
+            >
               Vissza
             </button>
           )}
-          <h1 className="ticketclerk-title">Jegyárus</h1>
+          <h1 className="mt-[5px] text-center text-[40px]">Jegyárus</h1>
         </div>
       </header>
 
-      <main>
-        <div className="order-container">
+      <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
+        <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-y-auto overflow-x-hidden px-0 py-5">
           {view === 'menu' && (
             <>
-              <div className="item-grid ticket-grid">
+              <div className="mx-auto grid min-h-0 w-full max-w-[500px] flex-1 grid-cols-2 content-center gap-[15px] overflow-y-auto overflow-x-hidden py-[5px] pb-[100px]">
                 {TICKETS.map((ticket) => {
                   const disabled = !capacityLoading && isTicketDisabled(ticket.name);
                   return (
                     <button
                       key={ticket.name}
-                      className={`item-button ${disabled ? 'item-button-disabled' : ''}`.trim()}
+                      className={`flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96] ${disabled ? '!active:scale-100 cursor-not-allowed bg-gombapp-btn-disabled opacity-[0.45]' : ''}`.trim()}
                       onClick={() => !disabled && addItem(ticket.name)}
                       disabled={disabled}
                     >
                       <Image
                         src={ticket.image}
                         alt={ticket.alt}
-                        className="item-pic"
+                        className="mb-[15px] h-[100px] w-[100px] max-[360px]:h-[80px] max-[360px]:w-[80px]"
                         width={100}
                         height={100}
                       />
@@ -628,62 +641,87 @@ export default function TicketClerkPage() {
           )}
 
           {view === 'order' && (
-            <div className="order-list">
-              <h2 className="order-list-header">Rendelt jegyek</h2>
+            <div className="mx-auto flex w-full max-w-[560px] flex-col gap-[15px]">
+              <h2 className="px-1 pb-2 text-[24px] font-bold text-gombapp-text">Rendelt jegyek</h2>
 
               {orderItems.length === 0 ? (
-                <div className="order-empty">
-                  <div className="order-empty-text">A kosár üres</div>
+                <div className="flex flex-col items-center justify-center rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-10">
+                  <div className="text-[18px] font-semibold opacity-80">A kosár üres</div>
                 </div>
               ) : (
-                <div className="order-list-items">
+                <div className="flex w-full flex-col gap-2.5">
                   {Object.entries(groupedItems).map(([name, qty]) => {
                     const unitPrice = getTicketPrice(name);
                     return (
-                      <div key={name} className="order-card">
-                        <div className="order-card-info">
-                          <div className="order-card-name">{name}</div>
-                          <div className="order-card-price">{unitPrice} Ft / db</div>
+                      <div
+                        key={name}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5 max-[399px]:flex-wrap max-[399px]:justify-center min-[400px]:grid min-[400px]:grid-cols-[1.5fr_auto_80px]"
+                      >
+                        <div className="flex min-w-0 flex-col gap-1 max-[399px]:mb-1 max-[399px]:w-full max-[399px]:text-center">
+                          <div className="break-words text-[18px] font-bold leading-[1.2] text-gombapp-text">
+                            {name}
+                          </div>
+                          <div className="whitespace-nowrap text-[15px] font-semibold opacity-90">
+                            {unitPrice} Ft / db
+                          </div>
                         </div>
-                        <div className="order-card-controls">
+                        <div className="flex items-center gap-[15px] rounded-xl border border-gombapp-card-border bg-gombapp-bg p-1">
                           <button
-                            className={`qty-btn ${qty === 1 ? 'qty-btn-remove' : ''}`.trim()}
+                            className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-[10px] border-none bg-gombapp-text text-gombapp-bg transition-transform active:scale-[0.92] ${qty === 1 ? 'bg-gombapp-btn-danger text-gombapp-bg' : ''}`.trim()}
                             onClick={() => throttle(() => removeOneOfType(name))}
                           >
-                            <span className="material-symbols-rounded qty-icon">
+                            <span className="material-symbols-rounded text-[22px] font-bold">
                               {qty === 1 ? 'delete' : 'remove'}
                             </span>
                           </button>
-                          <span className="qty-count">{qty}</span>
-                          <button className="qty-btn" onClick={() => throttle(() => addItem(name))}>
-                            <span className="material-symbols-rounded qty-icon">add</span>
+                          <span className="w-[25px] text-center text-[20px] font-bold tabular-nums">
+                            {qty}
+                          </span>
+                          <button
+                            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-[10px] border-none bg-gombapp-text text-gombapp-bg transition-transform active:scale-[0.92]"
+                            onClick={() => throttle(() => addItem(name))}
+                          >
+                            <span className="material-symbols-rounded text-[22px] font-bold">
+                              add
+                            </span>
                           </button>
                         </div>
-                        <div className="order-card-total">{unitPrice * qty} Ft</div>
+                        <div className="whitespace-nowrap text-right text-[18px] font-extrabold max-[399px]:hidden">
+                          {unitPrice * qty} Ft
+                        </div>
                       </div>
                     );
                   })}
                 </div>
               )}
 
-              <div className="order-summary">
-                <div className="order-summary-row">
-                  <span className="order-summary-label">Összesen</span>
-                  <span className="order-summary-value">
+              <div className="mt-2.5 flex flex-col gap-2.5 rounded-2xl border border-[#a3c9a5] bg-[#d4ebd5] p-5">
+                <div className="flex w-full items-end justify-between border-b-2 border-gombapp-text/10 pb-2.5">
+                  <span className="text-[22px] font-bold">Összesen</span>
+                  <span className="whitespace-nowrap text-[32px] font-extrabold leading-none tracking-[0.5px] text-gombapp-text">
                     {totalPrice.toLocaleString('hu-HU')} Ft
                   </span>
                 </div>
-                <span className="order-summary-count">
+                <span className="text-center text-[15px] font-semibold opacity-90">
                   {orderItems.length} tétel · {Object.keys(groupedItems).length} féle
                 </span>
-                <div className="order-actions-container">
-                  <button className="order-clear-btn" onClick={() => setOrderItems([])}>
+                <div className="mt-2.5 flex items-center gap-2.5">
+                  <button
+                    className="bg-gombapp-btn-danger flex h-[54px] w-[54px] min-w-[54px] cursor-pointer items-center justify-center rounded-xl border-none text-gombapp-bg transition-transform active:scale-[0.96]"
+                    onClick={() => setOrderItems([])}
+                  >
                     <span className="material-symbols-rounded">delete</span>
                   </button>
-                  <button className="order-save-btn" onClick={saveOrder}>
+                  <button
+                    className="h-[54px] flex-1 cursor-pointer rounded-xl border-none bg-gombapp-text text-[18px] font-bold tracking-[0.5px] text-gombapp-bg transition-transform active:scale-[0.96]"
+                    onClick={saveOrder}
+                  >
                     Gyors mentés
                   </button>
-                  <button className="order-save-btn" onClick={openCheckout}>
+                  <button
+                    className="h-[54px] flex-1 cursor-pointer rounded-xl border-none bg-gombapp-text text-[18px] font-bold tracking-[0.5px] text-gombapp-bg transition-transform active:scale-[0.96]"
+                    onClick={openCheckout}
+                  >
                     Kassza
                   </button>
                 </div>
@@ -692,20 +730,22 @@ export default function TicketClerkPage() {
           )}
 
           {view === 'stats' && (
-            <div className="statistics-container">
+            <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-y-auto p-5">
               {statsLoading || capacityLoading ? (
-                <div className="loading">
-                  <div className="loader loader-mb" />
+                <div className="p-10 text-center text-[18px] text-[#666]">
+                  <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
                   <br />
                   Statisztika betöltése...
                 </div>
               ) : maxCounts ? (
-                <div className="statistics-content">
-                  <div className="stats-header">
-                    <h2 className="stats-title">Jegy Statisztikák</h2>
-                    <p className="stats-subtitle">Elérhető helyek naponta</p>
+                <div className="flex w-full max-w-[460px] flex-col gap-5">
+                  <div className="flex flex-col gap-1 p-1 pt-0">
+                    <h2 className="text-[clamp(28px,3.5vh,38px)] font-bold tracking-[0.2px] text-gombapp-text">
+                      Jegy Statisztikák
+                    </h2>
+                    <p className="text-[20px] font-semibold opacity-90">Elérhető helyek naponta</p>
                   </div>
-                  <div className="stats-rows">
+                  <div className="flex flex-col gap-3">
                     {[
                       { label: 'Péntek', sublabel: 'pénteki napijegy', count: maxCounts.friday },
                       {
@@ -719,30 +759,49 @@ export default function TicketClerkPage() {
                         count: maxCounts.sunday,
                       },
                     ].map(({ label, sublabel, count }) => (
-                      <div key={label} className={`stat-row${count === 0 ? 'stat-row-full' : ''}`}>
-                        <div className="stat-row-accent" />
-                        <div className="stat-row-info">
-                          <div className="stat-row-day">{label}</div>
+                      <div
+                        key={label}
+                        className={`flex min-h-[112px] items-stretch overflow-hidden rounded-2xl border bg-gombapp-card-bg ${count === 0 ? 'border-[#c62828]' : 'border-gombapp-card-border'}`}
+                      >
+                        <div
+                          className={`w-[6px] shrink-0 ${count === 0 ? 'bg-[#c62828]' : 'bg-[#2e7d32]'}`}
+                        />
+                        <div
+                          className={`flex min-w-0 flex-1 flex-col justify-center gap-1.5 border-r border-gombapp-row-border p-3 px-[18px] ${count === 0 ? 'bg-[#fff8f8]' : 'bg-[#f8fcf8]'}`}
+                        >
+                          <div className="text-[26px] font-extrabold leading-[1.1] tracking-[-0.3px] text-gombapp-text">
+                            {label}
+                          </div>
                           <div
-                            className={`stat-row-badge ${count === 0 ? 'stat-row-badge-full' : 'stat-row-badge-open'}`}
+                            className={`inline-flex self-start rounded-full px-2.5 py-[3px] text-[13px] font-extrabold uppercase tracking-[0.5px] ${count === 0 ? 'border border-[#ffcdd2] bg-[#ffebee] text-[#c62828]' : 'border border-[#c8e6c9] bg-[#e8f5e9] text-[#2e7d32]'}`}
                           >
                             {count === 0 ? 'Megtelt' : 'Elérhető'}
                           </div>
                         </div>
-                        <div className="stat-row-right">
-                          <div className="stat-row-count">{count}</div>
-                          <div className="stat-row-unit">szabad hely</div>
+                        <div className="flex min-w-[120px] shrink-0 flex-col items-end justify-center px-[18px] py-3">
+                          <div
+                            className={`text-[42px] font-black leading-none tracking-[-1px] ${count === 0 ? 'text-[#c62828]' : 'text-gombapp-text'}`}
+                          >
+                            {count}
+                          </div>
+                          <div className="mt-1 text-[15px] font-bold uppercase tracking-[0.5px] opacity-80">
+                            szabad hely
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
               ) : (
-                <div className="statistics-content">
-                  <div className="stats-header">
-                    <h2 className="stats-title">Jegy Statisztikák</h2>
+                <div className="flex w-full max-w-[460px] flex-col gap-5">
+                  <div className="flex flex-col gap-1 p-1 pt-0">
+                    <h2 className="text-[clamp(28px,3.5vh,38px)] font-bold tracking-[0.2px] text-gombapp-text">
+                      Jegy Statisztikák
+                    </h2>
                   </div>
-                  <div className="error">Hiba történt az adatok betöltése közben.</div>
+                  <div className="rounded-xl border border-[#ffcdd2] bg-[#ffebee] p-3 text-center text-[16px] font-semibold text-[#c62828]">
+                    Hiba történt az adatok betöltése közben.
+                  </div>
                 </div>
               )}
             </div>

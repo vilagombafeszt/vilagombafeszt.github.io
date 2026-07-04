@@ -58,35 +58,47 @@ export default function GombAppHome() {
   return (
     <>
       {isNavigating && (
-        <div className="nav-loader-container">
-          <div className="loading">
-            <div className="loader loader-mb" />
+        <div className="fixed inset-0 z-[9999] flex animate-gombapp-fade-in-fast flex-col items-center justify-center bg-gombapp-bg">
+          <div className="p-10 text-center text-[18px] text-[#666]">
+            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
             <br />
             Betöltés...
           </div>
         </div>
       )}
 
-      <header>
-        <div className="header-content" style={user ? { flexDirection: 'column' } : undefined}>
-          <h1 className="app-title">GombApp</h1>
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
+        <div
+          className="flex w-full flex-row items-center justify-center"
+          style={user ? { flexDirection: 'column' } : undefined}
+        >
+          <h1 className="flex-1 text-center text-[1.5em] text-gombapp-text">GombApp</h1>
         </div>
 
         {initialLoading ? (
-          <div className="message-content" style={{ marginTop: '10px' }}>
-            <div className="loader" />
+          <div
+            className="mt-2.5 flex w-full flex-col items-center justify-center gap-5"
+            style={{ marginTop: '10px' }}
+          >
+            <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
           </div>
         ) : (
-          <div className="message-content">
+          <div className="mt-2.5 flex w-full flex-col items-center justify-center gap-5">
             {!user && !loading && (
-              <button className="login-button" onClick={() => setShowLogin((prev) => !prev)}>
+              <button
+                className="cursor-pointer rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg"
+                onClick={() => setShowLogin((prev) => !prev)}
+              >
                 Bejelentkezés
               </button>
             )}
             {user && (
               <>
-                <span className="logged-in-message">Be vagy jelentkezve!</span>
-                <button className="logout-button" onClick={handleLogout}>
+                <span className="text-[25px]">Be vagy jelentkezve!</span>
+                <button
+                  className="ml-2.5 cursor-pointer rounded-xl border-none bg-[#c62828] px-5 py-2.5 text-[0.7em] text-white transition-all duration-300 ease-in-out hover:bg-[#b71c1c]"
+                  onClick={handleLogout}
+                >
                   Kijelentkezés
                 </button>
               </>
@@ -95,43 +107,55 @@ export default function GombAppHome() {
         )}
       </header>
 
-      <main>
-        <div className="menu home-adjust">
-          <button className="button" onClick={() => navigateTo(`/${gombappBase}/admin/`, true)}>
+      <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
+        <div className="menu home-adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
+          <button
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={() => navigateTo(`/${gombappBase}/admin/`, true)}
+          >
             <Image
               src="/GombApp/images/adminpic.png"
               alt="Admin"
-              className="profile-pic"
+              className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
             />
             Admin
           </button>
-          <button className="button" onClick={() => navigateTo(`/${gombappBase}/bartender/`)}>
+          <button
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={() => navigateTo(`/${gombappBase}/bartender/`)}
+          >
             <Image
               src="/GombApp/images/bartenderprofilepic.png"
               alt="Pultos"
-              className="profile-pic"
+              className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
             />
             Pultos
           </button>
-          <button className="button" onClick={() => navigateTo(`/${gombappBase}/programs/`)}>
+          <button
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={() => navigateTo(`/${gombappBase}/programs/`)}
+          >
             <Image
               src="/GombApp/images/calendar.png"
               alt="Programok"
-              className="profile-pic"
+              className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
             />
             Programok
           </button>
-          <button className="button" onClick={() => navigateTo(`/${gombappBase}/ticketclerk/`)}>
+          <button
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={() => navigateTo(`/${gombappBase}/ticketclerk/`)}
+          >
             <Image
               src="/GombApp/images/ticketclerk.png"
               alt="Jegyárus"
-              className="profile-pic"
+              className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
             />
@@ -142,8 +166,8 @@ export default function GombAppHome() {
 
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
-      <footer>
-        <p className="footer-text">v2.2.0</p>
+      <footer className="mt-auto shrink-0 pt-5">
+        <p className="text-center">v2.2.1</p>
       </footer>
     </>
   );
