@@ -8,6 +8,7 @@ import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import LoginForm from '@/components/gombapp/LoginForm';
 import Image from 'next/image';
+import { FullScreenSpinner } from '@/components/gombapp/FullScreenSpinner';
 import packageInfo from '../../package.json';
 
 const ALLOWED_ADMIN_UIDS = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_UIDS?.split(',') || [];
@@ -54,15 +55,7 @@ export default function GombAppHome() {
 
   return (
     <>
-      {isNavigating && (
-        <div className="fixed inset-0 z-[9999] flex animate-gombapp-fade-in-fast flex-col items-center justify-center bg-gombapp-bg">
-          <div className="p-10 text-center text-[18px] text-[#666]">
-            <div className="mb-[15px] inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
-            <br />
-            Betöltés...
-          </div>
-        </div>
-      )}
+      {isNavigating && <FullScreenSpinner />}
 
       <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
         <div

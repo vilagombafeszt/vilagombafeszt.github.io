@@ -1,6 +1,6 @@
 {
   "name": "vilagombafeszt-next",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "private": true,
   "scripts": {
     "deploy": "npm version patch --no-git-tag-version && git add package.json package-lock.json && git commit --amend --no-edit && git push --force-with-lease",
