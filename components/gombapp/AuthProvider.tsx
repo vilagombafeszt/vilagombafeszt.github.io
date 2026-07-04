@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const cached = localStorage.getItem('gombapp_user');
         if (cached) return JSON.parse(cached) as User;
-      } catch (e) {
+      } catch {
         // ignore JSON parse errors
       }
     }

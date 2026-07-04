@@ -31,23 +31,48 @@ const EMPTY_STATS: Stats = {
   mostOrdered: 'N/A',
 };
 
-function computeStats(
-  data: Record<string, { orderList: string[]; orderCount: number; totalPrice: number }>
-): Stats {
+type HybridOrderData = {
+  orderList?: string[];
+  orderCount?: number;
+  totalPrice?: number;
+  orders?: Record<string, { items: string[]; total: number }>;
+};
+
+function computeStats(data: Record<string, HybridOrderData>): Stats {
   let totalOrders = 0;
   let totalOrderCount = 0;
   let totalRevenue = 0;
   const itemCounts: Record<string, number> = {};
 
   for (const uid in data) {
-    const userOrders = data[uid];
-    totalOrders += userOrders.orderList.length;
-    totalOrderCount += userOrders.orderCount;
-    totalRevenue += userOrders.totalPrice;
+    const userObject = data[uid];
 
-    userOrders.orderList.forEach((item) => {
-      itemCounts[item] = (itemCounts[item] || 0) + 1;
-    });
+    // 1. Process legacy schema (array-based)
+    if (userObject.orderList && Array.isArray(userObject.orderList)) {
+      totalOrders += userObject.orderList.length;
+      totalOrderCount += userObject.orderCount || 1;
+      totalRevenue += userObject.totalPrice || 0;
+
+      userObject.orderList.forEach((item: string) => {
+        itemCounts[item] = (itemCounts[item] || 0) + 1;
+      });
+    }
+
+    // 2. Process new schema (push-based subcollection)
+    if (userObject.orders && typeof userObject.orders === 'object') {
+      for (const pushId in userObject.orders) {
+        const order = userObject.orders[pushId];
+        if (order.items && Array.isArray(order.items)) {
+          totalOrders += order.items.length;
+          totalOrderCount += 1;
+          totalRevenue += order.total || 0;
+
+          order.items.forEach((item: string) => {
+            itemCounts[item] = (itemCounts[item] || 0) + 1;
+          });
+        }
+      }
+    }
   }
 
   const mostOrdered =

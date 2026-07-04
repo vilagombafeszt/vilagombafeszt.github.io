@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, set, get, runTransaction } from 'firebase/database';
+import { ref, get, runTransaction, push, serverTimestamp, remove } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
@@ -173,10 +173,6 @@ export default function TicketClerkPage() {
 
   const addItem = (ticket: string) => {
     setOrderItems((prev) => [...prev, ticket]);
-  };
-
-  const removeItem = (index: number) => {
-    setOrderItems((prev) => prev.filter((_, i) => i !== index));
   };
 
   const removeOneOfType = (name: string) => {
@@ -382,60 +378,22 @@ export default function TicketClerkPage() {
         orderPrices.push(price);
       });
 
-      const userOrderRef = ref(database!, 'Rendelések/Jegy/' + user.uid);
       const currentOrderItems = [...orderItems];
 
-      await Promise.all([
-        runTransaction(userOrderRef, (currentData) => {
-          let existingOrders: string[] = [];
-          let existingOrderPrices: number[] = [];
-          let existingTotalPrice = 0;
-          let existingOrderCount = 0;
+      // New schema: push individual orders to Rendelések/Jegy/<uid>/orders
+      const ordersRef = ref(database!, `Rendelések/Jegy/${user.uid}/orders`);
+      const newOrderRef = push(ordersRef, {
+        email: user.email,
+        items: currentOrderItems,
+        prices: orderPrices,
+        total: orderTotal,
+        timestamp: serverTimestamp(),
+      });
 
-          if (currentData) {
-            existingOrders = currentData.orderList || [];
-            existingOrderPrices = currentData.orderPrices || [];
-            existingTotalPrice = currentData.totalPrice || 0;
-            existingOrderCount = currentData.orderCount || 0;
-          }
-
-          return {
-            email: user.email,
-            orderList: existingOrders.concat(currentOrderItems),
-            orderPrices: existingOrderPrices.concat(orderPrices),
-            totalPrice: existingTotalPrice + orderTotal,
-            orderCount: existingOrderCount + 1,
-          };
-        }),
-        updateMaxTicketCounts(ticketCounts),
-      ]);
+      await updateMaxTicketCounts(ticketCounts);
 
       const handleUndo = () => {
-        Promise.all([
-          runTransaction(userOrderRef, (currentData) => {
-            if (!currentData) return currentData;
-
-            const existingOrders: string[] = currentData.orderList || [];
-            const existingOrderPrices: number[] = currentData.orderPrices || [];
-            const existingTotalPrice = currentData.totalPrice || 0;
-            const existingOrderCount = currentData.orderCount || 0;
-
-            return {
-              email: currentData.email,
-              orderList: existingOrders.slice(
-                0,
-                Math.max(0, existingOrders.length - currentOrderItems.length)
-              ),
-              orderPrices: existingOrderPrices.slice(
-                0,
-                Math.max(0, existingOrderPrices.length - orderPrices.length)
-              ),
-              totalPrice: Math.max(0, existingTotalPrice - orderTotal),
-              orderCount: Math.max(0, existingOrderCount - 1),
-            };
-          }),
-          revertMaxTicketCounts(ticketCounts),
-        ])
+        Promise.all([remove(newOrderRef), revertMaxTicketCounts(ticketCounts)])
           .then(() => {
             setOrderItems(currentOrderItems); // repopulate cart
             setView('order');
@@ -779,7 +737,7 @@ export default function TicketClerkPage() {
                         sublabel: 'vasárnapi napijegy',
                         count: maxCounts.sunday,
                       },
-                    ].map(({ label, sublabel, count }) => (
+                    ].map(({ label, count }) => (
                       <div
                         key={label}
                         className={`flex min-h-[112px] items-stretch overflow-hidden rounded-2xl border bg-gombapp-card-bg ${count === 0 ? 'border-[#c62828]' : 'border-gombapp-card-border'}`}
