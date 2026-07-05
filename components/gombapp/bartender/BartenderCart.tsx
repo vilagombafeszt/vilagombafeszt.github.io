@@ -12,6 +12,55 @@ interface BartenderCartProps {
   openCheckout: () => void;
 }
 
+interface BartenderCartItemProps {
+  name: string;
+  qty: number;
+  unitPrice: number;
+  removeOneOfType: (name: string) => void;
+  addItem: (name: string) => void;
+}
+
+const BartenderCartItem = React.memo(
+  ({ name, qty, unitPrice, removeOneOfType, addItem }: BartenderCartItemProps) => {
+    return (
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 rounded-xl bg-gombapp-text/[0.08] px-4 py-3 transition-colors duration-150 ease-in-out">
+        <div className="flex w-full items-baseline gap-2">
+          <div className="break-words text-[1.05em] font-semibold text-gombapp-text">{name}</div>
+          <div className="shrink-0 whitespace-nowrap text-[0.85em] text-gombapp-text/60">
+            {unitPrice} Ft / db
+          </div>
+        </div>
+
+        <div className="flex shrink-0 items-center gap-0">
+          <button
+            className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90 ${qty === 1 ? 'bg-[#c62828] text-white' : ''}`.trim()}
+            onClick={() => removeOneOfType(name)}
+          >
+            <span className="material-symbols-rounded pointer-events-none text-[20px] leading-none">
+              {qty === 1 ? 'delete' : 'remove'}
+            </span>
+          </button>
+          <span className="min-w-[36px] text-center text-[1.2em] font-bold text-gombapp-text">
+            {qty}
+          </span>
+          <button
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90"
+            onClick={() => addItem(name)}
+          >
+            <span className="material-symbols-rounded pointer-events-none text-[20px] leading-none">
+              add
+            </span>
+          </button>
+        </div>
+        <div className="ml-auto shrink-0 text-right text-[1em] font-bold text-gombapp-text">
+          {unitPrice * qty} Ft
+        </div>
+      </div>
+    );
+  }
+);
+BartenderCartItem.displayName = 'BartenderCartItem';
+
 export function BartenderCart({
   orderItems,
   groupedItems,
@@ -39,44 +88,14 @@ export function BartenderCart({
             {Object.entries(groupedItems).map(([name, qty]) => {
               const unitPrice = getDrinkPrice(name);
               return (
-                <div
+                <BartenderCartItem
                   key={name}
-                  className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 rounded-xl bg-gombapp-text/[0.08] px-4 py-3 transition-colors duration-150 ease-in-out"
-                >
-                  <div className="flex w-full items-baseline gap-2">
-                    <div className="break-words text-[1.05em] font-semibold text-gombapp-text">
-                      {name}
-                    </div>
-                    <div className="shrink-0 whitespace-nowrap text-[0.85em] text-gombapp-text/60">
-                      {unitPrice} Ft / db
-                    </div>
-                  </div>
-
-                  <div className="flex shrink-0 items-center gap-0">
-                    <button
-                      className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90 ${qty === 1 ? 'bg-[#c62828] text-white' : ''}`.trim()}
-                      onClick={() => removeOneOfType(name)}
-                    >
-                      <span className="material-symbols-rounded pointer-events-none text-[20px] leading-none">
-                        {qty === 1 ? 'delete' : 'remove'}
-                      </span>
-                    </button>
-                    <span className="min-w-[36px] text-center text-[1.2em] font-bold text-gombapp-text">
-                      {qty}
-                    </span>
-                    <button
-                      className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90"
-                      onClick={() => addItem(name)}
-                    >
-                      <span className="material-symbols-rounded pointer-events-none text-[20px] leading-none">
-                        add
-                      </span>
-                    </button>
-                  </div>
-                  <div className="ml-auto shrink-0 text-right text-[1em] font-bold text-gombapp-text">
-                    {unitPrice * qty} Ft
-                  </div>
-                </div>
+                  name={name}
+                  qty={qty}
+                  unitPrice={unitPrice}
+                  removeOneOfType={removeOneOfType}
+                  addItem={addItem}
+                />
               );
             })}
           </div>

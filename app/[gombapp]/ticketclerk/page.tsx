@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, startTransition } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ref, get, push, serverTimestamp, remove } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -84,13 +84,13 @@ export default function TicketClerkPage() {
 
   const totalPrice = orderItems.reduce((sum, item) => sum + getTicketPrice(item), 0);
 
-  const addItem = (ticket: string) => {
+  const addItem = useCallback((ticket: string) => {
     startTransition(() => {
       setOrderItems((prev) => [...prev, ticket]);
     });
-  };
+  }, []);
 
-  const removeOneOfType = (name: string) => {
+  const removeOneOfType = useCallback((name: string) => {
     startTransition(() => {
       setOrderItems((prev) => {
         const idx = prev.lastIndexOf(name);
@@ -100,12 +100,14 @@ export default function TicketClerkPage() {
         return copy;
       });
     });
-  };
+  }, []);
 
-  const groupedItems = orderItems.reduce<Record<string, number>>((acc, item) => {
-    acc[item] = (acc[item] || 0) + 1;
-    return acc;
-  }, {});
+  const groupedItems = useMemo(() => {
+    return orderItems.reduce<Record<string, number>>((acc, item) => {
+      acc[item] = (acc[item] || 0) + 1;
+      return acc;
+    }, {});
+  }, [orderItems]);
 
   const showStatistics = async () => {
     setView('stats');
@@ -174,14 +176,11 @@ export default function TicketClerkPage() {
         return;
       }
 
-      const priceSnap = await get(ref(database!, 'Árak/Jegy'));
-      const freshPrices = priceSnap.exists() ? priceSnap.val() : {};
       let orderTotal = 0;
       const orderPrices: number[] = [];
 
       orderItems.forEach((ticket) => {
-        const key = PRICE_MAP[ticket];
-        const price = key ? freshPrices[key] || 0 : 0;
+        const price = getTicketPrice(ticket);
         orderTotal += price;
         orderPrices.push(price);
       });

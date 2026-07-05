@@ -26,6 +26,7 @@ export function BartenderMenu({ addItem, setView, openCheckout, totalPrice }: Ba
               className="mb-[15px] h-[100px] w-[100px] max-[360px]:h-[80px] max-[360px]:w-[80px]"
               width={100}
               height={100}
+              priority={true}
             />
             <span>{drink.label}</span>
           </button>

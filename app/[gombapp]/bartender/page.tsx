@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, startTransition } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ref, push, serverTimestamp, remove } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -73,13 +73,13 @@ export default function BartenderPage() {
 
   const totalPrice = orderItems.reduce((sum, item) => sum + getDrinkPrice(item), 0);
 
-  const addItem = (drink: string) => {
+  const addItem = useCallback((drink: string) => {
     startTransition(() => {
       setOrderItems((prev) => [...prev, drink]);
     });
-  };
+  }, []);
 
-  const removeOneOfType = (name: string) => {
+  const removeOneOfType = useCallback((name: string) => {
     startTransition(() => {
       setOrderItems((prev) => {
         const idx = prev.lastIndexOf(name);
@@ -89,12 +89,14 @@ export default function BartenderPage() {
         return copy;
       });
     });
-  };
+  }, []);
 
-  const groupedItems = orderItems.reduce<Record<string, number>>((acc, item) => {
-    acc[item] = (acc[item] || 0) + 1;
-    return acc;
-  }, {});
+  const groupedItems = useMemo(() => {
+    return orderItems.reduce<Record<string, number>>((acc, item) => {
+      acc[item] = (acc[item] || 0) + 1;
+      return acc;
+    }, {});
+  }, [orderItems]);
 
   const openCheckout = () => {
     if (orderItems.length === 0) {

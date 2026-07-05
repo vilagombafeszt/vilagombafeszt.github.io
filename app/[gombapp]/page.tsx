@@ -93,6 +93,7 @@ export default function GombAppHome() {
               className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
+              priority={true}
             />
             Admin
           </Link>
@@ -108,6 +109,7 @@ export default function GombAppHome() {
               className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
+              priority={true}
             />
             Pultos
           </Link>
@@ -123,6 +125,7 @@ export default function GombAppHome() {
               className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
+              priority={true}
             />
             Programok
           </Link>
@@ -138,6 +141,7 @@ export default function GombAppHome() {
               className="mb-2.5 h-[100px] w-[100px]"
               width={100}
               height={100}
+              priority={true}
             />
             Jegyárus
           </Link>

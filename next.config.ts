@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     unoptimized: true, // required for static export
   },
   trailingSlash: true,
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
 };
 
 export default withSerwist(withNextIntl(nextConfig));

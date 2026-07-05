@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { ref, onValue, off, DataSnapshot } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { MaxCounts } from '@/components/gombapp/ticketclerk/types';
@@ -101,16 +101,10 @@ export function GlobalDataProvider({ children }: { children: React.ReactNode }) 
     };
   }, []);
 
-  return (
-    <GlobalDataContext.Provider
-      value={{
-        ticketPrices,
-        drinkPrices,
-        ticketCapacities,
-        loading,
-      }}
-    >
-      {children}
-    </GlobalDataContext.Provider>
+  const value = useMemo(
+    () => ({ ticketPrices, drinkPrices, ticketCapacities, loading }),
+    [ticketPrices, drinkPrices, ticketCapacities, loading]
   );
+
+  return <GlobalDataContext.Provider value={value}>{children}</GlobalDataContext.Provider>;
 }
