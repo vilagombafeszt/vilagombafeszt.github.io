@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { AnimatedNumber } from '../AnimatedNumber';
 import { DRINKS } from './constants';
 import { View } from './types';
 
@@ -62,7 +63,10 @@ export function BartenderMenu({
         >
           Mentés
         </button>
-        <p className="res-adj3 font-bold text-gombapp-text">Teljes ár: {totalPrice} Ft</p>
+        <p className="res-adj3 font-bold text-gombapp-text">
+          Teljes ár: <AnimatedNumber value={totalPrice} format={(v) => v.toLocaleString('hu-HU')} />{' '}
+          Ft
+        </p>
       </div>
     </>
   );

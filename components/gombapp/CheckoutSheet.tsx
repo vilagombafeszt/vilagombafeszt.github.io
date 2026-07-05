@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { BottomSheet, BottomSheetHeader, BottomSheetBody, BottomSheetFooter } from './BottomSheet';
+import { AnimatedNumber } from './AnimatedNumber';
 
 interface CheckoutSheetProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export function CheckoutSheet({ isOpen, onClose, totalPrice, onSave }: CheckoutS
           <div className="mb-[5px] flex items-center justify-between rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-[15px] text-[24px] font-bold">
             Fizetendő:{' '}
             <span className="text-[28px] font-extrabold text-gombapp-text">
-              {totalPrice.toLocaleString('hu-HU')} Ft
+              <AnimatedNumber value={totalPrice} format={(v) => v.toLocaleString('hu-HU')} /> Ft
             </span>
           </div>
           <div className="grid w-full grid-cols-3 gap-2.5">
@@ -123,9 +124,25 @@ export function CheckoutSheet({ isOpen, onClose, totalPrice, onSave }: CheckoutS
                 : 'border-[#ef9a9a] bg-gombapp-pill-danger-bg text-[#c62828]'
             }`}
           >
-            {Number(receivedAmount) >= totalPrice
-              ? `Visszajáró: ${(Number(receivedAmount) - totalPrice).toLocaleString('hu-HU')} Ft`
-              : `Hiányzik: ${(totalPrice - Number(receivedAmount)).toLocaleString('hu-HU')} Ft`}
+            {Number(receivedAmount) >= totalPrice ? (
+              <>
+                Visszajáró:{' '}
+                <AnimatedNumber
+                  value={Number(receivedAmount) - totalPrice}
+                  format={(v) => v.toLocaleString('hu-HU')}
+                />{' '}
+                Ft
+              </>
+            ) : (
+              <>
+                Hiányzik:{' '}
+                <AnimatedNumber
+                  value={totalPrice - Number(receivedAmount)}
+                  format={(v) => v.toLocaleString('hu-HU')}
+                />{' '}
+                Ft
+              </>
+            )}
           </div>
         </div>
       </BottomSheetBody>

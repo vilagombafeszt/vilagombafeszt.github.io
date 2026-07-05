@@ -1,5 +1,6 @@
 import React from 'react';
 import { MaxCounts } from './types';
+import { AnimatedNumber } from '../AnimatedNumber';
 
 interface TicketCartProps {
   orderItems: string[];
@@ -90,7 +91,7 @@ const TicketCartItem = React.memo(
           </button>
         </div>
         <div className="ml-auto shrink-0 text-right text-[1em] font-bold text-gombapp-text">
-          {unitPrice * qty} Ft
+          <AnimatedNumber value={unitPrice * qty} format={(v) => v.toLocaleString('hu-HU')} /> Ft
         </div>
       </div>
     );
@@ -152,7 +153,7 @@ export function TicketCart({
               </span>
             </div>
             <span className="text-[1.4em] font-bold text-gombapp-text">
-              {totalPrice.toLocaleString('hu-HU')} Ft
+              <AnimatedNumber value={totalPrice} format={(v) => v.toLocaleString('hu-HU')} /> Ft
             </span>
           </div>
 
