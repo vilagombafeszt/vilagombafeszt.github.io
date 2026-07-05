@@ -55,7 +55,7 @@ const TicketCartItem = React.memo(
     const isAtCapacityLimit = isCapacityLimited && !capacityLoading && currentAvailable === 0;
 
     return (
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 rounded-xl bg-gombapp-text/[0.08] px-4 py-3 transition-colors duration-150 ease-in-out">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 rounded-2xl bg-gombapp-text/[0.08] px-4 py-3 transition-colors duration-150 ease-in-out">
         <div className="flex w-full items-baseline gap-2">
           <div className="break-words text-[1.05em] font-semibold text-gombapp-text">{name}</div>
           <div className="shrink-0 whitespace-nowrap text-[0.85em] text-gombapp-text/60">
@@ -158,19 +158,19 @@ export function TicketCart({
 
           <div className="mt-4 flex w-full gap-2">
             <button
-              className="flex flex-[0.9] cursor-pointer items-center justify-center rounded-xl border-none bg-[#e01f32] px-5 py-3.5 text-center text-[1em] font-bold text-white transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              className="flex flex-[0.9] cursor-pointer items-center justify-center rounded-2xl border-none bg-[#e01f32] px-5 py-3.5 text-center text-[1em] font-bold text-white transition-transform duration-100 ease-in-out active:scale-[0.96]"
               onClick={() => setOrderItems([])}
             >
               <span className="material-symbols-rounded">delete</span>
             </button>
             <button
-              className="mt-0 flex w-full flex-[2] cursor-pointer items-center justify-center rounded-xl border-none bg-gombapp-text py-3.5 text-[1.15em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-[0.96] active:opacity-[0.85]"
+              className="mt-0 flex w-full flex-[2] cursor-pointer items-center justify-center rounded-2xl border-none bg-gombapp-text py-3.5 text-[1.15em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-[0.96] active:opacity-[0.85]"
               onClick={saveOrder}
             >
               Gyors mentés
             </button>
             <button
-              className="mt-0 flex w-full flex-[2] cursor-pointer items-center justify-center rounded-xl border-none bg-gombapp-text py-3.5 text-[1.15em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-[0.96] active:opacity-[0.85]"
+              className="mt-0 flex w-full flex-[2] cursor-pointer items-center justify-center rounded-2xl border-none bg-gombapp-text py-3.5 text-[1.15em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-[0.96] active:opacity-[0.85]"
               onClick={openCheckout}
             >
               Kassza

@@ -17,7 +17,7 @@ export function BartenderMenu({ addItem, setView, openCheckout, totalPrice }: Ba
         {DRINKS.map((drink) => (
           <button
             key={drink.name}
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => addItem(drink.name)}
           >
             <Image
@@ -34,13 +34,13 @@ export function BartenderMenu({ addItem, setView, openCheckout, totalPrice }: Ba
       </div>
       <div className="fixed-bottom">
         <button
-          className="res-adj1 flex cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+          className="res-adj1 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
           onClick={() => setView('order')}
         >
           Rendelés megnézése
         </button>
         <button
-          className="res-adj2 flex cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+          className="res-adj2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
           onClick={openCheckout}
         >
           Mentés

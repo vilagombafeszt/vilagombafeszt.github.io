@@ -103,7 +103,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
           {!showReset ? (
             <div className="flex w-full flex-col gap-[15px]">
               <input
-                className="h-10 rounded-xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
+                className="h-10 rounded-2xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
                 type="email"
                 placeholder="E-mail cím"
                 value={email}
@@ -112,7 +112,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
               />
               <div className="relative w-full">
                 <input
-                  className="h-10 w-full rounded-xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 pr-10 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
+                  className="h-10 w-full rounded-2xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 pr-10 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Jelszó"
                   value={password}
@@ -145,7 +145,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
                 visszajuthatsz a fiókodba.
               </p>
               <input
-                className="h-10 rounded-xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
+                className="h-10 rounded-2xl border-2 border-gombapp-text/20 bg-white/90 px-[15px] py-2.5 text-[1em] text-gombapp-text outline-none transition-all duration-300 ease-in-out placeholder:text-gombapp-text/50 focus:border-gombapp-text focus:bg-white focus:shadow-[0_0_0_3px_rgba(16,33,53,0.1)] [&:hover:not(:focus)]:border-gombapp-text/30"
                 type="email"
                 placeholder="E-mail cím"
                 value={resetEmail}
@@ -159,14 +159,14 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
             <div className="flex w-full justify-between">
               <button
                 type="button"
-                className="mr-auto flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+                className="mr-auto flex cursor-pointer flex-col items-center justify-center self-end rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
                 onClick={onClose}
               >
                 Mégse
               </button>
               <button
                 type="submit"
-                className="mt-5 flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+                className="mt-5 flex cursor-pointer flex-col items-center justify-center self-end rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               >
                 Belépés
               </button>
@@ -175,14 +175,14 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
             <div className="flex w-full justify-between">
               <button
                 type="button"
-                className="mr-auto flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-[18px] py-2.5 text-[0.95em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+                className="mr-auto flex cursor-pointer flex-col items-center justify-center self-end rounded-2xl border-none bg-gombapp-text px-[18px] py-2.5 text-[0.95em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
                 onClick={() => setShowReset(false)}
               >
                 Vissza
               </button>
               <button
                 type="submit"
-                className="mt-5 flex cursor-pointer flex-col items-center justify-center self-end rounded-xl border-none bg-gombapp-text px-[18px] py-2.5 text-[0.95em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+                className="mt-5 flex cursor-pointer flex-col items-center justify-center self-end rounded-2xl border-none bg-gombapp-text px-[18px] py-2.5 text-[0.95em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               >
                 Hivatkozás küldése
               </button>

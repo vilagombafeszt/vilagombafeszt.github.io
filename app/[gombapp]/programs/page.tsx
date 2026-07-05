@@ -58,7 +58,7 @@ export default function ProgramsPage() {
       {view === 'menu' && (
         <div className="menu adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => {
               setView('realtime');
               setIframeLoading(true);
@@ -74,7 +74,7 @@ export default function ProgramsPage() {
             Valós idejű
           </button>
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => {
               setView('agenda');
               setIframeLoading(true);
@@ -103,7 +103,7 @@ export default function ProgramsPage() {
             src={REALTIME_SRC}
             title="Program naptár"
             onLoad={() => setIframeLoading(false)}
-            className="w-full flex-1 overflow-hidden rounded-xl border-0 transition-opacity duration-300 ease-in-out"
+            className="w-full flex-1 overflow-hidden rounded-2xl border-0 transition-opacity duration-300 ease-in-out"
             style={{ opacity: iframeLoading ? 0 : 1 }}
             scrolling="no"
           />
@@ -121,7 +121,7 @@ export default function ProgramsPage() {
             src={AGENDA_SRC}
             title="Program naptár"
             onLoad={() => setIframeLoading(false)}
-            className="w-full flex-1 overflow-hidden rounded-xl border-0 transition-opacity duration-300 ease-in-out"
+            className="w-full flex-1 overflow-hidden rounded-2xl border-0 transition-opacity duration-300 ease-in-out"
             style={{ opacity: iframeLoading ? 0 : 1 }}
             scrolling="no"
           />

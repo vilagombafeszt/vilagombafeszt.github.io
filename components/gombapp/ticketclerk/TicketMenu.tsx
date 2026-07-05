@@ -29,7 +29,7 @@ export function TicketMenu({
           return (
             <button
               key={ticket.name}
-              className={`flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96] ${disabled ? '!active:scale-100 cursor-not-allowed bg-gombapp-btn-disabled opacity-[0.45]' : ''}`.trim()}
+              className={`flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96] ${disabled ? '!active:scale-100 cursor-not-allowed bg-gombapp-btn-disabled opacity-[0.45]' : ''}`.trim()}
               onClick={() => !disabled && addItem(ticket.name)}
               disabled={disabled}
             >
@@ -63,19 +63,19 @@ export function TicketMenu({
       </div>
       <div className="fixed-bottom">
         <button
-          className="res-adj1 flex cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+          className="res-adj1 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
           onClick={() => setView('order')}
         >
           Kosár megnézése
         </button>
         <button
-          className="res-adj2 flex cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+          className="res-adj2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
           onClick={openCheckout}
         >
           Mentés
         </button>
         <button
-          className="res-adj6 flex cursor-pointer flex-col items-center justify-center rounded-xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+          className="res-adj6 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
           onClick={showStatistics}
         >
           Statisztika
