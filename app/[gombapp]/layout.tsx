@@ -4,6 +4,7 @@ import { AuthProvider } from '@/components/gombapp/AuthProvider';
 import { IosDetector } from '@/components/gombapp/IosDetector';
 import { SnackbarProvider } from '@/components/gombapp/Snackbar';
 import { GlobalDataProvider } from '@/components/gombapp/GlobalDataProvider';
+import { OfflineBanner } from '@/components/gombapp/OfflineBanner';
 import './gombapp.css';
 
 const alumniSans = Alumni_Sans({
@@ -63,7 +64,10 @@ export default function GombAppLayout({ children }: { children: React.ReactNode 
       <AuthProvider>
         <IosDetector />
         <SnackbarProvider>
-          <GlobalDataProvider>{children}</GlobalDataProvider>
+          <GlobalDataProvider>
+            <OfflineBanner />
+            {children}
+          </GlobalDataProvider>
         </SnackbarProvider>
       </AuthProvider>
     </div>
