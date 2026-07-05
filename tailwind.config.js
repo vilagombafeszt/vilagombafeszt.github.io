@@ -66,6 +66,10 @@ module.exports = {
           from: { transform: 'translateY(0)', opacity: '1' },
           to: { transform: 'translateY(50px)', opacity: '0' },
         },
+        'toast-slide-down': {
+          '0%': { transform: 'translateY(-100%) scale(0.9)', opacity: '0' },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+        },
       },
       animation: {
         'gombapp-spin': 'gombapp-spin 1s linear infinite',
@@ -76,6 +80,7 @@ module.exports = {
         'gombapp-slide-down': 'gombapp-slide-down 0.3s ease-out forwards',
         'gombapp-slide-up-desktop': 'gombapp-slide-up-desktop 0.3s ease-out',
         'gombapp-slide-down-desktop': 'gombapp-slide-down-desktop 0.3s ease-out forwards',
+        'toast-slide-down': 'toast-slide-down 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
       },
     },
   },
