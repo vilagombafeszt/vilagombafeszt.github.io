@@ -28,7 +28,7 @@ export default function BartenderPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const { prices } = usePrices('Ital');
+  const { prices, loading: pricesLoading } = usePrices('Ital');
 
   // Load cart from sessionStorage on mount
   useEffect(() => {
@@ -195,6 +195,7 @@ export default function BartenderPage() {
       <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-hidden px-0 py-5">
         {view === 'menu' && (
           <BartenderMenu
+            isLoading={pricesLoading}
             addItem={addItem}
             setView={setView}
             openCheckout={openCheckout}

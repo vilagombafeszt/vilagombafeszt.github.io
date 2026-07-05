@@ -31,7 +31,7 @@ export default function TicketClerkPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const { prices } = usePrices('Jegy');
+  const { prices, loading: pricesLoading } = usePrices('Jegy');
   const {
     maxCounts,
     loading: capacityLoading,
@@ -249,7 +249,7 @@ export default function TicketClerkPage() {
       <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-hidden px-0 py-5">
         {view === 'menu' && (
           <TicketMenu
-            capacityLoading={capacityLoading}
+            isLoading={capacityLoading || pricesLoading}
             maxCounts={maxCounts}
             addItem={addItem}
             setView={setView}
