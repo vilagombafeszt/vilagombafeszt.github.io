@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ref, get, push, serverTimestamp, remove } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -30,7 +30,6 @@ export default function TicketClerkPage() {
   const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const lastClickRef = useRef(0);
 
   const { prices } = usePrices('Jegy');
   const {
@@ -67,13 +66,6 @@ export default function TicketClerkPage() {
     }
   }, [orderItems, view, isCartLoaded]);
 
-  const throttle = (fn: () => void) => {
-    const now = Date.now();
-    if (now - lastClickRef.current < 120) return;
-    lastClickRef.current = now;
-    fn();
-  };
-
   // Auth check
   useEffect(() => {
     if (!authLoading && !user) {
@@ -93,14 +85,20 @@ export default function TicketClerkPage() {
   const totalPrice = orderItems.reduce((sum, item) => sum + getTicketPrice(item), 0);
 
   const addItem = (ticket: string) => {
-    setOrderItems((prev) => [...prev, ticket]);
+    startTransition(() => {
+      setOrderItems((prev) => [...prev, ticket]);
+    });
   };
 
   const removeOneOfType = (name: string) => {
-    setOrderItems((prev) => {
-      const idx = prev.lastIndexOf(name);
-      if (idx === -1) return prev;
-      return prev.filter((_, i) => i !== idx);
+    startTransition(() => {
+      setOrderItems((prev) => {
+        const idx = prev.lastIndexOf(name);
+        if (idx === -1) return prev;
+        const copy = [...prev];
+        copy.splice(idx, 1);
+        return copy;
+      });
     });
   };
 
@@ -267,7 +265,6 @@ export default function TicketClerkPage() {
             groupedItems={groupedItems}
             getTicketPrice={getTicketPrice}
             totalPrice={totalPrice}
-            throttle={throttle}
             removeOneOfType={removeOneOfType}
             addItem={addItem}
             setOrderItems={setOrderItems}

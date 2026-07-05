@@ -6,7 +6,6 @@ interface TicketCartProps {
   groupedItems: Record<string, number>;
   getTicketPrice: (ticket: string) => number;
   totalPrice: number;
-  throttle: (fn: () => void) => void;
   removeOneOfType: (name: string) => void;
   addItem: (name: string) => void;
   setOrderItems: (items: string[]) => void;
@@ -21,7 +20,6 @@ export function TicketCart({
   groupedItems,
   getTicketPrice,
   totalPrice,
-  throttle,
   removeOneOfType,
   addItem,
   setOrderItems,
@@ -64,10 +62,6 @@ export function TicketCart({
                   );
                 }
               }
-              const currentOrdered = groupedItems[name] || 0;
-              const hasCapacity =
-                !isCapacityLimited ||
-                (!capacityLoading && ticketCapacities && currentAvailable > 0);
               const isAtCapacityLimit =
                 isCapacityLimited && !capacityLoading && currentAvailable === 0;
 
@@ -88,7 +82,7 @@ export function TicketCart({
                   <div className="flex shrink-0 items-center gap-0">
                     <button
                       className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90 ${qty === 1 ? 'bg-[#c62828] text-white' : ''}`.trim()}
-                      onClick={() => throttle(() => removeOneOfType(name))}
+                      onClick={() => removeOneOfType(name)}
                     >
                       <span className="material-symbols-rounded pointer-events-none text-[20px] leading-none">
                         {qty === 1 ? 'delete' : 'remove'}
@@ -99,7 +93,7 @@ export function TicketCart({
                     </span>
                     <button
                       className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-none bg-gombapp-text p-0 text-[1.2em] font-bold text-gombapp-bg transition-all duration-100 ease-in-out active:scale-90"
-                      onClick={() => throttle(() => addItem(name))}
+                      onClick={() => addItem(name)}
                       disabled={isAtCapacityLimit}
                       style={{
                         opacity: isAtCapacityLimit ? 0.5 : 1,

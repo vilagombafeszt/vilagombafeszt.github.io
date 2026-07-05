@@ -3,6 +3,7 @@ import { Alumni_Sans } from 'next/font/google';
 import { AuthProvider } from '@/components/gombapp/AuthProvider';
 import { IosDetector } from '@/components/gombapp/IosDetector';
 import { SnackbarProvider } from '@/components/gombapp/Snackbar';
+import { GlobalDataProvider } from '@/components/gombapp/GlobalDataProvider';
 import './gombapp.css';
 
 const alumniSans = Alumni_Sans({
@@ -61,7 +62,9 @@ export default function GombAppLayout({ children }: { children: React.ReactNode 
       />
       <AuthProvider>
         <IosDetector />
-        <SnackbarProvider>{children}</SnackbarProvider>
+        <SnackbarProvider>
+          <GlobalDataProvider>{children}</GlobalDataProvider>
+        </SnackbarProvider>
       </AuthProvider>
     </div>
   );

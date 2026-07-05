@@ -1,43 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
-import { ref, get, runTransaction } from 'firebase/database';
+import { ref, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { countTicketsByType } from '@/components/gombapp/ticketclerk/utils';
-import { MaxCounts } from '@/components/gombapp/ticketclerk/types';
+import { useGlobalData } from '@/components/gombapp/GlobalDataProvider';
 
 export function useTicketCapacity() {
-  const [maxCounts, setMaxCounts] = useState<MaxCounts | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { ticketCapacities: maxCounts, loading } = useGlobalData();
 
-  const fetchCapacity = useCallback(async (): Promise<MaxCounts> => {
-    if (!database) throw new Error('Database not initialized');
-    const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
-      get(ref(database, 'Jegyek/pentekMax')),
-      get(ref(database, 'Jegyek/szombatMax')),
-      get(ref(database, 'Jegyek/vasarnapMax')),
-    ]);
-    return {
-      friday: fridaySnap.exists() ? fridaySnap.val() : 0,
-      saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
-      sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
-    };
-  }, []);
-
-  const refreshCapacity = useCallback(async () => {
-    setLoading(true);
-    try {
-      const counts = await fetchCapacity();
-      setMaxCounts(counts);
-    } catch (error) {
-      console.error('Error fetching capacity:', error);
-      setMaxCounts(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchCapacity]);
-
-  useEffect(() => {
-    refreshCapacity();
-  }, [refreshCapacity]);
+  // The refreshCapacity function is kept for backward compatibility with the components,
+  // but it doesn't need to do anything anymore because GlobalDataProvider automatically syncs.
+  const refreshCapacity = async () => {
+    return Promise.resolve();
+  };
 
   const updateCapacity = async (ticketCounts: ReturnType<typeof countTicketsByType>) => {
     if (!database) return;

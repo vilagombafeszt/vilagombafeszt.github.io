@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import LoginForm from '@/components/gombapp/LoginForm';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FullScreenSpinner } from '@/components/gombapp/FullScreenSpinner';
 import packageInfo from '../../package.json';
 
@@ -16,7 +17,7 @@ const ALLOWED_ADMIN_UIDS = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_UIDS?.split(','
 export default function GombAppHome() {
   const { user, loading } = useAuth();
   const { showSnackbar, showConfirmSnackbar } = useSnackbar();
-  const router = useRouter();
+
   const params = useParams();
   const gombappBase = params.gombapp || 'GombApp';
   const [showLogin, setShowLogin] = useState(false);
@@ -40,17 +41,18 @@ export default function GombAppHome() {
     });
   };
 
-  const navigateTo = (path: string, adminOnly = false) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, adminOnly = false) => {
     if (!user) {
+      e.preventDefault();
       showSnackbar('Kérlek jelentkezz be!', 'info');
       return;
     }
     if (adminOnly && !ALLOWED_ADMIN_UIDS.includes(user.uid)) {
+      e.preventDefault();
       showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
       return;
     }
     navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
-    router.push(path);
   };
 
   return (
@@ -89,9 +91,10 @@ export default function GombAppHome() {
 
       <main className="flex min-h-0 w-full flex-1 flex-col items-center overflow-hidden px-5">
         <div className="menu home-adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
-          <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
-            onClick={() => navigateTo(`/${gombappBase}/admin/`, true)}
+          <Link
+            href={`/${gombappBase}/admin/`}
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={(e) => handleLinkClick(e, true)}
           >
             <Image
               src="/GombApp/images/adminpic.png"
@@ -101,10 +104,11 @@ export default function GombAppHome() {
               height={100}
             />
             Admin
-          </button>
-          <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
-            onClick={() => navigateTo(`/${gombappBase}/bartender/`)}
+          </Link>
+          <Link
+            href={`/${gombappBase}/bartender/`}
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={(e) => handleLinkClick(e)}
           >
             <Image
               src="/GombApp/images/bartenderprofilepic.png"
@@ -114,10 +118,11 @@ export default function GombAppHome() {
               height={100}
             />
             Pultos
-          </button>
-          <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
-            onClick={() => navigateTo(`/${gombappBase}/programs/`)}
+          </Link>
+          <Link
+            href={`/${gombappBase}/programs/`}
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={(e) => handleLinkClick(e)}
           >
             <Image
               src="/GombApp/images/calendar.png"
@@ -127,10 +132,11 @@ export default function GombAppHome() {
               height={100}
             />
             Programok
-          </button>
-          <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
-            onClick={() => navigateTo(`/${gombappBase}/ticketclerk/`)}
+          </Link>
+          <Link
+            href={`/${gombappBase}/ticketclerk/`}
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={(e) => handleLinkClick(e)}
           >
             <Image
               src="/GombApp/images/ticketclerk.png"
@@ -140,7 +146,7 @@ export default function GombAppHome() {
               height={100}
             />
             Jegyárus
-          </button>
+          </Link>
         </div>
       </main>
 

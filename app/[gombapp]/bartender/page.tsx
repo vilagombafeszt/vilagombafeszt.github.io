@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ref, push, serverTimestamp, remove } from 'firebase/database';
 import { database } from '@/lib/firebase';
@@ -27,7 +27,6 @@ export default function BartenderPage() {
   const [isCartLoaded, setIsCartLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const lastClickRef = useRef(0);
 
   const { prices } = usePrices('Ital');
 
@@ -56,13 +55,6 @@ export default function BartenderPage() {
     }
   }, [orderItems, view, isCartLoaded]);
 
-  const throttle = (fn: () => void) => {
-    const now = Date.now();
-    if (now - lastClickRef.current < 120) return;
-    lastClickRef.current = now;
-    fn();
-  };
-
   // Auth check
   useEffect(() => {
     if (!authLoading && !user) {
@@ -82,14 +74,20 @@ export default function BartenderPage() {
   const totalPrice = orderItems.reduce((sum, item) => sum + getDrinkPrice(item), 0);
 
   const addItem = (drink: string) => {
-    setOrderItems((prev) => [...prev, drink]);
+    startTransition(() => {
+      setOrderItems((prev) => [...prev, drink]);
+    });
   };
 
   const removeOneOfType = (name: string) => {
-    setOrderItems((prev) => {
-      const idx = prev.lastIndexOf(name);
-      if (idx === -1) return prev;
-      return prev.filter((_, i) => i !== idx);
+    startTransition(() => {
+      setOrderItems((prev) => {
+        const idx = prev.lastIndexOf(name);
+        if (idx === -1) return prev;
+        const copy = [...prev];
+        copy.splice(idx, 1);
+        return copy;
+      });
     });
   };
 
@@ -208,7 +206,6 @@ export default function BartenderPage() {
             groupedItems={groupedItems}
             getDrinkPrice={getDrinkPrice}
             totalPrice={totalPrice}
-            throttle={throttle}
             removeOneOfType={removeOneOfType}
             addItem={addItem}
             setOrderItems={setOrderItems}
