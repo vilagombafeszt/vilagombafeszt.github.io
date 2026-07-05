@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -9,7 +9,6 @@ import { useSnackbar } from '@/components/gombapp/Snackbar';
 import LoginForm from '@/components/gombapp/LoginForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FullScreenSpinner } from '@/components/gombapp/FullScreenSpinner';
 import packageInfo from '../../package.json';
 
 const ALLOWED_ADMIN_UIDS = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_UIDS?.split(',') || [];
@@ -21,16 +20,10 @@ export default function GombAppHome() {
   const params = useParams();
   const gombappBase = params.gombapp || 'GombApp';
   const [showLogin, setShowLogin] = useState(false);
-  const [isNavigating, setIsNavigating] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setIsNavigating(false);
     setIsClient(true);
-    return () => {
-      if (navTimerRef.current) clearTimeout(navTimerRef.current);
-    };
   }, []);
 
   const handleLogout = () => {
@@ -52,13 +45,10 @@ export default function GombAppHome() {
       showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
       return;
     }
-    navTimerRef.current = setTimeout(() => setIsNavigating(true), 500);
   };
 
   return (
     <>
-      {isNavigating && <FullScreenSpinner />}
-
       <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
         <div
           className="flex w-full flex-row items-center justify-center"
@@ -93,6 +83,7 @@ export default function GombAppHome() {
         <div className="menu home-adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
           <Link
             href={`/${gombappBase}/admin/`}
+            prefetch={true}
             className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e, true)}
           >
@@ -107,6 +98,7 @@ export default function GombAppHome() {
           </Link>
           <Link
             href={`/${gombappBase}/bartender/`}
+            prefetch={true}
             className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
@@ -121,6 +113,7 @@ export default function GombAppHome() {
           </Link>
           <Link
             href={`/${gombappBase}/programs/`}
+            prefetch={true}
             className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
@@ -135,6 +128,7 @@ export default function GombAppHome() {
           </Link>
           <Link
             href={`/${gombappBase}/ticketclerk/`}
+            prefetch={true}
             className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
