@@ -38,6 +38,17 @@ body:has(.gombapp) {
   font-family: inherit;
 }
 
+/* Remove number input spinners */
+.gombapp input[type='number']::-webkit-inner-spin-button,
+.gombapp input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gombapp input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 /* ===== Spacing helpers with clamp / max-height media queries ===== */
 .gombapp .adjust {
   margin-top: clamp(100px, 10vh, 250px);
