@@ -24,7 +24,7 @@ export default function KapcsolatSection() {
             rel="noopener noreferrer"
             className="group/fb inline-block"
           >
-            <div className="opacity-0 group-data-[visible=true]:animate-[spinIn_1.5s_cubic-bezier(0.25,1,0.5,1)]">
+            <div className="opacity-0 group-data-[visible=true]:animate-[spinIn_1.5s_cubic-bezier(0.25,1,0.5,1)_forwards]">
               <Image
                 src="/page_images/facebook.webp"
                 alt="Facebook esemény"
