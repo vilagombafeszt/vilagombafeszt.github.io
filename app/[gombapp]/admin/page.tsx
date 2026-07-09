@@ -235,7 +235,7 @@ export default function AdminPage() {
       {view === 'menu' && (
         <div className="menu adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => setView('bartender')}
           >
             <Image
@@ -248,7 +248,7 @@ export default function AdminPage() {
             Ital statisztika
           </button>
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => setView('ticket')}
           >
             <Image
@@ -261,7 +261,7 @@ export default function AdminPage() {
             Jegy statisztika
           </button>
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => setView('summary')}
           >
             <Image

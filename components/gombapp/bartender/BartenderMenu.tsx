@@ -35,7 +35,7 @@ export function BartenderMenu({
           : DRINKS.map((drink) => (
               <button
                 key={drink.name}
-                className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+                className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
                 onClick={() => addItem(drink.name)}
               >
                 <Image

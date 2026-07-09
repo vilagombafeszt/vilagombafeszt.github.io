@@ -11,9 +11,130 @@ type View = 'menu' | 'realtime' | 'agenda';
 
 const REALTIME_SRC =
   'https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=WEEK&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5';
-
 const AGENDA_SRC =
   'https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=AGENDA&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5&dates=20260821/20260824';
+
+const RealtimeSkeleton = () => (
+  <div className="absolute inset-0 flex animate-pulse flex-col overflow-hidden rounded-2xl bg-white">
+    {/* Header */}
+    <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-3 py-3">
+      <div className="h-5 w-24 rounded bg-gray-300"></div>
+      <div className="h-5 w-5 rounded-sm bg-gray-300"></div>
+    </div>
+
+    {/* Days Row */}
+    <div className="ml-12 flex shrink-0 border-b border-gray-200">
+      {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <div
+          key={i}
+          className="flex flex-1 flex-col items-center gap-1.5 border-l border-gray-100 py-2"
+        >
+          <div className="h-2 w-4 rounded bg-gray-300"></div>
+          <div className={`h-6 w-6 rounded-full ${i === 5 ? 'bg-[#1a73e8]' : 'bg-gray-300'}`}></div>
+        </div>
+      ))}
+    </div>
+
+    {/* Grid Body */}
+    <div className="relative flex flex-1 overflow-hidden">
+      {/* Time column */}
+      <div className="z-10 flex w-12 shrink-0 flex-col bg-white">
+        {[...Array(12)].map((_, i) => (
+          <div key={i} className="flex h-12 items-start justify-center pt-1.5">
+            <div className="h-2.5 w-7 rounded bg-gray-300"></div>
+          </div>
+        ))}
+      </div>
+      {/* Grid columns */}
+      <div className="flex flex-1 border-l border-gray-200">
+        {[...Array(7)].map((_, i) => (
+          <div key={i} className="flex flex-1 flex-col border-r border-gray-100">
+            {[...Array(12)].map((_, j) => (
+              <div key={j} className="relative h-12 w-full border-b border-gray-100">
+                {/* Red dot and line indicator */}
+                {i === 4 && j === 0 && (
+                  <div className="absolute left-0 right-[-10px] top-1/2 z-10 flex items-center">
+                    <div className="-ml-[5px] h-2.5 w-2.5 rounded-full bg-[#ea4335]"></div>
+                    <div className="h-[2px] w-full bg-[#ea4335]"></div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Bottom Bar Controls */}
+    <div className="absolute bottom-2 left-2 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#3c4043]">
+      <span className="text-xs font-medium text-white">N</span>
+    </div>
+    <div className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center">
+      <span className="text-[26px] font-light leading-none text-gray-500">+</span>
+    </div>
+  </div>
+);
+
+const AgendaSkeleton = () => (
+  <div className="absolute inset-0 flex animate-pulse flex-col overflow-hidden rounded-2xl bg-white">
+    {/* Header */}
+    <div className="flex items-center justify-between border-b border-gray-200 px-3 py-3">
+      <div className="h-5 w-40 rounded bg-gray-300"></div>
+      <div className="h-5 w-5 rounded-sm bg-gray-300"></div>
+    </div>
+
+    <div className="flex flex-1 flex-col overflow-hidden">
+      {/* Day 1 Header */}
+      <div className="border-b border-gray-200 bg-gray-50/50 px-3 py-3">
+        <div className="h-3.5 w-24 rounded bg-gray-300"></div>
+      </div>
+      {/* Day 1 - Events */}
+      <div className="flex items-start gap-4 border-b border-gray-100 px-3 py-3">
+        <div className="mt-0.5 h-3 w-12 shrink-0 rounded bg-gray-300"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 w-48 rounded bg-gray-300"></div>
+          <div className="h-3 w-32 rounded bg-gray-200"></div>
+        </div>
+      </div>
+      <div className="flex items-start gap-4 border-b border-gray-100 px-3 py-3">
+        <div className="mt-0.5 h-3 w-12 shrink-0 rounded bg-gray-300"></div>
+        <div className="h-4 w-36 rounded bg-gray-300"></div>
+      </div>
+      <div className="flex items-start gap-4 border-b border-gray-100 px-3 py-3">
+        <div className="mt-0.5 h-3 w-12 shrink-0 rounded bg-gray-300"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 w-52 rounded bg-gray-300"></div>
+          <div className="h-3 w-24 rounded bg-gray-200"></div>
+        </div>
+      </div>
+
+      {/* Day 2 Header */}
+      <div className="border-b border-gray-200 bg-gray-50/50 px-3 py-3">
+        <div className="h-3.5 w-20 rounded bg-gray-300"></div>
+      </div>
+      {/* Day 2 - Events */}
+      <div className="flex items-start gap-4 border-b border-gray-100 px-3 py-3">
+        <div className="mt-0.5 h-3 w-12 shrink-0 rounded bg-gray-300"></div>
+        <div className="h-4 w-40 rounded bg-gray-300"></div>
+      </div>
+      <div className="flex items-start gap-4 border-b border-gray-100 px-3 py-3">
+        <div className="mt-0.5 h-3 w-12 shrink-0 rounded bg-gray-300"></div>
+        <div className="flex flex-col gap-2">
+          <div className="h-4 w-44 rounded bg-gray-300"></div>
+          <div className="h-3 w-36 rounded bg-gray-200"></div>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom Bar Controls */}
+    <div className="absolute bottom-2 left-2 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#3c4043]">
+      <span className="text-xs font-medium text-white">N</span>
+    </div>
+    <div className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center">
+      <span className="text-[26px] font-light leading-none text-gray-500">+</span>
+    </div>
+  </div>
+);
 
 export default function ProgramsPage() {
   const { user, loading: authLoading } = useAuth();
@@ -58,7 +179,7 @@ export default function ProgramsPage() {
       {view === 'menu' && (
         <div className="menu adjust static z-auto mx-auto grid h-auto w-full max-w-[500px] grid-cols-2 gap-5 overflow-y-auto overflow-x-hidden bg-transparent p-0">
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => {
               setView('realtime');
               setIframeLoading(true);
@@ -74,7 +195,7 @@ export default function ProgramsPage() {
             Valós idejű
           </button>
           <button
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={() => {
               setView('agenda');
               setIframeLoading(true);
@@ -94,11 +215,7 @@ export default function ProgramsPage() {
 
       {view === 'realtime' && (
         <div className="relative flex min-h-0 w-full flex-1 py-2.5">
-          {iframeLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
-            </div>
-          )}
+          {iframeLoading && <RealtimeSkeleton />}
           <iframe
             src={REALTIME_SRC}
             title="Program naptár"
@@ -112,11 +229,7 @@ export default function ProgramsPage() {
 
       {view === 'agenda' && (
         <div className="relative flex min-h-0 w-full flex-1 py-2.5">
-          {iframeLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="inline-block h-10 w-10 animate-gombapp-spin rounded-full border-r-4 border-t-4 border-r-transparent border-t-gombapp-text" />
-            </div>
-          )}
+          {iframeLoading && <AgendaSkeleton />}
           <iframe
             src={AGENDA_SRC}
             title="Program naptár"

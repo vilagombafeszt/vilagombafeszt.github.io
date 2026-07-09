@@ -84,7 +84,7 @@ export default function GombAppHome() {
           <Link
             href={`/${gombappBase}/admin/`}
             prefetch={true}
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e, true)}
           >
             <Image
@@ -100,7 +100,7 @@ export default function GombAppHome() {
           <Link
             href={`/${gombappBase}/bartender/`}
             prefetch={true}
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
             <Image
@@ -116,7 +116,7 @@ export default function GombAppHome() {
           <Link
             href={`/${gombappBase}/programs/`}
             prefetch={true}
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
             <Image
@@ -132,7 +132,7 @@ export default function GombAppHome() {
           <Link
             href={`/${gombappBase}/ticketclerk/`}
             prefetch={true}
-            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-start rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             onClick={(e) => handleLinkClick(e)}
           >
             <Image

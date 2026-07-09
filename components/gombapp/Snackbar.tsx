@@ -129,13 +129,13 @@ export function SnackbarProvider({ children }: { children: React.ReactNode }) {
           </div>
           <div className="flex w-full flex-row justify-center gap-4">
             <button
-              className="flex-1 rounded-2xl bg-gombapp-text/10 px-5 py-3 text-[18px] font-bold text-gombapp-text transition-transform active:scale-[0.96]"
+              className="flex-1 cursor-pointer rounded-2xl border-none bg-gombapp-text/10 px-5 py-3 text-[18px] font-bold text-gombapp-text transition-transform active:scale-[0.96]"
               onClick={handleCancel}
             >
               Mégse
             </button>
             <button
-              className="flex-1 rounded-2xl bg-gombapp-text px-5 py-3 text-[18px] font-bold text-gombapp-bg transition-transform active:scale-[0.96]"
+              className="flex-1 cursor-pointer rounded-2xl border-none bg-gombapp-text px-5 py-3 text-[18px] font-bold text-gombapp-bg transition-transform active:scale-[0.96]"
               onClick={handleConfirm}
             >
               OK
