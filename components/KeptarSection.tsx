@@ -4,6 +4,25 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
+const trackAlbumClick = (albumName: string) => {
+  if (typeof window !== 'undefined') {
+    if (window.gtag) {
+      window.gtag('event', 'album_click', {
+        album_name: albumName,
+      });
+    } else if (window.dataLayer) {
+      window.dataLayer.push(['event', 'album_click', { album_name: albumName }]);
+    }
+  }
+};
+
 import indexPictures2024 from '../public/images-2024.json';
 import indexPictures2025 from '../public/images-2025.json';
 import indexPicturesnyarnyito from '../public/images-nyarnito.json';
@@ -67,6 +86,7 @@ export default function KeptarSection() {
           href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackAlbumClick('ViláGomba 2024')}
           style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
           className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
             isVisible
@@ -95,6 +115,7 @@ export default function KeptarSection() {
           href="https://photos.app.goo.gl/njhqn6NmA3wEk73H7"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackAlbumClick('ViláGomba 2025')}
           style={{ animationDelay: isVisible ? '0.2s' : '0s' }}
           className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
             isVisible
@@ -123,6 +144,7 @@ export default function KeptarSection() {
           href="https://photos.app.goo.gl/faBRAoSwUqxKYiFi7"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackAlbumClick('Nyárnyitó 2026')}
           style={{ animationDelay: isVisible ? '0.3s' : '0s' }}
           className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
             isVisible

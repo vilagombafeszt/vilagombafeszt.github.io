@@ -63,6 +63,7 @@ body:has(.gombapp) {
     margin-top: 12px;
     padding-top: 0;
   }
+
   .gombapp .home-adjust {
     margin-top: 6px;
     padding-top: 0;
@@ -74,6 +75,7 @@ body:has(.gombapp) {
     margin-top: 6px;
     padding-top: 0;
   }
+
   .gombapp .home-adjust {
     margin-top: 0;
     padding-top: 0;
@@ -85,6 +87,7 @@ body:has(.gombapp) {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -137,21 +140,26 @@ body:has(.gombapp) {
     font-size: 18px;
     width: 168px;
   }
+
   .gombapp .res-adj2 {
     font-size: 18px;
     width: 82px;
     margin-left: 30px;
   }
+
   .gombapp .res-adj3 {
     font-size: 23px;
   }
+
   .gombapp .res-adj4 {
     margin-top: 0;
     font-size: 32px;
   }
+
   .gombapp .res-adj5 {
     font-size: 1.2em;
   }
+
   .gombapp .res-adj6 {
     font-size: 18px;
   }
@@ -162,33 +170,6 @@ body:has(.gombapp) {
   .gombapp .menu {
     gap: 10px;
   }
-}
-
-/* ===== iOS device adjustments ===== */
-.gombapp.ios-device {
-  height: 100dvh;
-  bottom: auto;
-}
-
-.gombapp.ios-device header {
-  padding-top: calc(15px + env(safe-area-inset-top, 0px));
-}
-
-.gombapp.ios-device .back-button {
-  top: calc(50% + 5px + env(safe-area-inset-top, 0px) / 2);
-}
-
-.gombapp.ios-device footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding-bottom: 0px;
-}
-
-.gombapp.ios-device .fixed-bottom {
-  align-items: flex-end;
-  position: absolute;
 }
 
 /* ===== Full-screen loader backdrop ===== */

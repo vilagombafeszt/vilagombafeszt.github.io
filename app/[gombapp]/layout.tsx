@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Alumni_Sans } from 'next/font/google';
 import { AuthProvider } from '@/components/gombapp/AuthProvider';
-import { IosDetector } from '@/components/gombapp/IosDetector';
 import { SnackbarProvider } from '@/components/gombapp/Snackbar';
 import { GlobalDataProvider } from '@/components/gombapp/GlobalDataProvider';
 import { OfflineBanner } from '@/components/gombapp/OfflineBanner';
@@ -47,22 +46,21 @@ export function generateStaticParams() {
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`gombapp ${alumniSans.variable} fixed inset-0 flex flex-col overflow-hidden bg-gombapp-bg text-[20px] text-gombapp-text md:text-[25px]`}
+      className={`gombapp ${alumniSans.variable} relative flex h-screen w-full flex-col overflow-hidden bg-gombapp-bg text-[20px] text-gombapp-text md:text-[25px]`}
       style={{ fontFamily: 'var(--font-alumni-sans), Alumni Sans, sans-serif' }}
     >
       {/* Force html/body background to match GombApp — eliminates black bleed on all browsers */}
       <style
         dangerouslySetInnerHTML={{
-          __html: 'html, body { background-color: #7c8bb1 !important; overflow: hidden; }',
+          __html: 'html, body { background-color: #7c8bb1 !important; }',
         }}
       />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap"
         rel="stylesheet"
       />
       <AuthProvider>
-        <IosDetector />
         <SnackbarProvider>
           <GlobalDataProvider>
             <OfflineBanner />

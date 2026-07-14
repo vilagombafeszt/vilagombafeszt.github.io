@@ -15,7 +15,7 @@ const AGENDA_SRC =
   'https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=AGENDA&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5&dates=20260821/20260824';
 
 const RealtimeSkeleton = () => (
-  <div className="absolute inset-0 flex animate-pulse flex-col overflow-hidden rounded-2xl bg-white">
+  <div className="absolute bottom-6 left-0 right-0 top-6 flex animate-pulse flex-col overflow-hidden rounded-3xl bg-white">
     {/* Header */}
     <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-3 py-3">
       <div className="h-5 w-24 rounded bg-gray-300"></div>
@@ -30,7 +30,7 @@ const RealtimeSkeleton = () => (
           className="flex flex-1 flex-col items-center gap-1.5 border-l border-gray-100 py-2"
         >
           <div className="h-2 w-4 rounded bg-gray-300"></div>
-          <div className={`h-6 w-6 rounded-full ${i === 5 ? 'bg-[#1a73e8]' : 'bg-gray-300'}`}></div>
+          <div className={`h-6 w-6 rounded-full bg-gray-300`}></div>
         </div>
       ))}
     </div>
@@ -50,15 +50,7 @@ const RealtimeSkeleton = () => (
         {[...Array(7)].map((_, i) => (
           <div key={i} className="flex flex-1 flex-col border-r border-gray-100">
             {[...Array(12)].map((_, j) => (
-              <div key={j} className="relative h-12 w-full border-b border-gray-100">
-                {/* Red dot and line indicator */}
-                {i === 4 && j === 0 && (
-                  <div className="absolute left-0 right-[-10px] top-1/2 z-10 flex items-center">
-                    <div className="-ml-[5px] h-2.5 w-2.5 rounded-full bg-[#ea4335]"></div>
-                    <div className="h-[2px] w-full bg-[#ea4335]"></div>
-                  </div>
-                )}
-              </div>
+              <div key={j} className="relative h-12 w-full border-b border-gray-100"></div>
             ))}
           </div>
         ))}
@@ -76,7 +68,7 @@ const RealtimeSkeleton = () => (
 );
 
 const AgendaSkeleton = () => (
-  <div className="absolute inset-0 flex animate-pulse flex-col overflow-hidden rounded-2xl bg-white">
+  <div className="absolute bottom-6 left-0 right-0 top-6 flex animate-pulse flex-col overflow-hidden rounded-3xl bg-white">
     {/* Header */}
     <div className="flex items-center justify-between border-b border-gray-200 px-3 py-3">
       <div className="h-5 w-40 rounded bg-gray-300"></div>
@@ -214,13 +206,13 @@ export default function ProgramsPage() {
       )}
 
       {view === 'realtime' && (
-        <div className="relative flex min-h-0 w-full flex-1 py-2.5">
+        <div className="relative flex min-h-0 w-full flex-1 py-6">
           {iframeLoading && <RealtimeSkeleton />}
           <iframe
             src={REALTIME_SRC}
             title="Program naptár"
             onLoad={() => setIframeLoading(false)}
-            className="w-full flex-1 overflow-hidden rounded-2xl border-0 transition-opacity duration-300 ease-in-out"
+            className="w-full flex-1 overflow-hidden rounded-3xl border-0 transition-opacity duration-300 ease-in-out"
             style={{ opacity: iframeLoading ? 0 : 1 }}
             scrolling="no"
           />
@@ -228,13 +220,13 @@ export default function ProgramsPage() {
       )}
 
       {view === 'agenda' && (
-        <div className="relative flex min-h-0 w-full flex-1 py-2.5">
+        <div className="relative flex min-h-0 w-full flex-1 py-6">
           {iframeLoading && <AgendaSkeleton />}
           <iframe
             src={AGENDA_SRC}
             title="Program naptár"
             onLoad={() => setIframeLoading(false)}
-            className="w-full flex-1 overflow-hidden rounded-2xl border-0 transition-opacity duration-300 ease-in-out"
+            className="w-full flex-1 overflow-hidden rounded-3xl border-0 transition-opacity duration-300 ease-in-out"
             style={{ opacity: iframeLoading ? 0 : 1 }}
             scrolling="no"
           />

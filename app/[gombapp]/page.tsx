@@ -49,7 +49,7 @@ export default function GombAppHome() {
 
   return (
     <>
-      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[max(env(safe-area-inset-top),15px)] text-[30px]">
         <div
           className="flex w-full flex-row items-center justify-center"
           style={isClient && user ? { flexDirection: 'column' } : undefined}
@@ -150,7 +150,7 @@ export default function GombAppHome() {
 
       <LoginForm isOpen={showLogin && !user} onClose={() => setShowLogin(false)} />
 
-      <footer className="mt-auto shrink-0 pt-5">
+      <footer className="mt-auto shrink-0 pb-[env(safe-area-inset-bottom,0px)] pt-5">
         <p className="text-center">v{packageInfo.version}</p>
       </footer>
     </>

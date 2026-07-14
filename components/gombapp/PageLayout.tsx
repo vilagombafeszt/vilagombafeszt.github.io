@@ -19,8 +19,8 @@ export function PageLayout({ title, onBack, backHref, children }: PageLayoutProp
 
   return (
     <>
-      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[calc(10px+env(safe-area-inset-top,0px))] text-[30px]">
-        <div className="flex w-full flex-row items-center justify-center">
+      <header className="relative z-[100] flex w-full shrink-0 flex-col items-center justify-between bg-gombapp-bg px-5 pt-[max(env(safe-area-inset-top),15px)] text-[30px]">
+        <div className="relative flex w-full flex-row items-center justify-center">
           {backHref ? (
             <Link
               href={backHref}
