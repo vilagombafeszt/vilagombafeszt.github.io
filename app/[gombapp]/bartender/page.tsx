@@ -160,7 +160,12 @@ export default function BartenderPage() {
 
       setIsCheckoutOpen(false);
       showSnackbar('Sikeresen mentve!', 'success', 10000, {
-        label: <Undo2 size={24} />,
+        label: (
+          <div className="flex items-center gap-1.5">
+            <Undo2 size={16} />
+            <span>Visszavonás</span>
+          </div>
+        ),
         onClick: handleUndo,
       });
       setOrderItems([]);
