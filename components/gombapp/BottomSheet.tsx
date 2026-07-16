@@ -79,7 +79,7 @@ export function BottomSheet({ isOpen, onClose, children }: BottomSheetProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[1000] flex items-end justify-center bg-black/50 md:items-center ${
+      className={`fixed inset-0 z-[9999] flex items-end justify-center bg-black/50 md:items-center ${
         isClosing && !isDraggingClose
           ? 'closing animate-gombapp-fade-out'
           : 'animate-gombapp-fade-in'
