@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useCallback, useMemo, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, get, push, serverTimestamp, remove } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { database } from '@/lib/firebase';
+import { saveOrder as apiSaveOrder, undoOrder as apiUndoOrder } from '@/lib/firebase/api';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import { PageLayout } from '@/components/gombapp/PageLayout';
@@ -188,29 +189,32 @@ export default function TicketClerkPage() {
       const currentOrderItems = [...orderItems];
 
       // New schema: push individual orders to Rendelések/Jegy/<uid>/orders
-      const ordersRef = ref(database!, `Rendelések/Jegy/${user.uid}/orders`);
-      const newOrderRef = push(ordersRef, {
-        email: user.email,
-        items: currentOrderItems,
-        prices: orderPrices,
-        total: orderTotal,
-        timestamp: serverTimestamp(),
-      });
+      const orderId = await apiSaveOrder(
+        'Jegy',
+        user.uid,
+        user.email,
+        currentOrderItems,
+        orderPrices,
+        orderTotal
+      );
 
       await updateCapacity(ticketCounts);
       await refreshCapacity();
 
-      const handleUndo = () => {
-        Promise.all([remove(newOrderRef), revertCapacity(ticketCounts)])
-          .then(() => {
-            setOrderItems(currentOrderItems); // repopulate cart
-            setView('order');
-            showSnackbar('Mentés visszavonva!', 'info');
-          })
-          .catch((error) => {
-            console.error('Error undoing ticket order:', error);
-            showSnackbar('Hiba a visszavonás közben.', 'error');
-          });
+      const handleUndo = async () => {
+        if (!orderId) return;
+        try {
+          await Promise.all([
+            apiUndoOrder('Jegy', user.uid, orderId),
+            revertCapacity(ticketCounts),
+          ]);
+          setOrderItems(currentOrderItems); // repopulate cart
+          setView('order');
+          showSnackbar('Mentés visszavonva!', 'info');
+        } catch (error) {
+          console.error('Error undoing ticket order:', error);
+          showSnackbar('Hiba a visszavonás közben.', 'error');
+        }
       };
 
       setIsCheckoutOpen(false);

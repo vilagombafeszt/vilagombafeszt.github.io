@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, push, serverTimestamp, remove } from 'firebase/database';
-import { database } from '@/lib/firebase';
+import { saveOrder as apiSaveOrder, undoOrder as apiUndoOrder } from '@/lib/firebase/api';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import { PageLayout } from '@/components/gombapp/PageLayout';
@@ -137,26 +136,26 @@ export default function BartenderPage() {
       const currentOrderItems = [...orderItems];
 
       // New schema: push individual orders to Rendelések/Ital/<uid>/orders
-      const ordersRef = ref(database!, `Rendelések/Ital/${user.uid}/orders`);
-      const newOrderRef = push(ordersRef, {
-        email: user.email,
-        items: currentOrderItems,
-        prices: orderPrices,
-        total: orderTotal,
-        timestamp: serverTimestamp(),
-      });
+      const orderId = await apiSaveOrder(
+        'Ital',
+        user.uid,
+        user.email,
+        currentOrderItems,
+        orderPrices,
+        orderTotal
+      );
 
-      const handleUndo = () => {
-        remove(newOrderRef)
-          .then(() => {
-            setOrderItems(currentOrderItems); // repopulate cart
-            setView('order');
-            showSnackbar('Mentés visszavonva!', 'info');
-          })
-          .catch((error) => {
-            console.error('Error undoing order:', error);
-            showSnackbar('Hiba a visszavonás közben.', 'error');
-          });
+      const handleUndo = async () => {
+        if (!orderId) return;
+        try {
+          await apiUndoOrder('Ital', user.uid, orderId);
+          setOrderItems(currentOrderItems); // repopulate cart
+          setView('order');
+          showSnackbar('Mentés visszavonva!', 'info');
+        } catch (error) {
+          console.error('Error undoing order:', error);
+          showSnackbar('Hiba a visszavonás közben.', 'error');
+        }
       };
 
       setIsCheckoutOpen(false);

@@ -2,87 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, get, child } from 'firebase/database';
 import { doc, getDoc } from 'firebase/firestore';
+import { ref, get, child } from 'firebase/database';
 import { database, firestoreDB } from '@/lib/firebase';
+import { fetchOrderStats, EMPTY_STATS } from '@/lib/firebase/api';
+import { Stats, TicketCapacities } from '@/lib/firebase/types';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import { PageLayout } from '@/components/gombapp/PageLayout';
 import Image from 'next/image';
 
 type View = 'menu' | 'bartender' | 'ticket' | 'summary';
-
-interface Stats {
-  totalOrders: number;
-  totalOrderCount: number;
-  totalRevenue: number;
-  mostOrdered: string;
-}
-
-interface TicketCapacities {
-  friday: number;
-  saturday: number;
-  sunday: number;
-}
-
-const EMPTY_STATS: Stats = {
-  totalOrders: 0,
-  totalOrderCount: 0,
-  totalRevenue: 0,
-  mostOrdered: 'N/A',
-};
-
-type HybridOrderData = {
-  orderList?: string[];
-  orderCount?: number;
-  totalPrice?: number;
-  orders?: Record<string, { items: string[]; total: number }>;
-};
-
-function computeStats(data: Record<string, HybridOrderData>): Stats {
-  let totalOrders = 0;
-  let totalOrderCount = 0;
-  let totalRevenue = 0;
-  const itemCounts: Record<string, number> = {};
-
-  for (const uid in data) {
-    const userObject = data[uid];
-
-    // 1. Process legacy schema (array-based)
-    if (userObject.orderList && Array.isArray(userObject.orderList)) {
-      totalOrders += userObject.orderList.length;
-      totalOrderCount += userObject.orderCount || 1;
-      totalRevenue += userObject.totalPrice || 0;
-
-      userObject.orderList.forEach((item: string) => {
-        itemCounts[item] = (itemCounts[item] || 0) + 1;
-      });
-    }
-
-    // 2. Process new schema (push-based subcollection)
-    if (userObject.orders && typeof userObject.orders === 'object') {
-      for (const pushId in userObject.orders) {
-        const order = userObject.orders[pushId];
-        if (order.items && Array.isArray(order.items)) {
-          totalOrders += order.items.length;
-          totalOrderCount += 1;
-          totalRevenue += order.total || 0;
-
-          order.items.forEach((item: string) => {
-            itemCounts[item] = (itemCounts[item] || 0) + 1;
-          });
-        }
-      }
-    }
-  }
-
-  const mostOrdered =
-    Object.keys(itemCounts).length > 0
-      ? Object.keys(itemCounts).reduce((a, b) => (itemCounts[a] > itemCounts[b] ? a : b))
-      : 'N/A';
-
-  return { totalOrders, totalOrderCount, totalRevenue, mostOrdered };
-}
 
 function StatCard({ label, value, unit }: { label: string; value: number; unit: string }) {
   const formatted = value.toLocaleString('hu-HU').replace(/,/g, ' ');
@@ -180,27 +110,23 @@ export default function AdminPage() {
 
   const fetchStatistics = async () => {
     setIsFetchingStats(true);
-    const dbRef = ref(database!);
 
     try {
-      const drinkSnap = await get(child(dbRef, 'Rendelések/Ital'));
-      if (drinkSnap.exists()) {
-        setBartenderStats(computeStats(drinkSnap.val()));
-      }
+      const drinkStats = await fetchOrderStats('Ital');
+      setBartenderStats(drinkStats);
     } catch (error) {
       console.error('Error fetching drink stats:', error);
     }
 
     try {
-      const ticketSnap = await get(child(dbRef, 'Rendelések/Jegy'));
-      if (ticketSnap.exists()) {
-        setTicketStats(computeStats(ticketSnap.val()));
-      }
+      const tStats = await fetchOrderStats('Jegy');
+      setTicketStats(tStats);
     } catch (error) {
       console.error('Error fetching ticket stats:', error);
     }
 
     try {
+      const dbRef = ref(database!);
       const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
         get(child(dbRef, 'Jegyek/pentekMax')),
         get(child(dbRef, 'Jegyek/szombatMax')),

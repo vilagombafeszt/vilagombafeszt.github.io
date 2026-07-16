@@ -25,13 +25,13 @@ export function PageLayout({ title, onBack, backHref, children }: PageLayoutProp
             <Link
               href={backHref}
               prefetch={true}
-              className="absolute left-[10px] top-1/2 mt-1 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              className="absolute left-0 top-1/2 mt-1 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg no-underline transition-transform duration-100 ease-in-out active:scale-[0.96]"
             >
               Vissza
             </Link>
           ) : (
             <button
-              className="absolute left-[10px] top-1/2 mt-1 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+              className="absolute left-0 top-1/2 mt-1 flex w-[90px] -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-5 py-2.5 text-[1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
               onClick={handleBack}
             >
               Vissza
