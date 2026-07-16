@@ -1,4 +1,4 @@
-import { ref, get, child, push, serverTimestamp, remove } from 'firebase/database';
+import { ref, get, child, push, serverTimestamp, remove, runTransaction } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { HybridOrderData, Stats } from './types';
 
@@ -126,4 +126,79 @@ export const undoOrder = async (
   if (!database) return;
   const orderRef = ref(database, `Rendelések/${category}/${uid}/orders/${orderId}`);
   await remove(orderRef);
+};
+
+export const updateTicketCapacity = async (
+  friday: number,
+  saturday: number,
+  sunday: number,
+  pass: number
+): Promise<void> => {
+  if (!database) return;
+  const promises: Promise<unknown>[] = [];
+
+  if (friday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/pentekMax'), (currentValue) => {
+        const currentMax = currentValue || 0;
+        return Math.max(0, currentMax - (friday + pass));
+      })
+    );
+  }
+
+  if (saturday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/szombatMax'), (currentValue) => {
+        const currentMax = currentValue || 0;
+        return Math.max(0, currentMax - (saturday + pass));
+      })
+    );
+  }
+
+  if (sunday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/vasarnapMax'), (currentValue) => {
+        const currentMax = currentValue || 0;
+        return Math.max(0, currentMax - (sunday + pass));
+      })
+    );
+  }
+
+  await Promise.all(promises);
+};
+
+export const revertTicketCapacity = async (
+  friday: number,
+  saturday: number,
+  sunday: number,
+  pass: number
+): Promise<void> => {
+  if (!database) return;
+  const promises: Promise<unknown>[] = [];
+
+  if (friday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/pentekMax'), (currentValue) => {
+        return (currentValue || 0) + friday + pass;
+      })
+    );
+  }
+
+  if (saturday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/szombatMax'), (currentValue) => {
+        return (currentValue || 0) + saturday + pass;
+      })
+    );
+  }
+
+  if (sunday > 0 || pass > 0) {
+    promises.push(
+      runTransaction(ref(database, 'Jegyek/vasarnapMax'), (currentValue) => {
+        return (currentValue || 0) + sunday + pass;
+      })
+    );
+  }
+
+  await Promise.all(promises);
 };
