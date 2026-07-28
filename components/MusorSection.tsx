@@ -1,15 +1,40 @@
 import ScrollRevealWrapper from './ScrollRevealWrapper';
 
-const lineupData = {
+type LineupItem = {
+  time: string;
+  artist: string;
+  instagram?: string;
+  facebook?: string;
+  spotify?: string;
+  youtube?: string;
+  soundcloud?: string;
+};
+
+type B2bArtist = {
+  name: string;
+  instagram?: string;
+  facebook?: string;
+  spotify?: string;
+  youtube?: string;
+  soundcloud?: string;
+};
+
+type B2bEntry = {
+  time: string;
+  b2b: B2bArtist[];
+};
+
+type LineupEntry = LineupItem | { split: LineupItem[] } | B2bEntry;
+
+const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
   friday: [
     {
-      time: '17:30',
+      time: '19:15',
       artist: 'Artur',
       instagram: 'https://www.instagram.com/arturmusicofficial/',
       facebook: 'https://www.facebook.com/arturmusicofficial/',
       spotify: 'https://open.spotify.com/artist/5zjlRer0EwBcz3uRO3ozed',
     },
-    { time: '19:15', artist: 'Coming soon' },
     {
       time: '21:00',
       artist: 'Shakar Trio',
@@ -19,13 +44,48 @@ const lineupData = {
     },
     {
       time: '22:45',
-      artist: 'AZNAP Projekt',
+      artist: 'Aznap Projekt',
       instagram: 'https://www.instagram.com/aznapprojekt/',
       facebook: 'https://www.facebook.com/aznapprojekt/',
       spotify: 'https://open.spotify.com/artist/5nKpPdELRt9Ih7CIBegKWW',
     },
+    {
+      time: '00:15',
+      b2b: [
+        {
+          name: 'benj0e',
+          soundcloud: 'https://soundcloud.com/benj0e',
+          instagram: 'https://www.instagram.com/benj0e_/',
+        },
+        {
+          name: 'kabi',
+          soundcloud: 'https://soundcloud.com/kabikabikabi',
+          instagram: 'https://www.instagram.com/kabat_nik/',
+        },
+      ],
+    },
+    {
+      time: '03:00',
+      artist: 'Coming soon...',
+    },
   ],
   saturday: [
+    {
+      split: [
+        { time: '13:45', artist: 'Színdarab' },
+        { time: '13:45', artist: 'Kézmű' },
+      ],
+    },
+    {
+      time: '14:45',
+      artist: 'Gergel bakelit set',
+      soundcloud: 'https://soundcloud.com/kozma-gergely-330211448',
+      instagram: 'https://www.instagram.com/gergel.ed',
+    },
+    {
+      time: '15:30',
+      artist: 'Előadás',
+    },
     {
       time: '17:30',
       artist: 'Sildervald',
@@ -35,42 +95,81 @@ const lineupData = {
     },
     {
       time: '19:15',
-      artist: 'Várhegyutca',
-      instagram: 'https://www.instagram.com/varhegyutca/',
-      facebook: 'https://www.facebook.com/varhegyutca20',
-      spotify: 'https://open.spotify.com/artist/5arfgRXgs0kQH9jQvLchda',
-    },
-    { time: '21:00', artist: 'Táncház' },
-    {
-      time: '22:45',
-      artist: 'Héba',
-      instagram: 'https://www.instagram.com/heba_zenekar/',
-      facebook: 'https://www.facebook.com/hebazenekar/',
-      spotify: 'https://open.spotify.com/artist/2WBZepnDyHGUAfIK4GdnYn',
-    },
-  ],
-  sunday: [
-    {
-      time: '15:45',
       artist: 'Kvaterka',
       instagram: 'https://www.instagram.com/kvaterkaperka/',
       facebook: 'https://www.facebook.com/kvaterka/',
       spotify: 'https://open.spotify.com/artist/4saOqPzmr82yEkBYPjHjPH',
     },
-    { time: '17:30', artist: 'Coming soon' },
     {
-      time: '19:15',
+      time: '21:00',
+      artist: 'Táncház',
+    },
+    {
+      time: '22:45',
+      artist: 'Várhegyutca',
+      instagram: 'https://www.instagram.com/varhegyutca/',
+      facebook: 'https://www.facebook.com/varhegyutca20',
+      spotify: 'https://open.spotify.com/artist/5arfgRXgs0kQH9jQvLchda',
+    },
+    {
+      time: '00:15',
+      artist: 'Fenyo gang',
+      instagram: 'https://www.instagram.com/fenyogang/',
+      youtube: 'https://www.youtube.com/@FENYOgang',
+      spotify: 'https://open.spotify.com/artist/6WKmAVT5sPRhSU1eWz1JPy',
+    },
+    {
+      time: '01:30',
+      artist: 'Greasy Board',
+      instagram: 'https://www.instagram.com/greasy_board/',
+      youtube: 'https://www.youtube.com/channel/UCHkQFYjaK66VOYuWH23-oqQ',
+      spotify: 'https://open.spotify.com/artist/5x5y7u9dTAZ2gpdeVYsEjV',
+    },
+    {
+      time: '02:45',
+      artist: 'Tüske',
+      instagram: 'https://www.instagram.com/ambrusperjessy/',
+    },
+  ],
+  sunday: [
+    {
+      split: [
+        { time: '12:00', artist: 'Efi Róza' },
+        { time: '12:00', artist: 'Kézmű' },
+      ],
+    },
+    {
+      time: '13:00',
+      artist: 'Lazarus bakelit set',
+    },
+    {
+      time: '13:45',
+      artist: 'Előadás',
+    },
+    {
+      time: '15:45',
+      artist: 'Hárfa Fuvola duó',
+    },
+    {
+      time: '17:30',
       artist: 'Őri-Kiss Botond',
       instagram: 'https://www.instagram.com/okboti/',
       facebook: 'https://www.facebook.com/botondorikiss/',
       spotify: 'https://open.spotify.com/artist/3KDsNtTF0SG4Q7Wi9lIvu7',
     },
     {
-      time: '21:00',
+      time: '19:15',
       artist: 'Semmi',
       instagram: 'https://www.instagram.com/semmizenekar/',
       facebook: 'https://www.facebook.com/semmizenekar/',
       spotify: 'https://open.spotify.com/artist/4zIEONFFlYdvj8DhUvbFVk',
+    },
+    {
+      time: '21:00',
+      artist: 'HéBa',
+      instagram: 'https://www.instagram.com/heba_zenekar/',
+      facebook: 'https://www.facebook.com/hebazenekar/',
+      spotify: 'https://open.spotify.com/artist/2WBZepnDyHGUAfIK4GdnYn',
     },
     {
       time: '22:45',
@@ -78,6 +177,18 @@ const lineupData = {
       instagram: 'https://www.instagram.com/koc_band/',
       facebook: 'https://www.facebook.com/Koczenekar/',
       spotify: 'https://open.spotify.com/artist/2VJp10XXnDl8OPf5iABe4p',
+    },
+    {
+      time: '00:15',
+      artist: 'Jammellés',
+    },
+    {
+      time: '01:30',
+      artist: 'Saját szett',
+    },
+    {
+      time: '02:45',
+      artist: 'Áron szett',
     },
   ],
 };
@@ -115,76 +226,169 @@ const SpotifyIcon = ({ className }: { className?: string }) => (
     <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10C22 6.477 17.523 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.467-.077-.334.132-.67.467-.745 3.805-.87 7.076-.496 9.714 1.115.294.18.387.563.208.853zm1.192-3.218c-.226.368-.707.49-1.072.265-2.68-1.644-6.78-2.126-9.965-1.163-.418.125-.853-.113-.978-.53-.126-.418.113-.853.53-.98 3.65-1.1 8.196-.566 11.22 1.294.366.225.49.706.265 1.072zm.12-3.376c-3.215-1.906-8.52-2.08-11.564-1.155-.5.15-1.015-.13-1.168-.63-.153-.5.128-1.014.628-1.168 3.515-1.066 9.38-.865 13.085 1.332.443.262.585.834.323 1.277-.26.442-.832.583-1.275.322z" />
   </svg>
 );
+const YoutubeIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z" />
+  </svg>
+);
+const SoundcloudIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M11.17 19.33H22a2.38 2.38 0 0 0 2-2.28 2.22 2.22 0 0 0-2-2.29c-.06 0-.13 0-.19 0-.58-2.84-3.08-4.76-5.81-4.76a5.55 5.55 0 0 0-4.83 2.8A3.35 3.35 0 0 0 7.82 12 3.14 3.14 0 0 0 5 13.91a2.83 2.83 0 0 0-2.86 2c0 .08 0 .16 0 .24A3.49 3.49 0 0 0 5 19.33h6.17Z" />
+  </svg>
+);
 
-function LineupList({
-  items,
-  baseDelay,
+function SocialIcons({
+  links,
 }: {
-  items: {
-    time: string;
-    artist: string;
+  links: {
     instagram?: string;
     facebook?: string;
     spotify?: string;
-  }[];
-  baseDelay: number;
+    youtube?: string;
+    soundcloud?: string;
+  };
 }) {
+  if (!links.instagram && !links.facebook && !links.spotify && !links.youtube && !links.soundcloud)
+    return null;
   return (
-    <div className="relative mb-2 mt-4 flex w-full flex-col gap-3 md:mb-10 md:mt-8 md:gap-4">
-      {items.map((item, index) => (
-        <div
-          key={index}
-          style={{ animationDelay: `${baseDelay + index * 0.1}s` }}
-          className="group/card relative flex flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
+    <div className="flex items-center gap-2 sm:gap-3">
+      {links.instagram && (
+        <a
+          href={links.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-pink-400"
         >
-          <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
-            <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
-              {item.time}
-            </span>
-          </div>
+          <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
+        </a>
+      )}
+      {links.facebook && (
+        <a
+          href={links.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-blue-400"
+        >
+          <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
+        </a>
+      )}
+      {links.youtube && (
+        <a
+          href={links.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-red-500"
+        >
+          <YoutubeIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
+        </a>
+      )}
+      {links.soundcloud && (
+        <a
+          href={links.soundcloud}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-orange-500"
+        >
+          <SoundcloudIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
+        </a>
+      )}
+      {links.spotify && (
+        <a
+          href={links.spotify}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-green-400"
+        >
+          <SpotifyIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
+        </a>
+      )}
+    </div>
+  );
+}
 
-          <div className="relative z-10 flex w-full min-w-0 flex-row items-center justify-between gap-2 sm:gap-3">
-            <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
-              {item.artist}
-            </span>
+function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
+  return (
+    <div
+      style={{ animationDelay: `${delay}s` }}
+      className="group/card relative flex flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
+    >
+      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
+        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
+          {item.time}
+        </span>
+      </div>
 
-            {(item.instagram || item.facebook || item.spotify) && (
-              <div className="flex items-center gap-2 sm:gap-3">
-                {item.instagram && (
-                  <a
-                    href={item.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-pink-400"
-                  >
-                    <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
-                  </a>
-                )}
-                {item.facebook && (
-                  <a
-                    href={item.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-blue-400"
-                  >
-                    <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
-                  </a>
-                )}
-                {item.spotify && (
-                  <a
-                    href={item.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-green-400"
-                  >
-                    <SpotifyIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
-                  </a>
-                )}
+      <div className="relative z-10 flex w-full min-w-0 flex-row items-center justify-between gap-2 sm:gap-3">
+        <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
+          {item.artist}
+        </span>
+        <SocialIcons links={item} />
+      </div>
+    </div>
+  );
+}
+
+function B2bCard({ item, delay }: { item: B2bEntry; delay: number }) {
+  return (
+    <div
+      style={{ animationDelay: `${delay}s` }}
+      className="group/card relative flex flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
+    >
+      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
+        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
+          {item.time}
+        </span>
+      </div>
+
+      <div className="relative z-10 flex w-full min-w-0 flex-col gap-2">
+        {item.b2b.map((artist, i) => (
+          <div key={i}>
+            <div className="flex flex-row items-center justify-between gap-2 sm:gap-3">
+              <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
+                {artist.name}
+              </span>
+              <SocialIcons links={artist} />
+            </div>
+            {i < item.b2b.length - 1 && (
+              <div className="my-1.5 flex items-center gap-2">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+                <span className="shrink-0 rounded-full bg-amber-500/15 px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest text-amber-500/70">
+                  b2b
+                </span>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
               </div>
             )}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LineupList({ items, baseDelay }: { items: LineupEntry[]; baseDelay: number }) {
+  return (
+    <div className="relative mb-2 mt-4 flex w-full flex-col gap-3 md:mb-10 md:mt-8 md:gap-4">
+      {items.map((item, index) => {
+        if ('split' in item) {
+          return (
+            <div key={index} className="flex w-full flex-row gap-3 sm:gap-4 md:gap-6">
+              {item.split.map((splitItem, splitIndex) => (
+                <LineupCard
+                  key={splitIndex}
+                  item={splitItem}
+                  delay={baseDelay + index * 0.1 + splitIndex * 0.05}
+                />
+              ))}
+            </div>
+          );
+        }
+
+        if ('b2b' in item) {
+          return <B2bCard key={index} item={item} delay={baseDelay + index * 0.1} />;
+        }
+
+        return <LineupCard key={index} item={item} delay={baseDelay + index * 0.1} />;
+      })}
     </div>
   );
 }
