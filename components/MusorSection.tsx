@@ -1,3 +1,12 @@
+'use client';
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
 import ScrollRevealWrapper from './ScrollRevealWrapper';
 
 type LineupItem = {
@@ -237,8 +246,26 @@ const SoundcloudIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const trackSocialClick = (artistName: string, platform: string) => {
+  if (typeof window !== 'undefined') {
+    if (window.gtag) {
+      window.gtag('event', 'artist_social_click', {
+        artist_name: artistName,
+        social_platform: platform,
+      });
+    } else if (window.dataLayer) {
+      window.dataLayer.push([
+        'event',
+        'artist_social_click',
+        { artist_name: artistName, social_platform: platform },
+      ]);
+    }
+  }
+};
+
 function SocialIcons({
   links,
+  artistName,
 }: {
   links: {
     instagram?: string;
@@ -247,6 +274,7 @@ function SocialIcons({
     youtube?: string;
     soundcloud?: string;
   };
+  artistName: string;
 }) {
   if (!links.instagram && !links.facebook && !links.spotify && !links.youtube && !links.soundcloud)
     return null;
@@ -257,6 +285,7 @@ function SocialIcons({
           href={links.instagram}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackSocialClick(artistName, 'instagram')}
           className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-pink-400"
         >
           <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
@@ -267,6 +296,7 @@ function SocialIcons({
           href={links.facebook}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackSocialClick(artistName, 'facebook')}
           className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-blue-400"
         >
           <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
@@ -277,6 +307,7 @@ function SocialIcons({
           href={links.youtube}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackSocialClick(artistName, 'youtube')}
           className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-red-500"
         >
           <YoutubeIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
@@ -287,6 +318,7 @@ function SocialIcons({
           href={links.soundcloud}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackSocialClick(artistName, 'soundcloud')}
           className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-orange-500"
         >
           <SoundcloudIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
@@ -297,6 +329,7 @@ function SocialIcons({
           href={links.spotify}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackSocialClick(artistName, 'spotify')}
           className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-green-400"
         >
           <SpotifyIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
@@ -322,7 +355,7 @@ function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
         <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
           {item.artist}
         </span>
-        <SocialIcons links={item} />
+        <SocialIcons links={item} artistName={item.artist} />
       </div>
     </div>
   );
@@ -347,7 +380,7 @@ function B2bCard({ item, delay }: { item: B2bEntry; delay: number }) {
               <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
                 {artist.name}
               </span>
-              <SocialIcons links={artist} />
+              <SocialIcons links={artist} artistName={artist.name} />
             </div>
             {i < item.b2b.length - 1 && (
               <div className="my-1.5 flex items-center gap-2">
