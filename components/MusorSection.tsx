@@ -75,7 +75,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '03:00',
-      artist: 'Coming soon...',
+      artist: 'antiprosti',
     },
   ],
   saturday: [
@@ -122,7 +122,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '00:15',
-      artist: 'Fenyo gang',
+      artist: 'FENYO gang',
       instagram: 'https://www.instagram.com/fenyogang/',
       youtube: 'https://www.youtube.com/@FENYOgang',
       spotify: 'https://open.spotify.com/artist/6WKmAVT5sPRhSU1eWz1JPy',
@@ -143,7 +143,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
   sunday: [
     {
       split: [
-        { time: '12:00', artist: 'Efi Róza' },
+        { time: '12:00', artist: 'Efi, Róza' },
         { time: '12:00', artist: 'Kézmű' },
       ],
     },
@@ -157,7 +157,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '15:45',
-      artist: 'Hárfa Fuvola duó',
+      artist: '24/7',
     },
     {
       time: '17:30',
@@ -197,7 +197,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '02:45',
-      artist: 'Áron szett',
+      artist: 'Teve',
     },
   ],
 };
