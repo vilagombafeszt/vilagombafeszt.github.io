@@ -343,16 +343,16 @@ function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="group/card relative flex flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
+      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
     >
-      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
-        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
+      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 sm:min-w-[80px] sm:group-hover/card:scale-110 sm:group-hover/card:bg-black/60">
+        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base min-[1800px]:text-lg">
           {item.time}
         </span>
       </div>
 
       <div className="relative z-10 flex w-full min-w-0 flex-row items-center justify-between gap-2 sm:gap-3">
-        <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
+        <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 sm:text-xl sm:group-hover/card:text-white md:text-3xl xl:text-2xl min-[1800px]:text-3xl">
           {item.artist}
         </span>
         <SocialIcons links={item} artistName={item.artist} />
@@ -365,10 +365,10 @@ function B2bCard({ item, delay }: { item: B2bEntry; delay: number }) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="group/card relative flex flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 md:gap-6"
+      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
     >
-      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 group-hover/card:scale-110 group-hover/card:bg-black/60 sm:min-w-[80px]">
-        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base 2xl:text-lg">
+      <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 sm:min-w-[80px] sm:group-hover/card:scale-110 sm:group-hover/card:bg-black/60">
+        <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base min-[1800px]:text-lg">
           {item.time}
         </span>
       </div>
@@ -377,7 +377,7 @@ function B2bCard({ item, delay }: { item: B2bEntry; delay: number }) {
         {item.b2b.map((artist, i) => (
           <div key={i}>
             <div className="flex flex-row items-center justify-between gap-2 sm:gap-3">
-              <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 group-hover/card:text-white sm:text-xl md:text-3xl xl:text-2xl 2xl:text-3xl">
+              <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 sm:text-xl sm:group-hover/card:text-white md:text-3xl xl:text-2xl min-[1800px]:text-3xl">
                 {artist.name}
               </span>
               <SocialIcons links={artist} artistName={artist.name} />
@@ -404,7 +404,7 @@ function LineupList({ items, baseDelay }: { items: LineupEntry[]; baseDelay: num
       {items.map((item, index) => {
         if ('split' in item) {
           return (
-            <div key={index} className="flex w-full flex-row gap-3 sm:gap-4 md:gap-6">
+            <div key={index} className="flex w-full flex-row gap-1.5 sm:gap-2 md:gap-3">
               {item.split.map((splitItem, splitIndex) => (
                 <LineupCard
                   key={splitIndex}
@@ -431,13 +431,13 @@ export default function MusorSection() {
     <ScrollRevealWrapper
       id="musor"
       dataLogoTheme="vaj"
-      className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#354b3d] px-[clamp(16px,5vw,80px)] pb-[clamp(24px,3vh,48px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#354b3d]"
+      className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#354b3d] px-[clamp(16px,5vw,80px)] pb-[clamp(24px,3vh,48px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#354b3d] xl:px-2 2xl:px-[clamp(40px,5vw,80px)]"
     >
       <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
         Műsor
       </h2>
 
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 px-4 md:gap-10 xl:flex-row xl:gap-4 2xl:gap-24">
+      <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-4 px-2 sm:px-4 md:gap-10 xl:flex-row xl:gap-4 2xl:gap-16">
         <div className="min-w-0 flex-1">
           <h3
             style={{ animationDelay: '0.1s' }}
