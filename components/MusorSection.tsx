@@ -53,7 +53,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '22:45',
-      artist: 'Aznap Projekt',
+      artist: 'AZNAP Projekt',
       instagram: 'https://www.instagram.com/aznapprojekt/',
       facebook: 'https://www.facebook.com/aznapprojekt/',
       spotify: 'https://open.spotify.com/artist/5nKpPdELRt9Ih7CIBegKWW',
@@ -149,7 +149,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '13:00',
-      artist: 'Lazarus bakelit set',
+      artist: 'Lazarus Selector bakelit set',
     },
     {
       time: '13:45',

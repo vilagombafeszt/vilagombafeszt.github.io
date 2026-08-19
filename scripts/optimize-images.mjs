@@ -113,6 +113,12 @@ async function processPageImages() {
       opts: { maxWidth: 300, quality: 85 },
       keepSource: true,
     },
+    {
+      src: 'dumaszinhaz_logo.png',
+      dst: 'dumaszinhaz_logo.webp',
+      opts: { maxWidth: 500, quality: 85 },
+      keepSource: true,
+    },
     // --- HERO & ICONS ---
     {
       src: 'IMG_1367.jpg',

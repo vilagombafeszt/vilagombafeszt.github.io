@@ -89,7 +89,7 @@ export default function KapcsolatSection() {
 
       <div
         style={{ animationDelay: '0.3s' }}
-        className="mb-[clamp(12px,2vh,24px)] mt-[clamp(20px,3vh,40px)] text-center opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
+        className="mb-[clamp(12px,2vh,24px)] mt-[clamp(8px,1.5vh,16px)] text-center opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <a
           className="group/doc inline-flex items-center gap-2 font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] transition-colors duration-300 hover:text-[#102135] md:text-[clamp(14px,1.5vw,22px)]"
@@ -120,8 +120,36 @@ export default function KapcsolatSection() {
         </a>
       </div>
 
+      <h3
+        style={{ animationDelay: '0.35s' }}
+        className="m-0 mb-[clamp(12px,2vh,24px)] mt-[clamp(32px,5vh,64px)] text-center font-[family-name:var(--font-brand)] text-[clamp(18px,4vw,28px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(18px,2.5vw,32px)]"
+      >
+        Támogatók
+      </h3>
+
       <div
         style={{ animationDelay: '0.4s' }}
+        className="mb-[clamp(24px,4vh,48px)] flex items-center justify-center opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
+      >
+        <a
+          href="https://dumaszinhaz.hu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/sponsor inline-block"
+        >
+          <Image
+            src="/page_images/dumaszinhaz_logo.webp"
+            alt="Dumaszínház"
+            width={200}
+            height={80}
+            className="h-auto w-[150px] transition-all duration-300 ease-out group-hover/sponsor:scale-110 group-hover/sponsor:brightness-125 md:w-[200px]"
+            unoptimized
+          />
+        </a>
+      </div>
+
+      <div
+        style={{ animationDelay: '0.5s' }}
         className="w-full max-w-[1200px] text-center font-[family-name:var(--font-body)] text-[14px] text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(13px,1.4vw,20px)]"
       >
         © 2026 ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével | Minden jog fenntartva
