@@ -4,9 +4,10 @@ interface BottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  maxWidthClass?: string;
 }
 
-export function BottomSheet({ isOpen, onClose, children }: BottomSheetProps) {
+export function BottomSheet({ isOpen, onClose, children, maxWidthClass }: BottomSheetProps) {
   const [shouldRender, setShouldRender] = useState(isOpen);
   const [isClosing, setIsClosing] = useState(false);
   const [isDraggingClose, setIsDraggingClose] = useState(false);
@@ -87,7 +88,7 @@ export function BottomSheet({ isOpen, onClose, children }: BottomSheetProps) {
       onClick={onClose}
     >
       <div
-        className={`flex max-h-[90vh] w-full max-w-[500px] flex-col rounded-b-none rounded-t-[20px] bg-gombapp-bg p-5 pb-[calc(20px+env(safe-area-inset-bottom,0px))] pt-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:mb-5 md:rounded-[20px] ${
+        className={`flex max-h-[90vh] w-full ${maxWidthClass || 'max-w-[500px]'} flex-col rounded-b-none rounded-t-[20px] bg-gombapp-bg p-5 pb-[calc(20px+env(safe-area-inset-bottom,0px))] pt-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.2)] md:mb-5 md:rounded-[20px] ${
           isClosing && !isDraggingClose
             ? 'closing animate-gombapp-slide-down md:animate-gombapp-slide-down-desktop'
             : 'animate-gombapp-slide-up md:animate-gombapp-slide-up-desktop'
