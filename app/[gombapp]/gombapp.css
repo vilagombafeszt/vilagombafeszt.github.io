@@ -165,6 +165,69 @@ body:has(.gombapp) {
   }
 }
 
+/* ===== Desktop: larger footer bar & buttons ===== */
+@media only screen and (min-width: 768px) {
+  .gombapp .fixed-bottom {
+    height: calc(90px + env(safe-area-inset-bottom, 0px));
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .gombapp .res-adj1 {
+    font-size: 22px;
+    width: 220px;
+    padding: 14px 24px;
+    margin-left: 10px;
+  }
+
+  .gombapp .res-adj2 {
+    font-size: 22px;
+    width: 110px;
+    padding: 14px 24px;
+    margin-left: 40px;
+  }
+
+  .gombapp .res-adj6 {
+    font-size: 22px;
+    padding: 14px 24px;
+    margin-right: 20px;
+  }
+}
+
+/* ===== Large desktop: even bigger footer bar & buttons ===== */
+@media only screen and (min-width: 1024px) {
+  .gombapp .fixed-bottom {
+    height: calc(100px + env(safe-area-inset-bottom, 0px));
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .gombapp .res-adj1 {
+    font-size: 24px;
+    width: 260px;
+    padding: 16px 28px;
+    margin-left: 16px;
+  }
+
+  .gombapp .res-adj2 {
+    font-size: 24px;
+    width: 130px;
+    padding: 16px 28px;
+    margin-left: 50px;
+  }
+
+  .gombapp .res-adj3 {
+    font-size: 28px;
+    margin-right: 20px;
+  }
+
+  .gombapp .res-adj6 {
+    font-size: 24px;
+    padding: 16px 28px;
+    margin-right: 30px;
+  }
+}
+
 /* ===== Landscape / small screen overrides ===== */
 @media only screen and (orientation: landscape) and (max-height: 500px) {
   .gombapp .menu {

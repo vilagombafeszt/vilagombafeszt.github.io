@@ -21,7 +21,7 @@ export function BartenderMenu({
 }: BartenderMenuProps) {
   return (
     <>
-      <div className="mx-auto grid min-h-0 w-full max-w-[500px] flex-1 grid-cols-2 content-start gap-[15px] overflow-y-auto overflow-x-hidden py-[5px] pb-[100px]">
+      <div className="mx-auto grid min-h-0 w-full max-w-[500px] flex-1 grid-cols-2 content-start gap-[15px] overflow-y-auto overflow-x-hidden py-[5px] pb-[100px] min-[768px]:max-w-[720px] min-[768px]:grid-cols-3 min-[768px]:gap-5 min-[1024px]:max-w-[960px] min-[1024px]:grid-cols-4 min-[1024px]:gap-6">
         {isLoading
           ? Array.from({ length: DRINKS.length }).map((_, i) => (
               <div

@@ -111,7 +111,7 @@ const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
     },
     {
       time: '21:00',
-      artist: 'Táncház',
+      artist: 'Táncház (Gáska zenekar)',
     },
     {
       time: '22:45',
