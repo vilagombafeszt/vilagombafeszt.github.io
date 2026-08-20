@@ -114,7 +114,7 @@ export default function JegyekSection() {
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
-          ELINDULT A JEGYÉRTÉKESÍTÉS!
+          JEGYÉRTÉKESÍTÉS MÁR CSAK A HELYSZÍNEN!
         </div>
       </div>
 
@@ -129,10 +129,10 @@ export default function JegyekSection() {
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <p className="mb-[clamp(36px,5vh,56px)] text-[clamp(18px,4vw,24px)] leading-[1.6] md:text-[clamp(16px,2vw,26px)]">
-          A 2026-os fesztiválra az Early Bird jegyek elfogytak! Már csak a normál jegyek elérhetőek,
-          de azok is csak korlátozott számban. Érdemes megvenni a jegyeket előre, hogy biztosan
-          legyen helyetek a fesztiválon! A legfrissebb információkért kövessetek be minket a
-          hivatalos Facebook- és Instagram-oldalunkon.
+          A 2026-os fesztiválra az online jegyek elfogytak! Már csak a helyszíni jegyek elérhetőek,
+          de azok is csak korlátozott számban. Érdemes minél hamarabb érkezni, hogy biztosan legyen
+          helyetek a fesztiválon! A legfrissebb információkért kövessetek be minket a hivatalos
+          Facebook- és Instagram-oldalunkon.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-[clamp(16px,2vw,24px)] sm:flex-row">
