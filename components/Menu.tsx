@@ -174,7 +174,7 @@ export default function Menu() {
     e.preventDefault();
     if (menuOpen) {
       setMenuOpen(false);
-      setTimeout(() => smoothScrollTo(id), 10);
+      setTimeout(() => smoothScrollTo(id), 300);
     } else {
       smoothScrollTo(id);
     }
@@ -184,7 +184,7 @@ export default function Menu() {
     e.preventDefault();
     if (menuOpen) {
       setMenuOpen(false);
-      setTimeout(() => smoothScrollTo('otthon'), 10);
+      setTimeout(() => smoothScrollTo('otthon'), 300);
     } else {
       smoothScrollTo('otthon');
     }
