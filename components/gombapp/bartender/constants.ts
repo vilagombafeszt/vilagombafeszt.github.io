@@ -57,6 +57,12 @@ export const DRINKS: DrinkItem[] = [
     label: 'Házmester',
   },
   {
+    name: 'Viceházmester',
+    image: '/GombApp/images/vicehazmester.png',
+    alt: 'Viceházmester',
+    label: 'Viceházmester',
+  },
+  {
     name: 'Bor 1dl',
     image: '/GombApp/images/kisbor.png',
     alt: 'Bor 1dl',
@@ -93,6 +99,12 @@ export const DRINKS: DrinkItem[] = [
     label: 'Tejes kávé',
   },
   {
+    name: 'Cold brew',
+    image: '/GombApp/images/kave.png',
+    alt: 'Cold brew',
+    label: 'Cold brew',
+  },
+  {
     name: 'Jeges tea/Limonádé',
     image: '/GombApp/images/jegestea.png',
     alt: 'Jeges tea/Limonádé',
@@ -109,12 +121,6 @@ export const DRINKS: DrinkItem[] = [
     image: '/GombApp/images/pohar.png',
     alt: 'Pohár',
     label: 'Pohár',
-  },
-  {
-    name: 'Viceházmester',
-    image: '/GombApp/images/vicehazmester.png',
-    alt: 'Viceházmester',
-    label: 'Viceházmester',
   },
 ];
 
@@ -133,6 +139,7 @@ export const PRICE_MAP: Record<string, string> = {
   'Pálinka 4cl': 'nagypalinkaPrice',
   Kávé: 'kavePrice',
   'Tejes Kávé': 'tejesKavePrice',
+  'Cold brew': 'tejesKavePrice',
   'Jeges tea/Limonádé': 'teaLimonadePrice',
   'Levendula szörp': 'szorpPrice',
   Pohár: 'poharPrice',
