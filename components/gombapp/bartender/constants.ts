@@ -93,16 +93,28 @@ export const DRINKS: DrinkItem[] = [
     label: 'Tejes kávé',
   },
   {
-    name: 'Kis Szörp/Tea/Limonádé',
+    name: 'Jeges tea/Limonádé',
     image: '/GombApp/images/jegestea.png',
-    alt: 'Kis Szörp/Tea/Limonádé',
-    label: 'Kis Szörp/Tea/Limonádé',
+    alt: 'Jeges tea/Limonádé',
+    label: 'Jeges tea/Limonádé',
   },
   {
-    name: 'Nagy Szörp/Tea/Limonádé',
+    name: 'Levendula szörp',
     image: '/GombApp/images/jegestea.png',
-    alt: 'Nagy Szörp/Tea/Limonádé',
-    label: 'Nagy Szörp/Tea/Limonádé',
+    alt: 'Levendula szörp',
+    label: 'Levendula szörp',
+  },
+  {
+    name: 'Pohár',
+    image: '/GombApp/images/pohar.png',
+    alt: 'Pohár',
+    label: 'Pohár',
+  },
+  {
+    name: 'Viceházmester',
+    image: '/GombApp/images/vicehazmester.png',
+    alt: 'Viceházmester',
+    label: 'Viceházmester',
   },
 ];
 
@@ -121,8 +133,10 @@ export const PRICE_MAP: Record<string, string> = {
   'Pálinka 4cl': 'nagypalinkaPrice',
   Kávé: 'kavePrice',
   'Tejes Kávé': 'tejesKavePrice',
-  'Kis Szörp/Tea/Limonádé': 'kisTeaSzorpLimonadePrice',
-  'Nagy Szörp/Tea/Limonádé': 'nagyTeaSzorpLimonadePrice',
+  'Jeges tea/Limonádé': 'teaLimonadePrice',
+  'Levendula szörp': 'szorpPrice',
+  Pohár: 'poharPrice',
+  Viceházmester: 'vicehazmesterPrice',
 };
 
 const LEGACY_PRICE_MAP: Partial<Record<string, string[]>> = {
@@ -131,8 +145,8 @@ const LEGACY_PRICE_MAP: Partial<Record<string, string[]>> = {
   Házmester: ['haziurPrice', 'sportfroccsPrice'],
   'Bor 1dl': ['kisborPrice'],
   'Szóda 1dl': ['kisszodaPrice'],
-  'Kis Szörp/Tea/Limonádé': ['jegesteaPrice'],
-  'Nagy Szörp/Tea/Limonádé': ['limonadePrice'],
+  'Jeges tea/Limonádé': ['kisTeaSzorpLimonadePrice', 'jegesteaPrice'],
+  'Levendula szörp': ['nagyTeaSzorpLimonadePrice', 'limonadePrice'],
 };
 
 export function resolveDrinkPrice(drink: string, prices: Record<string, number>): number {
