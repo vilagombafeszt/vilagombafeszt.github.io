@@ -124,3 +124,27 @@ export const PRICE_MAP: Record<string, string> = {
   'Kis Szörp/Tea/Limonádé': 'kisTeaSzorpLimonadePrice',
   'Nagy Szörp/Tea/Limonádé': 'nagyTeaSzorpLimonadePrice',
 };
+
+const LEGACY_PRICE_MAP: Partial<Record<string, string[]>> = {
+  'Korsó Kézműves': ['korsoNarancsSor'],
+  'Pohár Kézműves': ['poharNarancsSor'],
+  Házmester: ['haziurPrice', 'sportfroccsPrice'],
+  'Bor 1dl': ['kisborPrice'],
+  'Szóda 1dl': ['kisszodaPrice'],
+  'Kis Szörp/Tea/Limonádé': ['jegesteaPrice'],
+  'Nagy Szörp/Tea/Limonádé': ['limonadePrice'],
+};
+
+export function resolveDrinkPrice(drink: string, prices: Record<string, number>): number {
+  const keys = [PRICE_MAP[drink], ...(LEGACY_PRICE_MAP[drink] || [])].filter(Boolean);
+
+  for (const key of keys) {
+    const rawPrice = prices[key];
+    const normalizedPrice = typeof rawPrice === 'number' ? rawPrice : Number(rawPrice);
+    if (Number.isFinite(normalizedPrice)) {
+      return normalizedPrice;
+    }
+  }
+
+  return 0;
+}
