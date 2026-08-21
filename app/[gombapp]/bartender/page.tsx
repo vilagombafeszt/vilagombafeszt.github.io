@@ -10,7 +10,7 @@ import { CheckoutSheet } from '@/components/gombapp/CheckoutSheet';
 import { Undo2 } from 'lucide-react';
 import { usePrices } from '@/hooks/usePrices';
 import { View } from '@/components/gombapp/bartender/types';
-import { PRICE_MAP } from '@/components/gombapp/bartender/constants';
+import { resolveDrinkPrice } from '@/components/gombapp/bartender/constants';
 import { BartenderMenu } from '@/components/gombapp/bartender/BartenderMenu';
 import { BartenderCart } from '@/components/gombapp/bartender/BartenderCart';
 
@@ -64,8 +64,7 @@ export default function BartenderPage() {
 
   const getDrinkPrice = useCallback(
     (drink: string): number => {
-      const key = PRICE_MAP[drink];
-      return key ? prices[key] || 0 : 0;
+      return resolveDrinkPrice(drink, prices);
     },
     [prices]
   );
@@ -127,8 +126,7 @@ export default function BartenderPage() {
       const orderPrices: number[] = [];
 
       orderItems.forEach((drink) => {
-        const key = PRICE_MAP[drink];
-        const price = key ? prices[key] || 0 : 0;
+        const price = getDrinkPrice(drink);
         orderTotal += price;
         orderPrices.push(price);
       });
