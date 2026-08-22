@@ -105,6 +105,12 @@ export const DRINKS: DrinkItem[] = [
     label: 'Cold brew',
   },
   {
+    name: 'Dupla presszó',
+    image: '/GombApp/images/kave.png',
+    alt: 'Dupla presszó',
+    label: 'Dupla presszó',
+  },
+  {
     name: 'Jeges tea/Limonádé',
     image: '/GombApp/images/jegestea.png',
     alt: 'Jeges tea/Limonádé',
@@ -140,6 +146,7 @@ export const PRICE_MAP: Record<string, string> = {
   Kávé: 'kavePrice',
   'Tejes Kávé': 'tejesKavePrice',
   'Cold brew': 'tejesKavePrice',
+  'Dupla presszó': 'duplaPresszoPrice',
   'Jeges tea/Limonádé': 'teaLimonadePrice',
   'Levendula szörp': 'szorpPrice',
   Pohár: 'poharPrice',
