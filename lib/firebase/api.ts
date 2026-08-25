@@ -98,6 +98,25 @@ export const fetchOrderStats = async (category: 'Ital' | 'Jegy'): Promise<Stats>
   return EMPTY_STATS;
 };
 
+export const fetchOrderStatsByYear = async (
+  category: 'Ital' | 'Jegy',
+  year: number
+): Promise<Stats> => {
+  if (!database) return EMPTY_STATS;
+  const currentYear = new Date().getFullYear();
+  const path = year === currentYear ? `Rendelések/${category}` : `Rendelések${year}/${category}`;
+  const dbRef = ref(database);
+  try {
+    const snap = await get(child(dbRef, path));
+    if (snap.exists()) {
+      return computeStats(snap.val());
+    }
+  } catch (error) {
+    console.error(`Error fetching ${category} stats for ${year}:`, error);
+  }
+  return EMPTY_STATS;
+};
+
 export const saveOrder = async (
   category: 'Ital' | 'Jegy',
   uid: string,

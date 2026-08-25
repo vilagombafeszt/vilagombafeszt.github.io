@@ -1,16 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { ref, get, child } from 'firebase/database';
 import { database, firestoreDB } from '@/lib/firebase';
-import { fetchOrderStats, EMPTY_STATS } from '@/lib/firebase/api';
+import { fetchOrderStatsByYear, EMPTY_STATS } from '@/lib/firebase/api';
 import { Stats, TicketCapacities } from '@/lib/firebase/types';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import { PageLayout } from '@/components/gombapp/PageLayout';
 import Image from 'next/image';
+
+const CURRENT_YEAR = new Date().getFullYear();
+const AVAILABLE_YEARS = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2];
 
 type View = 'menu' | 'bartender' | 'ticket' | 'summary';
 
@@ -37,6 +40,32 @@ function StatTextCard({ label, value }: { label: string; value: string }) {
   );
 }
 
+function YearSelector({
+  selectedYear,
+  onYearChange,
+}: {
+  selectedYear: number;
+  onYearChange: (year: number) => void;
+}) {
+  return (
+    <div className="mb-4 flex gap-2">
+      {AVAILABLE_YEARS.map((year) => (
+        <button
+          key={year}
+          onClick={() => onYearChange(year)}
+          className={`cursor-pointer rounded-xl border-2 px-4 py-2 text-[16px] font-bold transition-all active:scale-[0.96] ${
+            selectedYear === year
+              ? 'border-gombapp-text bg-gombapp-text text-gombapp-bg'
+              : 'border-gombapp-text/20 bg-gombapp-text/5 text-gombapp-text hover:bg-gombapp-text/10'
+          }`}
+        >
+          {year}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const { user, loading } = useAuth();
   const { showSnackbar } = useSnackbar();
@@ -47,6 +76,7 @@ export default function AdminPage() {
   const [authorized, setAuthorized] = useState(false);
   const [isFetchingStats, setIsFetchingStats] = useState(true);
   const [isViewLoaded, setIsViewLoaded] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
   const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
   const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
   const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({
@@ -55,21 +85,67 @@ export default function AdminPage() {
     sunday: 0,
   });
 
-  // Load view from sessionStorage on mount
+  // Load view and year from sessionStorage on mount
   useEffect(() => {
     const savedView = sessionStorage.getItem('admin_view') as View;
     if (savedView) {
       setView(savedView);
     }
+    const savedYear = sessionStorage.getItem('admin_year');
+    if (savedYear && !isNaN(Number(savedYear))) {
+      setSelectedYear(Number(savedYear));
+    }
     setIsViewLoaded(true);
   }, []);
 
-  // Save view to sessionStorage when it changes
+  // Save view and year to sessionStorage when they change
   useEffect(() => {
     if (isViewLoaded) {
       sessionStorage.setItem('admin_view', view);
+      sessionStorage.setItem('admin_year', selectedYear.toString());
     }
-  }, [view, isViewLoaded]);
+  }, [view, selectedYear, isViewLoaded]);
+
+  const fetchStatistics = useCallback(async (year: number) => {
+    setIsFetchingStats(true);
+
+    try {
+      const drinkStats = await fetchOrderStatsByYear('Ital', year);
+      setBartenderStats(drinkStats);
+    } catch (error) {
+      console.error('Error fetching drink stats:', error);
+    }
+
+    try {
+      const tStats = await fetchOrderStatsByYear('Jegy', year);
+      setTicketStats(tStats);
+    } catch (error) {
+      console.error('Error fetching ticket stats:', error);
+    }
+
+    // Only fetch ticket capacities for the current year
+    if (year === CURRENT_YEAR) {
+      try {
+        const dbRef = ref(database!);
+        const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
+          get(child(dbRef, 'Jegyek/pentekMax')),
+          get(child(dbRef, 'Jegyek/szombatMax')),
+          get(child(dbRef, 'Jegyek/vasarnapMax')),
+        ]);
+        setTicketCapacities({
+          friday: fridaySnap.exists() ? fridaySnap.val() : 0,
+          saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
+          sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
+        });
+      } catch (error) {
+        console.error('Error fetching ticket capacities:', error);
+      }
+    } else {
+      setTicketCapacities({ friday: 0, saturday: 0, sunday: 0 });
+    }
+
+    setIsFetchingStats(false);
+  }, []);
 
   // Auth & admin check
   useEffect(() => {
@@ -90,7 +166,9 @@ export default function AdminPage() {
           const adminData = docSnap.data();
           if (adminData[user.uid] === true) {
             setAuthorized(true);
-            fetchStatistics();
+            const savedYear = sessionStorage.getItem('admin_year');
+            const initialYear = savedYear ? Number(savedYear) : CURRENT_YEAR;
+            fetchStatistics(initialYear);
           } else {
             showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
             router.push(`/${gombappBase}/`);
@@ -106,42 +184,12 @@ export default function AdminPage() {
     };
 
     checkAdmin();
-  }, [user, loading, router, showSnackbar, gombappBase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading, router, showSnackbar, gombappBase, fetchStatistics]);
 
-  const fetchStatistics = async () => {
-    setIsFetchingStats(true);
-
-    try {
-      const drinkStats = await fetchOrderStats('Ital');
-      setBartenderStats(drinkStats);
-    } catch (error) {
-      console.error('Error fetching drink stats:', error);
-    }
-
-    try {
-      const tStats = await fetchOrderStats('Jegy');
-      setTicketStats(tStats);
-    } catch (error) {
-      console.error('Error fetching ticket stats:', error);
-    }
-
-    try {
-      const dbRef = ref(database!);
-      const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
-        get(child(dbRef, 'Jegyek/pentekMax')),
-        get(child(dbRef, 'Jegyek/szombatMax')),
-        get(child(dbRef, 'Jegyek/vasarnapMax')),
-      ]);
-      setTicketCapacities({
-        friday: fridaySnap.exists() ? fridaySnap.val() : 0,
-        saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
-        sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
-      });
-    } catch (error) {
-      console.error('Error fetching ticket capacities:', error);
-    } finally {
-      setIsFetchingStats(false);
-    }
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
+    fetchStatistics(year);
   };
 
   const formatNumber = (n: number) => n.toLocaleString('hu-HU').replace(/,/g, ' ');
@@ -222,6 +270,8 @@ export default function AdminPage() {
                   </div>
                 </div>
 
+                <YearSelector selectedYear={selectedYear} onYearChange={handleYearChange} />
+
                 <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                   <StatCard label="Rendelt tételek" value={bartenderStats.totalOrders} unit="db" />
                   <StatCard label="Rendelések" value={bartenderStats.totalOrderCount} unit="db" />
@@ -253,6 +303,8 @@ export default function AdminPage() {
                     </div>
                   </div>
 
+                  <YearSelector selectedYear={selectedYear} onYearChange={handleYearChange} />
+
                   <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                     <StatCard label="Eladott jegyek" value={ticketStats.totalOrders} unit="db" />
                     <StatCard label="Rendelések" value={ticketStats.totalOrderCount} unit="db" />
@@ -269,55 +321,63 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <div className="px-0.5 text-[24px] font-bold">Szabad helyek</div>
-                  <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
-                    <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                      <div className="text-[20px] font-bold">Péntek</div>
-                      <div className="inline-flex items-center gap-2.5">
-                        <span
-                          className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.friday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                        >
-                          {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                        </span>
-                        <span className="text-[22px] font-extrabold">
-                          {formatNumber(ticketCapacities.friday)}
-                          <span className="ml-1.5 text-[18px] font-semibold opacity-95">hely</span>
-                        </span>
+                {selectedYear === CURRENT_YEAR && (
+                  <div className="flex flex-col gap-3">
+                    <div className="px-0.5 text-[24px] font-bold">Szabad helyek</div>
+                    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Péntek</div>
+                        <div className="inline-flex items-center gap-2.5">
+                          <span
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.friday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
+                          >
+                            {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="text-[22px] font-extrabold">
+                            {formatNumber(ticketCapacities.friday)}
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                      <div className="text-[20px] font-bold">Szombat</div>
-                      <div className="inline-flex items-center gap-2.5">
-                        <span
-                          className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.saturday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                        >
-                          {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                        </span>
-                        <span className="text-[22px] font-extrabold">
-                          {formatNumber(ticketCapacities.saturday)}
-                          <span className="ml-1.5 text-[18px] font-semibold opacity-95">hely</span>
-                        </span>
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Szombat</div>
+                        <div className="inline-flex items-center gap-2.5">
+                          <span
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.saturday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
+                          >
+                            {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="text-[22px] font-extrabold">
+                            {formatNumber(ticketCapacities.saturday)}
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                      <div className="text-[20px] font-bold">Vasárnap</div>
-                      <div className="inline-flex items-center gap-2.5">
-                        <span
-                          className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.sunday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                        >
-                          {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                        </span>
-                        <span className="text-[22px] font-extrabold">
-                          {formatNumber(ticketCapacities.sunday)}
-                          <span className="ml-1.5 text-[18px] font-semibold opacity-95">hely</span>
-                        </span>
+                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
+                        <div className="text-[20px] font-bold">Vasárnap</div>
+                        <div className="inline-flex items-center gap-2.5">
+                          <span
+                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.sunday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
+                          >
+                            {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
+                          </span>
+                          <span className="text-[22px] font-extrabold">
+                            {formatNumber(ticketCapacities.sunday)}
+                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
+                              hely
+                            </span>
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           )}
@@ -331,6 +391,8 @@ export default function AdminPage() {
                   </div>
                   <div className="text-[22px] font-semibold opacity-90">Ital + jegy együtt</div>
                 </div>
+
+                <YearSelector selectedYear={selectedYear} onYearChange={handleYearChange} />
 
                 <div className="grid w-full grid-cols-2 gap-3 max-[360px]:grid-cols-1">
                   <StatCard label="Eladott tételek" value={summaryOrders} unit="db" />
