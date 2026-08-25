@@ -1,4 +1,14 @@
-import { ref, get, child, push, serverTimestamp, remove, runTransaction } from 'firebase/database';
+import {
+  ref,
+  get,
+  child,
+  push,
+  serverTimestamp,
+  remove,
+  runTransaction,
+  set,
+  onValue,
+} from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { HybridOrderData, Stats } from './types';
 
@@ -117,6 +127,17 @@ export const fetchOrderStatsByYear = async (
   return EMPTY_STATS;
 };
 
+export interface Shift {
+  id?: string;
+  startTime: number;
+  endTime?: number;
+  startingFloat: number;
+  sales: number;
+  expectedCash?: number;
+  actualCash?: number;
+  discrepancy?: number;
+}
+
 export const saveOrder = async (
   category: 'Ital' | 'Jegy',
   uid: string,
@@ -134,6 +155,13 @@ export const saveOrder = async (
     total,
     timestamp: serverTimestamp(),
   });
+
+  const shiftRef = ref(database, `Shifts/${category}/current/sales`);
+  runTransaction(shiftRef, (currentSales) => {
+    if (currentSales === null) return undefined;
+    return (currentSales || 0) + total;
+  });
+
   return newOrderRef.key;
 };
 
@@ -144,7 +172,74 @@ export const undoOrder = async (
 ): Promise<void> => {
   if (!database) return;
   const orderRef = ref(database, `Rendelések/${category}/${uid}/orders/${orderId}`);
+
+  const orderSnap = await get(orderRef);
+  if (orderSnap.exists()) {
+    const total = orderSnap.val().total || 0;
+    const shiftRef = ref(database, `Shifts/${category}/current/sales`);
+    await runTransaction(shiftRef, (currentSales) => {
+      if (currentSales === null) return undefined;
+      return (currentSales || 0) - total;
+    });
+  }
+
   await remove(orderRef);
+};
+
+export const startShift = async (category: 'Ital' | 'Jegy', floatAmount: number) => {
+  if (!database) return;
+  const currentRef = ref(database, `Shifts/${category}/current`);
+  await set(currentRef, {
+    startTime: serverTimestamp(),
+    startingFloat: floatAmount,
+    sales: 0,
+  });
+};
+
+export const closeShift = async (category: 'Ital' | 'Jegy', actualCash: number) => {
+  if (!database) return;
+  const currentRef = ref(database, `Shifts/${category}/current`);
+  const snap = await get(currentRef);
+
+  if (snap.exists()) {
+    const shift = snap.val();
+    const historyRef = ref(database, `Shifts/${category}/history`);
+
+    const finalShift = {
+      ...shift,
+      endTime: serverTimestamp(),
+      actualCash,
+      expectedCash: shift.startingFloat + shift.sales,
+      discrepancy: actualCash - (shift.startingFloat + shift.sales),
+    };
+
+    await push(historyRef, finalShift);
+    await remove(currentRef);
+  }
+};
+
+export const listenToCurrentShift = (
+  category: 'Ital' | 'Jegy',
+  callback: (shift: Shift | null) => void,
+  onError?: (error: Error) => void
+) => {
+  if (!database) return () => {};
+  const currentRef = ref(database, `Shifts/${category}/current`);
+  const unsubscribe = onValue(
+    currentRef,
+    (snap) => {
+      if (snap.exists()) {
+        callback(snap.val() as Shift);
+      } else {
+        callback(null);
+      }
+    },
+    (error) => {
+      console.error('listenToCurrentShift error:', error);
+      if (onError) onError(error);
+    }
+  );
+  return unsubscribe;
 };
 
 export const updateTicketCapacity = async (

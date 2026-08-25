@@ -15,7 +15,9 @@ import Image from 'next/image';
 const CURRENT_YEAR = new Date().getFullYear();
 const AVAILABLE_YEARS = [2024, 2025, 2026]; // Displayed chronologically in charts
 
-type View = 'menu' | 'bartender' | 'ticket' | 'summary';
+type View = 'menu' | 'bartender' | 'ticket' | 'summary' | 'shifts';
+
+import { ShiftPanel } from '@/components/gombapp/ShiftPanel';
 
 interface YearData {
   bartender: Stats;
@@ -318,6 +320,19 @@ export default function AdminPage() {
             />
             Összes statisztika
           </button>
+          <button
+            className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-none bg-gombapp-text px-2.5 py-[15px] text-[1.1em] text-gombapp-bg transition-transform duration-100 ease-in-out active:scale-[0.96]"
+            onClick={() => setView('shifts')}
+          >
+            <Image
+              src="/GombApp/images/stats.png"
+              alt="Műszakok"
+              className="mb-2.5 h-[100px] w-[100px]"
+              width={100}
+              height={100}
+            />
+            Műszakok
+          </button>
         </div>
       )}
 
@@ -434,6 +449,28 @@ export default function AdminPage() {
                   unit="Ft"
                   title="Teljes bevétel alakulása"
                 />
+              </div>
+            </div>
+          )}
+
+          {view === 'shifts' && (
+            <div className="w-full overflow-y-auto py-4 pb-6">
+              <div className="mx-auto flex w-full max-w-[900px] flex-col gap-3 px-1">
+                <div className="flex flex-col gap-1 pt-2">
+                  <div className="text-[clamp(30px,3.2vh,38px)] font-bold tracking-[0.2px]">
+                    Műszakok kezelése
+                  </div>
+                  <div className="text-[20px] font-semibold opacity-90">Kasszazárás és nyitás</div>
+                </div>
+
+                <div className="flex flex-col gap-5 md:flex-row">
+                  <div className="flex-1">
+                    <ShiftPanel category="Ital" />
+                  </div>
+                  <div className="flex-1">
+                    <ShiftPanel category="Jegy" />
+                  </div>
+                </div>
               </div>
             </div>
           )}
