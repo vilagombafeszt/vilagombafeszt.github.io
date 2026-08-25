@@ -6,16 +6,21 @@ import { doc, getDoc } from 'firebase/firestore';
 import { ref, get, child } from 'firebase/database';
 import { database, firestoreDB } from '@/lib/firebase';
 import { fetchOrderStatsByYear, EMPTY_STATS } from '@/lib/firebase/api';
-import { Stats, TicketCapacities } from '@/lib/firebase/types';
+import { Stats } from '@/lib/firebase/types';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import { PageLayout } from '@/components/gombapp/PageLayout';
 import Image from 'next/image';
 
 const CURRENT_YEAR = new Date().getFullYear();
-const AVAILABLE_YEARS = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2];
+const AVAILABLE_YEARS = [2024, 2025, 2026]; // Displayed chronologically in charts
 
 type View = 'menu' | 'bartender' | 'ticket' | 'summary';
+
+interface YearData {
+  bartender: Stats;
+  ticket: Stats;
+}
 
 function StatCard({ label, value, unit }: { label: string; value: number; unit: string }) {
   const formatted = value.toLocaleString('hu-HU').replace(/,/g, ' ');
@@ -36,6 +41,78 @@ function StatTextCard({ label, value }: { label: string; value: string }) {
     <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
       <div className="text-[20px] font-semibold tracking-[0.2px] opacity-95">{label}</div>
       <div className="mt-2 break-words text-[22px] font-bold leading-[1.2]">{value}</div>
+    </div>
+  );
+}
+
+function LineChart({
+  data,
+  unit,
+  title,
+}: {
+  data: { label: string; value: number; highlighted: boolean }[];
+  unit: string;
+  title: string;
+}) {
+  const width = 500;
+  const height = 180;
+  const paddingX = 40;
+  const paddingYTop = 30;
+  const paddingYBottom = 30;
+
+  const maxVal = Math.max(...data.map((d) => d.value), 0);
+  const minVal = 0;
+  const range = maxVal - minVal || 1;
+
+  const points = data.map((d, i) => {
+    const x = paddingX + (i / (data.length - 1)) * (width - 2 * paddingX);
+    const y =
+      height -
+      paddingYBottom -
+      ((d.value - minVal) / range) * (height - paddingYTop - paddingYBottom);
+    return { x, y, ...d };
+  });
+
+  const pathD = `M ${points.map((p) => `${p.x},${p.y}`).join(' L ')}`;
+
+  return (
+    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5 pt-4">
+      <div className="mb-4 text-center text-[18px] font-semibold opacity-95">{title}</div>
+      <svg viewBox={`0 0 ${width} ${height}`} className="h-auto w-full overflow-visible">
+        <path
+          d={pathD}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          className="text-gombapp-text/20"
+        />
+        {points.map((p, i) => (
+          <g key={i}>
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={p.highlighted ? 7 : 4}
+              className={p.highlighted ? 'fill-gombapp-text' : 'fill-gombapp-text/20'}
+            />
+            <text
+              x={p.x}
+              y={p.y - 12}
+              textAnchor="middle"
+              className={`text-[12px] font-bold tracking-[0.5px] ${p.highlighted ? 'fill-gombapp-text' : 'fill-gombapp-text/60'}`}
+            >
+              {(p.value / 1000).toLocaleString('hu-HU')}E {unit}
+            </text>
+            <text
+              x={p.x}
+              y={height - 5}
+              textAnchor="middle"
+              className={`text-[14px] font-bold ${p.highlighted ? 'fill-gombapp-text' : 'fill-gombapp-text/60'}`}
+            >
+              {p.label}
+            </text>
+          </g>
+        ))}
+      </svg>
     </div>
   );
 }
@@ -77,13 +154,7 @@ export default function AdminPage() {
   const [isFetchingStats, setIsFetchingStats] = useState(true);
   const [isViewLoaded, setIsViewLoaded] = useState(false);
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
-  const [bartenderStats, setBartenderStats] = useState<Stats>(EMPTY_STATS);
-  const [ticketStats, setTicketStats] = useState<Stats>(EMPTY_STATS);
-  const [ticketCapacities, setTicketCapacities] = useState<TicketCapacities>({
-    friday: 0,
-    saturday: 0,
-    sunday: 0,
-  });
+  const [yearlyData, setYearlyData] = useState<Record<number, YearData>>({});
 
   // Load view and year from sessionStorage on mount
   useEffect(() => {
@@ -106,45 +177,28 @@ export default function AdminPage() {
     }
   }, [view, selectedYear, isViewLoaded]);
 
-  const fetchStatistics = useCallback(async (year: number) => {
+  const fetchAllStatistics = useCallback(async () => {
     setIsFetchingStats(true);
 
     try {
-      const drinkStats = await fetchOrderStatsByYear('Ital', year);
-      setBartenderStats(drinkStats);
+      const results: Record<number, YearData> = {};
+
+      await Promise.all(
+        AVAILABLE_YEARS.map(async (year) => {
+          const [bartender, ticket] = await Promise.all([
+            fetchOrderStatsByYear('Ital', year),
+            fetchOrderStatsByYear('Jegy', year),
+          ]);
+          results[year] = { bartender, ticket };
+        })
+      );
+
+      setYearlyData(results);
     } catch (error) {
-      console.error('Error fetching drink stats:', error);
+      console.error('Error fetching statistics:', error);
+    } finally {
+      setIsFetchingStats(false);
     }
-
-    try {
-      const tStats = await fetchOrderStatsByYear('Jegy', year);
-      setTicketStats(tStats);
-    } catch (error) {
-      console.error('Error fetching ticket stats:', error);
-    }
-
-    // Only fetch ticket capacities for the current year
-    if (year === CURRENT_YEAR) {
-      try {
-        const dbRef = ref(database!);
-        const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
-          get(child(dbRef, 'Jegyek/pentekMax')),
-          get(child(dbRef, 'Jegyek/szombatMax')),
-          get(child(dbRef, 'Jegyek/vasarnapMax')),
-        ]);
-        setTicketCapacities({
-          friday: fridaySnap.exists() ? fridaySnap.val() : 0,
-          saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
-          sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
-        });
-      } catch (error) {
-        console.error('Error fetching ticket capacities:', error);
-      }
-    } else {
-      setTicketCapacities({ friday: 0, saturday: 0, sunday: 0 });
-    }
-
-    setIsFetchingStats(false);
   }, []);
 
   // Auth & admin check
@@ -166,9 +220,7 @@ export default function AdminPage() {
           const adminData = docSnap.data();
           if (adminData[user.uid] === true) {
             setAuthorized(true);
-            const savedYear = sessionStorage.getItem('admin_year');
-            const initialYear = savedYear ? Number(savedYear) : CURRENT_YEAR;
-            fetchStatistics(initialYear);
+            fetchAllStatistics();
           } else {
             showSnackbar('Nincs jogosultságod az admin oldal megtekintéséhez!', 'error');
             router.push(`/${gombappBase}/`);
@@ -185,20 +237,39 @@ export default function AdminPage() {
 
     checkAdmin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loading, router, showSnackbar, gombappBase, fetchStatistics]);
+  }, [user, loading, router, showSnackbar, gombappBase, fetchAllStatistics]);
 
   const handleYearChange = (year: number) => {
     setSelectedYear(year);
-    fetchStatistics(year);
   };
 
   const formatNumber = (n: number) => n.toLocaleString('hu-HU').replace(/,/g, ' ');
 
   if (!authorized) return null;
 
+  const currentData = yearlyData[selectedYear] || { bartender: EMPTY_STATS, ticket: EMPTY_STATS };
+  const bartenderStats = currentData.bartender;
+  const ticketStats = currentData.ticket;
+
   const summaryOrders = bartenderStats.totalOrders + ticketStats.totalOrders;
   const summaryOrderCount = bartenderStats.totalOrderCount + ticketStats.totalOrderCount;
   const summaryRevenue = bartenderStats.totalRevenue + ticketStats.totalRevenue;
+
+  // Chart data helpers
+  const getChartData = (type: 'bartender' | 'ticket' | 'summary') => {
+    return AVAILABLE_YEARS.map((year) => {
+      const data = yearlyData[year] || { bartender: EMPTY_STATS, ticket: EMPTY_STATS };
+      let value = 0;
+      if (type === 'bartender') value = data.bartender.totalRevenue;
+      if (type === 'ticket') value = data.ticket.totalRevenue;
+      if (type === 'summary') value = data.bartender.totalRevenue + data.ticket.totalRevenue;
+      return {
+        label: year.toString(),
+        value,
+        highlighted: year === selectedYear,
+      };
+    });
+  };
 
   return (
     <PageLayout
@@ -286,6 +357,12 @@ export default function AdminPage() {
                     </div>
                   </div>
                 </div>
+
+                <LineChart
+                  data={getChartData('bartender')}
+                  unit="Ft"
+                  title="Ital bevétel alakulása"
+                />
               </div>
             </div>
           )}
@@ -321,63 +398,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {selectedYear === CURRENT_YEAR && (
-                  <div className="flex flex-col gap-3">
-                    <div className="px-0.5 text-[24px] font-bold">Szabad helyek</div>
-                    <div className="rounded-2xl border border-gombapp-card-border bg-gombapp-card-bg p-3.5">
-                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                        <div className="text-[20px] font-bold">Péntek</div>
-                        <div className="inline-flex items-center gap-2.5">
-                          <span
-                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.friday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                          >
-                            {ticketCapacities.friday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                          </span>
-                          <span className="text-[22px] font-extrabold">
-                            {formatNumber(ticketCapacities.friday)}
-                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
-                              hely
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                        <div className="text-[20px] font-bold">Szombat</div>
-                        <div className="inline-flex items-center gap-2.5">
-                          <span
-                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.saturday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                          >
-                            {ticketCapacities.saturday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                          </span>
-                          <span className="text-[22px] font-extrabold">
-                            {formatNumber(ticketCapacities.saturday)}
-                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
-                              hely
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 border-t border-gombapp-row-border px-0.5 py-2.5 first:border-t-0 first:pt-0.5">
-                        <div className="text-[20px] font-bold">Vasárnap</div>
-                        <div className="inline-flex items-center gap-2.5">
-                          <span
-                            className={`rounded-full border px-2.5 py-1.5 text-[14px] font-bold tracking-[0.4px] ${ticketCapacities.sunday === 0 ? 'border-[#c62828] bg-gombapp-pill-danger-bg text-[#c62828]' : 'border-gombapp-card-border bg-gombapp-pill-bg'}`}
-                          >
-                            {ticketCapacities.sunday === 0 ? 'ELFOGYOTT' : 'SZABAD'}
-                          </span>
-                          <span className="text-[22px] font-extrabold">
-                            {formatNumber(ticketCapacities.sunday)}
-                            <span className="ml-1.5 text-[18px] font-semibold opacity-95">
-                              hely
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <LineChart data={getChartData('ticket')} unit="Ft" title="Jegybevétel alakulása" />
               </div>
             </div>
           )}
@@ -407,6 +428,12 @@ export default function AdminPage() {
                     </div>
                   </div>
                 </div>
+
+                <LineChart
+                  data={getChartData('summary')}
+                  unit="Ft"
+                  title="Teljes bevétel alakulása"
+                />
               </div>
             </div>
           )}
