@@ -95,6 +95,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="hu" className={`${fontClasses} scroll-smooth md:scroll-pt-[72px]`}>
       <head>
+        {/* Critical CSS inlined to eliminate render-blocking stylesheet */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+:root{--color-menu-bg:#7c8bb1;--color-menu-text:#102135;--color-menu-hover:#8b0000;--color-accent:#ac9d9d;--color-hero-text:#7c8bb1;--color-musor-bg:#354b3d;--color-jegyek-bg:#355168;--color-helyszin-bg:#a44041;--color-story-bg:#474738;--color-keptar-bg:#253529;--color-kapcsolat-bg:#594a66;--menu-height:72px;--font-brand:var(--font-rubik-beastly),'Rubik Beastly',cursive;--font-body:var(--font-alumni-sans),'Alumni Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background-color:#000;-webkit-text-size-adjust:100%}
+body{margin:0;padding:0;background-color:#000;overflow-x:hidden;width:100%;touch-action:manipulation}
+a{color:var(--color-accent);text-decoration:none}
+`,
+          }}
+        />
         {/* Preconnect to Google Maps to speed up LazyMap loading */}
         <link rel="preconnect" href="https://www.google.com" />
 
