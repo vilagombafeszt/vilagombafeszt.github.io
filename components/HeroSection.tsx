@@ -1,3 +1,6 @@
+import { siteConfig } from '@/site.config';
+import Countdown from '@/components/Countdown';
+
 export default function HeroSection() {
   return (
     <section
@@ -26,6 +29,9 @@ export default function HeroSection() {
         {/* <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] text-center font-[family-name:var(--font-brand)] text-[clamp(16px,2.5vw,32px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
           08.21. - 08.23.
         </h2> */}
+
+        {/* Countdown Timer */}
+        {siteConfig.features.showCountdown && <Countdown />}
       </div>
     </section>
   );
