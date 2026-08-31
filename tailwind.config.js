@@ -70,6 +70,13 @@ module.exports = {
           '0%': { transform: 'translateY(-100%) scale(0.9)', opacity: '0' },
           '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
         },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '20%': { transform: 'rotate(-12deg)' },
+          '40%': { transform: 'rotate(10deg)' },
+          '60%': { transform: 'rotate(-6deg)' },
+          '80%': { transform: 'rotate(3deg)' },
+        },
       },
       animation: {
         'gombapp-spin': 'gombapp-spin 1s linear infinite',

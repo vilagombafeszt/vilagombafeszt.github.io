@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import ScrollRevealWrapper from './ScrollRevealWrapper';
+import CopyButton from './CopyButton';
 import { siteConfig } from '@/site.config';
 
 export default function KapcsolatSection() {
@@ -43,43 +44,51 @@ export default function KapcsolatSection() {
         >
           <table className="w-auto border-collapse">
             <tbody>
-              <tr>
-                <td className="whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  Telefon:
+              <tr className="contact-row cursor-pointer transition-colors duration-300">
+                <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-block">Telefon:</span>
                 </td>
-                <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <a
-                    href={`tel:${siteConfig.contact.phone}`}
-                    className="transition-colors duration-300 hover:text-[#102135]"
-                  >
-                    +36 30 197 5338
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td className="whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  Általános információk:
-                </td>
-                <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <a
-                    href={`mailto:${siteConfig.contact.emailGeneral}`}
-                    className="transition-colors duration-300 hover:text-[#102135]"
-                  >
-                    info@vilagombafeszt.hu
-                  </a>
+                <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-block">
+                    <a
+                      href={`tel:${siteConfig.contact.phone}`}
+                      className="contact-link outline-none transition-colors duration-300"
+                    >
+                      +36 30 197 5338
+                    </a>
+                  </span>
                 </td>
               </tr>
-              <tr>
-                <td className="whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  Jegyinformációk:
+              <tr className="contact-row cursor-pointer transition-colors duration-300">
+                <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-block">Általános információk:</span>
                 </td>
-                <td className="px-2 py-1 align-top text-[17px] md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <a
-                    href={`mailto:${siteConfig.contact.emailTickets}`}
-                    className="transition-colors duration-300 hover:text-[#102135]"
-                  >
-                    jegy@vilagombafeszt.hu
-                  </a>
+                <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-flex items-center gap-2.5">
+                    <a
+                      href={`mailto:${siteConfig.contact.emailGeneral}`}
+                      className="contact-link outline-none transition-colors duration-300"
+                    >
+                      info@vilagombafeszt.hu
+                    </a>
+                    <CopyButton text={siteConfig.contact.emailGeneral} />
+                  </span>
+                </td>
+              </tr>
+              <tr className="contact-row cursor-pointer transition-colors duration-300">
+                <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-block">Jegyinformációk:</span>
+                </td>
+                <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
+                  <span className="contact-trigger inline-flex items-center gap-2.5">
+                    <a
+                      href={`mailto:${siteConfig.contact.emailTickets}`}
+                      className="contact-link outline-none transition-colors duration-300"
+                    >
+                      jegy@vilagombafeszt.hu
+                    </a>
+                    <CopyButton text={siteConfig.contact.emailTickets} />
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -92,29 +101,26 @@ export default function KapcsolatSection() {
         className="mb-[clamp(12px,2vh,24px)] mt-[clamp(8px,1.5vh,16px)] text-center opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <a
-          className="group/doc inline-flex items-center gap-2 font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] transition-colors duration-300 hover:text-[#102135] md:text-[clamp(14px,1.5vw,22px)]"
+          className="group/doc inline-flex items-center gap-2 font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] transition-colors duration-300 hover:text-white md:text-[clamp(14px,1.5vw,22px)]"
           href="/szuloi-nyilatkozat-vilagomba.pdf"
           download="szuloi-nyilatkozat-vilagomba.pdf"
         >
           <div className="relative mr-1 flex items-center justify-center">
-            <Image
-              src="/page_images/document.webp"
-              alt="Szülői nyilatkozat"
-              width={30}
-              height={35}
-              className="h-auto w-[24px] transition-opacity duration-300 group-hover/doc:opacity-0 md:w-[30px]"
-              unoptimized
-            />
-            <Image
-              src="/page_images/document_blue.webp"
-              alt="Szülői nyilatkozat"
-              width={30}
-              height={35}
-              className="absolute inset-0 h-auto w-[24px] opacity-0 transition-opacity duration-300 group-hover/doc:opacity-100 md:w-[30px]"
-              unoptimized
+            <div
+              className="h-[30px] w-[24px] bg-[#ac9d9d] transition-colors duration-300 group-hover/doc:bg-white md:h-[35px] md:w-[30px]"
+              style={{
+                WebkitMaskImage: 'url(/page_images/document.webp)',
+                WebkitMaskSize: 'contain',
+                WebkitMaskPosition: 'center',
+                WebkitMaskRepeat: 'no-repeat',
+                maskImage: 'url(/page_images/document.webp)',
+                maskSize: 'contain',
+                maskPosition: 'center',
+                maskRepeat: 'no-repeat',
+              }}
             />
           </div>
-          <span className="border-b-2 border-transparent transition-colors duration-300 group-hover/doc:border-[#102135]/50">
+          <span className="border-b border-transparent transition-colors duration-300 group-hover/doc:border-white/30">
             Szülői nyilatkozat letöltése
           </span>
         </a>
