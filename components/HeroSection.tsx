@@ -1,7 +1,12 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { siteConfig } from '@/site.config';
 import Countdown from '@/components/Countdown';
 
 export default function HeroSection() {
+  const t = useTranslations('hero');
+
   return (
     <section
       id="otthon"
@@ -12,7 +17,7 @@ export default function HeroSection() {
         <source media="(max-width: 768px)" srcSet="/page_images/IMG_1367_mobile.webp" />
         <img
           src="/page_images/IMG_1367.webp"
-          alt="ViláGomba Fesztivál háttér"
+          alt={t('backgroundAlt')}
           fetchPriority="high"
           decoding="async"
           className="absolute inset-0 z-0 h-full w-full object-cover object-center"
@@ -22,7 +27,7 @@ export default function HeroSection() {
       <div className="relative z-10 flex flex-col items-center gap-2 md:gap-4">
         {/* Main Title */}
         <h1 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards] font-[family-name:var(--font-brand)] text-[clamp(32px,6vw,72px)] font-normal text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
-          viláGomba
+          {t('title')}
         </h1>
 
         {/* Date Subtitle */}

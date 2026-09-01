@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import ScrollRevealWrapper from './ScrollRevealWrapper';
 import CopyButton from './CopyButton';
 import { siteConfig } from '@/site.config';
 
 export default function KapcsolatSection() {
+  const t = useTranslations('kapcsolat');
+
   return (
     <ScrollRevealWrapper
       id="kapcsolat"
@@ -11,7 +16,7 @@ export default function KapcsolatSection() {
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex w-full flex-col items-center bg-[#594a66] px-[clamp(16px,5vw,80px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#594a66]"
     >
       <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
-        Kapcsolat
+        {t('title')}
       </h2>
 
       <div className="mb-[clamp(24px,4vh,60px)] flex w-full max-w-[900px] flex-col items-center justify-center gap-6 font-[family-name:var(--font-body)] text-[clamp(16px,1.8vw,26px)] font-semibold md:flex-row md:items-start md:gap-[clamp(24px,4vw,48px)]">
@@ -28,7 +33,7 @@ export default function KapcsolatSection() {
             <div className="opacity-0 group-data-[visible=true]:animate-[spinIn_1.5s_cubic-bezier(0.25,1,0.5,1)_forwards]">
               <Image
                 src="/page_images/facebook.webp"
-                alt="Facebook esemény"
+                alt={t('facebookAlt')}
                 width={150}
                 height={150}
                 className="h-auto w-[60px] transition-transform duration-300 ease-out group-hover/fb:scale-110 md:w-[80px] lg:w-[clamp(60px,8vw,110px)]"
@@ -46,7 +51,7 @@ export default function KapcsolatSection() {
             <tbody>
               <tr className="contact-row cursor-pointer transition-colors duration-300">
                 <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <span className="contact-trigger inline-block">Telefon:</span>
+                  <span className="contact-trigger inline-block">{t('phone')}</span>
                 </td>
                 <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <span className="contact-trigger inline-block">
@@ -61,7 +66,7 @@ export default function KapcsolatSection() {
               </tr>
               <tr className="contact-row cursor-pointer transition-colors duration-300">
                 <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <span className="contact-trigger inline-block">Általános információk:</span>
+                  <span className="contact-trigger inline-block">{t('generalInfo')}</span>
                 </td>
                 <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <span className="contact-trigger inline-flex items-center gap-2.5">
@@ -77,7 +82,7 @@ export default function KapcsolatSection() {
               </tr>
               <tr className="contact-row cursor-pointer transition-colors duration-300">
                 <td className="contact-text whitespace-nowrap px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
-                  <span className="contact-trigger inline-block">Jegyinformációk:</span>
+                  <span className="contact-trigger inline-block">{t('ticketInfo')}</span>
                 </td>
                 <td className="contact-text px-2 py-1 align-top text-[17px] opacity-80 transition-all duration-300 md:px-2.5 md:py-1.5 md:text-[clamp(14px,1.5vw,22px)]">
                   <span className="contact-trigger inline-flex items-center gap-2.5">
@@ -121,7 +126,7 @@ export default function KapcsolatSection() {
             />
           </div>
           <span className="border-b border-transparent transition-colors duration-300 group-hover/doc:border-white/30">
-            Szülői nyilatkozat letöltése
+            {t('downloadDeclaration')}
           </span>
         </a>
       </div>
@@ -130,7 +135,7 @@ export default function KapcsolatSection() {
         style={{ animationDelay: '0.35s' }}
         className="m-0 mb-[clamp(12px,2vh,24px)] mt-[clamp(32px,5vh,64px)] text-center font-[family-name:var(--font-brand)] text-[clamp(18px,4vw,28px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(18px,2.5vw,32px)]"
       >
-        Támogatók
+        {t('sponsors')}
       </h3>
 
       <div
@@ -145,7 +150,7 @@ export default function KapcsolatSection() {
         >
           <Image
             src="/page_images/dumaszinhaz_logo.webp"
-            alt="Dumaszínház"
+            alt={t('sponsorAlt')}
             width={200}
             height={80}
             className="h-auto w-[150px] transition-all duration-300 ease-out group-hover/sponsor:scale-110 group-hover/sponsor:brightness-125 md:w-[200px]"
@@ -158,7 +163,7 @@ export default function KapcsolatSection() {
         style={{ animationDelay: '0.5s' }}
         className="w-full max-w-[1200px] text-center font-[family-name:var(--font-body)] text-[14px] text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(13px,1.4vw,20px)]"
       >
-        © 2026 ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével | Minden jog fenntartva
+        {t('copyright')}
       </div>
     </ScrollRevealWrapper>
   );

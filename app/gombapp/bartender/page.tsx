@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useCallback, useMemo, startTransition } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ref, get } from 'firebase/database';
-import { database } from '@/lib/firebase';
 import { saveOrder as apiSaveOrder, undoOrder as apiUndoOrder } from '@/lib/firebase/api';
 import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
@@ -11,20 +9,16 @@ import { PageLayout } from '@/components/gombapp/PageLayout';
 import { CheckoutSheet } from '@/components/gombapp/CheckoutSheet';
 import { Undo2 } from 'lucide-react';
 import { usePrices } from '@/hooks/usePrices';
-import { useTicketCapacity } from '@/hooks/useTicketCapacity';
-import { View } from '@/components/gombapp/ticketclerk/types';
-import { countTicketsByType } from '@/components/gombapp/ticketclerk/utils';
-import { PRICE_MAP } from '@/components/gombapp/ticketclerk/constants';
-import { TicketMenu } from '@/components/gombapp/ticketclerk/TicketMenu';
-import { TicketCart } from '@/components/gombapp/ticketclerk/TicketCart';
-import { TicketStats } from '@/components/gombapp/ticketclerk/TicketStats';
+import { View } from '@/components/gombapp/bartender/types';
+import { resolveDrinkPrice } from '@/components/gombapp/bartender/constants';
+import { BartenderMenu } from '@/components/gombapp/bartender/BartenderMenu';
+import { BartenderCart } from '@/components/gombapp/bartender/BartenderCart';
 
-export default function TicketClerkPage() {
+export default function BartenderPage() {
   const { user, loading: authLoading } = useAuth();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
-  const params = useParams();
-  const gombappBase = params.gombapp || 'GombApp';
+  const gombappBase = 'gombapp' || 'GombApp';
 
   const [view, setView] = useState<View>('menu');
   const [orderItems, setOrderItems] = useState<string[]>([]);
@@ -32,19 +26,11 @@ export default function TicketClerkPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const { prices, loading: pricesLoading } = usePrices('Jegy');
-  const {
-    maxCounts,
-    loading: capacityLoading,
-    refreshCapacity,
-    updateCapacity,
-    revertCapacity,
-  } = useTicketCapacity();
-  const [statsLoading, setStatsLoading] = useState(false);
+  const { prices, loading: pricesLoading } = usePrices('Ital');
 
   // Load cart from sessionStorage on mount
   useEffect(() => {
-    const savedCart = sessionStorage.getItem('ticketclerk_cart');
+    const savedCart = sessionStorage.getItem('bartender_cart');
     if (savedCart) {
       try {
         setOrderItems(JSON.parse(savedCart));
@@ -52,7 +38,7 @@ export default function TicketClerkPage() {
         console.error('Failed to parse cart', e);
       }
     }
-    const savedView = sessionStorage.getItem('ticketclerk_view') as View;
+    const savedView = sessionStorage.getItem('bartender_view') as View;
     if (savedView) {
       setView(savedView);
     }
@@ -62,8 +48,8 @@ export default function TicketClerkPage() {
   // Save cart to sessionStorage when it changes
   useEffect(() => {
     if (isCartLoaded) {
-      sessionStorage.setItem('ticketclerk_cart', JSON.stringify(orderItems));
-      sessionStorage.setItem('ticketclerk_view', view);
+      sessionStorage.setItem('bartender_cart', JSON.stringify(orderItems));
+      sessionStorage.setItem('bartender_view', view);
     }
   }, [orderItems, view, isCartLoaded]);
 
@@ -75,19 +61,18 @@ export default function TicketClerkPage() {
     }
   }, [user, authLoading, router, showSnackbar, gombappBase]);
 
-  const getTicketPrice = useCallback(
-    (ticket: string): number => {
-      const key = PRICE_MAP[ticket];
-      return key ? prices[key] || 0 : 0;
+  const getDrinkPrice = useCallback(
+    (drink: string): number => {
+      return resolveDrinkPrice(drink, prices);
     },
     [prices]
   );
 
-  const totalPrice = orderItems.reduce((sum, item) => sum + getTicketPrice(item), 0);
+  const totalPrice = orderItems.reduce((sum, item) => sum + getDrinkPrice(item), 0);
 
-  const addItem = useCallback((ticket: string) => {
+  const addItem = useCallback((drink: string) => {
     startTransition(() => {
-      setOrderItems((prev) => [...prev, ticket]);
+      setOrderItems((prev) => [...prev, drink]);
     });
   }, []);
 
@@ -110,16 +95,9 @@ export default function TicketClerkPage() {
     }, {});
   }, [orderItems]);
 
-  const showStatistics = async () => {
-    setView('stats');
-    setStatsLoading(true);
-    await refreshCapacity();
-    setStatsLoading(false);
-  };
-
   const openCheckout = () => {
     if (orderItems.length === 0) {
-      showSnackbar('Adj hozzá legalább egy jegyet a rendeléshez!', 'info');
+      showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
       return;
     }
     if (!user) {
@@ -131,7 +109,7 @@ export default function TicketClerkPage() {
 
   const saveOrder = async () => {
     if (orderItems.length === 0) {
-      showSnackbar('Adj hozzá legalább egy jegytípust a rendeléshez!', 'info');
+      showSnackbar('Adj hozzá legalább egy italt a rendeléshez!', 'info');
       return;
     }
     if (!user) {
@@ -142,55 +120,21 @@ export default function TicketClerkPage() {
     setIsSaving(true);
 
     try {
-      // Re-fetch latest capacity before saving
-      await refreshCapacity();
-      // Notice: refreshCapacity updates the state asynchronously, so this might use old state.
-      // However, we can use the snapshot directly if we need to. Since we extracted the hook,
-      // let's fetch it directly to be perfectly safe, or just check what we have.
-      // Actually, we can just fetch it again to be safe.
-      const [fridaySnap, saturdaySnap, sundaySnap] = await Promise.all([
-        get(ref(database!, 'Jegyek/pentekMax')),
-        get(ref(database!, 'Jegyek/szombatMax')),
-        get(ref(database!, 'Jegyek/vasarnapMax')),
-      ]);
-      const freshCounts = {
-        friday: fridaySnap.exists() ? fridaySnap.val() : 0,
-        saturday: saturdaySnap.exists() ? saturdaySnap.val() : 0,
-        sunday: sundaySnap.exists() ? sundaySnap.val() : 0,
-      };
-
-      const ticketCounts = countTicketsByType(orderItems);
-
-      if (freshCounts.friday === 0 && (ticketCounts.friday > 0 || ticketCounts.pass > 0)) {
-        showSnackbar('A pénteki napijegy elfogyott!', 'error');
-        setIsCheckoutOpen(false);
-        return;
-      }
-      if (freshCounts.saturday === 0 && (ticketCounts.saturday > 0 || ticketCounts.pass > 0)) {
-        showSnackbar('A szombati napijegy elfogyott!', 'error');
-        setIsCheckoutOpen(false);
-        return;
-      }
-      if (freshCounts.sunday === 0 && (ticketCounts.sunday > 0 || ticketCounts.pass > 0)) {
-        showSnackbar('A vasárnapi napijegy elfogyott!', 'error');
-        setIsCheckoutOpen(false);
-        return;
-      }
-
+      // Use the cached prices from the hook for the order total instead of re-fetching
       let orderTotal = 0;
       const orderPrices: number[] = [];
 
-      orderItems.forEach((ticket) => {
-        const price = getTicketPrice(ticket);
+      orderItems.forEach((drink) => {
+        const price = getDrinkPrice(drink);
         orderTotal += price;
         orderPrices.push(price);
       });
 
       const currentOrderItems = [...orderItems];
 
-      // New schema: push individual orders to Rendelések/Jegy/<uid>/orders
+      // New schema: push individual orders to Rendelések/Ital/<uid>/orders
       const orderId = await apiSaveOrder(
-        'Jegy',
+        'Ital',
         user.uid,
         user.email,
         currentOrderItems,
@@ -198,21 +142,15 @@ export default function TicketClerkPage() {
         orderTotal
       );
 
-      await updateCapacity(ticketCounts);
-      await refreshCapacity();
-
       const handleUndo = async () => {
         if (!orderId) return;
         try {
-          await Promise.all([
-            apiUndoOrder('Jegy', user.uid, orderId),
-            revertCapacity(ticketCounts),
-          ]);
+          await apiUndoOrder('Ital', user.uid, orderId);
           setOrderItems(currentOrderItems); // repopulate cart
           setView('order');
           showSnackbar('Mentés visszavonva!', 'info');
         } catch (error) {
-          console.error('Error undoing ticket order:', error);
+          console.error('Error undoing order:', error);
           showSnackbar('Hiba a visszavonás közben.', 'error');
         }
       };
@@ -239,7 +177,7 @@ export default function TicketClerkPage() {
 
   return (
     <PageLayout
-      title="Jegyárus"
+      title="Pultos"
       onBack={view === 'menu' ? undefined : () => setView('menu')}
       backHref={view === 'menu' ? `/${gombappBase}/` : undefined}
     >
@@ -257,37 +195,26 @@ export default function TicketClerkPage() {
       />
       <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-start overflow-hidden px-0 py-5">
         {view === 'menu' && (
-          <TicketMenu
-            isLoading={capacityLoading || pricesLoading}
-            maxCounts={maxCounts}
+          <BartenderMenu
+            isLoading={pricesLoading}
             addItem={addItem}
             setView={setView}
             openCheckout={openCheckout}
-            showStatistics={showStatistics}
+            totalPrice={totalPrice}
           />
         )}
 
         {view === 'order' && (
-          <TicketCart
+          <BartenderCart
             orderItems={orderItems}
             groupedItems={groupedItems}
-            getTicketPrice={getTicketPrice}
+            getDrinkPrice={getDrinkPrice}
             totalPrice={totalPrice}
             removeOneOfType={removeOneOfType}
             addItem={addItem}
             setOrderItems={setOrderItems}
-            capacityLoading={capacityLoading}
-            ticketCapacities={maxCounts}
             saveOrder={saveOrder}
             openCheckout={openCheckout}
-          />
-        )}
-
-        {view === 'stats' && (
-          <TicketStats
-            statsLoading={statsLoading}
-            capacityLoading={capacityLoading}
-            maxCounts={maxCounts}
           />
         )}
       </div>

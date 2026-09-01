@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { siteConfig } from '@/site.config';
 
 interface TimeLeft {
@@ -26,6 +27,7 @@ function pad(n: number): string {
 }
 
 export default function Countdown() {
+  const t = useTranslations('countdown');
   const target = new Date(siteConfig.festivalDate);
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -44,10 +46,10 @@ export default function Countdown() {
   if (!mounted || !timeLeft) return null;
 
   const units = [
-    { value: timeLeft.days, label: 'nap' },
-    { value: timeLeft.hours, label: 'óra' },
-    { value: timeLeft.minutes, label: 'perc' },
-    { value: timeLeft.seconds, label: 'mp' },
+    { value: timeLeft.days, label: t('days') },
+    { value: timeLeft.hours, label: t('hours') },
+    { value: timeLeft.minutes, label: t('minutes') },
+    { value: timeLeft.seconds, label: t('seconds') },
   ];
 
   return (

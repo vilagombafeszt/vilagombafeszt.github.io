@@ -1,29 +1,5 @@
-import Menu from '@/components/Menu';
-import HeroSection from '@/components/HeroSection';
-import dynamic from 'next/dynamic';
-import PromoToast from '@/components/PromoToast';
-import { siteConfig } from '@/site.config';
+﻿import { redirect } from 'next/navigation';
 
-const MusorSection = dynamic(() => import('@/components/MusorSection'));
-const JegyekSection = dynamic(() => import('@/components/JegyekSection'));
-const HelyszinSection = dynamic(() => import('@/components/HelyszinSection'));
-const EzUgyVoltSection = dynamic(() => import('@/components/EzUgyVoltSection'));
-const KeptarSection = dynamic(() => import('@/components/KeptarSection'));
-const KapcsolatSection = dynamic(() => import('@/components/KapcsolatSection'));
-
-export default function Home() {
-  return (
-    <>
-      {siteConfig.features.showPromoToast && <PromoToast />}
-
-      <Menu />
-      <HeroSection />
-      <MusorSection />
-      <JegyekSection />
-      <HelyszinSection />
-      <EzUgyVoltSection />
-      <KeptarSection />
-      <KapcsolatSection />
-    </>
-  );
+export default function RootPage() {
+  redirect('/hu');
 }

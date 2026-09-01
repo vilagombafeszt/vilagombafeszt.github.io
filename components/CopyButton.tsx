@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function CopyButton({ text }: { text: string }) {
+  const t = useTranslations('copyButton');
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -23,7 +25,7 @@ export default function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      title={copied ? 'Másolva!' : 'Másolás vágólapra'}
+      title={copied ? t('copied') : t('copyToClipboard')}
       className="copy-btn cursor-pointer border-0 bg-transparent p-0 text-[#ac9d9d] outline-none transition-all duration-200 hover:scale-110 hover:text-white active:scale-95"
     >
       {copied ? (

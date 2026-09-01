@@ -149,8 +149,7 @@ export default function AdminPage() {
   const { user, loading } = useAuth();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
-  const params = useParams();
-  const gombappBase = params.gombapp || 'GombApp';
+  const gombappBase = 'gombapp' || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [authorized, setAuthorized] = useState(false);
   const [isFetchingStats, setIsFetchingStats] = useState(true);
