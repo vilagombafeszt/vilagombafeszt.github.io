@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 declare global {
@@ -57,6 +58,7 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 );
 
 export default function KeptarSection() {
+  const t = useTranslations('keptar');
   const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
 
   const album1Src = useRandomImage(indexPictures2024, 'index-pictures-2024');
@@ -77,7 +79,7 @@ export default function KeptarSection() {
             : 'opacity-0'
         }`}
       >
-        Képtár
+        {t('title')}
       </h2>
 
       <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[95%] lg:grid-cols-3 lg:gap-[clamp(32px,4vw,64px)] xl:max-w-[1800px]">
@@ -97,7 +99,7 @@ export default function KeptarSection() {
           {album1Src && (
             <Image
               src={album1Src}
-              alt="Világomba 2024"
+              alt={t('gallery2024Alt')}
               width={800}
               height={600}
               unoptimized
@@ -106,7 +108,7 @@ export default function KeptarSection() {
             />
           )}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            ViláGomba 2024
+            {t('gallery2024Title')}
           </div>
         </a>
 
@@ -126,7 +128,7 @@ export default function KeptarSection() {
           {album2Src && (
             <Image
               src={album2Src}
-              alt="Világomba 2025"
+              alt={t('gallery2025Alt')}
               width={800}
               height={600}
               unoptimized
@@ -135,7 +137,7 @@ export default function KeptarSection() {
             />
           )}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            ViláGomba 2025
+            {t('gallery2025Title')}
           </div>
         </a>
 
@@ -155,7 +157,7 @@ export default function KeptarSection() {
           {album3Src && (
             <Image
               src={album3Src}
-              alt="Nyárnyitó"
+              alt={t('summerOpenerAlt')}
               width={800}
               height={600}
               unoptimized
@@ -164,7 +166,7 @@ export default function KeptarSection() {
             />
           )}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            Nyárnyitó 2026
+            {t('summerOpenerTitle')}
           </div>
         </a>
       </div>
@@ -177,7 +179,7 @@ export default function KeptarSection() {
             : 'opacity-0'
         }`}
       >
-        Kattints a képre a teljes galéria megtekintéséhez!
+        {t('clickToView')}
       </div>
 
       <div
@@ -188,14 +190,14 @@ export default function KeptarSection() {
             : 'opacity-0'
         }`}
       >
-        <span>Képeket készítette:&nbsp;</span>
+        <span>{t('photoCredit')}</span>
         <a
           href="https://www.instagram.com/g.adam.llery/"
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center whitespace-nowrap text-[#ac9d9d] transition-colors duration-300 hover:text-white"
         >
-          <InstagramIcon className="mx-1.5 mb-[1px] h-[0.8em] w-[0.8em]" /> Kovács Ádám
+          <InstagramIcon className="mx-1.5 mb-[1px] h-[0.8em] w-[0.8em]" /> {t('photographerName')}
         </a>
       </div>
     </section>

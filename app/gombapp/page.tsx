@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useAuth } from '@/components/gombapp/AuthProvider';
@@ -17,8 +16,7 @@ export default function GombAppHome() {
   const { user, loading } = useAuth();
   const { showSnackbar, showConfirmSnackbar } = useSnackbar();
 
-  const params = useParams();
-  const gombappBase = params.gombapp || 'GombApp';
+  const gombappBase = 'gombapp' || 'GombApp';
   const [showLogin, setShowLogin] = useState(false);
   const [isClient, setIsClient] = useState(false);
 

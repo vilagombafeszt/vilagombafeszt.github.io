@@ -1,24 +1,108 @@
 {
-  "nav": {
-    "program": "Műsor",
-    "tickets": "Jegyeket, Bérleteket",
-    "venue": "Helyszín",
-    "gallery": "Képtár",
-    "contact": "Kapcsolat"
-  },
-  "hero": {
-    "tagline": "Zebegény"
-  },
-  "tickets": {
-    "title": "Jegyeket, Bérleteket",
-    "buy": "Jegyvásárlás"
-  },
-  "contact": {
-    "title": "Kapcsolat",
-    "email": "E-mail"
-  },
   "meta": {
     "title": "ViláGomba Fesztivál",
-    "description": "ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról."
+    "description": "ViláGomba Fesztivál"
+  },
+  "nav": {
+    "home": "Otthon",
+    "program": "Műsor",
+    "tickets": "Jegyeket, Bérleteket!",
+    "venue": "Helyszín",
+    "story": "Ez úgy volt...",
+    "gallery": "Képtár",
+    "contact": "Kapcsolat",
+    "logoAlt": "Világomba logo"
+  },
+  "hero": {
+    "title": "viláGomba",
+    "backgroundAlt": "ViláGomba Fesztivál háttér"
+  },
+  "countdown": {
+    "days": "nap",
+    "hours": "óra",
+    "minutes": "perc",
+    "seconds": "mp"
+  },
+  "musor": {
+    "title": "Műsor",
+    "friday": "Péntek",
+    "saturday": "Szombat",
+    "sunday": "Vasárnap",
+    "activities": {
+      "szindarab": "Színdarab",
+      "kezmu": "Kézmű",
+      "eloadas": "Előadás",
+      "tanchaz": "Táncház (Gáska zenekar)",
+      "jammelles": "Jammellés",
+      "sajatSzett": "Saját szett",
+      "gergelVinyl": "Gergel bakelit set",
+      "lazarusVinyl": "Lazarus Selector bakelit set"
+    }
+  },
+  "jegyek": {
+    "title": "Jegyeket, Bérleteket!",
+    "soldOutBanner": "JEGYÉRTÉKESÍTÉS MÁR CSAK A HELYSZÍNEN!",
+    "soldOutText": "A szerdai napon (08.21) az online elővételes jegyértékesítés lezárult. Pénteken kapunyitástól a helyszínen korlátozott számban még lesz lehetőségetek napi jegyeket és bérleteket váltani. Várunk titeket sok szeretettel!",
+    "followFacebook": "Kövess Facebookon",
+    "followInstagram": "Kövess Instagramon",
+    "normalDayPassAlt": "Normál Napijegy",
+    "normalSeasonPassAlt": "Normál Bérlet",
+    "onsiteDayPassAlt": "Helyszíni Napijegy",
+    "onsiteSeasonPassAlt": "Helyszíni Bérlet"
+  },
+  "helyszin": {
+    "title": "Helyszín",
+    "walkingDistance": "A Zebegényi vasútállomástól kb. 20 perc sétára található.",
+    "venueMapTitle": "ViláGomba Fesztivál helyszín",
+    "venueMapCaption": "A fesztivál helyszíne",
+    "routeMapTitle": "A helyszín a Zebegényi vasútállomástól",
+    "routeMapCaption": "Útvonal a vasútállomástól"
+  },
+  "ezUgyVolt": {
+    "title": "Ez úgy volt...",
+    "greeting": "Szép napokat!",
+    "paragraph1": "Mi egy maréknyi, de annál lelkesebb fiatalból álló társaság vagyunk, akik gondoltak egy merészet, és kitalálták, hogy közösen létrehozzák azt, ami eddig csak álom volt: egy saját fesztivált! Így született meg a Világomba fesztivál. Az egész egy közös szenvedélyből és abból a vágyból indult, hogy alkossunk valamit, ami összehoz minket és másokat is egy fergeteges nyári élményre. Mert hiszünk abban, hogy a zene, a nevetés és az együttlét olyan energiákat mozgat meg, amikre mindannyiunknak szüksége van.",
+    "paragraph2": "Bár kezdetben csak ötleteltünk, hamar rájöttünk, hogy a lelkesedésünk és az összefogásunk valóban képes hegyeket mozgatni – vagy legalábbis felépíteni egy fesztivált! A szervezés során mindannyian más-más tehetségünket tettük hozzá a közösbe: van, aki a zenekarok beszervezésében jeleskedik, mások a logisztikát vagy a vizuális világot álmodták meg. A legfontosabb azonban az volt, hogy mindannyian ugyanazért a célért dolgozunk: hogy létrehozzunk egy olyan fesztivált, ahol mindenki otthon érezheti magát, és ami – reményeink szerint – évekre szóló emlékeket ad nekünk és a látogatóknak is.",
+    "paragraph3": "Néha mi magunk is alig hisszük el, hogy idáig eljutottunk, de a sok munka, a nevetés és még a nehezebb pillanatok is mind megérték. És ez még csak a kezdet! Alig várjuk, hogy megosszuk veletek azt, amit közösen megálmodtunk, és hogy együtt bulizzunk veletek ezen az őrült, csodálatos nyári hétvégén. Köszönjük mindenkinek aki hozzájárult ahhoz, hogy ez a fesztivál megvalósulhasson!",
+    "closing": "Találkozunk Zebegényben 2026. augusztus 21-én! Várunk Titeket!",
+    "team": "A ViláGomba csapata"
+  },
+  "keptar": {
+    "title": "Képtár",
+    "gallery2024Alt": "Világomba 2024",
+    "gallery2024Title": "ViláGomba 2024",
+    "gallery2025Alt": "Világomba 2025",
+    "gallery2025Title": "ViláGomba 2025",
+    "summerOpenerAlt": "Nyárnyitó",
+    "summerOpenerTitle": "Nyárnyitó 2026",
+    "clickToView": "Kattints a képre a teljes galéria megtekintéséhez!",
+    "photoCredit": "Képeket készítette: ",
+    "photographerName": "Kovács Ádám"
+  },
+  "kapcsolat": {
+    "title": "Kapcsolat",
+    "facebookAlt": "Facebook esemény",
+    "phone": "Telefon:",
+    "generalInfo": "Általános információk:",
+    "ticketInfo": "Jegyinformációk:",
+    "downloadDeclaration": "Szülői nyilatkozat letöltése",
+    "sponsors": "Támogatók",
+    "sponsorAlt": "Dumaszínház",
+    "copyright": "© 2026 ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével | Minden jog fenntartva"
+  },
+  "copyButton": {
+    "copied": "Másolva!",
+    "copyToClipboard": "Másolás vágólapra"
+  },
+  "promoToast": {
+    "close": "Bezárás",
+    "soon": "Hamarosan",
+    "title": "ViláGomba nyárnyitó",
+    "date": "2026. JÚN. 27.",
+    "description": "Készüljünk együtt a fesztiválra! Gyertek el a nyárnyitó bulinkra, ahol megalapozzuk az augusztusi hangulatot. Zene, filmvetítés, és a ViláGomba közösség vár!",
+    "cta": "Megnézem az eseményt!"
+  },
+  "lazyMap": {
+    "loading": "Térkép betöltésre vár…"
   }
 }

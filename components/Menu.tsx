@@ -2,14 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const SECTIONS = [
-  { id: 'musor', label: 'Műsor' },
-  { id: 'jegyeket-berleteket', label: 'Jegyeket, Bérleteket!' },
-  { id: 'helyszin', label: 'Helyszín' },
-  { id: 'ez-ugy-volt', label: 'Ez úgy volt...' },
-  { id: 'keptar', label: 'Képtár' },
-  { id: 'kapcsolat', label: 'Kapcsolat' },
+  { id: 'musor', key: 'program' },
+  { id: 'jegyeket-berleteket', key: 'tickets' },
+  { id: 'helyszin', key: 'venue' },
+  { id: 'ez-ugy-volt', key: 'story' },
+  { id: 'keptar', key: 'gallery' },
+  { id: 'kapcsolat', key: 'contact' },
 ] as const;
 
 const LOGO_VAJ = '/page_images/cimlogo_vaj.webp';
@@ -25,6 +27,7 @@ function smoothScrollTo(id: string) {
 }
 
 export default function Menu() {
+  const t = useTranslations('nav');
   const [logoSrc, setLogoSrc] = useState(LOGO_KEK);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -223,7 +226,7 @@ export default function Menu() {
       >
         <Image
           src={menuOpen ? LOGO_KEK : logoSrc}
-          alt="Világomba logo"
+          alt={t('logoAlt')}
           width={45}
           height={45}
           unoptimized
@@ -260,7 +263,7 @@ export default function Menu() {
               : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
           }`}
         >
-          Otthon
+          {t('home')}
           {/* Animated Structural Scrollspy Indicator */}
           <span
             className={`absolute -bottom-1.5 left-1/2 hidden h-[2.5px] -translate-x-1/2 rounded-full bg-[#102135] transition-all duration-300 group-hover:bg-[#8b0000] md:block ${
@@ -269,7 +272,7 @@ export default function Menu() {
           />
         </a>
 
-        {SECTIONS.map(({ id, label }, i) => (
+        {SECTIONS.map(({ id, key }, i) => (
           <a
             key={id}
             href={`#${id}`}
@@ -282,7 +285,7 @@ export default function Menu() {
                 : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
             }`}
           >
-            {label}
+            {t(key as 'program' | 'tickets' | 'venue' | 'story' | 'gallery' | 'contact')}
             {/* Animated Structural Scrollspy Indicator */}
             <span
               className={`absolute -bottom-1.5 left-1/2 hidden h-[2.5px] -translate-x-1/2 rounded-full bg-[#102135] transition-all duration-300 group-hover:bg-[#8b0000] md:block ${
@@ -291,6 +294,26 @@ export default function Menu() {
             />
           </a>
         ))}
+
+        {/* Divider on mobile */}
+        <div
+          className={`my-2 h-px w-full bg-[#102135]/10 md:hidden ${
+            menuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
+          }`}
+          style={{
+            transitionDelay: menuOpen && !isDragging ? `${(SECTIONS.length + 3) * 35}ms` : '0ms',
+            transitionDuration: '400ms',
+            transitionProperty: 'all',
+          }}
+        />
+
+        <LanguageSwitcher
+          className={`${
+            menuOpen
+              ? 'translate-y-0 opacity-100'
+              : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
+          }`}
+        />
 
         {/* Tactile Drag Handle Pill */}
         <div className="mb-2 mt-4 flex w-full justify-center md:hidden">

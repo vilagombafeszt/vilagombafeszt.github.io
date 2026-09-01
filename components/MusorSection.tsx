@@ -8,6 +8,7 @@ declare global {
 }
 
 import ScrollRevealWrapper from './ScrollRevealWrapper';
+import { useTranslations } from 'next-intl';
 
 type LineupItem = {
   time: string;
@@ -34,6 +35,42 @@ type B2bEntry = {
 };
 
 type LineupEntry = LineupItem | { split: LineupItem[] } | B2bEntry;
+
+const getArtistName = (
+  name: string,
+  t: (
+    key:
+      | 'activities.szindarab'
+      | 'activities.kezmu'
+      | 'activities.eloadas'
+      | 'activities.tanchaz'
+      | 'activities.jammelles'
+      | 'activities.sajatSzett'
+      | 'activities.gergelVinyl'
+      | 'activities.lazarusVinyl'
+  ) => string
+) => {
+  switch (name) {
+    case 'Színdarab':
+      return t('activities.szindarab');
+    case 'Kézmű':
+      return t('activities.kezmu');
+    case 'Előadás':
+      return t('activities.eloadas');
+    case 'Táncház (Gáska zenekar)':
+      return t('activities.tanchaz');
+    case 'Jammellés':
+      return t('activities.jammelles');
+    case 'Saját szett':
+      return t('activities.sajatSzett');
+    case 'Gergel bakelit set':
+      return t('activities.gergelVinyl');
+    case 'Lazarus Selector bakelit set':
+      return t('activities.lazarusVinyl');
+    default:
+      return name;
+  }
+};
 
 const lineupData: Record<'friday' | 'saturday' | 'sunday', LineupEntry[]> = {
   friday: [
@@ -340,6 +377,7 @@ function SocialIcons({
 }
 
 function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
+  const t = useTranslations('musor');
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
@@ -353,9 +391,15 @@ function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
 
       <div className="relative z-10 flex w-full min-w-0 flex-row items-center justify-between gap-2 sm:gap-3">
         <span className="flex-1 break-words font-[family-name:var(--font-body)] text-lg font-bold leading-tight tracking-wide text-[#ac9d9d] drop-shadow-sm transition-colors duration-300 sm:text-xl sm:group-hover/card:text-white md:text-3xl xl:text-2xl min-[1800px]:text-3xl">
-          {item.artist}
+          {getArtistName(item.artist, t as unknown as Parameters<typeof getArtistName>[1])}
         </span>
-        <SocialIcons links={item} artistName={item.artist} />
+        <SocialIcons
+          links={item}
+          artistName={getArtistName(
+            item.artist,
+            t as unknown as Parameters<typeof getArtistName>[1]
+          )}
+        />
       </div>
     </div>
   );
@@ -427,6 +471,7 @@ function LineupList({ items, baseDelay }: { items: LineupEntry[]; baseDelay: num
 }
 
 export default function MusorSection() {
+  const t = useTranslations('musor');
   return (
     <ScrollRevealWrapper
       id="musor"
@@ -434,7 +479,7 @@ export default function MusorSection() {
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[100svh] w-full flex-col items-center bg-[#354b3d] px-[clamp(16px,5vw,80px)] pb-[clamp(24px,3vh,48px)] pt-[clamp(32px,3vh,56px)] text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#354b3d] xl:px-2 2xl:px-[clamp(40px,5vw,80px)]"
     >
       <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
-        Műsor
+        {t('title')}
       </h2>
 
       <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-4 px-2 sm:px-4 md:gap-10 xl:flex-row xl:gap-4 2xl:gap-16">
@@ -443,7 +488,7 @@ export default function MusorSection() {
             style={{ animationDelay: '0.1s' }}
             className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
-            Péntek
+            {t('friday')}
           </h3>
           <LineupList items={lineupData.friday} baseDelay={0.2} />
         </div>
@@ -453,7 +498,7 @@ export default function MusorSection() {
             style={{ animationDelay: '0.3s' }}
             className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
-            Szombat
+            {t('saturday')}
           </h3>
           <LineupList items={lineupData.saturday} baseDelay={0.4} />
         </div>
@@ -463,7 +508,7 @@ export default function MusorSection() {
             style={{ animationDelay: '0.5s' }}
             className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
           >
-            Vasárnap
+            {t('sunday')}
           </h3>
           <LineupList items={lineupData.sunday} baseDelay={0.6} />
         </div>

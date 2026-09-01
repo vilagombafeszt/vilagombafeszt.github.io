@@ -1,4 +1,5 @@
 'use client';
+import { useTranslations } from 'next-intl';
 
 import { useEffect, useRef, useState } from 'react';
 
@@ -8,6 +9,7 @@ interface LazyMapProps {
 }
 
 export default function LazyMap({ src, title }: LazyMapProps) {
+  const t = useTranslations('lazyMap');
   const containerRef = useRef<HTMLDivElement>(null);
   const [iframeSrc, setIframeSrc] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -38,7 +40,7 @@ export default function LazyMap({ src, title }: LazyMapProps) {
           className="absolute inset-0 flex animate-pulse items-center justify-center text-[#ac9d9d]/40"
           role="status"
         >
-          <span className="sr-only">Térkép betöltésre vár…</span>
+          <span className="sr-only">{t('loading')}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

@@ -132,8 +132,7 @@ export default function ProgramsPage() {
   const { user, loading: authLoading } = useAuth();
   const { showSnackbar } = useSnackbar();
   const router = useRouter();
-  const params = useParams();
-  const gombappBase = params.gombapp || 'GombApp';
+  const gombappBase = 'gombapp' || 'GombApp';
   const [view, setView] = useState<View>('menu');
   const [isViewLoaded, setIsViewLoaded] = useState(false);
   const [iframeLoading, setIframeLoading] = useState(true);

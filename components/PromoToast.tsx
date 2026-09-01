@@ -1,4 +1,5 @@
 'use client';
+import { useTranslations } from 'next-intl';
 
 import { useEffect, useState } from 'react';
 
@@ -42,6 +43,7 @@ const CalendarIcon = ({ className }: { className?: string }) => (
 );
 
 export default function PromoToast() {
+  const t = useTranslations('promoToast');
   const [isVisible, setIsVisible] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
 
@@ -76,7 +78,7 @@ export default function PromoToast() {
         <button
           onClick={handleClose}
           className="group absolute right-4 top-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-transparent text-[#ac9d9d] outline-none transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:text-white active:scale-95"
-          aria-label="Bezárás"
+          aria-label={t('close')}
         >
           <CloseIcon className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
         </button>
@@ -88,26 +90,25 @@ export default function PromoToast() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span>
             </div>
             <span className="text-[15px] font-bold uppercase tracking-[3px] text-white/80">
-              Hamarosan
+              {t('soon')}
             </span>
           </div>
 
           <div className="mb-2 flex flex-col gap-1.5">
             <h3 className="pr-6 font-[family-name:var(--font-brand)] text-[24px] font-normal tracking-wide text-white drop-shadow-sm sm:text-[26px]">
-              ViláGomba nyárnyitó
+              {t('title')}
             </h3>
 
             <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[#ac9d9d]/20 bg-[#ac9d9d]/15 px-3 py-1.5 backdrop-blur-sm">
               <CalendarIcon className="h-5 w-5 text-[#ac9d9d]" />
               <span className="font-mono text-[14px] font-bold tracking-widest text-[#ac9d9d]">
-                2026. JÚN. 27.
+                {t('date')}
               </span>
             </div>
           </div>
 
           <p className="mb-5 text-[18px] font-normal leading-[1.65] text-[#ac9d9d]/90">
-            Készüljünk együtt a fesztiválra! Gyertek el a nyárnyitó bulinkra, ahol megalapozzuk az
-            augusztusi hangulatot. Zene, filmvetítés, és a ViláGomba közösség vár!
+            {t('description')}
           </p>
 
           <a
@@ -118,7 +119,7 @@ export default function PromoToast() {
             className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#ac9d9d] px-5 py-3.5 text-[18px] font-bold tracking-wide !text-[#102135] shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.98]"
           >
             <FacebookIcon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
-            Megnézem az eseményt!
+            {t('cta')}
           </a>
         </div>
       </div>

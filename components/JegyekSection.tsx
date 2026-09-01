@@ -2,15 +2,9 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import ScrollRevealWrapper from './ScrollRevealWrapper';
 import { siteConfig } from '@/site.config';
-
-const TICKET_IMAGES = [
-  { src: '/page_images/normal_napijegy.webp', alt: 'Normál Napijegy' },
-  { src: '/page_images/normal_berlet.webp', alt: 'Normál Bérlet' },
-  { src: '/page_images/helyszini_napijegy.webp', alt: 'Helyszíni Napijegy' },
-  { src: '/page_images/helyszini_berlet.webp', alt: 'Helyszíni Bérlet' },
-];
 
 /* ── Social Icons for the Buttons ─────────────────────────────── */
 const FacebookIcon = ({ className }: { className?: string }) => (
@@ -99,6 +93,15 @@ const TicketCard = ({ img, index }: { img: { src: string; alt: string }; index: 
 };
 
 export default function JegyekSection() {
+  const t = useTranslations('jegyek');
+
+  const ticketImages = [
+    { src: '/page_images/normal_napijegy.webp', alt: t('normalDayPassAlt') },
+    { src: '/page_images/normal_berlet.webp', alt: t('normalSeasonPassAlt') },
+    { src: '/page_images/helyszini_napijegy.webp', alt: t('onsiteDayPassAlt') },
+    { src: '/page_images/helyszini_berlet.webp', alt: t('onsiteSeasonPassAlt') },
+  ];
+
   return (
     <ScrollRevealWrapper
       id="jegyeket-berleteket"
@@ -106,7 +109,7 @@ export default function JegyekSection() {
       className="landscape:max-h-[500px]:min-h-0 landscape:max-h-[500px]:pt-[80px] flex min-h-[85svh] w-full flex-col items-center bg-[#355168] px-[clamp(16px,5vw,80px)] pb-[clamp(40px,5vh,72px)] pt-[clamp(32px,3vh,56px)] text-center text-[#ac9d9d] selection:bg-[#ac9d9d] selection:text-[#355168]"
     >
       <h2 className="m-0 mb-[clamp(16px,3vh,40px)] text-center font-[family-name:var(--font-brand)] text-[clamp(30px,7vw,48px)] font-normal opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(28px,4.5vw,60px)]">
-        Jegyeket, Bérleteket!
+        {t('title')}
       </h2>
 
       <div
@@ -114,12 +117,12 @@ export default function JegyekSection() {
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
-          JEGYÉRTÉKESÍTÉS MÁR CSAK A HELYSZÍNEN!
+          {t('soldOutBanner')}
         </div>
       </div>
 
       <div className="mx-auto mb-10 mt-4 grid w-full max-w-[1600px] grid-cols-1 justify-items-center gap-6 md:mb-12 md:mt-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
-        {TICKET_IMAGES.map((img, index) => (
+        {ticketImages.map((img, index) => (
           <TicketCard key={index} img={img} index={index} />
         ))}
       </div>
@@ -129,10 +132,7 @@ export default function JegyekSection() {
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <p className="mb-[clamp(36px,5vh,56px)] text-[clamp(18px,4vw,24px)] leading-[1.6] md:text-[clamp(16px,2vw,26px)]">
-          A 2026-os fesztiválra az online jegyek elfogytak! Már csak a helyszíni jegyek elérhetőek,
-          de azok is csak korlátozott számban. Érdemes minél hamarabb érkezni, hogy biztosan legyen
-          helyetek a fesztiválon! A legfrissebb információkért kövessetek be minket a hivatalos
-          Facebook- és Instagram-oldalunkon.
+          {t('soldOutText')}
         </p>
 
         <div className="flex flex-col items-center justify-center gap-[clamp(16px,2vw,24px)] sm:flex-row">
@@ -143,7 +143,7 @@ export default function JegyekSection() {
             className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
             <FacebookIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-            Kövess Facebookon
+            {t('followFacebook')}
           </a>
           <a
             href={siteConfig.socials.instagram}
@@ -152,7 +152,7 @@ export default function JegyekSection() {
             className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
             <InstagramIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-            Kövess Instagramon
+            {t('followInstagram')}
           </a>
         </div>
       </div>

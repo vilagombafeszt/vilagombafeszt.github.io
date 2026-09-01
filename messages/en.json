@@ -1,24 +1,108 @@
 {
-  "nav": {
-    "program": "Programme",
-    "tickets": "Tickets & Passes",
-    "venue": "Venue",
-    "gallery": "Gallery",
-    "contact": "Contact"
-  },
-  "hero": {
-    "tagline": "Zebegény"
-  },
-  "tickets": {
-    "title": "Tickets & Passes",
-    "buy": "Buy Tickets"
-  },
-  "contact": {
-    "title": "Contact",
-    "email": "E-mail"
-  },
   "meta": {
     "title": "ViláGomba Festival",
-    "description": "ViláGomba Festival – Zebegény. Programme, tickets, venue and photo gallery."
+    "description": "ViláGomba Festival"
+  },
+  "nav": {
+    "home": "Home",
+    "program": "Programs",
+    "tickets": "Tickets & Passes",
+    "venue": "Venue",
+    "story": "The Story...",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "logoAlt": "Vilagomba logo"
+  },
+  "hero": {
+    "title": "viláGomba",
+    "backgroundAlt": "ViláGomba Festival background"
+  },
+  "countdown": {
+    "days": "days",
+    "hours": "hours",
+    "minutes": "mins",
+    "seconds": "secs"
+  },
+  "musor": {
+    "title": "Programs",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "activities": {
+      "szindarab": "Stage-play",
+      "kezmu": "Crafts",
+      "eloadas": "Presentation",
+      "tanchaz": "Folk dance (Gáska band)",
+      "jammelles": "Jam session",
+      "sajatSzett": "Own set",
+      "gergelVinyl": "Gergel vinyl set",
+      "lazarusVinyl": "Lazarus Selector vinyl set"
+    }
+  },
+  "jegyek": {
+    "title": "Tickets & Passes!",
+    "soldOutBanner": "TICKET SALES ONLY AVAILABLE ON SITE!",
+    "soldOutText": "Online pre-sale tickets have closed on Wednesday (08.21). You will still have a limited opportunity to purchase daily tickets and passes on site from Friday when the gates open. We look forward to seeing you!",
+    "followFacebook": "Follow us on Facebook",
+    "followInstagram": "Follow us on Instagram",
+    "normalDayPassAlt": "Normal Day Pass",
+    "normalSeasonPassAlt": "Normal Season Pass",
+    "onsiteDayPassAlt": "On-site Day Pass",
+    "onsiteSeasonPassAlt": "On-site Season Pass"
+  },
+  "helyszin": {
+    "title": "Venue",
+    "walkingDistance": "Located approx. 20 minutes walk from the Zebegény train station.",
+    "venueMapTitle": "ViláGomba Festival venue",
+    "venueMapCaption": "The festival venue",
+    "routeMapTitle": "Route from Zebegény train station",
+    "routeMapCaption": "Route from the train station"
+  },
+  "ezUgyVolt": {
+    "title": "The Story...",
+    "greeting": "Have a nice day!",
+    "paragraph1": "We are a handful, but all the more enthusiastic group of young people who thought big and decided to create together what had only been a dream so far: our own festival! This is how the Világomba festival was born. It all started with a shared passion and the desire to create something that brings us and others together for a fantastic summer experience. Because we believe that music, laughter, and being together move energies that we all need.",
+    "paragraph2": "Although we only brainstormed at first, we quickly realized that our enthusiasm and collaboration can really move mountains - or at least build a festival! During the organization, we all contributed our different talents: some excel in organizing bands, others dreamed up the logistics or the visual world. The most important thing, however, was that we all work for the same goal: to create a festival where everyone can feel at home, and which - we hope - will give us and the visitors memories for years to come.",
+    "paragraph3": "Sometimes we can barely believe we've made it this far, but the hard work, laughter, and even the harder moments were all worth it. And this is just the beginning! We can't wait to share what we've dreamed up together with you, and to party with you on this crazy, wonderful summer weekend. Thank you to everyone who contributed to making this festival a reality!",
+    "closing": "See you in Zebegény on August 21, 2026! We are waiting for you!",
+    "team": "The ViláGomba team"
+  },
+  "keptar": {
+    "title": "Gallery",
+    "gallery2024Alt": "Vilagomba 2024",
+    "gallery2024Title": "ViláGomba 2024",
+    "gallery2025Alt": "Vilagomba 2025",
+    "gallery2025Title": "ViláGomba 2025",
+    "summerOpenerAlt": "Summer Opener",
+    "summerOpenerTitle": "Summer Opener 2026",
+    "clickToView": "Click on the image to view the full gallery!",
+    "photoCredit": "Photos by: ",
+    "photographerName": "Ádám Kovács"
+  },
+  "kapcsolat": {
+    "title": "Contact",
+    "facebookAlt": "Facebook event",
+    "phone": "Phone:",
+    "generalInfo": "General information:",
+    "ticketInfo": "Ticket information:",
+    "downloadDeclaration": "Download parental consent",
+    "sponsors": "Sponsors",
+    "sponsorAlt": "Dumaszínház",
+    "copyright": "© 2026 ViláGomba Festival | In cooperation with Ántáresz Association | All rights reserved"
+  },
+  "copyButton": {
+    "copied": "Copied!",
+    "copyToClipboard": "Copy to clipboard"
+  },
+  "promoToast": {
+    "close": "Close",
+    "soon": "Coming Soon",
+    "title": "ViláGomba summer opener",
+    "date": "JUN 27, 2026",
+    "description": "Let's prepare for the festival together! Come to our summer opener party, where we lay the foundation for the August atmosphere. Music, movie screening, and the ViláGomba community await!",
+    "cta": "Check out the event!"
+  },
+  "lazyMap": {
+    "loading": "Map is loading..."
   }
 }
