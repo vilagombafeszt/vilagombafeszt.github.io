@@ -89,6 +89,8 @@ export const metadata: Metadata = {
   },
 };
 
+import GoogleAnalyticsTracker from '@/components/GoogleAnalyticsTracker';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const fontClasses = [alumniSans.variable, rubikBeastly.variable].join(' ');
 
@@ -196,6 +198,7 @@ a{color:var(--color-accent);text-decoration:none}
           Update cookies preferences
         </a>
 
+        <GoogleAnalyticsTracker />
         {children}
       </body>
     </html>

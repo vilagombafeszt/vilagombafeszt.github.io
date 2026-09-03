@@ -79,6 +79,7 @@ const TicketCard = ({ img, index }: { img: { src: string; alt: string }; index: 
       href={siteConfig.externalLinks.ticketSales}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => window.gtag?.('event', 'ticket_cta_click', { ticket_type: img.alt })}
       style={{ animationDelay: `${0.2 + index * 0.15}s` }}
       className={`group/ticket block opacity-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
         isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
