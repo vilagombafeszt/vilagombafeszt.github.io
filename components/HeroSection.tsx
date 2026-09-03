@@ -2,6 +2,15 @@ import { siteConfig } from '@/site.config';
 import Countdown from '@/components/Countdown';
 
 export default function HeroSection() {
+  const now = new Date();
+  const endDate = new Date(siteConfig.festivalEndDate);
+
+  // Check if we are within 2 months after the festival
+  const twoMonthsAfter = new Date(endDate);
+  twoMonthsAfter.setMonth(twoMonthsAfter.getMonth() + 2);
+
+  const isPostFestival = now > endDate && now < twoMonthsAfter;
+
   return (
     <section
       id="otthon"
@@ -25,13 +34,19 @@ export default function HeroSection() {
           viláGomba
         </h1>
 
-        {/* Date Subtitle */}
-        {/* <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] text-center font-[family-name:var(--font-brand)] text-[clamp(16px,2.5vw,32px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
-          08.21. - 08.23.
-        </h2> */}
+        {/* Date / Post-Festival Subtitle */}
+        {isPostFestival ? (
+          <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] px-4 text-center font-[family-name:var(--font-brand)] text-[clamp(20px,3.5vw,40px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
+            Köszönjük, hogy velünk voltatok!
+          </h2>
+        ) : (
+          <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] text-center font-[family-name:var(--font-brand)] text-[clamp(16px,2.5vw,32px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
+            {siteConfig.festivalDateString}
+          </h2>
+        )}
 
         {/* Countdown Timer */}
-        {siteConfig.features.showCountdown && <Countdown />}
+        {siteConfig.features.showCountdown && !isPostFestival && <Countdown />}
       </div>
     </section>
   );

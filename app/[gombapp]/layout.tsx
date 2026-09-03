@@ -40,7 +40,7 @@ export const viewport: Viewport = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return [{ gombapp: 'GombApp' }, { gombapp: 'gombapp' }];
+  return [{ gombapp: 'GombApp' }];
 }
 
 export default function GombAppLayout({ children }: { children: React.ReactNode }) {

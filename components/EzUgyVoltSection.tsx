@@ -1,4 +1,5 @@
 import ScrollRevealWrapper from './ScrollRevealWrapper';
+import { siteConfig } from '@/site.config';
 
 export default function EzUgyVoltSection() {
   return (
@@ -56,7 +57,7 @@ export default function EzUgyVoltSection() {
           style={{ animationDelay: '0.4s' }}
           className="opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
         >
-          Találkozunk Zebegényben 2026. augusztus 21-én! Várunk Titeket!
+          Találkozunk Zebegényben {siteConfig.festivalYear}. augusztus 21-én! Várunk Titeket!
           <br />
           <br />
           <span className="opacity-90">A ViláGomba csapata</span>

@@ -6,13 +6,13 @@ import { useAuth } from '@/components/gombapp/AuthProvider';
 import { useSnackbar } from '@/components/gombapp/Snackbar';
 import Image from 'next/image';
 import { PageLayout } from '@/components/gombapp/PageLayout';
+import { siteConfig } from '@/site.config';
 
 type View = 'menu' | 'realtime' | 'agenda';
 
 const REALTIME_SRC =
   'https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=WEEK&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5';
-const AGENDA_SRC =
-  'https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=AGENDA&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5&dates=20260821/20260824';
+const AGENDA_SRC = `https://calendar.google.com/calendar/embed?height=500&wkst=2&ctz=Europe%2FBudapest&bgcolor=%23ffffff&showTitle=0&showNav=0&showPrint=0&showTabs=0&mode=AGENDA&showTz=0&src=dmlsYWdvbWJhZmVzenRAZ21haWwuY29t&color=%23039BE5&dates=${siteConfig.gombappProgramsDates[0]}/${siteConfig.gombappProgramsDates[siteConfig.gombappProgramsDates.length - 1]}`;
 
 const RealtimeSkeleton = () => (
   <div className="absolute bottom-6 left-0 right-0 top-6 flex animate-pulse flex-col overflow-hidden rounded-3xl bg-white">
