@@ -1,4 +1,4 @@
-﻿import type { Metadata, Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Alumni_Sans, Rubik_Beastly } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
@@ -28,15 +28,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'VilÃ¡Gomba FesztivÃ¡l',
-    template: '%s | VilÃ¡Gomba FesztivÃ¡l',
+    default: 'ViláGomba Fesztivál',
+    template: '%s | ViláGomba Fesztivál',
   },
   description:
-    'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny. Programok, jegyek, helyszÃ­n Ã©s kÃ©pgalÃ©ria a fesztivÃ¡lrÃ³l.',
-  keywords: ['VilÃ¡Gomba', 'FesztivÃ¡l', 'ZebegÃ©ny', 'zene', 'programok', 'jegyek'],
-  authors: [{ name: 'VilÃ¡Gomba FesztivÃ¡l' }],
-  creator: 'VilÃ¡Gomba FesztivÃ¡l',
-  publisher: 'VilÃ¡Gomba FesztivÃ¡l',
+    'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
+  keywords: ['ViláGomba', 'Fesztivál', 'Zebegény', 'zene', 'programok', 'jegyek'],
+  authors: [{ name: 'ViláGomba Fesztivál' }],
+  creator: 'ViláGomba Fesztivál',
+  publisher: 'ViláGomba Fesztivál',
   robots: {
     index: true,
     follow: true,
@@ -51,23 +51,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'hu_HU',
     url: siteUrl,
-    siteName: 'VilÃ¡Gomba FesztivÃ¡l',
-    title: 'VilÃ¡Gomba FesztivÃ¡l',
+    siteName: 'ViláGomba Fesztivál',
+    title: 'ViláGomba Fesztivál',
     description:
-      'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny. Programok, jegyek, helyszÃ­n Ã©s kÃ©pgalÃ©ria a fesztivÃ¡lrÃ³l.',
+      'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
     images: [
       {
         url: '/page_images/IMG_1367.webp',
         width: 1200,
         height: 630,
-        alt: 'VilÃ¡Gomba FesztivÃ¡l',
+        alt: 'ViláGomba Fesztivál',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VilÃ¡Gomba FesztivÃ¡l',
-    description: 'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny',
+    title: 'ViláGomba Fesztivál',
+    description: 'ViláGomba Fesztivál – Zebegény',
     images: ['/page_images/IMG_1367.webp'],
   },
   icons: {
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   appleWebApp: {
-    title: 'VilÃ¡Gomba FesztivÃ¡l',
+    title: 'ViláGomba Fesztivál',
     statusBarStyle: 'default',
     capable: true,
   },
@@ -148,7 +148,7 @@ a{color:var(--color-accent);text-decoration:none}
           src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"
           strategy="beforeInteractive"
         />
-        {/* Google Analytics â€“ only fires after tracking consent */}
+        {/* Google Analytics – only fires after tracking consent */}
         <Script
           id="ga-script"
           data-cookie-consent="tracking"
@@ -169,7 +169,7 @@ a{color:var(--color-accent);text-decoration:none}
               notice_banner_reject_button_hide: false,
               preferences_center_close_button_hide: false,
               page_refresh_confirmation_buttons: false,
-              website_name: 'VilÃ¡GombaFeszt',
+              website_name: 'ViláGombaFeszt',
             });
           }
         `}</Script>
