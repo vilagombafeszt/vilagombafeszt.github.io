@@ -158,7 +158,7 @@ export default function KapcsolatSection() {
         style={{ animationDelay: '0.5s' }}
         className="w-full max-w-[1200px] text-center font-[family-name:var(--font-body)] text-[14px] text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:text-[clamp(13px,1.4vw,20px)]"
       >
-        © {siteConfig.festivalYear} ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével |
+        © {new Date().getFullYear()} ViláGomba Fesztivál | Ántáresz Egyesület együttműködésével |
         Minden jog fenntartva
       </div>
     </ScrollRevealWrapper>
