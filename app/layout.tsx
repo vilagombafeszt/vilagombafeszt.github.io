@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next';
+﻿import type { Metadata, Viewport } from 'next';
 import { Alumni_Sans, Rubik_Beastly } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
@@ -28,15 +28,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'ViláGomba Fesztivál',
-    template: '%s | ViláGomba Fesztivál',
+    default: 'VilÃ¡Gomba FesztivÃ¡l',
+    template: '%s | VilÃ¡Gomba FesztivÃ¡l',
   },
   description:
-    'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
-  keywords: ['ViláGomba', 'Fesztivál', 'Zebegény', 'zene', 'programok', 'jegyek'],
-  authors: [{ name: 'ViláGomba Fesztivál' }],
-  creator: 'ViláGomba Fesztivál',
-  publisher: 'ViláGomba Fesztivál',
+    'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny. Programok, jegyek, helyszÃ­n Ã©s kÃ©pgalÃ©ria a fesztivÃ¡lrÃ³l.',
+  keywords: ['VilÃ¡Gomba', 'FesztivÃ¡l', 'ZebegÃ©ny', 'zene', 'programok', 'jegyek'],
+  authors: [{ name: 'VilÃ¡Gomba FesztivÃ¡l' }],
+  creator: 'VilÃ¡Gomba FesztivÃ¡l',
+  publisher: 'VilÃ¡Gomba FesztivÃ¡l',
   robots: {
     index: true,
     follow: true,
@@ -51,23 +51,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'hu_HU',
     url: siteUrl,
-    siteName: 'ViláGomba Fesztivál',
-    title: 'ViláGomba Fesztivál',
+    siteName: 'VilÃ¡Gomba FesztivÃ¡l',
+    title: 'VilÃ¡Gomba FesztivÃ¡l',
     description:
-      'ViláGomba Fesztivál – Zebegény. Programok, jegyek, helyszín és képgaléria a fesztiválról.',
+      'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny. Programok, jegyek, helyszÃ­n Ã©s kÃ©pgalÃ©ria a fesztivÃ¡lrÃ³l.',
     images: [
       {
         url: '/page_images/IMG_1367.webp',
         width: 1200,
         height: 630,
-        alt: 'ViláGomba Fesztivál',
+        alt: 'VilÃ¡Gomba FesztivÃ¡l',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ViláGomba Fesztivál',
-    description: 'ViláGomba Fesztivál – Zebegény',
+    title: 'VilÃ¡Gomba FesztivÃ¡l',
+    description: 'VilÃ¡Gomba FesztivÃ¡l â€“ ZebegÃ©ny',
     images: ['/page_images/IMG_1367.webp'],
   },
   icons: {
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   appleWebApp: {
-    title: 'ViláGomba Fesztivál',
+    title: 'VilÃ¡Gomba FesztivÃ¡l',
     statusBarStyle: 'default',
     capable: true,
   },
@@ -110,12 +110,45 @@ a{color:var(--color-accent);text-decoration:none}
         {/* Preconnect to Google Maps to speed up LazyMap loading */}
         <link rel="preconnect" href="https://www.google.com" />
 
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'MusicEvent',
+              name: 'ViláGomba Fesztivál 2026',
+              description: 'ViláGomba Fesztivál – Zebegény. Zene, programok, helyszín.',
+              startDate: '2026-08-21T16:00:00+02:00',
+              endDate: '2026-08-23T23:59:59+02:00',
+              location: {
+                '@type': 'Place',
+                name: 'Zebegény',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressLocality: 'Zebegény',
+                  addressCountry: 'HU',
+                },
+              },
+              image: ['https://vilagombafeszt.github.io/page_images/IMG_1367.webp'],
+              offers: {
+                '@type': 'Offer',
+                url: 'https://www.tixa.hu/vilagomba-2026',
+                priceCurrency: 'HUF',
+                availability: 'https://schema.org/InStock',
+                validFrom: '2025-09-01T00:00:00+02:00',
+              },
+            }),
+          }}
+        />
+
         {/* Cookie Consent */}
         <Script
           src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"
           strategy="beforeInteractive"
         />
-        {/* Google Analytics – only fires after tracking consent */}
+        {/* Google Analytics â€“ only fires after tracking consent */}
         <Script
           id="ga-script"
           data-cookie-consent="tracking"
@@ -136,7 +169,7 @@ a{color:var(--color-accent);text-decoration:none}
               notice_banner_reject_button_hide: false,
               preferences_center_close_button_hide: false,
               page_refresh_confirmation_buttons: false,
-              website_name: 'ViláGombaFeszt',
+              website_name: 'VilÃ¡GombaFeszt',
             });
           }
         `}</Script>
