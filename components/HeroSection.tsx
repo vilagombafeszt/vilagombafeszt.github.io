@@ -36,7 +36,7 @@ export default function HeroSection() {
 
         {/* Date / Post-Festival Subtitle */}
         {isPostFestival ? (
-          <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] px-4 text-center font-[family-name:var(--font-brand)] text-[clamp(20px,3.5vw,40px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
+          <h2 className="m-0 animate-[fadeSlideUp_1.2s_cubic-bezier(0.2,0.8,0.2,1)_0.3s_forwards] px-4 text-center font-[family-name:var(--font-brand)] text-[clamp(14px,2vw,24px)] tracking-[2px] text-[#7c8bb1] opacity-0 [text-shadow:0_4px_40px_rgba(0,0,0,1),0_0_15px_rgba(0,0,0,0.8)]">
             Köszönjük, hogy velünk voltatok!
           </h2>
         ) : (
