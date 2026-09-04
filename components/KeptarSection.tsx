@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 declare global {
@@ -56,8 +56,103 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+/* ── Individual Album Card with Mobile Scroll Activation ──────── */
+const AlbumCard = ({
+  href,
+  albumName,
+  imageSrc,
+  imageAlt,
+  isVisible,
+  delay,
+  index,
+  isMobileActive,
+  onIntersect,
+}: {
+  href: string;
+  albumName: string;
+  imageSrc: string;
+  imageAlt: string;
+  isVisible: boolean;
+  delay: string;
+  index: number;
+  isMobileActive: boolean;
+  onIntersect: (index: number, isIntersecting: boolean) => void;
+}) => {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (window.innerWidth < 768) {
+          onIntersect(index, entry.isIntersecting);
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [index, onIntersect]);
+
+  return (
+    <a
+      ref={cardRef}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackAlbumClick(albumName)}
+      style={{ animationDelay: isVisible ? delay : '0s' }}
+      className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+        isMobileActive
+          ? 'z-10 shadow-[0_40px_80px_rgba(0,0,0,0.7),0_20px_35px_rgba(0,0,0,0.5)]'
+          : 'shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)]'
+      } ${
+        isVisible
+          ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
+          : 'opacity-0'
+      }`}
+    >
+      {imageSrc && (
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          width={800}
+          height={600}
+          unoptimized
+          loading="lazy"
+          className={`md:group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] md:aspect-[16/10] md:group-hover:-rotate-1 md:group-hover:scale-110 ${
+            isMobileActive ? '-rotate-1 scale-110 saturate-[1.25]' : ''
+          }`}
+        />
+      )}
+      <div
+        className={`pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] md:text-[clamp(28px,4vw,56px)] md:group-hover:bg-black/40 md:group-hover:tracking-[clamp(4px,1vw,10px)] md:group-hover:text-white ${
+          isMobileActive
+            ? 'bg-black/40 tracking-[clamp(4px,1vw,10px)] text-white'
+            : 'bg-black/20 text-[#ac9d9d]'
+        }`}
+      >
+        {albumName}
+      </div>
+    </a>
+  );
+};
+
 export default function KeptarSection() {
   const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>();
+  const [activeAlbum, setActiveAlbum] = useState<number | null>(null);
+
+  const handleIntersect = useCallback((index: number, isIntersecting: boolean) => {
+    setActiveAlbum((prev) => {
+      if (isIntersecting) return index;
+      // Only clear if this card was the active one
+      if (prev === index) return null;
+      return prev;
+    });
+  }, []);
 
   const album1Src = useRandomImage(indexPictures2024, 'index-pictures-2024');
   const album2Src = useRandomImage(indexPictures2025, 'index-pictures-2025');
@@ -81,92 +176,39 @@ export default function KeptarSection() {
       </h2>
 
       <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[95%] lg:grid-cols-3 lg:gap-[clamp(32px,4vw,64px)] xl:max-w-[1800px]">
-        {/* Album 1: ViláGomba 2024 */}
-        <a
+        <AlbumCard
           href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackAlbumClick('ViláGomba 2024')}
-          style={{ animationDelay: isVisible ? '0.1s' : '0s' }}
-          className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
-        >
-          {album1Src && (
-            <Image
-              src={album1Src}
-              alt="Világomba 2024"
-              width={800}
-              height={600}
-              unoptimized
-              loading="lazy"
-              className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
-            />
-          )}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            ViláGomba 2024
-          </div>
-        </a>
-
-        {/* Album 2: ViláGomba 2025 */}
-        <a
+          albumName="ViláGomba 2024"
+          imageSrc={album1Src}
+          imageAlt="Világomba 2024"
+          isVisible={isVisible}
+          delay="0.1s"
+          index={0}
+          isMobileActive={activeAlbum === 0}
+          onIntersect={handleIntersect}
+        />
+        <AlbumCard
           href="https://photos.app.goo.gl/njhqn6NmA3wEk73H7"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackAlbumClick('ViláGomba 2025')}
-          style={{ animationDelay: isVisible ? '0.2s' : '0s' }}
-          className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
-        >
-          {album2Src && (
-            <Image
-              src={album2Src}
-              alt="Világomba 2025"
-              width={800}
-              height={600}
-              unoptimized
-              loading="lazy"
-              className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
-            />
-          )}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            ViláGomba 2025
-          </div>
-        </a>
-
-        {/* Album 3: Nyárnyitó */}
-        <a
+          albumName="ViláGomba 2025"
+          imageSrc={album2Src}
+          imageAlt="Világomba 2025"
+          isVisible={isVisible}
+          delay="0.2s"
+          index={1}
+          isMobileActive={activeAlbum === 1}
+          onIntersect={handleIntersect}
+        />
+        <AlbumCard
           href="https://photos.app.goo.gl/faBRAoSwUqxKYiFi7"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackAlbumClick('Nyárnyitó 2026')}
-          style={{ animationDelay: isVisible ? '0.3s' : '0s' }}
-          className={`group relative block overflow-hidden rounded-2xl border-2 border-[#ac9d9d] shadow-[0_30px_60px_rgba(0,0,0,0.6),0_15px_25px_rgba(0,0,0,0.4)] ${
-            isVisible
-              ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
-              : 'opacity-0'
-          }`}
-        >
-          {album3Src && (
-            <Image
-              src={album3Src}
-              alt="Nyárnyitó"
-              width={800}
-              height={600}
-              unoptimized
-              loading="lazy"
-              className="group-hover:saturate-125 block aspect-[16/9] h-auto w-full object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-rotate-1 group-hover:scale-110 md:aspect-[16/10]"
-            />
-          )}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap bg-black/20 font-[family-name:var(--font-body)] text-[clamp(28px,8vw,44px)] font-bold tracking-wide text-[#ac9d9d] transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [text-shadow:2px_2px_8px_rgba(0,0,0,0.7)] group-hover:bg-black/40 group-hover:tracking-[clamp(4px,1vw,10px)] group-hover:text-white md:text-[clamp(28px,4vw,56px)]">
-            Nyárnyitó 2026
-          </div>
-        </a>
+          albumName="Nyárnyitó 2026"
+          imageSrc={album3Src}
+          imageAlt="Nyárnyitó"
+          isVisible={isVisible}
+          delay="0.3s"
+          index={2}
+          isMobileActive={activeAlbum === 2}
+          onIntersect={handleIntersect}
+        />
       </div>
 
       <div

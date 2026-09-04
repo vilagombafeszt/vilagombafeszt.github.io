@@ -114,9 +114,9 @@ export default function JegyekSection() {
         style={{ animationDelay: '0.1s' }}
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
-        <div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
+        {/*<div className="mb-[clamp(28px,4vh,48px)] inline-block animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-[#ac9d9d] px-7 py-2.5 text-[clamp(17px,4vw,24px)] font-bold tracking-[2px] text-[#102135] shadow-lg md:text-[clamp(16px,2vw,26px)]">
           JEGYÉRTÉKESÍTÉS MÁR CSAK A HELYSZÍNEN!
-        </div>
+        </div>*/}
       </div>
 
       <div className="mx-auto mb-10 mt-4 grid w-full max-w-[1600px] grid-cols-1 justify-items-center gap-6 md:mb-12 md:mt-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8">
@@ -130,10 +130,8 @@ export default function JegyekSection() {
         className="w-full max-w-[800px] font-[family-name:var(--font-body)] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
       >
         <p className="mb-[clamp(36px,5vh,56px)] text-[clamp(18px,4vw,24px)] leading-[1.6] md:text-[clamp(16px,2vw,26px)]">
-          A {siteConfig.festivalYear}-os fesztiválra az online jegyek elfogytak! Már csak a
-          helyszíni jegyek elérhetőek, de azok is csak korlátozott számban. Érdemes minél hamarabb
-          érkezni, hogy biztosan legyen helyetek a fesztiválon! A legfrissebb információkért
-          kövessetek be minket a hivatalos Facebook- és Instagram-oldalunkon.
+          A {siteConfig.festivalYear}-os fesztiválra a jegyértékesítés befejeződött! A legfrissebb
+          információkért kövessetek be minket a hivatalos Facebook- és Instagram-oldalunkon.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-[clamp(16px,2vw,24px)] sm:flex-row">
