@@ -90,6 +90,7 @@ export const metadata: Metadata = {
 };
 
 import GoogleAnalyticsTracker from '@/components/GoogleAnalyticsTracker';
+import CookieConsent from '@/components/CookieConsent';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const fontClasses = [alumniSans.variable, rubikBeastly.variable].join(' ');
@@ -144,44 +145,8 @@ a{color:var(--color-accent);text-decoration:none}
             }),
           }}
         />
-
-        {/* Cookie Consent */}
-        <Script
-          src="//www.freeprivacypolicy.com/public/cookie-consent/4.1.0/cookie-consent.js"
-          strategy="beforeInteractive"
-        />
-        {/* Google Analytics – only fires after tracking consent */}
-        <Script
-          id="ga-script"
-          data-cookie-consent="tracking"
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-3C9SFFDX5K"
-        />
       </head>
       <body>
-        {/* Cookie consent initialisation */}
-        <Script id="cookie-consent-init" strategy="afterInteractive">{`
-          if (typeof cookieconsent !== 'undefined') {
-            cookieconsent.run({
-              notice_banner_type: 'simple',
-              consent_type: 'express',
-              palette: 'dark',
-              language: 'hu',
-              page_load_consent_levels: ['strictly-necessary'],
-              notice_banner_reject_button_hide: false,
-              preferences_center_close_button_hide: false,
-              page_refresh_confirmation_buttons: false,
-              website_name: 'ViláGombaFeszt',
-            });
-          }
-        `}</Script>
-        {/* Google Analytics init */}
-        <Script id="ga-init" strategy="afterInteractive">{`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-3C9SFFDX5K');
-        `}</Script>
         {/* Service Worker registration */}
         {process.env.NODE_ENV === 'production' && (
           <Script id="sw-registration" strategy="afterInteractive">{`
@@ -193,12 +158,8 @@ a{color:var(--color-accent);text-decoration:none}
           `}</Script>
         )}
 
-        {/* Cookie preferences link (hidden on mobile via CSS) */}
-        <a href="#" id="open_preferences_center" style={{ display: 'none' }}>
-          Update cookies preferences
-        </a>
-
         <GoogleAnalyticsTracker />
+        <CookieConsent />
         {children}
       </body>
     </html>
