@@ -11,8 +11,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "optimize-images": "node scripts/optimize-images.mjs",
-    "test": "vitest run",
-    "test:watch": "vitest",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -36,14 +34,9 @@
     "serwist": "^9.5.7"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/jsdom": "^28.0.1",
     "@types/node": "^20.19.37",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.27",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -51,7 +44,6 @@
     "eslint-config-next": "^15.1.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
-    "jsdom": "^29.0.1",
     "lint-staged": "^16.4.0",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
@@ -59,8 +51,7 @@
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.0.0",
-    "vitest": "^4.1.0"
+    "typescript": "^5.0.0"
   },
   "browserslist": [
     "chrome >= 87",

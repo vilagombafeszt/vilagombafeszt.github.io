@@ -25,7 +25,7 @@ const trackAlbumClick = (albumName: string) => {
 
 import indexPictures2024 from '../public/images-2024.json';
 import indexPictures2025 from '../public/images-2025.json';
-import indexPicturesnyarnyito from '../public/images-nyarnito.json';
+import indexPicturesnyarnyito from '../public/images-nyarnyito.json';
 
 function useRandomImage(files: string[], folder: string) {
   const [src, setSrc] = useState('');

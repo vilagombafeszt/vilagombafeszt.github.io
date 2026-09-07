@@ -203,7 +203,7 @@ export default function Menu() {
   };
 
   return (
-    <nav className="pointer-events-none fixed left-0 top-0 z-[1000] w-full md:pointer-events-auto md:flex md:h-[72px] md:flex-row md:items-center md:justify-center md:bg-[var(--color-menu-bg)] md:px-5">
+    <nav className="pointer-events-none fixed left-0 top-0 z-[1000] w-full md:pointer-events-auto md:flex md:h-[72px] md:flex-row md:items-center md:justify-center md:bg-[var(--color-menu-bg)] md:px-2">
       {/* Mobile Backdrop Overlay */}
       <div
         className={`fixed inset-0 touch-none overscroll-none bg-black/40 backdrop-blur-sm transition-opacity duration-500 md:hidden ${
@@ -228,7 +228,7 @@ export default function Menu() {
           height={45}
           unoptimized
           priority={true}
-          className="block h-[44px] w-auto cursor-pointer drop-shadow-md md:h-[clamp(28px,3.5vw,44px)]"
+          className="block h-[44px] w-auto cursor-pointer drop-shadow-md md:h-[46px] lg:h-[44px]"
         />
       </a>
 
@@ -244,7 +244,7 @@ export default function Menu() {
             boxShadow: menuOpen && !isDragging ? '0 40px 100px rgba(0,0,0,0.5)' : 'none',
           } as React.CSSProperties
         }
-        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] transition-all md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-[clamp(8px,1.5vw,28px)] md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none ${
+        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] transition-all md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-3 md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none lg:gap-6 xl:gap-8 ${
           isDragging ? 'duration-0' : 'duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)]'
         } ${menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
       >
@@ -254,7 +254,7 @@ export default function Menu() {
           id="nav-home"
           onClick={handleHomeClick}
           style={{ transitionDelay: menuOpen && !isDragging ? '100ms' : '0ms' }}
-          className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
+          className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
             menuOpen
               ? 'translate-y-0 opacity-100'
               : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
@@ -276,7 +276,7 @@ export default function Menu() {
             id={`nav-${id}`}
             onClick={(e) => handleNavClick(e, id)}
             style={{ transitionDelay: menuOpen && !isDragging ? `${(i + 3) * 35}ms` : '0ms' }}
-            className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[clamp(13px,1.4vw,22px)] md:font-semibold md:normal-case md:tracking-[1px] md:hover:scale-110 md:active:scale-100 ${
+            className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
               menuOpen
                 ? 'translate-y-0 opacity-100'
                 : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
