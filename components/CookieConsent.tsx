@@ -123,11 +123,11 @@ function PreferencesCenter({
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="relative flex h-[85vh] w-full max-w-[720px] flex-col overflow-hidden rounded-3xl bg-[#1a1a1a] shadow-[0_20px_60px_rgba(0,0,0,0.8)] sm:h-[650px]">
+      <div className="relative flex h-[85vh] w-full max-w-[800px] flex-col overflow-hidden rounded-3xl bg-[#1a1a1a] shadow-[0_20px_60px_rgba(0,0,0,0.8)] sm:h-[650px]">
         {/* Header */}
-        <div className="flex flex-col px-6 pb-4 pt-5">
+        <div className="flex flex-col px-6 pb-4 pt-6">
           <div className="flex items-center justify-between">
-            <p className="font-[family-name:var(--font-brand)] text-base leading-none text-yellow-400 sm:text-lg">
+            <p className="font-[family-name:var(--font-brand)] text-xl leading-none text-yellow-400 sm:text-2xl">
               ViláGomba Fesztivál
             </p>
             <button
@@ -138,23 +138,23 @@ function PreferencesCenter({
               <CloseIcon />
             </button>
           </div>
-          <h2 className="mt-2 font-[family-name:var(--font-body)] text-xl font-bold leading-tight text-white sm:text-2xl">
+          <h2 className="mt-2 font-[family-name:var(--font-body)] text-xl font-bold leading-tight text-white sm:text-3xl">
             Süti beállítások
           </h2>
         </div>
 
         {/* Body */}
-        <div className="flex flex-1 flex-col overflow-hidden border-t border-white/5 sm:flex-row">
+        <div className="flex flex-1 flex-col overflow-hidden border-t border-white/10 sm:flex-row">
           {/* Sidebar (tabs) */}
-          <nav className="hidden w-[220px] shrink-0 flex-col gap-1 overflow-y-auto border-r border-white/5 bg-black/20 p-2 sm:flex">
+          <nav className="hidden w-[260px] shrink-0 flex-col gap-1 overflow-y-auto border-r border-white/10 px-4 pb-6 pt-6 [-ms-overflow-style:none] [scrollbar-width:none] sm:flex [&::-webkit-scrollbar]:hidden">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`cursor-pointer rounded-xl border-0 px-4 py-3 text-left font-[family-name:var(--font-body)] text-base font-bold outline-none transition-all duration-200 sm:text-base ${
+                className={`cursor-pointer rounded-xl border-0 px-4 py-3.5 text-left font-[family-name:var(--font-body)] text-base font-bold tracking-wide outline-none transition-all duration-200 sm:text-lg ${
                   activeTab === tab.key
-                    ? 'bg-white text-black shadow-md'
-                    : 'bg-[#e5e5e5] text-black hover:bg-white hover:text-black'
+                    ? 'bg-white/10 text-white'
+                    : 'bg-transparent text-[#ac9d9d] hover:bg-white/5 hover:text-white'
                 }`}
                 style={{ border: 'none' }}
               >
@@ -164,15 +164,14 @@ function PreferencesCenter({
           </nav>
 
           {/* Mobile tab selector */}
-          <div className="border-b border-white/5 bg-black/20 p-4 sm:hidden">
+          <div className="border-b border-white/10 p-4 sm:hidden">
             <select
               value={activeTab}
               onChange={(e) => setActiveTab(e.target.value)}
-              className="block w-full rounded-xl border-0 bg-[#e5e5e5] px-4 py-3.5 font-[family-name:var(--font-body)] text-base font-bold text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              style={{ border: 'none' }}
+              className="block w-full rounded-xl border border-white/10 bg-[#222222] px-4 py-3.5 font-[family-name:var(--font-body)] text-base font-bold text-white focus:border-yellow-400 focus:outline-none focus:ring-1 focus:ring-yellow-400"
             >
               {tabs.map((tab) => (
-                <option key={tab.key} value={tab.key} className="text-black">
+                <option key={tab.key} value={tab.key}>
                   {tab.label}
                 </option>
               ))}
@@ -180,13 +179,13 @@ function PreferencesCenter({
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+          <div className="flex-1 overflow-y-auto p-6 pt-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-8 sm:pb-8 sm:pt-2 [&::-webkit-scrollbar]:hidden">
             {activeTab === 'overview' && (
               <div>
-                <h3 className="mb-4 font-[family-name:var(--font-body)] text-2xl font-bold text-white sm:text-2xl">
+                <h3 className="mb-3 font-[family-name:var(--font-body)] text-2xl font-bold leading-tight text-white sm:text-3xl sm:leading-none">
                   Az Ön adatainak védelme kiemelten fontos számunkra
                 </h3>
-                <p className="mb-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[#ac9d9d] sm:text-lg">
+                <p className="mb-3 font-[family-name:var(--font-body)] text-base leading-relaxed text-[#ac9d9d] sm:text-lg">
                   A sütik (cookie-k) olyan kisméretű szöveges fájlok, amelyeket a weboldal tárol el
                   az Ön böngészőjében. Ezeket azért használjuk, hogy biztosítsuk az oldal zavartalan
                   működését, és személyre szabottabb felhasználói élményt nyújtsunk.
@@ -203,8 +202,8 @@ function PreferencesCenter({
               (cat) =>
                 activeTab === cat.key && (
                   <div key={cat.key}>
-                    <div className="mb-6 flex items-start justify-between gap-4">
-                      <h3 className="font-[family-name:var(--font-body)] text-2xl font-bold leading-tight text-white sm:text-2xl">
+                    <div className="mb-4 flex items-center justify-between gap-4">
+                      <h3 className="font-[family-name:var(--font-body)] text-2xl font-bold leading-tight text-white sm:text-3xl sm:leading-none">
                         {cat.label}
                       </h3>
                       <div className="flex shrink-0 items-center gap-3">
@@ -234,7 +233,7 @@ function PreferencesCenter({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end border-t border-white/10 bg-black/20 px-6 py-5">
+        <div className="flex items-center justify-end border-t border-white/10 px-6 py-5">
           <button
             onClick={() => onSave(state)}
             className="cursor-pointer rounded-full border-0 bg-yellow-400 px-8 py-3.5 font-[family-name:var(--font-body)] text-base font-bold tracking-wide text-black shadow-[0_4px_14px_rgba(250,204,21,0.25)] transition-all duration-300 hover:bg-yellow-300 active:scale-95 sm:text-lg"
