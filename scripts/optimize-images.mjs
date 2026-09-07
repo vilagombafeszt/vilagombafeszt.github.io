@@ -226,6 +226,11 @@ async function main() {
     quality: 82,
   });
 
+  await processGalleryFolder('index-pictures-2026', 'images-2026.json', {
+    maxWidth: 1200,
+    quality: 82,
+  });
+
   console.log('\nDone! Rebuild the site to apply changes.');
 }
 

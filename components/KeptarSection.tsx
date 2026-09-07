@@ -26,6 +26,7 @@ const trackAlbumClick = (albumName: string) => {
 import indexPictures2024 from '../public/images-2024.json';
 import indexPictures2025 from '../public/images-2025.json';
 import indexPicturesnyarnyito from '../public/images-nyarnyito.json';
+import indexPictures2026 from '../public/images-2026.json';
 
 function useRandomImage(files: string[], folder: string) {
   const [src, setSrc] = useState('');
@@ -157,6 +158,7 @@ export default function KeptarSection() {
   const album1Src = useRandomImage(indexPictures2024, 'index-pictures-2024');
   const album2Src = useRandomImage(indexPictures2025, 'index-pictures-2025');
   const album3Src = useRandomImage(indexPicturesnyarnyito, 'index-pictures-nyarnyito');
+  const album4Src = useRandomImage(indexPictures2026, 'index-pictures-2026');
 
   return (
     <section
@@ -175,7 +177,7 @@ export default function KeptarSection() {
         Képtár
       </h2>
 
-      <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[95%] lg:grid-cols-3 lg:gap-[clamp(32px,4vw,64px)] xl:max-w-[1800px]">
+      <div className="grid w-full max-w-[700px] grid-cols-1 gap-10 lg:max-w-[90%] lg:grid-cols-2 lg:gap-[clamp(32px,4vw,64px)] xl:max-w-[1400px]">
         <AlbumCard
           href="https://photos.app.goo.gl/5kMuzpd7iqXdGfGV7"
           albumName="ViláGomba 2024"
@@ -209,6 +211,17 @@ export default function KeptarSection() {
           isMobileActive={activeAlbum === 2}
           onIntersect={handleIntersect}
         />
+        <AlbumCard
+          href="https://photos.app.goo.gl/wtDkw5UNacipk8KW7"
+          albumName="ViláGomba 2026"
+          imageSrc={album4Src}
+          imageAlt="ViláGomba 2026"
+          isVisible={isVisible}
+          delay="0.4s"
+          index={3}
+          isMobileActive={activeAlbum === 3}
+          onIntersect={handleIntersect}
+        />
       </div>
 
       <div
@@ -224,7 +237,7 @@ export default function KeptarSection() {
 
       <div
         style={{ animationDelay: isVisible ? '0.55s' : '0s' }}
-        className={`mt-2 flex w-full items-center justify-center font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] md:text-[clamp(16px,1.8vw,26px)] ${
+        className={`mt-2 flex w-full items-center justify-center font-[family-name:var(--font-body)] text-[clamp(16px,3.5vw,20px)] font-semibold text-[#ac9d9d] md:text-[clamp(16px,1.8vw,26px)] lg:mb-10 xl:mb-20 ${
           isVisible
             ? 'animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] opacity-0'
             : 'opacity-0'
