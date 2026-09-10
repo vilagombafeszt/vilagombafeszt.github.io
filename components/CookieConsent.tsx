@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { getConsent, setConsent, loadGoogleAnalytics, type ConsentState } from '@/lib/analytics';
 
 /* ── Cookie category definitions ──────────────────────────────── */
@@ -250,6 +251,7 @@ function PreferencesCenter({
 /* ── Main Cookie Consent Banner ───────────────────────────────── */
 
 export default function CookieConsent() {
+  const pathname = usePathname();
   const [bannerVisible, setBannerVisible] = useState(false);
   const [dismissing, setDismissing] = useState(false);
   const [prefsOpen, setPrefsOpen] = useState(false);
@@ -292,6 +294,7 @@ export default function CookieConsent() {
   );
 
   if (!bannerVisible && !prefsOpen) return null;
+  if (pathname?.toLowerCase().startsWith('/gombapp')) return null;
 
   return (
     <>
