@@ -30,8 +30,8 @@ export default function Menu() {
 
   const [activeSection, setActiveSection] = useState('otthon');
 
-  const [dragY, setDragY] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+  const dragYRef = useRef(0);
+  const isDraggingRef = useRef(false);
   const touchStartY = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const ticking = useRef(false);
@@ -152,21 +152,36 @@ export default function Menu() {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length !== 1) return;
     touchStartY.current = e.touches[0].clientY;
-    setIsDragging(true);
+    isDraggingRef.current = true;
+    dragYRef.current = 0;
+    if (menuRef.current) {
+      menuRef.current.style.transitionDuration = '0ms';
+      menuRef.current.style.boxShadow = 'none';
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
     const currentY = e.touches[0].clientY;
     const deltaY = currentY - touchStartY.current;
-    setDragY(deltaY < 0 ? deltaY : 0);
+    dragYRef.current = deltaY < 0 ? deltaY : 0;
+    if (menuRef.current) {
+      menuRef.current.style.setProperty('--mobile-translate-y', `${dragYRef.current}px`);
+    }
   };
 
   const handleTouchEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    if (dragY < -60) setMenuOpen(false);
-    setDragY(0);
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+
+    if (menuRef.current) {
+      menuRef.current.style.transitionDuration = '';
+      menuRef.current.style.boxShadow = '';
+      menuRef.current.style.removeProperty('--mobile-translate-y');
+    }
+
+    if (dragYRef.current < -60) setMenuOpen(false);
+    dragYRef.current = 0;
   };
 
   /* ── Navigation Handlers ──────────────────────────────────────────── */
@@ -206,7 +221,7 @@ export default function Menu() {
     <nav className="pointer-events-none fixed left-0 top-0 z-[1000] w-full md:pointer-events-auto md:flex md:h-[72px] md:flex-row md:items-center md:justify-center md:bg-[var(--color-menu-bg)] md:px-2">
       {/* Mobile Backdrop Overlay */}
       <div
-        className={`fixed inset-0 touch-none overscroll-none bg-black/40 backdrop-blur-sm transition-opacity duration-500 md:hidden ${
+        className={`fixed inset-0 transform-gpu touch-none overscroll-none bg-black/40 backdrop-blur-sm transition-opacity duration-500 will-change-[opacity] md:hidden ${
           menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setMenuOpen(false)}
@@ -240,21 +255,19 @@ export default function Menu() {
         onTouchEnd={handleTouchEnd}
         style={
           {
-            '--mobile-translate-y': isDragging ? `${dragY}px` : menuOpen ? '0px' : '-100%',
-            boxShadow: menuOpen && !isDragging ? '0 40px 100px rgba(0,0,0,0.5)' : 'none',
+            '--mobile-translate-y': menuOpen ? '0px' : '-100%',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.5)',
           } as React.CSSProperties
         }
-        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] transition-all md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-3 md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none lg:gap-6 xl:gap-8 ${
-          isDragging ? 'duration-0' : 'duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)]'
-        } ${menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] transition duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-3 md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none lg:gap-6 xl:gap-8 ${menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
       >
         {/* Nav Links */}
         <a
           href="#otthon"
           id="nav-home"
           onClick={handleHomeClick}
-          style={{ transitionDelay: menuOpen && !isDragging ? '100ms' : '0ms' }}
-          className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
+          style={{ transitionDelay: menuOpen ? '100ms' : '0ms' }}
+          className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
             menuOpen
               ? 'translate-y-0 opacity-100'
               : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
@@ -275,8 +288,8 @@ export default function Menu() {
             href={`#${id}`}
             id={`nav-${id}`}
             onClick={(e) => handleNavClick(e, id)}
-            style={{ transitionDelay: menuOpen && !isDragging ? `${(i + 3) * 35}ms` : '0ms' }}
-            className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition-all duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
+            style={{ transitionDelay: menuOpen ? `${(i + 3) * 35}ms` : '0ms' }}
+            className={`group relative flex h-[44px] w-full select-none items-center justify-center font-[family-name:var(--font-body)] text-[1.5rem] font-bold uppercase tracking-[3px] !text-[#102135] transition duration-[400ms] hover:!text-[#8b0000] active:scale-[0.96] active:opacity-70 md:h-auto md:w-auto md:bg-transparent md:py-0 md:text-[20px] md:font-semibold md:normal-case md:tracking-normal md:hover:scale-110 md:active:scale-100 lg:text-[24px] ${
               menuOpen
                 ? 'translate-y-0 opacity-100'
                 : '-translate-y-4 opacity-0 md:translate-y-0 md:opacity-100'
