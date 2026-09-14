@@ -286,7 +286,7 @@ function SocialIcons({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSocialClick(artistName, 'instagram')}
-          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-pink-400"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-pink-400"
         >
           <InstagramIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
         </a>
@@ -297,7 +297,7 @@ function SocialIcons({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSocialClick(artistName, 'facebook')}
-          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-blue-400"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-blue-400"
         >
           <FacebookIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
         </a>
@@ -308,7 +308,7 @@ function SocialIcons({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSocialClick(artistName, 'youtube')}
-          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-red-500"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-red-500"
         >
           <YoutubeIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
         </a>
@@ -319,7 +319,7 @@ function SocialIcons({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSocialClick(artistName, 'soundcloud')}
-          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-orange-500"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-orange-500"
         >
           <SoundcloudIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
         </a>
@@ -330,7 +330,7 @@ function SocialIcons({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSocialClick(artistName, 'spotify')}
-          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 backdrop-blur-sm transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-green-400"
+          className="flex items-center justify-center rounded-full bg-white/5 p-2 text-white/70 transition-all duration-300 hover:scale-125 hover:bg-white/10 hover:text-green-400"
         >
           <SpotifyIcon className="h-4 w-4 sm:h-5 sm:w-5 xl:h-4 xl:w-4 2xl:h-5 2xl:w-5" />
         </a>
@@ -343,7 +343,7 @@ function LineupCard({ item, delay }: { item: LineupItem; delay: number }) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
+      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg transition duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
     >
       <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 sm:min-w-[80px] sm:group-hover/card:scale-110 sm:group-hover/card:bg-black/60">
         <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base min-[1800px]:text-lg">
@@ -365,7 +365,7 @@ function B2bCard({ item, delay }: { item: B2bEntry; delay: number }) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
+      className="group/card relative flex min-w-0 flex-1 flex-row items-center gap-3 rounded-2xl border border-white/5 bg-black/10 p-3 opacity-0 shadow-lg transition duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-4 sm:p-4 sm:hover:-translate-y-1.5 sm:hover:border-white/20 sm:hover:bg-white/10 sm:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] md:gap-6 xl:gap-3 2xl:gap-4"
     >
       <div className="relative z-10 flex min-w-[60px] shrink-0 items-center justify-center rounded-xl bg-black/40 py-2 transition-transform duration-500 sm:min-w-[80px] sm:group-hover/card:scale-110 sm:group-hover/card:bg-black/60">
         <span className="font-mono text-sm font-bold tracking-wider text-amber-500/90 sm:text-lg xl:text-base min-[1800px]:text-lg">
