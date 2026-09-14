@@ -441,7 +441,7 @@ export default function MusorSection() {
         <div className="min-w-0 flex-1">
           <h3
             style={{ animationDelay: '0.1s' }}
-            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl font-normal text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-5xl"
           >
             Péntek
           </h3>
@@ -451,7 +451,7 @@ export default function MusorSection() {
         <div className="min-w-0 flex-1">
           <h3
             style={{ animationDelay: '0.3s' }}
-            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl font-normal text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-5xl"
           >
             Szombat
           </h3>
@@ -461,7 +461,7 @@ export default function MusorSection() {
         <div className="min-w-0 flex-1">
           <h3
             style={{ animationDelay: '0.5s' }}
-            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl text-[#ac9d9d] opacity-0 drop-shadow-md group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-4xl"
+            className="mb-2 w-full border-b border-[#ac9d9d]/20 pb-2 text-center font-[family-name:var(--font-brand)] text-2xl font-normal text-[#ac9d9d] opacity-0 group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:mb-6 md:pb-3 md:text-5xl"
           >
             Vasárnap
           </h3>
