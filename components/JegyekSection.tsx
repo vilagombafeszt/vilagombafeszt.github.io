@@ -81,7 +81,7 @@ const TicketCard = ({ img, index }: { img: { src: string; alt: string }; index: 
       rel="noopener noreferrer"
       onClick={() => window.gtag?.('event', 'ticket_cta_click', { ticket_type: img.alt })}
       style={{ animationDelay: `${0.2 + index * 0.15}s` }}
-      className={`group/ticket block opacity-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
+      className={`group/ticket block opacity-0 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] transition duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform group-data-[visible=true]:animate-[fadeSlideUp_0.8s_cubic-bezier(0.2,0.8,0.2,1)_forwards] md:hover:-translate-y-4 md:hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] ${
         isMobileActive ? 'z-10 -translate-y-4 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]' : 'z-0'
       }`}
     >
@@ -91,7 +91,7 @@ const TicketCard = ({ img, index }: { img: { src: string; alt: string }; index: 
         width={350}
         height={500}
         loading="lazy"
-        className={`aspect-[7/10] h-auto w-[250px] object-cover transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover/ticket:-rotate-2 md:group-hover/ticket:scale-105 md:group-hover/ticket:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
+        className={`aspect-[7/10] h-auto w-[250px] object-cover transition duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] sm:w-[280px] md:w-[260px] md:group-hover/ticket:-rotate-2 md:group-hover/ticket:scale-105 md:group-hover/ticket:brightness-110 lg:w-[220px] xl:w-[260px] 2xl:w-[300px] ${
           isMobileActive ? '-rotate-2 scale-[1.15] brightness-110' : ''
         }`}
       />
@@ -139,7 +139,7 @@ export default function JegyekSection() {
             href={siteConfig.socials.facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
+            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
             <FacebookIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
             Kövess Facebookon
@@ -148,7 +148,7 @@ export default function JegyekSection() {
             href={siteConfig.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
+            className="group flex w-full items-center justify-center gap-3 rounded-full bg-[#ac9d9d] px-7 py-3.5 text-[clamp(17px,4vw,22px)] font-bold tracking-[1.5px] !text-[#102135] shadow-[0_8px_20px_rgba(0,0,0,0.25)] transition duration-300 hover:-translate-y-1 hover:bg-white hover:!text-[#102135] hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] active:translate-y-0 active:scale-[0.96] sm:w-auto md:px-8 md:text-[clamp(16px,1.8vw,22px)]"
           >
             <InstagramIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
             Kövess Instagramon
