@@ -256,10 +256,9 @@ export default function Menu() {
         style={
           {
             '--mobile-translate-y': menuOpen ? '0px' : '-100%',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.5)',
           } as React.CSSProperties
         }
-        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] transition duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-3 md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none lg:gap-6 xl:gap-8 ${menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`absolute left-0 right-0 top-0 z-[1010] flex translate-y-[var(--mobile-translate-y)] touch-none flex-col gap-2 rounded-b-[40px] bg-[#7c8bb1] px-6 pb-2 pt-[max(16px,env(safe-area-inset-top))] shadow-[0_40px_100px_rgba(0,0,0,0.5)] transition duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform md:pointer-events-auto md:static md:w-auto md:translate-y-0 md:flex-row md:gap-3 md:rounded-none md:border-none md:bg-transparent md:p-0 md:opacity-100 md:shadow-none md:backdrop-blur-none lg:gap-6 xl:gap-8 ${menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
       >
         {/* Nav Links */}
         <a
